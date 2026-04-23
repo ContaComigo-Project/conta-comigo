@@ -1,5 +1,3 @@
-import React from 'react';
-
 const benefitsData = [
   {
     icon: 'fas fa-link',
@@ -48,8 +46,8 @@ export default function Benefits() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {benefitsData.map((benefit, index) => (
-            <div 
-              key={index} 
+            <div
+              key={index}
               className="group text-center p-8 rounded-2xl bg-[#f8f9fa] border border-transparent transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:border-[#36b37e] hover:bg-white"
             >
               <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-gradient-primary flex items-center justify-center text-2xl text-white">

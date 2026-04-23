@@ -1,6 +1,4 @@
-import React, { useState } from 'react';
-
-const emptyObj = {}; // avoiding no-unused-vars if state is heavily used, but we just use index
+import { useState } from 'react';
 
 const faqsList = [
   {

@@ -1,20 +1,18 @@
-import React from 'react';
-
 export default function Hero() {
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-br from-[#f8f9fa] to-[#e9ecef] pt-24 md:pt-0">
       <div className="absolute inset-0 z-0">
         <div className="absolute w-full h-full">
-          <div 
-            className="absolute rounded-full bg-gradient-light" 
+          <div
+            className="absolute rounded-full bg-gradient-light"
             style={{ width: '20rem', height: '20rem', top: '10%', right: '10%', animation: 'float 6s ease-in-out infinite', animationDelay: '0s' }}
           ></div>
-          <div 
-            className="absolute rounded-full bg-gradient-light" 
+          <div
+            className="absolute rounded-full bg-gradient-light"
             style={{ width: '15rem', height: '15rem', bottom: '20%', left: '5%', animation: 'float 6s ease-in-out infinite', animationDelay: '2s' }}
           ></div>
-          <div 
-            className="absolute rounded-full bg-gradient-light" 
+          <div
+            className="absolute rounded-full bg-gradient-light"
             style={{ width: '12rem', height: '12rem', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', animation: 'float 6s ease-in-out infinite', animationDelay: '4s' }}
           ></div>
         </div>
@@ -59,24 +57,24 @@ export default function Hero() {
                   <div className="flex-1 bg-gradient-primary rounded-sm min-h-[1rem]" style={{ animation: 'growUp 1s ease-out forwards', '--height': '70%' } as React.CSSProperties}></div>
                 </div>
               </div>
-              
+
               <div className="absolute w-full h-full inset-0 pointer-events-none">
-                <div 
-                  className="absolute bg-white rounded-xl p-4 shadow-lg flex items-center gap-2 text-sm font-medium text-[#001b42]" 
+                <div
+                  className="absolute bg-white rounded-xl p-4 shadow-lg flex items-center gap-2 text-sm font-medium text-[#001b42]"
                   style={{ top: '-4rem', right: '-1rem', animation: 'floatCard 3s ease-in-out infinite', animationDelay: '0s' }}
                 >
                   <i className="fas fa-credit-card text-[#36b37e]"></i>
                   <span>Cartões</span>
                 </div>
-                <div 
-                  className="absolute bg-white rounded-xl p-4 shadow-lg flex items-center gap-2 text-sm font-medium text-[#001b42]" 
+                <div
+                  className="absolute bg-white rounded-xl p-4 shadow-lg flex items-center gap-2 text-sm font-medium text-[#001b42]"
                   style={{ bottom: '-2rem', left: '-2rem', animation: 'floatCard 3s ease-in-out infinite', animationDelay: '1s' }}
                 >
                   <i className="fas fa-chart-line text-[#36b37e]"></i>
                   <span>Investimentos</span>
                 </div>
-                <div 
-                  className="absolute bg-white rounded-xl p-4 shadow-lg flex items-center gap-2 text-sm font-medium text-[#001b42]" 
+                <div
+                  className="absolute bg-white rounded-xl p-4 shadow-lg flex items-center gap-2 text-sm font-medium text-[#001b42]"
                   style={{ top: '8rem', right: '-3rem', animation: 'floatCard 3s ease-in-out infinite', animationDelay: '2s' }}
                 >
                   <i className="fas fa-piggy-bank text-[#36b37e]"></i>
