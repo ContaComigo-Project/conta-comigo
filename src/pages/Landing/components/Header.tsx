@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -27,8 +28,8 @@ export default function Header() {
           </div>
 
           <div className="hidden md:flex gap-4 items-center">
-            <a href="/pages/login.html" className="px-4 py-[0.225rem] text-[0.7875rem] font-medium border-2 border-[#36b37e] text-[#36b37e] rounded-md transition duration-150 hover:bg-[#36b37e] hover:text-white inline-flex items-center justify-center">Login</a>
-            <a href="/pages/login.html?action=register" className="px-4 py-[0.225rem] text-[0.7875rem] font-medium bg-gradient-primary text-white rounded-md shadow-md transition duration-150 hover:-translate-y-[2px] hover:shadow-lg inline-flex items-center justify-center">Cadastro</a>
+            <Link to="/login" className="px-4 py-[0.225rem] text-[0.7875rem] font-medium border-2 border-[#36b37e] text-[#36b37e] rounded-md transition duration-150 hover:bg-[#36b37e] hover:text-white inline-flex items-center justify-center">Login</Link>
+            <Link to="/register" className="px-4 py-[0.225rem] text-[0.7875rem] font-medium bg-gradient-primary text-white rounded-md shadow-md transition duration-150 hover:-translate-y-[2px] hover:shadow-lg inline-flex items-center justify-center">Cadastro</Link>
           </div>
 
           <button 
@@ -78,12 +79,12 @@ export default function Header() {
         </nav>
 
         <div className="flex flex-col gap-3 mt-auto">
-          <a href="/pages/login.html" className="w-full py-3 border-2 border-[#36b37e] text-[#36b37e] rounded-lg font-medium text-center hover:bg-[#36b37e] hover:text-white transition-colors flex items-center justify-center gap-2">
+          <Link to="/login" className="w-full py-3 border-2 border-[#36b37e] text-[#36b37e] rounded-lg font-medium text-center hover:bg-[#36b37e] hover:text-white transition-colors flex items-center justify-center gap-2">
             <i className="fas fa-sign-in-alt"></i> Login
-          </a>
-          <a href="/pages/login.html?action=register" className="w-full py-3 bg-gradient-primary text-white rounded-lg font-medium text-center shadow-md hover:-translate-y-1 hover:shadow-lg transition-all flex items-center justify-center gap-2">
+          </Link>
+          <Link to="/register" className="w-full py-3 bg-gradient-primary text-white rounded-lg font-medium text-center shadow-md hover:-translate-y-1 hover:shadow-lg transition-all flex items-center justify-center gap-2">
             <i className="fas fa-user-plus"></i> Cadastro
-          </a>
+          </Link>
         </div>
       </div>
     </header>

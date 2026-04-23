@@ -1,3 +1,6 @@
+import React from 'react';
+import { Link } from 'react-router-dom';
+
 export default function Hero() {
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-br from-[#f8f9fa] to-[#e9ecef] pt-24 md:pt-0">
@@ -29,13 +32,13 @@ export default function Hero() {
               O ContaComigo é uma plataforma web de gerenciamento financeiro pessoal que conecta o usuário ao ecossistema do Open Finance. Simplifique sua vida financeira em um só lugar.
             </p>
             <div className="flex gap-4 flex-wrap justify-center md:justify-start">
-              <a href="/pages/login.html?action=register" className="px-6 py-3 md:px-8 md:py-4 text-base md:text-lg font-medium bg-gradient-primary text-white rounded-md shadow-md transition-all duration-150 hover:-translate-y-1 hover:shadow-lg inline-flex items-center group overflow-hidden relative">
+              <Link to="/register" className="px-6 py-3 md:px-8 md:py-4 text-base md:text-lg font-medium bg-gradient-primary text-white rounded-md shadow-md transition-all duration-150 hover:-translate-y-1 hover:shadow-lg inline-flex items-center group overflow-hidden relative">
                 <div className="absolute top-0 -left-full w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-all duration-500 group-hover:left-full"></div>
                 <span className="relative z-10 flex items-center">
                   Comece Agora
                   <i className="fas fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"></i>
                 </span>
-              </a>
+              </Link>
               <a href="#beneficios" className="px-6 py-3 md:px-8 md:py-4 text-base md:text-lg font-medium bg-transparent border-2 border-[#001b42] text-[#001b42] rounded-md transition-all duration-150 hover:bg-[#001b42] hover:text-white inline-flex items-center">
                 Saiba Mais
               </a>
