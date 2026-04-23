@@ -19,7 +19,7 @@ const featuresList = [
 
 export default function Features() {
   return (
-    <section className="py-24 bg-[#f8f9fa]">
+    <section id="funcionalidades" className="py-24 bg-[#f8f9fa]">
       <div className="w-full max-w-[1200px] mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
           <div>

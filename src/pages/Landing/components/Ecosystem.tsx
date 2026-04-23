@@ -9,7 +9,7 @@ export default function Ecosystem() {
   ];
 
   return (
-    <section className="py-24 bg-white overflow-hidden">
+    <section id="conectividade" className="py-24 bg-white overflow-hidden">
       <div className="w-full max-w-[1200px] mx-auto px-4 text-center">
         <div className="mb-16">
           <h2 className="text-3xl font-bold text-[#001b42] mb-4">

@@ -1,8 +1,8 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
-import Landing from '../pages/Landing/index';
-import AuthLayout from '../pages/Auth/layout';
-import Login from '../pages/Auth/Login/index';
-import Register from '../pages/Auth/Register/index';
+import Landing from '../pages/Landing/Landing';
+import AuthLayout from '../pages/Auth/AuthLayout';
+import Login from '../pages/Auth/Login/Login';
+import Register from '../pages/Auth/Register/Register';
 
 export function AppRoutes() {
   return (

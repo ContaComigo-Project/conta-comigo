@@ -25,19 +25,27 @@ export default function Header() {
           </Link>
 
           <div className="hidden md:flex gap-7">
-            <a href="#beneficios" className="font-medium text-gray-700 transition duration-150 relative group hover:text-[#36b37e]">
+            <a href="#beneficios" className="font-semibold text-gray-600 transition duration-150 relative group hover:text-[#36b37e] text-sm tracking-tight">
               Benefícios
               <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-gradient-primary transition-all duration-150 group-hover:w-full"></span>
             </a>
-            <a href="#faq" className="font-medium text-gray-700 transition duration-150 relative group hover:text-[#36b37e]">
+            <a href="#funcionalidades" className="font-semibold text-gray-600 transition duration-150 relative group hover:text-[#36b37e] text-sm tracking-tight">
+              Funcionalidades
+              <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-gradient-primary transition-all duration-150 group-hover:w-full"></span>
+            </a>
+            <a href="#conectividade" className="font-semibold text-gray-600 transition duration-150 relative group hover:text-[#36b37e] text-sm tracking-tight">
+              Conectividade
+              <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-gradient-primary transition-all duration-150 group-hover:w-full"></span>
+            </a>
+            <a href="#faq" className="font-semibold text-gray-600 transition duration-150 relative group hover:text-[#36b37e] text-sm tracking-tight">
               FAQ
               <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-gradient-primary transition-all duration-150 group-hover:w-full"></span>
             </a>
           </div>
 
           <div className="hidden md:flex gap-4 items-center">
-            <Link to="/login" className="px-4 py-[0.225rem] text-[0.7875rem] font-medium border-2 border-[#36b37e] text-[#36b37e] rounded-md transition duration-150 hover:bg-[#36b37e] hover:text-white inline-flex items-center justify-center">Login</Link>
-            <Link to="/register" className="px-4 py-[0.225rem] text-[0.7875rem] font-medium bg-gradient-primary text-white rounded-md shadow-md transition duration-150 hover:-translate-y-[2px] hover:shadow-lg inline-flex items-center justify-center">Cadastro</Link>
+            <Link to="/login" className="px-5 py-2 text-sm font-bold border-2 border-[#36b37e]/20 text-[#36b37e] rounded-xl transition duration-300 hover:border-[#36b37e] hover:bg-[#36b37e]/5 inline-flex items-center justify-center">Login</Link>
+            <Link to="/register" className="px-5 py-2 text-sm font-bold bg-gradient-primary text-white rounded-xl shadow-[0_10px_20px_rgba(54,179,126,0.15)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_15px_25px_rgba(54,179,126,0.25)] inline-flex items-center justify-center">Abrir conta</Link>
           </div>
 
           <button
@@ -85,6 +93,24 @@ export default function Header() {
                   <i className="fas fa-star text-sm"></i>
                 </div>
                 <span className="font-semibold text-[0.95rem]">Benefícios</span>
+              </div>
+              <i className="fas fa-chevron-right text-[10px] opacity-30 group-hover:opacity-100"></i>
+            </a>
+            <a href="#funcionalidades" className="flex items-center justify-between p-4 rounded-xl text-gray-700 hover:bg-[#36b37e]/5 hover:text-[#36b37e] transition-all group" onClick={() => setIsMobileMenuOpen(false)}>
+              <div className="flex items-center gap-4">
+                <div className="w-8 h-8 rounded-lg bg-gray-50 flex items-center justify-center group-hover:bg-[#36b37e]/10">
+                  <i className="fas fa-tools text-sm"></i>
+                </div>
+                <span className="font-semibold text-[0.95rem]">Funcionalidades</span>
+              </div>
+              <i className="fas fa-chevron-right text-[10px] opacity-30 group-hover:opacity-100"></i>
+            </a>
+            <a href="#conectividade" className="flex items-center justify-between p-4 rounded-xl text-gray-700 hover:bg-[#36b37e]/5 hover:text-[#36b37e] transition-all group" onClick={() => setIsMobileMenuOpen(false)}>
+              <div className="flex items-center gap-4">
+                <div className="w-8 h-8 rounded-lg bg-gray-50 flex items-center justify-center group-hover:bg-[#36b37e]/10">
+                  <i className="fas fa-link text-sm"></i>
+                </div>
+                <span className="font-semibold text-[0.95rem]">Conectividade</span>
               </div>
               <i className="fas fa-chevron-right text-[10px] opacity-30 group-hover:opacity-100"></i>
             </a>
