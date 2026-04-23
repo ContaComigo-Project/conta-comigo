@@ -30,7 +30,6 @@ export default function Login() {
         title: "Login realizado!",
         description: "Redirecionando para a aplicação...",
       });
-      // In a real app we would navigate to dashboard here
     }, 1500);
   };
 

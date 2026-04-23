@@ -15,16 +15,16 @@ export function Toaster() {
   return (
     <ToastProvider>
       {toasts.map(function ({ id, title, description, action, variant, ...props }, index) {
-        const Icon = variant === "destructive" 
-          ? AlertCircle 
-          : variant === "success" 
-            ? CheckCircle2 
+        const Icon = variant === "destructive"
+          ? AlertCircle
+          : variant === "success"
+            ? CheckCircle2
             : Info;
 
         return (
-          <Toast 
-            key={id} 
-            variant={variant} 
+          <Toast
+            key={id}
+            variant={variant}
             {...props}
             style={{
               position: 'absolute',
@@ -32,7 +32,6 @@ export function Toaster() {
               right: 0,
               width: '100%',
               zIndex: 100 - index,
-              // CSS Variables for stacking
               "--index": index,
               "--offset": `${index * 8}px`,
               "--hover-offset": `${index * 85}px`,
