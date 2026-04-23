@@ -17,7 +17,7 @@ export default function Header() {
       <nav className="py-4 px-4 w-full max-w-[1200px] mx-auto">
         <div className="flex items-center justify-between">
           <Link to="/" className="flex items-center gap-2 font-bold text-[1.125rem]">
-            <img src="/assets/logos/logo.png" alt="ContaComigo Logo" className="w-12 h-12 object-contain" />
+            <img src="/assets/brand/icone-conta-comigo.png" alt="ContaComigo Logo" className="w-12 h-12 object-contain" />
             <span>
               <span className="text-[#36b37e]">Conta</span>
               <span className="text-[#001b42]">Comigo</span>
@@ -70,7 +70,7 @@ export default function Header() {
       <aside className={`fixed top-0 right-0 h-[100dvh] w-full sm:w-[320px] bg-white shadow-[-10px_0_30px_rgba(0,0,0,0.1)] z-[1050] p-0 transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] md:hidden flex flex-col ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
         <div className="flex items-center justify-between p-6 border-b border-gray-100 bg-white">
           <div className="flex items-center gap-2 font-bold text-xl">
-            <img src="/assets/logos/logo.png" alt="ContaComigo Logo" className="w-8 h-8 object-contain" />
+            <img src="/assets/brand/icone-conta-comigo.png" alt="ContaComigo Logo" className="w-8 h-8 object-contain" />
             <span>
               <span className="text-[#36b37e]">Conta</span>
               <span className="text-[#001b42]">Comigo</span>

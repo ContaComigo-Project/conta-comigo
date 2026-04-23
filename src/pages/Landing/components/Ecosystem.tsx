@@ -1,17 +1,32 @@
+import nubankLogo from '../../../assets/banks/logo-nubank.png';
+import itauLogo from '../../../assets/banks/logo-itau.png';
+import bradescoLogo from '../../../assets/banks/logo-bradesco.png';
+import santanderLogo from '../../../assets/banks/logo-santander.png';
+import btgLogo from '../../../assets/banks/logo-btg-pactual.png';
+import banrisulLogo from '../../../assets/banks/logo-banrisul.png';
+import openFinanceLogo from '../../../assets/banks/logo-open-finance.png';
+
 export default function Ecosystem() {
   const banks = [
-    { name: 'Nubank', color: 'text-gray-400 hover:text-[#8A05BE]' },
-    { name: 'Itaú', color: 'text-gray-400 hover:text-[#EC7000]' },
-    { name: 'Inter', color: 'text-gray-400 hover:text-[#FF7A00]' },
-    { name: 'Bradesco', color: 'text-gray-400 hover:text-[#CC092F]' },
-    { name: 'Santander', color: 'text-gray-400 hover:text-[#EC0000]' },
-    { name: 'BTG Pactual', color: 'text-gray-400 hover:text-[#001b42]' },
+    { name: 'Nubank', logo: nubankLogo },
+    { name: 'Itaú', logo: itauLogo },
+    { name: 'Bradesco', logo: bradescoLogo },
+    { name: 'Santander', logo: santanderLogo },
+    { name: 'BTG Pactual', logo: btgLogo },
+    { name: 'Banrisul', logo: banrisulLogo },
   ];
 
   return (
     <section id="conectividade" className="py-24 bg-white overflow-hidden">
       <div className="w-full max-w-[1200px] mx-auto px-4 text-center">
-        <div className="mb-16">
+        <div className="mb-16 flex flex-col items-center">
+          <div className="mb-8">
+            <img 
+              src={openFinanceLogo} 
+              alt="Open Finance Brasil" 
+              className="h-16 w-auto object-contain opacity-90"
+            />
+          </div>
           <h2 className="text-3xl font-bold text-[#001b42] mb-4">
             Tudo Conectado via Open Finance
           </h2>
@@ -26,13 +41,18 @@ export default function Ecosystem() {
           <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>
           <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
 
-          <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16 opacity-40 hover:opacity-100 transition-opacity duration-500">
+          <div className="flex flex-wrap justify-center items-center gap-6 md:gap-12 opacity-60 hover:opacity-100 transition-opacity duration-500">
             {banks.map((bank) => (
               <div 
                 key={bank.name} 
-                className={`text-2xl md:text-3xl font-black tracking-tighter transition-all duration-300 grayscale hover:grayscale-0 cursor-default select-none ${bank.color}`}
+                className="w-28 md:w-36 h-12 flex items-center justify-center grayscale hover:grayscale-0 transition-all duration-300 transform hover:scale-110 cursor-pointer"
+                title={bank.name}
               >
-                {bank.name}
+                <img 
+                  src={bank.logo} 
+                  alt={bank.name} 
+                  className="max-w-full max-h-full object-contain"
+                />
               </div>
             ))}
           </div>

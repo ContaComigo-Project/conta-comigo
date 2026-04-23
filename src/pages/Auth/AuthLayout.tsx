@@ -11,7 +11,7 @@ export default function AuthLayout() {
             <span>Voltar</span>
           </Link>
           <div className="flex items-center gap-2 font-bold text-xl">
-            <img src="/assets/logos/logo.png" alt="ContaComigo Logo" className="w-8 h-8 object-contain" />
+            <img src="/assets/brand/icone-conta-comigo.png" alt="ContaComigo Logo" className="w-8 h-8 object-contain" />
             <span>
               <span className="text-[#36b37e]">Conta</span>
               <span className="text-[#001b42]">Comigo</span>
