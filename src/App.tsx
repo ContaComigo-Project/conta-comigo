@@ -1,11 +1,27 @@
-export default function App() {
+import React from 'react';
+import Header from './components/landing/Header';
+import Hero from './components/landing/Hero';
+import Benefits from './components/landing/Benefits';
+import Features from './components/landing/Features';
+import FAQ from './components/landing/FAQ';
+import CTA from './components/landing/CTA';
+import Footer from './components/landing/Footer';
+
+function App() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-50 p-4">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold tracking-tight text-cc-blue sm:text-6xl mb-4">
-          Conta Comigo <span className="text-cc-green">V2</span>
-        </h1>
-      </div>
-    </div>
-  )
+    <>
+      <Header />
+      <main>
+        <Hero />
+        <Benefits />
+        <Features />
+        <FAQ />
+        <CTA />
+      </main>
+      <Footer />
+      {/* Back to Top Button can be implemented here if needed later */}
+    </>
+  );
 }
+
+export default App;
