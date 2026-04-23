@@ -1,21 +1,29 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+  }, [isMobileMenuOpen]);
+
   return (
     <header className="fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-[10px] border-b border-[#36b37e]/10 z-50 transition-all duration-150">
-      <nav className="py-6 py-4 px-4 w-full max-w-[1200px] mx-auto">
+      <nav className="py-4 px-4 w-full max-w-[1200px] mx-auto">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2 font-bold text-[1.125rem]">
+          <Link to="/" className="flex items-center gap-2 font-bold text-[1.125rem]">
             <img src="/assets/logos/logo.png" alt="ContaComigo Logo" className="w-12 h-12 object-contain" />
             <span>
               <span className="text-[#36b37e]">Conta</span>
               <span className="text-[#001b42]">Comigo</span>
             </span>
-          </div>
-          
+          </Link>
+
           <div className="hidden md:flex gap-7">
             <a href="#beneficios" className="font-medium text-gray-700 transition duration-150 relative group hover:text-[#36b37e]">
               Benefícios
@@ -32,8 +40,8 @@ export default function Header() {
             <Link to="/register" className="px-4 py-[0.225rem] text-[0.7875rem] font-medium bg-gradient-primary text-white rounded-md shadow-md transition duration-150 hover:-translate-y-[2px] hover:shadow-lg inline-flex items-center justify-center">Cadastro</Link>
           </div>
 
-          <button 
-            className="md:hidden flex flex-col justify-between w-8 h-6 bg-transparent border-none cursor-pointer relative z-[1050]" 
+          <button
+            className={`md:hidden flex flex-col justify-between w-8 h-6 bg-transparent border-none cursor-pointer relative z-[1051] transition-opacity duration-300 ${isMobileMenuOpen ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
             aria-label="Menu"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
@@ -45,16 +53,14 @@ export default function Header() {
       </nav>
 
       {/* Mobile Sidebar Overlay */}
-      {isMobileMenuOpen && (
-        <div 
-          className="fixed inset-0 bg-black/50 z-[1040] md:hidden transition-opacity" 
-          onClick={() => setIsMobileMenuOpen(false)}
-        ></div>
-      )}
+      <div
+        className={`fixed inset-0 bg-black/50 z-[1040] md:hidden transition-all duration-300 ${isMobileMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+        onClick={() => setIsMobileMenuOpen(false)}
+      ></div>
 
       {/* Mobile Sidebar */}
-      <div className={`fixed top-0 right-0 h-full w-[280px] bg-white shadow-2xl z-[1050] p-6 transition-transform duration-300 md:hidden flex flex-col ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
-        <div className="flex items-center justify-between mb-8 pb-4 border-b border-gray-100">
+      <aside className={`fixed top-0 right-0 h-[100dvh] w-full sm:w-[320px] bg-white shadow-[-10px_0_30px_rgba(0,0,0,0.1)] z-[1050] p-0 transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] md:hidden flex flex-col ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+        <div className="flex items-center justify-between p-6 border-b border-gray-100 bg-white">
           <div className="flex items-center gap-2 font-bold text-xl">
             <img src="/assets/logos/logo.png" alt="ContaComigo Logo" className="w-8 h-8 object-contain" />
             <span>
@@ -62,31 +68,47 @@ export default function Header() {
               <span className="text-[#001b42]">Comigo</span>
             </span>
           </div>
-          <button className="text-gray-500 hover:text-red-500 transition-colors" onClick={() => setIsMobileMenuOpen(false)}>
+          <button
+            className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-50 text-gray-400 hover:text-red-500 hover:bg-red-50 transition-all duration-200"
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
             <i className="fas fa-times text-xl"></i>
           </button>
         </div>
-        
-        <nav className="flex flex-col gap-2 flex-grow">
-          <a href="#beneficios" className="flex items-center gap-3 p-3 rounded-lg text-gray-700 hover:bg-gray-50 hover:text-[#36b37e] transition-colors" onClick={() => setIsMobileMenuOpen(false)}>
-            <i className="fas fa-star w-5 text-center"></i>
-            <span className="font-medium">Benefícios</span>
-          </a>
-          <a href="#faq" className="flex items-center gap-3 p-3 rounded-lg text-gray-700 hover:bg-gray-50 hover:text-[#36b37e] transition-colors" onClick={() => setIsMobileMenuOpen(false)}>
-            <i className="fas fa-question-circle w-5 text-center"></i>
-            <span className="font-medium">FAQ</span>
-          </a>
-        </nav>
 
-        <div className="flex flex-col gap-3 mt-auto">
-          <Link to="/login" className="w-full py-3 border-2 border-[#36b37e] text-[#36b37e] rounded-lg font-medium text-center hover:bg-[#36b37e] hover:text-white transition-colors flex items-center justify-center gap-2">
-            <i className="fas fa-sign-in-alt"></i> Login
-          </Link>
-          <Link to="/register" className="w-full py-3 bg-gradient-primary text-white rounded-lg font-medium text-center shadow-md hover:-translate-y-1 hover:shadow-lg transition-all flex items-center justify-center gap-2">
-            <i className="fas fa-user-plus"></i> Cadastro
-          </Link>
+        <div className="flex flex-col p-6 flex-grow overflow-y-auto">
+          <nav className="flex flex-col gap-1 mb-8">
+            <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-3 mb-2">Navegação</span>
+            <a href="#beneficios" className="flex items-center justify-between p-4 rounded-xl text-gray-700 hover:bg-[#36b37e]/5 hover:text-[#36b37e] transition-all group" onClick={() => setIsMobileMenuOpen(false)}>
+              <div className="flex items-center gap-4">
+                <div className="w-8 h-8 rounded-lg bg-gray-50 flex items-center justify-center group-hover:bg-[#36b37e]/10">
+                  <i className="fas fa-star text-sm"></i>
+                </div>
+                <span className="font-semibold text-[0.95rem]">Benefícios</span>
+              </div>
+              <i className="fas fa-chevron-right text-[10px] opacity-30 group-hover:opacity-100"></i>
+            </a>
+            <a href="#faq" className="flex items-center justify-between p-4 rounded-xl text-gray-700 hover:bg-[#36b37e]/5 hover:text-[#36b37e] transition-all group" onClick={() => setIsMobileMenuOpen(false)}>
+              <div className="flex items-center gap-4">
+                <div className="w-8 h-8 rounded-lg bg-gray-50 flex items-center justify-center group-hover:bg-[#36b37e]/10">
+                  <i className="fas fa-question-circle text-sm"></i>
+                </div>
+                <span className="font-semibold text-[0.95rem]">FAQ</span>
+              </div>
+              <i className="fas fa-chevron-right text-[10px] opacity-30 group-hover:opacity-100"></i>
+            </a>
+          </nav>
+
+          <div className="mt-auto pt-6 border-t border-gray-100 flex flex-col gap-4">
+            <Link to="/login" className="w-full py-4 border-2 border-[#36b37e] text-[#36b37e] rounded-xl font-bold text-center hover:bg-[#36b37e] hover:text-white transition-all flex items-center justify-center gap-3 active:scale-95" onClick={() => setIsMobileMenuOpen(false)}>
+              <i className="fas fa-sign-in-alt"></i> Login na plataforma
+            </Link>
+            <Link to="/register" className="w-full py-4 bg-gradient-primary text-white rounded-xl font-bold text-center shadow-[0_10px_20px_rgba(54,179,126,0.2)] hover:-translate-y-1 hover:shadow-[0_15px_25px_rgba(54,179,126,0.3)] transition-all flex items-center justify-center gap-3 active:scale-95" onClick={() => setIsMobileMenuOpen(false)}>
+              <i className="fas fa-user-plus"></i> Abrir conta grátis
+            </Link>
+          </div>
         </div>
-      </div>
+      </aside>
     </header>
   );
 }

@@ -5,6 +5,7 @@ import Features from './components/Features';
 import FAQ from './components/FAQ';
 import CTA from './components/CTA';
 import Footer from './components/Footer';
+import BackToTop from './components/BackToTop';
 
 export default function Landing() {
   return (
@@ -18,6 +19,7 @@ export default function Landing() {
         <CTA />
       </main>
       <Footer />
+      <BackToTop />
     </>
   );
 }
