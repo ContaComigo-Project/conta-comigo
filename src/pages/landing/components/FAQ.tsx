@@ -18,6 +18,10 @@ const faqsList = [
     answer: 'Oferecemos um plano gratuito com funcionalidades básicas e planos premium com recursos avançados como relatórios detalhados, alertas personalizados e suporte prioritário.',
   },
   {
+    question: 'Como a Inteligência Artificial utiliza os meus dados?',
+    answer: 'A IA do ContaComigo analisa seu histórico financeiro de forma estritamente privada para gerar insights e categorizar transações. Seus dados são protegidos por criptografia de ponta, cumprem rigorosamente a LGPD e nunca são compartilhados ou utilizados para treinar modelos públicos.',
+  },
+  {
     question: 'Como posso cancelar minha conta?',
     answer: 'Você pode cancelar sua conta a qualquer momento através das configurações da plataforma. Todos os seus dados serão removidos conforme nossa política de privacidade.',
   },
@@ -35,12 +39,12 @@ export default function FAQ() {
       <div className="w-full max-w-[1200px] mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-6 text-[#001b42]">Perguntas Frequentes</h2>
-          <p className="text-lg text-gray-500 max-w-[40rem] mx-auto">
+          <p className="text-lg text-gray-500 max-w-160 mx-auto">
             Tire suas dúvidas sobre o ContaComigo
           </p>
         </div>
 
-        <div className="max-w-[50rem] mx-auto">
+        <div className="max-w-200 mx-auto">
           {faqsList.map((faq, index) => {
             const isOpen = openIndex === index;
             return (
@@ -54,7 +58,7 @@ export default function FAQ() {
                   <i className={`fas fa-chevron-down transition-transform duration-150 ${isOpen ? 'rotate-180' : ''}`}></i>
                 </button>
                 <div 
-                  className={`px-8 text-gray-500 leading-relaxed overflow-hidden transition-all duration-300 ${isOpen ? 'max-h-[15rem] pb-6 opacity-100' : 'max-h-0 opacity-0'}`}
+                  className={`px-8 text-gray-500 leading-relaxed overflow-hidden transition-all duration-300 ${isOpen ? 'max-h-60 pb-6 opacity-100' : 'max-h-0 opacity-0'}`}
                 >
                   <p>{faq.answer}</p>
                 </div>

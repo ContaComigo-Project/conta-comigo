@@ -10,9 +10,9 @@ const benefitsData = [
     description: 'Gráficos interativos e relatórios detalhados para entender seus hábitos financeiros.',
   },
   {
-    icon: 'fas fa-robot',
-    title: 'Categorização Inteligente',
-    description: 'Despesas organizadas automaticamente por palavras-chave, sem complicações.',
+    icon: 'fas fa-magic',
+    title: 'Limpador Semântico por IA',
+    description: 'Chega de nomes confusos na fatura. Nossa Inteligência Artificial decodifica códigos bancários complexos e categoriza suas despesas automaticamente de forma clara.',
   },
   {
     icon: 'fas fa-shield-alt',
@@ -20,14 +20,14 @@ const benefitsData = [
     description: 'Criptografia de ponta e conformidade com LGPD para proteger seus dados financeiros.',
   },
   {
-    icon: 'fas fa-graduation-cap',
-    title: 'Educação Financeira',
-    description: 'Dicas personalizadas e insights para melhorar sua saúde financeira continuamente.',
+    icon: 'fas fa-heartbeat',
+    title: 'Diagnóstico de Saúde Financeira',
+    description: 'Receba relatórios e insights gerados por IA baseados no seu histórico de gastos real, mostrando caminhos práticos e personalizados para começar a poupar.',
   },
   {
-    icon: 'fas fa-mobile-alt',
-    title: 'Acesso Multiplataforma',
-    description: 'Interface responsiva que funciona perfeitamente em qualquer dispositivo.',
+    icon: 'fas fa-comments',
+    title: 'Consultor Financeiro 24/7',
+    description: 'Converse direto com nosso Chatbot Educativo integrado. Tire dúvidas sobre investimentos, inflação ou valide se uma compra cabe no seu orçamento.',
   },
 ];
 
@@ -39,7 +39,7 @@ export default function Benefits() {
           <h2 className="text-3xl md:text-4xl font-bold mb-6 text-[#001b42]">
             Por que escolher o ContaComigo?
           </h2>
-          <p className="text-lg text-gray-500 max-w-[40rem] mx-auto">
+          <p className="text-lg text-gray-500 max-w-160 mx-auto">
             Descubra como nossa plataforma pode transformar sua relação com o dinheiro
           </p>
         </div>

@@ -5,7 +5,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-12 lg:gap-8 mb-16">
           <div className="lg:col-span-2">
             <div className="flex items-center gap-2 mb-6">
-              <img src="/assets/logos/logo.png" alt="ContaComigo Logo" className="w-8 h-8 filter brightness-0 invert" />
+              <img src="/assets/brand/icone-conta-comigo.png" alt="ContaComigo Logo" className="w-8 h-8 filter brightness-0 invert" />
               <span className="text-xl font-bold">ContaComigo</span>
             </div>
             <p className="text-white/80 mb-6 leading-relaxed">
