@@ -3,15 +3,21 @@ import Landing from '../pages/landing/Landing';
 import AuthLayout from '../pages/auth/AuthLayout';
 import Login from '../pages/auth/login/Login';
 import Register from '../pages/auth/register/Register';
+import DashboardLayout from '../pages/dashboard/DashboardLayout';
+import Overview from '../pages/dashboard/overview/Overview';
 
 export function AppRoutes() {
   return (
     <Routes>
       <Route path="/" element={<Landing />} />
-      
+
       <Route element={<AuthLayout />}>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+      </Route>
+
+      <Route path="/dashboard" element={<DashboardLayout />}>
+        <Route index element={<Overview />} />
       </Route>
 
       <Route path="*" element={<Navigate to="/" />} />
