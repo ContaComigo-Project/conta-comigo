@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { AnimatedButton } from '../../../components/ui/AnimatedButton';
 
 export default function Hero() {
   const [displayValue, setDisplayValue] = useState(0);
@@ -55,13 +56,9 @@ export default function Hero() {
                 O ContaComigo une o ecossistema real do Open Finance através da infraestrutura da Pluggy à Inteligência Artificial para limpar seu extrato automaticamente, prever seu saldo e guiar suas decisões de economia e investimento.
               </p>
               <div className="flex gap-4 flex-wrap justify-center md:justify-start">
-                <Link to="/register" className="px-6 py-3 md:px-8 md:py-4 text-base md:text-lg font-medium bg-gradient-primary text-white rounded-md shadow-md transition-all duration-150 hover:-translate-y-1 hover:shadow-lg inline-flex items-center group overflow-hidden relative">
-                  <div className="absolute top-0 -left-full w-full h-full bg-linear-to-r from-transparent via-white/20 to-transparent transition-all duration-500 group-hover:left-full"></div>
-                  <span className="relative z-10 flex items-center">
-                    Comece Agora
-                    <i className="fas fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"></i>
-                  </span>
-                </Link>
+                <AnimatedButton to="/register" size="lg" icon={<i className="fas fa-arrow-right"></i>}>
+                  Comece Agora
+                </AnimatedButton>
                 <a href="#beneficios" className="px-6 py-3 md:px-8 md:py-4 text-base md:text-lg font-medium bg-transparent border-2 border-[#001b42] text-[#001b42] rounded-md transition-all duration-150 hover:bg-[#001b42] hover:text-white inline-flex items-center">
                   Saiba Mais
                 </a>
