@@ -81,6 +81,7 @@ function InsightCard({ insight, isActive }: { insight: AIInsight; isActive: bool
         <AnimatedButton
           size="sm"
           id={`ai-insight-cta-${insight.id}`}
+          to={insight.ctaRoute}
           icon={<ArrowRight size={15} strokeWidth={2.2} />}
         >
           {insight.ctaLabel}
