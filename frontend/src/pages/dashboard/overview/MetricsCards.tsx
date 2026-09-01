@@ -1,5 +1,5 @@
 import { Wallet, TrendingDown, BarChart3, TrendingUp, TrendingDown as TrendDown } from 'lucide-react';
-import { mockMetrics, type Metric } from '../../../data/dashboard.mock';
+import { mockMetrics, type Metric } from '../../../mocks';
 import { useCountUp } from '../../../hooks/use-count-up';
 
 const ICONS: Record<Metric['icon'], React.ReactNode> = {
@@ -37,7 +37,7 @@ function MetricCard({ metric }: { metric: Metric }) {
       id={`metric-card-${metric.id}`}
       className={`relative overflow-hidden rounded-2xl p-5 ${
         metric.highlight
-          ? 'bg-gradient-to-br from-[#0a6d42] to-[#36b37e] text-white shadow-md shadow-[#36b37e]/20'
+          ? 'bg-linear-to-br from-cc-dark-green to-cc-green text-white shadow-md shadow-cc-green/20'
           : 'bg-white border border-slate-100 shadow-sm'
       }`}
     >

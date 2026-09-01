@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Music2 } from 'lucide-react';
-import { mockSpendingCategories } from '../../../data/dashboard.mock';
+import { mockSpendingCategories } from '../../../mocks';
 
 function ChartBar({
   category,

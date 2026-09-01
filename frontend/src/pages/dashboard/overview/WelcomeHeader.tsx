@@ -1,5 +1,5 @@
 import { Bell } from 'lucide-react';
-import { mockUser } from '../../../data/dashboard.mock';
+import { mockUser } from '../../../mocks';
 
 function formatDate(): string {
   const date = new Intl.DateTimeFormat('pt-BR', {

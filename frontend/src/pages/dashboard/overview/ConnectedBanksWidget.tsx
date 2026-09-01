@@ -1,5 +1,5 @@
 import { Plus } from 'lucide-react';
-import { mockConnectedBanks, type ConnectedBank } from '../../../data/dashboard.mock';
+import { mockConnectedBanks, type ConnectedBank } from '../../../mocks';
 
 function StatusIndicator({ status }: { status: ConnectedBank['status'] }) {
   if (status === 'active') {
@@ -23,7 +23,7 @@ export default function ConnectedBanksWidget() {
         </div>
         <button
           id="banks-widget-add"
-          className="w-8 h-8 flex items-center justify-center rounded-xl border border-dashed border-[#36b37e] text-[#36b37e] hover:bg-emerald-50 transition-colors"
+          className="w-8 h-8 flex items-center justify-center rounded-xl border border-dashed border-cc-green text-cc-green hover:bg-emerald-50 transition-colors"
           aria-label="Conectar novo banco"
         >
           <Plus size={16} strokeWidth={2} />
@@ -57,7 +57,7 @@ export default function ConnectedBanksWidget() {
 
       <div className="pt-3 border-t border-slate-100 flex items-center justify-between">
         <span className="text-xs text-slate-400 font-medium">Total consolidado</span>
-        <span className="text-sm font-bold text-[#0a6d42]">
+        <span className="text-sm font-bold text-cc-dark-green">
           R$ {total.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
         </span>
       </div>

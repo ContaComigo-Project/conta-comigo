@@ -1,5 +1,6 @@
+import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
-import { mockTransactions, type Transaction } from '../../../data/dashboard.mock';
+import { mockTransactions, type Transaction } from '../../../mocks';
 
 function BankBadge({ name, color }: { name: string; color: string }) {
   return (
@@ -56,13 +57,14 @@ export default function RecentActivity() {
           <p className="text-[0.72rem] text-slate-400 mt-0.5">Via Open Finance · {transactions.length} transações</p>
         </div>
 
-        <button
+        <Link
           id="recent-activity-view-all"
-          className="text-[0.75rem] font-semibold text-[#36b37e] hover:text-[#0a6d42] hover:underline underline-offset-2 transition-colors flex items-center gap-1"
+          to="/dashboard/expenses#transacoes"
+          className="text-[0.75rem] font-semibold text-cc-green hover:text-cc-dark-green hover:underline underline-offset-2 transition-colors flex items-center gap-1"
         >
           Ver todas
           <ArrowRight size={13} strokeWidth={2.2} />
-        </button>
+        </Link>
       </div>
 
       <ul className="divide-y divide-slate-50">
