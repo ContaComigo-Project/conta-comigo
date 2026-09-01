@@ -225,9 +225,9 @@ Referência GitHub:
       <br><sub>Desenvolvedor Full Stack</sub>
     </td>
     <td align="center">
-      <a href="https://github.com/CaputiDev" title="Iago Caputi no GitHub">
-        <img src="https://github.com/CaputiDev.png" width="100px;" alt="Foto do Iago Rodrigues Caputi"/><br>
-        <sub><strong>Iago R. Caputi</strong></sub>
+      <a href="https://github.com/CaputiDev" title="Thiago Caputi no GitHub">
+        <img src="https://github.com/CaputiDev.png" width="100px;" alt="Foto do Thiago Rodrigues Caputi"/><br>
+        <sub><strong>Thiago R. Caputi</strong></sub>
       </a>
       <br><sub>Desenvolvedor Full Stack</sub>
     </td>
