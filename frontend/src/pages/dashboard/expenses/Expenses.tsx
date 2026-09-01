@@ -18,6 +18,9 @@ import {
   ListTree,
   LayoutGrid,
   ArrowUpRight,
+  Download,
+  FileText,
+  FileSpreadsheet,
 } from 'lucide-react';
 import {
   BUDGET_BY_MONTH,
@@ -113,6 +116,7 @@ export default function Expenses() {
   const [animate, setAnimate] = useState(false);
   const [filter, setFilter] = useState<'todas' | BudgetStatus>('todas');
   const [showSuggestions, setShowSuggestions] = useState(true);
+  const [exportOpen, setExportOpen] = useState(false);
 
   const transactionsSectionRef = useRef<HTMLDivElement | null>(null);
 
@@ -281,7 +285,7 @@ export default function Expenses() {
             <button
               type="button"
               onClick={() => setViewMode('single')}
-              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[0.78rem] font-semibold transition-all ${
+              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[0.78rem] font-semibold transition-all cursor-pointer ${
                 viewMode === 'single'
                   ? 'bg-[#36b37e] text-white shadow-sm'
                   : 'text-slate-600 hover:bg-slate-50'
@@ -293,7 +297,7 @@ export default function Expenses() {
             <button
               type="button"
               onClick={() => setViewMode('history')}
-              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[0.78rem] font-semibold transition-all ${
+              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[0.78rem] font-semibold transition-all cursor-pointer ${
                 viewMode === 'history'
                   ? 'bg-[#36b37e] text-white shadow-sm'
                   : 'text-slate-600 hover:bg-slate-50'
@@ -302,6 +306,82 @@ export default function Expenses() {
               <ListTree size={14} strokeWidth={2} />
               Histórico (todos os meses)
             </button>
+          </div>
+
+          <div className="relative">
+            <button
+              type="button"
+              onClick={() => setExportOpen((v) => !v)}
+              className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 hover:border-slate-300 transition-all cursor-pointer"
+            >
+              <Download size={14} strokeWidth={2} />
+              <span className="text-[0.78rem] font-semibold text-slate-700">
+                Exportar
+              </span>
+              <ChevronDown size={12} strokeWidth={2.2} className={`transition-transform ${exportOpen ? 'rotate-180' : ''}`} />
+            </button>
+
+            {exportOpen && (
+              <>
+                <div
+                  className="fixed inset-0 z-10"
+                  onClick={() => setExportOpen(false)}
+                  aria-hidden="true"
+                />
+                <div className="absolute right-0 top-full mt-2 z-20 w-56 rounded-2xl bg-white border border-slate-200 shadow-xl p-1.5 overflow-hidden animate-fade-in">
+                  <div className="px-3 py-2 border-b border-slate-100 mb-1">
+                    <p className="text-[0.65rem] font-bold uppercase tracking-wider text-slate-400">
+                      Formato do relatório
+                    </p>
+                    <p className="text-[0.72rem] text-slate-500 mt-0.5">
+                      {viewMode === 'history'
+                        ? 'Inclui todos os meses (Jan–Jun 2026)'
+                        : `${selectedMonthInfo.fullLabel} · Categorias + Transações`}
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setExportOpen(false)}
+                    className="w-full flex items-center gap-2.5 px-2.5 py-2 rounded-xl hover:bg-slate-50 transition-colors cursor-pointer text-left"
+                  >
+                    <div className="w-8 h-8 rounded-lg bg-red-50 flex items-center justify-center shrink-0">
+                      <FileText size={15} strokeWidth={2} className="text-red-600" />
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <p className="text-[0.8rem] font-semibold text-slate-800 leading-tight">
+                        Documento PDF
+                      </p>
+                      <p className="text-[0.65rem] text-slate-400 mt-0.5">
+                        Layout formatado para impressão
+                      </p>
+                    </div>
+                    <span className="text-[0.65rem] font-bold text-slate-300 shrink-0">
+                      .pdf
+                    </span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setExportOpen(false)}
+                    className="w-full flex items-center gap-2.5 px-2.5 py-2 rounded-xl hover:bg-slate-50 transition-colors cursor-pointer text-left"
+                  >
+                    <div className="w-8 h-8 rounded-lg bg-emerald-50 flex items-center justify-center shrink-0">
+                      <FileSpreadsheet size={15} strokeWidth={2} className="text-emerald-700" />
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <p className="text-[0.8rem] font-semibold text-slate-800 leading-tight">
+                        Planilha CSV
+                      </p>
+                      <p className="text-[0.65rem] text-slate-400 mt-0.5">
+                        Dados brutos para Excel / Sheets
+                      </p>
+                    </div>
+                    <span className="text-[0.65rem] font-bold text-slate-300 shrink-0">
+                      .csv
+                    </span>
+                  </button>
+                </div>
+              </>
+            )}
           </div>
         </div>
       </header>
@@ -314,7 +394,7 @@ export default function Expenses() {
                 type="button"
                 onClick={goPrev}
                 disabled={isAtStart}
-                className="w-9 h-9 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-600 hover:bg-slate-100 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                className="w-9 h-9 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-600 hover:bg-slate-100 disabled:opacity-40 disabled:cursor-not-allowed transition-colors cursor-pointer"
                 aria-label="Mês anterior"
               >
                 <ChevronLeft size={17} strokeWidth={2.2} />
@@ -330,7 +410,7 @@ export default function Expenses() {
                       key={m.slug}
                       type="button"
                       onClick={() => setSelectedMonth(m.slug)}
-                      className={`group flex flex-col items-center gap-1.5 px-3 py-2 rounded-xl border transition-all ${
+                      className={`group flex flex-col items-center gap-1.5 px-3 py-2 rounded-xl border transition-all cursor-pointer ${
                         isSelected
                           ? `bg-linear-to-br from-cc-dark-green to-cc-green text-white border-transparent shadow-md shadow-cc-green/20`
                           : `bg-white border-slate-100 text-slate-600 hover:border-slate-200 hover:shadow-sm`
@@ -362,7 +442,7 @@ export default function Expenses() {
                 type="button"
                 onClick={goNext}
                 disabled={isAtEnd}
-                className="w-9 h-9 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-600 hover:bg-slate-100 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                className="w-9 h-9 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-600 hover:bg-slate-100 disabled:opacity-40 disabled:cursor-not-allowed transition-colors cursor-pointer"
                 aria-label="Próximo mês"
               >
                 <ChevronRight size={17} strokeWidth={2.2} />
@@ -471,7 +551,7 @@ export default function Expenses() {
                 <button
                   type="button"
                   onClick={() => setFilter('todas')}
-                  className={`text-[0.72rem] font-semibold px-2.5 py-1.5 rounded-lg transition-all border ${
+                  className={`text-[0.72rem] font-semibold px-2.5 py-1.5 rounded-lg transition-all border cursor-pointer ${
                     filter === 'todas'
                       ? 'bg-slate-900 text-white border-slate-900'
                       : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50'
@@ -488,7 +568,7 @@ export default function Expenses() {
                       key={f}
                       type="button"
                       onClick={() => setFilter(f)}
-                      className={`text-[0.72rem] font-semibold px-2.5 py-1.5 rounded-lg transition-all flex items-center gap-1.5 border ${
+                      className={`text-[0.72rem] font-semibold px-2.5 py-1.5 rounded-lg transition-all flex items-center gap-1.5 border cursor-pointer ${
                         active ? `${m.badgeClass} ring-2 ${m.ringClass}` : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50'
                       }`}
                     >
@@ -502,7 +582,7 @@ export default function Expenses() {
                 <button
                   type="button"
                   onClick={() => setShowSuggestions((v) => !v)}
-                  className="inline-flex items-center gap-1 text-[0.7rem] font-semibold text-slate-600"
+                  className="inline-flex items-center gap-1 text-[0.7rem] font-semibold text-slate-600 cursor-pointer"
                 >
                   {showSuggestions ? (
                     <ChevronUp size={12} strokeWidth={2.2} />
@@ -588,7 +668,7 @@ export default function Expenses() {
                         onClick={() =>
                           editingIds.has(c.id) ? cancelEdit(c.id) : enterEdit(c.id, c.limit)
                         }
-                        className={`w-7 h-7 rounded-lg flex items-center justify-center transition-colors ${
+                        className={`w-7 h-7 rounded-lg flex items-center justify-center transition-colors cursor-pointer ${
                           editingIds.has(c.id)
                             ? 'bg-slate-100 text-slate-600 hover:bg-slate-200'
                             : 'bg-slate-50 text-slate-400 hover:bg-slate-100 hover:text-slate-700'
@@ -640,7 +720,7 @@ export default function Expenses() {
                             <button
                               type="button"
                               onClick={() => nudgeDraft(c.id, c.limit, -50)}
-                              className="w-7 h-7 text-slate-600 hover:bg-slate-50 font-bold"
+                              className="w-7 h-7 text-slate-600 hover:bg-slate-50 font-bold cursor-pointer"
                             >
                               −
                             </button>
@@ -653,7 +733,7 @@ export default function Expenses() {
                             <button
                               type="button"
                               onClick={() => nudgeDraft(c.id, c.limit, 50)}
-                              className="w-7 h-7 text-slate-600 hover:bg-slate-50 font-bold"
+                              className="w-7 h-7 text-slate-600 hover:bg-slate-50 font-bold cursor-pointer"
                             >
                               +
                             </button>
@@ -692,7 +772,7 @@ export default function Expenses() {
                       <button
                         type="button"
                         onClick={() => applySuggested(c.id, c.suggestedLimit)}
-                        className="w-full mb-2 flex items-center justify-between gap-2 px-2 py-1.5 rounded-lg bg-cc-green/5 border border-cc-green/15 hover:bg-cc-green/10 text-[0.68rem] font-semibold text-cc-dark-green transition-colors"
+                        className="w-full mb-2 flex items-center justify-between gap-2 px-2 py-1.5 rounded-lg bg-cc-green/5 border border-cc-green/15 hover:bg-cc-green/10 text-[0.68rem] font-semibold text-cc-dark-green transition-colors cursor-pointer"
                       >
                         <span className="flex items-center gap-1">
                           <Sparkles size={11} strokeWidth={2.2} />
@@ -707,7 +787,7 @@ export default function Expenses() {
                         <button
                           type="button"
                           onClick={() => applyDraft(c.id)}
-                          className="flex-1 inline-flex items-center justify-center gap-1 px-2 py-1.5 rounded-lg bg-linear-to-br from-cc-dark-green to-cc-green text-white text-[0.7rem] font-semibold hover:shadow-sm transition-all"
+                          className="flex-1 inline-flex items-center justify-center gap-1 px-2 py-1.5 rounded-lg bg-linear-to-br from-cc-dark-green to-cc-green text-white text-[0.7rem] font-semibold hover:shadow-sm transition-all cursor-pointer"
                         >
                           <Check size={12} strokeWidth={2.4} />
                           Aplicar
@@ -715,7 +795,7 @@ export default function Expenses() {
                         <button
                           type="button"
                           onClick={() => cancelEdit(c.id)}
-                          className="flex-1 inline-flex items-center justify-center gap-1 px-2 py-1.5 rounded-lg bg-white border border-slate-200 text-slate-700 text-[0.7rem] font-semibold hover:bg-slate-50 transition-colors"
+                          className="flex-1 inline-flex items-center justify-center gap-1 px-2 py-1.5 rounded-lg bg-white border border-slate-200 text-slate-700 text-[0.7rem] font-semibold hover:bg-slate-50 transition-colors cursor-pointer"
                         >
                           <X size={12} strokeWidth={2.4} />
                           Cancelar
@@ -1045,7 +1125,7 @@ function HistoricalOverview({
                     key={issue.slug + idx}
                     type="button"
                     onClick={() => onSelectMonth(issue.slug as MonthSlug)}
-                    className="w-full flex items-center justify-between gap-2 p-2.5 rounded-xl bg-red-50/60 border border-red-100 hover:bg-red-50 hover:shadow-sm transition-all group"
+                    className="w-full flex items-center justify-between gap-2 p-2.5 rounded-xl bg-red-50/60 border border-red-100 hover:bg-red-50 hover:shadow-sm transition-all group cursor-pointer"
                   >
                     <div className="flex items-center gap-2 min-w-0">
                       <div className="w-7 h-7 rounded-lg bg-red-100 flex items-center justify-center text-red-700 shrink-0">
@@ -1107,7 +1187,7 @@ function HistoricalOverview({
                 key={s.slug}
                 type="button"
                 onClick={() => onSelectMonth(s.slug)}
-                className="group flex flex-col items-center gap-3 focus:outline-none"
+                className="group flex flex-col items-center gap-3 focus:outline-none cursor-pointer"
               >
                 <div className="relative w-full h-48 flex items-end justify-center">
                   <div
