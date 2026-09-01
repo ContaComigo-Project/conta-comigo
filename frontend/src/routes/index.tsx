@@ -5,6 +5,7 @@ import Login from '../pages/auth/login/Login';
 import Register from '../pages/auth/register/Register';
 import DashboardLayout from '../pages/dashboard/DashboardLayout';
 import Overview from '../pages/dashboard/overview/Overview';
+import Expenses from '../pages/dashboard/expenses/Expenses';
 
 export function AppRoutes() {
   return (
@@ -18,6 +19,7 @@ export function AppRoutes() {
 
       <Route path="/dashboard" element={<DashboardLayout />}>
         <Route index element={<Overview />} />
+        <Route path="expenses" element={<Expenses />} />
       </Route>
 
       <Route path="*" element={<Navigate to="/" />} />
