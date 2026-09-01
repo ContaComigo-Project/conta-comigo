@@ -34,25 +34,18 @@
 
 ## Descrição
 
-No cenário socioeconômico brasileiro contemporâneo, a ausência de educação
-financeira atua como uma barreira invisível que aprofunda as desigualdades e
-limita o potencial de ascensão das famílias. O **ContaComigo** foi idealizado
-como uma plataforma de transformação social e tecnológica voltada ao
-empoderamento financeiro do cidadão comum.
+O **ContaComigo** é uma Prova de Conceito (PoC) de aplicação web voltada à
+democratização da gestão financeira pessoal no Brasil. Integra dados bancários
+via **Open Finance (regulamentado pelo BACEN)** com **Inteligência Artificial
+generativa (Google Gemini)** para oferecer orçamento semáforo inteligente,
+diagnósticos e educação financeira — sem exercer aconselhamento regulamentado
+por CVM/Bacen.
 
-O objetivo central é oferecer uma **Prova de Conceito (PoC)** de uma aplicação
-web responsiva que consolide os dados bancários do usuário em um ambiente
-único (via **Open Finance Brasileiro**, regulamentado pelo Banco Central) e, a
-partir disso, utilize **Inteligência Artificial generativa** como um motor
-ativo de **diagnóstico, educação e orientação financeira** — sem jamais
-exercer aconselhamento financeiro regulamentado.
+A aplicação foi submetida, homologada e apresentada na **MOCITEC (Mostra de
+Ciências e Tecnologias do IFSul Campus Charqueadas)**. Para o texto completo
+do resumo submetido à mostra, acesse:
 
-A relevância do ContaComigo reside em sua capacidade de transmutar extratos
-bancários brutos em conhecimento prático, auxiliando diretamente na superação
-do analfabetismo financeiro.
-
-**Resumo completo submetido e homologado na MOCITEC:**
-[docs/RESUMO-MOCITEC.md](./docs/RESUMO-MOCITEC.md)
+**[Resumo homologado (MOCITEC) — docs/RESUMO-MOCITEC.md](./docs/RESUMO-MOCITEC.md)**
 
 ### Principais funcionalidades (PoC em andamento)
 

@@ -1,114 +1,229 @@
-<h1 align="center"> Conta Comigo </h1>
+<h1 align="center">ContaComigo — Frontend</h1>
 
 <p align="center">
-<img src="http://img.shields.io/static/v1?label=STATUS&message=EM%20DESENVOLVIMENTO&color=GREEN&style=for-the-badge"/>
-<img src="https://img.shields.io/badge/.NET-512BD4?style=for-the-badge&logo=dotnet&logoColor=white"/>
-<img src="https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white"/>
-<img src="https://img.shields.io/badge/Docker-2CA5E0?style=for-the-badge&logo=docker&logoColor=white"/>
+  <img src="http://img.shields.io/static/v1?label=STATUS&message=EM%20DESENVOLVIMENTO&color=GREEN&style=for-the-badge"/>
+  <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB"/>
+  <img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white"/>
+  <img src="https://img.shields.io/badge/TailwindCSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white"/>
 </p>
 
+> Interface web do **ContaComigo** — plataforma de democratização da gestão
+> financeira pessoal via Open Finance e Inteligência Artificial. PoC
+> homologada e apresentada na MOCITEC / IFSul Campus Charqueadas.
+
+---
+
 ## Descrição
-Descreva brevemente o objetivo do projeto, suas funcionalidades principais e qualquer outra informação relevante.
 
-## Tecnologias Utilizadas
+O frontend do ContaComigo é uma **Single Page Application** construída com
+**React 19 + Vite + TypeScript**, utilizando **TailwindCSS 4** para
+estilização. Consome (futuramente) a API REST do backend (NestJS + Pluggy
+Sandbox + Google Gemini) para consolidação de dados bancários via Open
+Finance, diagnósticos por IA e orçamento semáforo inteligente.
 
-- `<tecnologia_1>`
-- `<tecnologia_2>`
-- `<tecnologia_3>`
+---
 
-## Demonstração
+## Tecnologias
 
-Veja o <nome_do_projeto> em ação! Confira nossa demonstração completa das principais funcionalidades:
+| Tecnologia | Versão | Função |
+|---|---|---|
+| React | 19.2 | Biblioteca de UI (com React Compiler habilitado) |
+| TypeScript | 6.0 | Tipagem estática (`strict: true`) |
+| Vite | 8.0 | Bundler e dev server |
+| TailwindCSS | 4.2 | Estilização utilitária + `@theme` inline (sem `config.js`) |
+| React Router DOM | 7.14 | Roteamento client-side + Nested Routes |
+| React Hook Form | 7.73 | Gerenciamento de formulários |
+| Zod | 4.3 | Validação de schemas e tipagem inferida |
+| Lucide React | 1.8 | Ícones SVG |
+| Font Awesome | 6.x | Ícones de categorias (orçamento) |
+| Radix UI Toast | 1.2 | Feedback ao usuário |
+| `clsx` / `tailwind-merge` / `cva` | — | Composição de classes CSS |
 
-<div align="center">
-  <img src="public/videos/demo.gif" alt="Demonstração do <nome_do_projeto>" width="800">
-</div>
+---
 
-> **Quer ver mais detalhes?** [Clique aqui para visualizar em tamanho completo](public/videos/demo.gif)
+## Pré-requisitos
 
-> **Nota**: A demonstração pode demorar alguns segundos para carregar devido ao tamanho do arquivo. Por favor, aguarde!
+- Node.js **22+**
+- pnpm **9+**
+- (Opcional, backend futuro) Backend NestJS rodando em
+  `http://localhost:3001` (veja [`/backend`](../backend/README.md))
 
-## Como Executar o Projeto
+---
 
-### Pré-requisitos
+## Instalação e Execução
 
-- `<pré-requisito_1>`
-- `<pré-requisito_2>`
-- `<pré-requisito_3>`
+### 1. Clone o repositório
 
-### Instalação
+```bash
+git clone https://github.com/Raullize/conta-comigo.git
+cd conta-comigo/frontend
+```
 
-1. **Clone o repositório**
-   ```bash
-   $ git clone <url-do-repositorio>
-   $ cd <nome_do_projeto>
-   ```
+### 2. Instale as dependências
 
-2. **Instale as dependências**
-   ```bash
-   $ npm install
-   ```
+```bash
+pnpm install
+```
 
-3. **Configure as variáveis de ambiente**
-   ```bash
-   $ cp .env.example .env
-   ```
-   Edite o arquivo `.env` com suas configurações.
+### 3. (Opcional) Configure as variáveis de ambiente
 
-4. Entre outras configurações necessárias...
+```bash
+cp .env.example .env.local
+```
 
-## Documentação
-- [Documentação do Banco de Dados](./docs/README.md)
-- [Documentação da API](./docs/README.md)
-- [Documentação do Front-end](./docs/README.md)
+Edite o arquivo `.env.local` conforme necessário (hoje 100% mockado, sem
+chaves obrigatórias).
 
-## Contribuindo
+### 4. Inicie o servidor de desenvolvimento
 
-Se você deseja contribuir para este projeto, siga estas etapas:
+```bash
+pnpm run dev
+```
 
-1. Bifurque este repositório.
-2. Crie um branch: `git checkout -b <nome_branch>`.
-3. Faça suas alterações e confirme-as: `git commit -m '<mensagem_commit>'`
-4. Envie para o branch original: `git push origin <nome_do_projeto> / <local>`
-5. Crie a solicitação de pull.
+Acesse [http://localhost:5173](http://localhost:5173) no navegador.
 
-Como alternativa, consulte a documentação do GitHub em [como criar uma solicitação pull](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request).
+---
 
-## Contribuidores
+## Variáveis de Ambiente
 
-Agradecemos às seguintes pessoas que contribuíram para este projeto:
+Crie um arquivo `.env.local` na raiz de `frontend/` baseado no
+`.env.example` (quando disponibilizado):
 
-<table>
-  <tr>
-    <td align="center">
-      <a href="https://github.com/Raullize" title="Perfil no GitHub">
-        <img src="https://github.com/Raullize.png" width="100px;" alt="Foto do Raul Lize Teixeira no GitHub"/><br>
-        <sub>
-          <b>Raul Lize Teixeira</b>
-        </sub>
-      </a>
-    </td>
-    <td align="center">
-      <a href="https://github.com/unclebob" title="Perfil no GitHub">
-        <img src="https://github.com/unclebob.png" width="100px;" alt="Foto do Robert C. Martin no GitHub"/><br>
-        <sub>
-          <b>Robert C. Martin</b>
-        </sub>
-      </a>
-    </td>
-    <td align="center">
-      <a href="https://github.com/torvalds" title="Perfil no GitHub">
-        <img src="https://github.com/torvalds.png" width="100px;" alt="Foto do Linus Torvalds no GitHub"/><br>
-        <sub>
-          <b>Linus Torvalds</b>
-        </sub>
-      </a>
-    </td>
-  </tr>
-</table>
+| Variável | Padrão | Descrição |
+|---|---|---|
+| `VITE_API_BASE_URL` | `http://localhost:3001/api` | URL base da API REST do backend NestJS |
+| `VITE_NODE_ENV` | `development` | Ambiente de execução |
 
-## Licença
+> **Atenção:** O frontend opera em modo 100% mockado enquanto o backend
+> não for integrado. Nenhuma variável é obrigatória hoje.
 
-Esse projeto está sob licença. Veja o arquivo [LICENÇA](LICENSE.md) para mais detalhes.
+---
 
-> Você pode atualizar esse documento e implementar as mudanças conforme necessário. Seja adicionando, removendo ou atualizando as informações existentes.
+## Scripts Disponíveis
+
+```bash
+pnpm run dev        # Servidor de desenvolvimento com HMR (5173)
+pnpm run build      # Build de produção (tsc -b strict + vite build)
+pnpm run preview    # Preview da build de produção (4173)
+pnpm run lint       # Linting (ESLint 9 + Tailwind suggestCanonicalClasses)
+```
+
+---
+
+## Estrutura de Pastas
+
+```
+frontend/
+├── public/                      # Assets estáticos
+│   └── assets/
+│       ├── brand/               # Logotipo e ícone da marca
+│       ├── images/              # Demo GIF
+│       └── videos/              # Demo MP4
+│
+└── src/
+    ├── App.tsx                  # App shell + providers (Router, Toaster)
+    ├── main.tsx                 # Entry point (StrictMode + createRoot)
+    ├── index.css                # TailwindCSS v4 + @theme tokens cc-*
+    │
+    ├── assets/
+    │   ├── banks/*.png          # Logos de instituições Pluggy
+    │   └── conta-comigo/*       # Ícones / logos internos da marca
+    │
+    ├── components/
+    │   └── ui/                  # Componentes base reutilizáveis
+    │       ├── AnimatedButton   # Botão primário (hover shine + Link opcional)
+    │       ├── toaster.tsx      # Container global de toasts
+    │       └── toast.tsx        # Toast individual (variantes)
+    │
+    ├── validations/
+    │   └── auth.schema.ts       # Zod schemas: LoginSchema / RegisterSchema
+    │
+    ├── utils/
+    │   ├── formatters.ts        # formatBRL() · formatCPF() · unformatCPF()
+    │   └── password.ts          # evaluatePasswordStrength()
+    │
+    ├── hooks/
+    │   ├── use-toast.ts         # Sistema Radix Toast
+    │   ├── use-count-up.ts      # Contador numérico animado
+    │   └── use-mounted-animation.ts  # Animação mount com delay
+    │
+    ├── mocks/                   # ⭐ Single Source of Truth dos dados (PoC)
+    │   ├── index.ts             # Barrel central de imports
+    │   ├── user.mock.ts
+    │   ├── metrics.mock.ts
+    │   ├── ai-insights.mock.ts
+    │   ├── spending-categories.mock.ts
+    │   ├── transactions.mock.ts
+    │   ├── connected-banks.mock.ts
+    │   ├── budget.mock.ts       # BUDGET_STATUS_META + resolveStatus()
+    │   └── chat.mock.ts
+    │
+    ├── pages/
+    │   ├── landing/             # Landing pública
+    │   │   ├── Landing.tsx
+    │   │   └── components/*     # Hero, Features, Benefits, FAQ, CTA,
+    │   │                          Header, Footer, BackToTop, Ecosystem,
+    │   │                          LandingChatMock
+    │   │
+    │   ├── auth/                # Autenticação
+    │   │   ├── AuthLayout.tsx   # Layout compartilhado login/register
+    │   │   ├── login/Login.tsx
+    │   │   └── register/Register.tsx
+    │   │
+    │   └── dashboard/           # Área logada
+    │       ├── DashboardLayout.tsx  # Sidebar (md:) + BottomDock (mobile)
+    │       ├── components/      # Sidebar · BottomDock · AIChatWidget
+    │       ├── overview/        # Rota "/" · Bento Grid xl:12 cols
+    │       │   ├── Overview.tsx
+    │       │   ├── WelcomeHeader / ConnectedBanksWidget / MetricsCards
+    │       │   ├── BudgetAtAGlance / SpendingChart
+    │       │   ├── BudgetProgressChart / RecentActivity
+    │       │   └── AIInsightPanel
+    │       │
+    │       └── expenses/        # Rota "/expenses" · SPLIT 9 módulos
+    │           ├── Expenses.tsx       # Compose apenas (~241 LOC)
+    │           ├── hooks/use-expenses-state.ts
+    │           └── components/
+    │               ├── SegmentedViewToggle (UI kit)
+    │               ├── ExportDropdown (UI kit)
+    │               ├── MonthPicker
+    │               ├── QuickFilterBar
+    │               ├── CategoryCard
+    │               ├── TransactionsListView (paginação 5/pág)
+    │               └── HistoricalOverview (6 meses)
+    │
+    ├── routes/
+    │   └── index.tsx            # AppRoutes() · "/" · /login · /register
+    │                              · /dashboard (Outlet Overview/Expenses)
+    │
+    └── (backend futuro) services/  # Axios + services por entidade
+```
+
+> **Para um aprofundamento na arquitetura client-side (Roteamento, Layouts,
+> Tokens Tailwind, Semáforo Orçamentário e LGPD), consulte a documentação
+> detalhada: [Arquitetura do Frontend](../docs/FRONTEND_ARCHITECTURE.md)**
+
+---
+
+## Autenticação
+
+Na PoC atual (MOCITEC) a autenticação é **visual/local** (mock). Quando o
+backend NestJS for integrado:
+
+- Utilizará **JWT** (access + refresh token) armazenado em `localStorage`.
+- Cliente HTTP (Axios / Fetch wrapper) injeta automaticamente o token em
+  cada requisição via interceptor (`Authorization: Bearer <token>`).
+- Rotas `/dashboard*` serão envolvidas por `<ProtectedRoute />` no
+  `DashboardLayout` (guarda + redirect para `/login`).
+
+---
+
+## Contribuição
+
+1. Faça um **fork** do projeto.
+2. Crie uma branch (`git checkout -b feature/MinhaFeature`).
+3. Commit suas mudanças (**Conventional Commits**: `feat(dashboard): …`,
+   `fix(expenses): …`, `refactor(core): …`, `docs(frontend): …`).
+4. Push para a branch (`git push origin feature/MinhaFeature`).
+5. Abra um **Pull Request** contra a branch `develop`.
