@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { AlertTriangle, CheckCircle2, XCircle, Sparkles, ArrowUpRight } from 'lucide-react';
+import { AlertTriangle, CheckCircle2, XCircle, Sparkles, ArrowRight } from 'lucide-react';
 import { mockBudgetCategories, type BudgetStatus } from '../../../mocks';
 import { Link } from 'react-router-dom';
 
@@ -65,10 +65,10 @@ export default function BudgetAtAGlance() {
         </div>
         <Link
           to="/dashboard/expenses"
-          className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-cc-green/10 text-cc-dark-green hover:bg-cc-green/20 transition-colors text-[0.7rem] font-semibold"
+          className="text-[0.75rem] font-semibold text-cc-green hover:text-cc-dark-green hover:underline underline-offset-2 transition-colors flex items-center gap-1"
         >
           Ajustar limites
-          <ArrowUpRight size={12} strokeWidth={2.2} />
+          <ArrowRight size={13} strokeWidth={2.2} />
         </Link>
       </div>
 

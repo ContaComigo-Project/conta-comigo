@@ -23,7 +23,7 @@ export default function ConnectedBanksWidget() {
         </div>
         <button
           id="banks-widget-add"
-          className="w-8 h-8 flex items-center justify-center rounded-xl border border-dashed border-cc-green text-cc-green hover:bg-emerald-50 transition-colors"
+          className="w-8 h-8 flex items-center justify-center rounded-xl border border-dashed border-cc-green text-cc-green hover:bg-emerald-50 transition-colors cursor-pointer"
           aria-label="Conectar novo banco"
         >
           <Plus size={16} strokeWidth={2} />

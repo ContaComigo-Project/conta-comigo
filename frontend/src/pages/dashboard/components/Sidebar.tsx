@@ -75,7 +75,7 @@ export default function Sidebar() {
       <div className="px-3 pb-6 border-t border-slate-100 pt-4">
         <button
           id="sidebar-user-menu"
-          className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-slate-50 transition-colors group"
+          className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-slate-50 transition-colors group cursor-pointer"
           aria-label="Menu do usuário"
         >
           <div

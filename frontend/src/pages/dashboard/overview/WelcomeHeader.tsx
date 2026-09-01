@@ -54,7 +54,7 @@ export default function WelcomeHeader() {
         <button
           id="dashboard-notifications-btn"
           aria-label="Notificações"
-          className="relative w-9 h-9 flex items-center justify-center rounded-xl bg-white border border-slate-200 text-slate-500 hover:text-slate-800 hover:border-slate-300 hover:shadow-sm transition-all duration-200"
+          className="relative w-9 h-9 flex items-center justify-center rounded-xl bg-white border border-slate-200 text-slate-500 hover:text-slate-800 hover:border-slate-300 hover:shadow-sm transition-all duration-200 cursor-pointer"
         >
           <Bell size={17} strokeWidth={1.8} />
           <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-[#36b37e] border-2 border-white" />

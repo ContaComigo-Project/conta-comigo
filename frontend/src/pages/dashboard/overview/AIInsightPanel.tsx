@@ -129,7 +129,7 @@ export default function AIInsightPanel() {
               id={`ai-insight-tab-${i}`}
               onClick={() => handleDotClick(i)}
               aria-label={`Insight ${i + 1}`}
-              className={`rounded-full transition-all duration-300 ${
+              className={`rounded-full transition-all duration-300 cursor-pointer ${
                 i === activeIndex
                   ? 'w-5 h-1.5 bg-[#36b37e]'
                   : 'w-1.5 h-1.5 bg-slate-200 hover:bg-slate-300'
