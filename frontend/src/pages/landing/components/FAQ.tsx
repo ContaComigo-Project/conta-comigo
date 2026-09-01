@@ -15,7 +15,7 @@ const faqsList = [
   },
   {
     question: 'O ContaComigo é gratuito?',
-    answer: 'Oferecemos um plano gratuito com funcionalidades básicas e planos premium com recursos avançados como relatórios detalhados, alertas personalizados e suporte prioritário.',
+    answer: 'Sim! No lançamento, o ContaComigo é 100% gratuito para todas as funcionalidades que você vê — Open Finance, diagnósticos de IA, orçamento por categoria, simulações de compra e exportação de relatórios. Não há planos pagos nem limites escondidos.',
   },
   {
     question: 'Como a Inteligência Artificial utiliza os meus dados?',

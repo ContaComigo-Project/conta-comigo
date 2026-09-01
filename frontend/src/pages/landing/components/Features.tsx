@@ -2,20 +2,20 @@ import LandingChatMock from './LandingChatMock';
 
 const featuresList = [
   {
-    title: 'Metas Financeiras',
-    description: 'Defina e acompanhe suas metas de economia e investimento',
+    title: 'Visão Consolidada Multi-banco',
+    description: 'Saldo consolidado, despesas do mês e orçamento total de múltiplos bancos em 3 cards com indicadores de tendência percentual mês a mês.',
   },
   {
-    title: 'Simulador de Metas Realista',
-    description: 'A IA analisa sua renda consolidada de múltiplos bancos e calcula prazos e aportes reais para você alcançar seus objetivos sem passar sufoco.',
+    title: 'Simulador de Compra Orçamentária',
+    description: 'Informe o valor do item desejado. A IA analisa seu orçamento e calcula múltiplos cenários de parcelamento mostrando o impacto real no mês e status de viabilidade.',
   },
   {
     title: 'Relatórios Detalhados',
-    description: 'Exporte relatórios em PDF e CSV para análise completa',
+    description: 'Exporte relatórios do orçamento e transações em PDF e CSV diretamente das telas de Despesas e Visão Geral.',
   },
   {
-    title: 'Mapa de Calor de Gastos',
-    description: 'Visualize os maiores gastos por categoria com gráficos de temperatura.',
+    title: 'Insights IA com Barra de Confiança',
+    description: '3 tipos de diagnósticos automáticos — Oportunidades de economia, Alertas de risco e Metas recomendadas — todos com barra de confiança percentual e auto-rotação.',
   },
 ];
 

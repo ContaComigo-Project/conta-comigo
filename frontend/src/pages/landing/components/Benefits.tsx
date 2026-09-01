@@ -10,9 +10,9 @@ const benefitsData = [
     description: 'Gráficos interativos e relatórios detalhados para entender seus hábitos financeiros.',
   },
   {
-    icon: 'fas fa-magic',
-    title: 'Limpador Semântico por IA',
-    description: 'Chega de nomes confusos na fatura. Nossa Inteligência Artificial decodifica códigos bancários complexos e categoriza suas despesas automaticamente de forma clara.',
+    icon: 'fas fa-traffic-light',
+    title: 'Orçamento com Semáforo Inteligente',
+    description: 'Defina limites por categoria e receba alertas visuais Verde / Amarelo / Vermelho em tempo real (70% / 90% do limite), com edição inline sem sair da tela. Histórico de meses anteriores incluso.',
   },
   {
     icon: 'fas fa-shield-alt',

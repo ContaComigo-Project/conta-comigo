@@ -52,7 +52,7 @@ export default function Hero() {
               <span className="text-gradient-primary">Multiplicando suas escolhas.</span>
             </h1>
             <p className="text-lg leading-relaxed mb-10 text-gray-500">
-              O ContaComigo une o ecossistema real do Open Finance através da infraestrutura da Pluggy à Inteligência Artificial para limpar seu extrato automaticamente, prever seu saldo e guiar suas decisões de economia e investimento.
+              O ContaComigo une o ecossistema real do Open Finance aprovado pelo Banco Central à Inteligência Artificial para consolidar suas finanças, validar compras no seu orçamento e gerar insights personalizados baseados no seu gasto real.
             </p>
             <div className="flex gap-4 flex-wrap justify-center md:justify-start">
               <AnimatedButton to="/register" size="lg" icon={<i className="fas fa-arrow-right"></i>}>
