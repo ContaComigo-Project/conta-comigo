@@ -34,7 +34,7 @@ const benefitsData = [
 export default function Benefits() {
   return (
     <section id="beneficios" className="py-24 bg-white">
-      <div className="w-full max-w-[1200px] mx-auto px-4">
+      <div className="w-full max-w-300 mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-6 text-[#001b42]">
             Por que escolher o ContaComigo?

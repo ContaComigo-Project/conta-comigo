@@ -44,7 +44,7 @@ export default function Hero() {
         </div>
       </div>
 
-      <div className="w-full max-w-[1200px] mx-auto px-4 relative z-10">
+      <div className="w-full max-w-300 mx-auto px-4 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-20 items-center py-12 md:py-20 lg:py-24">
           <div className="max-w-140 mx-auto md:mx-0 text-center md:text-left">
             <h1 className="text-4xl md:text-5xl font-bold leading-tight mb-6 text-[#001b42]">

@@ -5,9 +5,6 @@ import {
   X,
   MessageCircle,
   Sparkles,
-  CheckCircle2,
-  AlertTriangle,
-  XCircle,
   Maximize,
   Minimize,
   Info,
@@ -16,41 +13,20 @@ import {
   mockChatMessages,
   generateMockReply,
   CHAT_SUGGESTION_CHIPS,
+  BUDGET_STATUS_META,
+  resolveStatus,
   type ChatMessage,
   type BudgetStatus,
   type BudgetStatusData,
   type PurchasePlanData,
 } from '../../../mocks';
+import { formatBRL } from '../../../utils/formatters';
 
-const STATUS_META: Record<BudgetStatus, {
-  label: string;
-  Icon: typeof CheckCircle2;
-  badgeClass: string;
-  barClass: string;
-}> = {
-  verde: {
-    label: 'Baixo impacto',
-    Icon: CheckCircle2,
-    badgeClass: 'bg-emerald-100 text-emerald-700 border-emerald-200',
-    barClass: 'bg-emerald-500',
-  },
-  amarelo: {
-    label: 'Atenção',
-    Icon: AlertTriangle,
-    badgeClass: 'bg-amber-100 text-amber-700 border-amber-200',
-    barClass: 'bg-amber-400',
-  },
-  vermelho: {
-    label: 'Alto impacto',
-    Icon: XCircle,
-    badgeClass: 'bg-red-100 text-red-700 border-red-200',
-    barClass: 'bg-red-500',
-  },
+const CHAT_STATUS_LABELS: Record<BudgetStatus, string> = {
+  verde: 'Baixo impacto',
+  amarelo: 'Atenção',
+  vermelho: 'Alto impacto',
 };
-
-function formatBRL(value: number) {
-  return value.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-}
 
 function formatTime(d: Date) {
   return d.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
@@ -58,8 +34,8 @@ function formatTime(d: Date) {
 
 function BudgetStatusCard({ data }: { data: BudgetStatusData }) {
   const pct = (data.totalSpent / data.totalLimit) * 100;
-  const statusMeta: BudgetStatus = pct <= 70 ? 'verde' : pct <= 90 ? 'amarelo' : 'vermelho';
-  const meta = STATUS_META[statusMeta];
+  const statusMeta: BudgetStatus = resolveStatus(pct);
+  const meta = BUDGET_STATUS_META[statusMeta];
   return (
     <div className="rounded-xl border border-slate-100 bg-linear-to-br from-white to-slate-50 p-3.5 w-full">
       <div className="flex items-center justify-between mb-2.5">
@@ -74,7 +50,7 @@ function BudgetStatusCard({ data }: { data: BudgetStatusData }) {
         </div>
         <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[0.6rem] font-bold uppercase border ${meta.badgeClass}`}>
           <meta.Icon size={10} strokeWidth={2.4} />
-          {meta.label}
+          {CHAT_STATUS_LABELS[statusMeta]}
         </span>
       </div>
 
@@ -90,13 +66,13 @@ function BudgetStatusCard({ data }: { data: BudgetStatusData }) {
 
       <div className="flex items-center gap-2 mb-3">
         {(['verde', 'amarelo', 'vermelho'] as BudgetStatus[]).map((s) => {
-          const m = STATUS_META[s];
+          const m = BUDGET_STATUS_META[s];
           const count = data[s];
           return (
             <div key={s} className="flex-1 flex items-center gap-1.5 px-2 py-1 rounded-lg bg-white border border-slate-100">
               <span className={`w-2 h-2 rounded-full ${m.barClass}`} />
               <span className="text-[0.62rem] font-bold text-slate-600 tabular-nums">{count}</span>
-              <span className="text-[0.6rem] text-slate-400">{m.label.slice(0, 6)}</span>
+              <span className="text-[0.6rem] text-slate-400">{CHAT_STATUS_LABELS[s].slice(0, 6)}</span>
             </div>
           );
         })}
@@ -106,8 +82,8 @@ function BudgetStatusCard({ data }: { data: BudgetStatusData }) {
         <p className="text-[0.62rem] font-semibold uppercase tracking-wider text-slate-400">Categorias de atenção</p>
         {data.topAlert.map((t) => {
           const p = (t.spent / t.limit) * 100;
-          const s: BudgetStatus = p <= 70 ? 'verde' : p <= 90 ? 'amarelo' : 'vermelho';
-          const m = STATUS_META[s];
+          const s: BudgetStatus = resolveStatus(p);
+          const m = BUDGET_STATUS_META[s];
           return (
             <div key={t.name} className="flex items-center justify-between gap-2">
               <div className="flex items-center gap-1.5">
@@ -149,7 +125,7 @@ function PurchasePlanCard({ data }: { data: PurchasePlanData }) {
 
       <div className="space-y-2">
         {data.options.map((opt, idx) => {
-          const meta = STATUS_META[opt.status];
+          const meta = BUDGET_STATUS_META[opt.status];
           return (
             <div
               key={opt.id}

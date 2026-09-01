@@ -1,6 +1,64 @@
+import { AlertTriangle, CheckCircle2, XCircle } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 import { mockTransactions, type Transaction } from './transactions.mock';
 
 export type BudgetStatus = 'verde' | 'amarelo' | 'vermelho';
+
+export interface BudgetStatusMeta {
+  label: string;
+  short: string;
+  Icon: LucideIcon;
+  barClass: string;
+  badgeClass: string;
+  ringClass: string;
+  softBg: string;
+  textClass: string;
+  dotClass: string;
+  progressTrackClass: string;
+  progressFillClass: string;
+}
+
+export const BUDGET_STATUS_META: Record<BudgetStatus, BudgetStatusMeta> = {
+  verde: {
+    label: 'Verde',
+    short: 'OK',
+    Icon: CheckCircle2,
+    barClass: 'bg-linear-to-t from-emerald-600 to-emerald-400',
+    badgeClass: 'text-emerald-700 bg-emerald-50 border border-emerald-200',
+    ringClass: 'ring-emerald-200',
+    softBg: 'bg-emerald-50',
+    textClass: 'text-emerald-600',
+    dotClass: 'bg-emerald-500',
+    progressTrackClass: 'from-emerald-50 via-emerald-50 to-slate-50',
+    progressFillClass: 'from-emerald-500 to-emerald-600',
+  },
+  amarelo: {
+    label: 'Atenção',
+    short: 'Atenção',
+    Icon: AlertTriangle,
+    barClass: 'bg-linear-to-t from-amber-500 to-amber-300',
+    badgeClass: 'text-amber-700 bg-amber-50 border border-amber-200',
+    ringClass: 'ring-amber-200',
+    softBg: 'bg-amber-50',
+    textClass: 'text-amber-600',
+    dotClass: 'bg-amber-400',
+    progressTrackClass: 'from-amber-50 via-amber-50 to-slate-50',
+    progressFillClass: 'from-amber-400 to-amber-500',
+  },
+  vermelho: {
+    label: 'Estourado',
+    short: 'Estouro',
+    Icon: XCircle,
+    barClass: 'bg-linear-to-t from-red-600 to-red-400',
+    badgeClass: 'text-red-700 bg-red-50 border border-red-200',
+    ringClass: 'ring-red-200',
+    softBg: 'bg-red-50',
+    textClass: 'text-red-600',
+    dotClass: 'bg-red-500',
+    progressTrackClass: 'from-red-50 via-red-50 to-slate-50',
+    progressFillClass: 'from-red-500 to-red-600',
+  },
+};
 
 export interface BudgetCategory {
   id: string;
@@ -26,6 +84,13 @@ export function resolveStatus(percentage: number): BudgetStatus {
   if (percentage <= BUDGET_RULES.verdeMax) return 'verde';
   if (percentage <= BUDGET_RULES.amareloMax) return 'amarelo';
   return 'vermelho';
+}
+
+export function recomputeCategory(c: BudgetCategory, newLimit: number): BudgetCategory {
+  const limit = Math.max(1, newLimit);
+  const percentage = Math.min(200, +((c.spent / limit) * 100).toFixed(1));
+  const remaining = Math.max(0, +(limit - c.spent).toFixed(2));
+  return { ...c, limit, percentage, remaining, status: resolveStatus(percentage) };
 }
 
 const rawBudgetCategories: Omit<BudgetCategory, 'percentage' | 'status' | 'remaining'>[] = [

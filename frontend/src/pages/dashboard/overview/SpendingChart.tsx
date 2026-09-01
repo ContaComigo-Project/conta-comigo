@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
 import { Music2 } from 'lucide-react';
 import { mockSpendingCategories } from '../../../mocks';
+import { useMountedAnimation } from '../../../hooks/use-mounted-animation';
 
 function ChartBar({
   category,
@@ -38,7 +38,7 @@ function ChartBar({
         <i className={`fas ${category.icon}`} style={{ color: category.color }} />
       </div>
 
-      <span className="text-[0.62rem] font-medium text-slate-400 text-center leading-tight max-w-[48px]">
+      <span className="text-[0.62rem] font-medium text-slate-400 text-center leading-tight max-w-12">
         {category.name.length > 8 ? category.name.slice(0, 7) + '.' : category.name}
       </span>
     </div>
@@ -69,12 +69,7 @@ function CategoryLegend() {
 
 export default function SpendingChart() {
   const maxValue = Math.max(...mockSpendingCategories.map((c) => c.value));
-  const [animate, setAnimate] = useState(false);
-
-  useEffect(() => {
-    const t = setTimeout(() => setAnimate(true), 80);
-    return () => clearTimeout(t);
-  }, []);
+  const animate = useMountedAnimation(80);
 
   return (
     <section aria-label="Mapa de gastos por categoria" className="bg-white border border-slate-100 rounded-2xl shadow-sm p-5">

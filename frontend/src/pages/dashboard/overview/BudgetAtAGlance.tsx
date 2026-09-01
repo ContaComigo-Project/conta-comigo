@@ -1,50 +1,16 @@
-import { useEffect, useState } from 'react';
-import { AlertTriangle, CheckCircle2, XCircle, Sparkles, ArrowRight } from 'lucide-react';
-import { mockBudgetCategories, type BudgetStatus } from '../../../mocks';
+import { Sparkles, ArrowRight } from 'lucide-react';
+import { mockBudgetCategories, BUDGET_STATUS_META, resolveStatus, type BudgetStatus } from '../../../mocks';
 import { Link } from 'react-router-dom';
-
-const STATUS_META: Record<BudgetStatus, {
-  label: string;
-  Icon: typeof CheckCircle2;
-  barClass: string;
-  badgeClass: string;
-}> = {
-  verde: {
-    label: 'Dentro',
-    Icon: CheckCircle2,
-    barClass: 'bg-emerald-500',
-    badgeClass: 'text-emerald-600 bg-emerald-50',
-  },
-  amarelo: {
-    label: 'Atenção',
-    Icon: AlertTriangle,
-    barClass: 'bg-amber-400',
-    badgeClass: 'text-amber-700 bg-amber-50',
-  },
-  vermelho: {
-    label: 'Estourado',
-    Icon: XCircle,
-    barClass: 'bg-red-500',
-    badgeClass: 'text-red-700 bg-red-50',
-  },
-};
-
-function formatBRL(value: number) {
-  return value.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-}
+import { formatBRL } from '../../../utils/formatters';
+import { useMountedAnimation } from '../../../hooks/use-mounted-animation';
 
 export default function BudgetAtAGlance() {
-  const [animate, setAnimate] = useState(false);
-
-  useEffect(() => {
-    const t = setTimeout(() => setAnimate(true), 140);
-    return () => clearTimeout(t);
-  }, []);
+  const animate = useMountedAnimation(140);
 
   const totalSpent = mockBudgetCategories.reduce((s, c) => s + c.spent, 0);
   const totalLimit = mockBudgetCategories.reduce((s, c) => s + c.limit, 0);
   const pct = (totalSpent / totalLimit) * 100;
-  const overallStatus: BudgetStatus = pct <= 70 ? 'verde' : pct <= 90 ? 'amarelo' : 'vermelho';
+  const overallStatus: BudgetStatus = resolveStatus(pct);
 
   const counts = mockBudgetCategories.reduce(
     (acc, c) => ({ ...acc, [c.status]: acc[c.status] + 1 }),
@@ -75,9 +41,9 @@ export default function BudgetAtAGlance() {
       <div className="flex items-center justify-between gap-4 mb-4 p-3 rounded-xl bg-linear-to-br from-slate-50 to-white border border-slate-100">
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-2 mb-1.5">
-            <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[0.6rem] font-bold uppercase ${STATUS_META[overallStatus].badgeClass}`}>
+            <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[0.6rem] font-bold uppercase ${BUDGET_STATUS_META[overallStatus].badgeClass}`}>
               <Sparkles size={9} strokeWidth={2.5} />
-              {STATUS_META[overallStatus].label}
+              {BUDGET_STATUS_META[overallStatus].label}
             </span>
             <span className="text-[0.65rem] text-slate-400">Total consolidado</span>
           </div>
@@ -90,7 +56,7 @@ export default function BudgetAtAGlance() {
         </div>
         <div className="grid grid-cols-3 gap-1 shrink-0">
           {(['verde', 'amarelo', 'vermelho'] as BudgetStatus[]).map((s) => {
-            const m = STATUS_META[s];
+            const m = BUDGET_STATUS_META[s];
             return (
               <div key={s} className="flex flex-col items-center px-2.5 py-1.5 rounded-lg bg-white border border-slate-100">
                 <m.Icon size={12} strokeWidth={2.4} className={m.badgeClass.split(' ')[0]} />
@@ -110,7 +76,7 @@ export default function BudgetAtAGlance() {
                 <div className="absolute left-0 right-0 top-[30%] h-px border-t border-dashed border-amber-200 z-1" />
                 <div className="absolute left-0 right-0 top-[10%] h-px border-t border-dashed border-red-200 z-1" />
                 <div
-                  className={`w-full ${STATUS_META[c.status].barClass} transition-all duration-1200 ease-out rounded-t-sm`}
+                  className={`w-full ${BUDGET_STATUS_META[c.status].barClass} transition-all duration-1200 ease-out rounded-t-sm`}
                   style={{ height: animate ? `${fillPct}%` : '0%' }}
                 />
                 {c.percentage > 100 && (
@@ -129,7 +95,7 @@ export default function BudgetAtAGlance() {
               <div className="text-[0.6rem] font-semibold text-slate-500 leading-tight text-center max-w-14 truncate w-full">
                 {c.name}
               </div>
-              <div className={`text-[0.6rem] font-bold tabular-nums leading-none ${STATUS_META[c.status].badgeClass.split(' ')[0]}`}>
+              <div className={`text-[0.6rem] font-bold tabular-nums leading-none ${BUDGET_STATUS_META[c.status].badgeClass.split(' ')[0]}`}>
                 {c.percentage.toFixed(0)}%
               </div>
             </div>
@@ -141,7 +107,7 @@ export default function BudgetAtAGlance() {
         <div className="pt-3 border-t border-slate-100 space-y-2">
           <p className="text-[0.65rem] font-semibold uppercase tracking-wider text-slate-400">Categorias de atenção</p>
           {alerts.map((a) => {
-            const m = STATUS_META[a.status];
+            const m = BUDGET_STATUS_META[a.status];
             return (
               <div key={a.id} className="flex items-center justify-between gap-2 p-2 rounded-lg bg-slate-50 border border-slate-100">
                 <div className="flex items-center gap-2 min-w-0">

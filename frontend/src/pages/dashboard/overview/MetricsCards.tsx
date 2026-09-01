@@ -1,16 +1,13 @@
 import { Wallet, TrendingDown, BarChart3, TrendingUp, TrendingDown as TrendDown } from 'lucide-react';
 import { mockMetrics, type Metric } from '../../../mocks';
 import { useCountUp } from '../../../hooks/use-count-up';
+import { formatBRL } from '../../../utils/formatters';
 
 const ICONS: Record<Metric['icon'], React.ReactNode> = {
   wallet: <Wallet size={18} strokeWidth={1.7} />,
   'trending-down': <TrendingDown size={18} strokeWidth={1.7} />,
   'bar-chart': <BarChart3 size={18} strokeWidth={1.7} />,
 };
-
-function formatBRL(value: number): string {
-  return value.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-}
 
 function TrendBadge({ trend, label }: { trend: number; label: string }) {
   const isPositive = trend >= 0;

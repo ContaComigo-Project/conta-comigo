@@ -1,47 +1,10 @@
-import { useEffect, useState } from 'react';
-import { AlertTriangle, CheckCircle2, XCircle, TrendingUp, TrendingDown, Sparkles } from 'lucide-react';
-import { mockBudgetCategories, type BudgetCategory, type BudgetStatus } from '../../../mocks';
-
-const STATUS_META: Record<BudgetStatus, {
-  label: string;
-  Icon: typeof CheckCircle2;
-  badgeClass: string;
-  dotClass: string;
-  progressTrackClass: string;
-  progressFillClass: string;
-}> = {
-  verde: {
-    label: 'Verde',
-    Icon: CheckCircle2,
-    badgeClass: 'bg-emerald-100 text-emerald-700',
-    dotClass: 'bg-emerald-500',
-    progressTrackClass: 'from-emerald-50 via-emerald-50 to-slate-50',
-    progressFillClass: 'from-emerald-500 to-emerald-600',
-  },
-  amarelo: {
-    label: 'Atenção',
-    Icon: AlertTriangle,
-    badgeClass: 'bg-amber-100 text-amber-700',
-    dotClass: 'bg-amber-500',
-    progressTrackClass: 'from-amber-50 via-amber-50 to-slate-50',
-    progressFillClass: 'from-amber-400 to-amber-500',
-  },
-  vermelho: {
-    label: 'Excedido',
-    Icon: XCircle,
-    badgeClass: 'bg-red-100 text-red-700',
-    dotClass: 'bg-red-500',
-    progressTrackClass: 'from-red-50 via-red-50 to-slate-50',
-    progressFillClass: 'from-red-500 to-red-600',
-  },
-};
-
-function formatBRL(value: number) {
-  return value.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-}
+import { TrendingUp, TrendingDown, Sparkles } from 'lucide-react';
+import { mockBudgetCategories, BUDGET_STATUS_META, type BudgetCategory, type BudgetStatus } from '../../../mocks';
+import { formatBRL } from '../../../utils/formatters';
+import { useMountedAnimation } from '../../../hooks/use-mounted-animation';
 
 function StatusBadge({ status }: { status: BudgetStatus }) {
-  const meta = STATUS_META[status];
+  const meta = BUDGET_STATUS_META[status];
   return (
     <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[0.65rem] font-bold uppercase tracking-wide ${meta.badgeClass}`}>
       <meta.Icon size={10} strokeWidth={2.4} />
@@ -72,7 +35,7 @@ function MiniHistoryChart({ history, spent }: { history: BudgetCategory['history
 }
 
 function BudgetRow({ category, animate }: { category: BudgetCategory; animate: boolean }) {
-  const meta = STATUS_META[category.status];
+  const meta = BUDGET_STATUS_META[category.status];
   const fillWidth = Math.min(100, category.percentage);
 
   return (
@@ -138,15 +101,15 @@ function BudgetRow({ category, animate }: { category: BudgetCategory; animate: b
         </div>
         <div className="flex items-center justify-between mt-2 text-[0.65rem] text-slate-500">
           <div className="flex items-center gap-1">
-            <span className={`w-1.5 h-1.5 rounded-full ${STATUS_META.verde.dotClass}`} />
+            <span className={`w-1.5 h-1.5 rounded-full ${BUDGET_STATUS_META.verde.dotClass}`} />
             <span>0–70%</span>
           </div>
           <div className="flex items-center gap-1">
-            <span className={`w-1.5 h-1.5 rounded-full ${STATUS_META.amarelo.dotClass}`} />
+            <span className={`w-1.5 h-1.5 rounded-full ${BUDGET_STATUS_META.amarelo.dotClass}`} />
             <span>70–90%</span>
           </div>
           <div className="flex items-center gap-1">
-            <span className={`w-1.5 h-1.5 rounded-full ${STATUS_META.vermelho.dotClass}`} />
+            <span className={`w-1.5 h-1.5 rounded-full ${BUDGET_STATUS_META.vermelho.dotClass}`} />
             <span>{'>'}90%</span>
           </div>
           <div className="flex items-center gap-2 ml-auto">
@@ -194,7 +157,7 @@ function SummaryStrip() {
 
       <div className="flex-1 flex items-center justify-around">
         {(['verde', 'amarelo', 'vermelho'] as BudgetStatus[]).map((s) => {
-          const meta = STATUS_META[s];
+          const meta = BUDGET_STATUS_META[s];
           return (
             <div key={s} className="flex items-center gap-2">
               <div className={`w-9 h-9 rounded-xl flex items-center justify-center ${meta.badgeClass}`}>
@@ -213,12 +176,7 @@ function SummaryStrip() {
 }
 
 export default function BudgetProgressChart() {
-  const [animate, setAnimate] = useState(false);
-
-  useEffect(() => {
-    const t = setTimeout(() => setAnimate(true), 120);
-    return () => clearTimeout(t);
-  }, []);
+  const animate = useMountedAnimation(120);
 
   const sorted = [...mockBudgetCategories].sort((a, b) => {
     const order: Record<BudgetStatus, number> = { vermelho: 0, amarelo: 1, verde: 2 };

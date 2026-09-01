@@ -10,3 +10,10 @@ export function formatCPF(value: string) {
 export function unformat(value: string) {
   return value.replace(/\D/g, '');
 }
+
+export function formatBRL(value: number): string {
+  return value.toLocaleString('pt-BR', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+}
