@@ -1,6 +1,6 @@
 <h1 align="center">
   <img
-    src="https://raw.githubusercontent.com/Raullize/conta-comigo/main/frontend/public/assets/brand/logo-conta-comigo.png"
+    src="./frontend/public/assets/brand/logo-conta-comigo.png"
     alt="ContaComigo"
     width="320"
   />
