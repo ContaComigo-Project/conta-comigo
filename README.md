@@ -164,6 +164,8 @@ copie `.env.example` → `.env` e preencha as chaves de
 
 | Documento | Descrição |
 | :--- | :--- |
+| [Workflow Agêntico](./docs/WORKFLOW-AGENTICO.md) | Guia operacional: como puxar, executar, validar e fechar uma história |
+| [Kanban Oficial](./docs/jira-pessoal/KANBAN-OFICIAL.md) | Fonte única da próxima demanda |
 | [Resumo homologado MOCITEC](./docs/RESUMO-MOCITEC.md) | Texto completo submetido, aprovado e apresentado na Mostra |
 | [Arquitetura Frontend](./docs/FRONTEND_ARCHITECTURE.md) | Estrutura de pastas, rotas, layout, componentes, temas |
 | [Arquitetura Backend](./docs/BACKEND_ARCHITECTURE.md) | NestJS, Pluggy, Gemini / LangChain, persistência |
