@@ -28,5 +28,14 @@ identificadores; elas não os redefinem.
 
 ## Estado atual
 
-Catálogos vazios por decisão do time: os requisitos serão definidos após a
-sessão de spec-driven-development. Ver `docs/spec-driven-development/`.
+Catálogos preenchidos a partir de
+[`SDD-001`](../spec-driven-development/SDD-001-contacomigo-poc.md):
+
+| Catálogo | Itens | Faixa |
+| --- | --- | --- |
+| Requisitos funcionais | 25 | `RF-001` a `RF-025` |
+| Regras de negócio | 23 | `RN-001` a `RN-023` |
+| Requisitos não funcionais | 21 | `RNF-001` a `RNF-021` |
+
+Dois alvos seguem em aberto por decisão pendente do time, marcados como
+_(a calibrar)_ / _(a definir)_ em `RNF-009` e `RNF-016`. Ver seção 7 da `SDD-001`.
