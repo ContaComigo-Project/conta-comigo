@@ -20,10 +20,15 @@ Arquivo: `ENTREGA-[CHAVE]-titulo-em-kebab-case.md`, a partir de
 
 | Data | Chave | Título | Versão | Commit | Tag |
 | --- | --- | --- | --- | --- | --- |
-| 2026-09-01 | [`HT-000`](./ENTREGA-HT-000-fundacao-workflow-agentico.md) | Fundação do workflow agêntico | `v0.1.0` | _(pendente)_ | _(pendente)_ |
-| 2026-09-02 | [`HT-001`](./ENTREGA-HT-001-sdd-inicial.md) | SDD-001 e entendimento inicial | `v0.2.0` | _(pendente)_ | _(pendente)_ |
-| 2026-09-02 | [`HT-002`](./ENTREGA-HT-002-catalogo-rf-rn.md) | Catálogo RF/RN e épico de negócio | `v0.3.0` | _(pendente)_ | _(pendente)_ |
-| 2026-09-02 | [`HT-003`](./ENTREGA-HT-003-catalogo-rnf.md) | Catálogo RNF e épico técnico | `v0.4.0` | _(pendente)_ | _(pendente)_ |
+| 2026-09-01 | [`HT-000`](./ENTREGA-HT-000-fundacao-workflow-agentico.md) | Fundação do workflow agêntico | `v0.1.0` | `1a2f863` | `v0.1.0` |
+| 2026-09-02 | [`HT-001`](./ENTREGA-HT-001-sdd-inicial.md) | SDD-001 e entendimento inicial | `v0.2.0` | `fe1f89b` | `v0.2.0` |
+| 2026-09-02 | [`HT-002`](./ENTREGA-HT-002-catalogo-rf-rn.md) | Catálogo RF/RN e épico de negócio | `v0.3.0` | `96ec972` | `v0.3.0` |
+| 2026-09-02 | [`HT-003`](./ENTREGA-HT-003-catalogo-rnf.md) | Catálogo RNF e épico técnico | `v0.4.0` | `f9ed24f` | `v0.4.0` |
+| 2026-09-02 | `HT-002` `HT-003` | Correção: backlog incorpora o frontend existente | `v0.4.1` | `9c063f7` | `v0.4.1` |
 
-Quatro entregas estão em `Em revisão` aguardando um único ato de fechamento:
-commit semântico por história e tag apontando para o mesmo hash.
+Toda linha acima foi verificada por `scripts/verificar-fechamento.sh`: a tag
+aponta para o mesmo hash do commit de fechamento, e a mensagem cita a chave.
+
+Exceção única: em `HT-000` o commit da estrutura (`5e38950`) é diferente do
+commit de fechamento, porque a estrutura foi versionada antes de a rule de
+commit existir. O motivo está registrado na entrega.

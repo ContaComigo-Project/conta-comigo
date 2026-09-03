@@ -12,8 +12,8 @@ max_lines: 300
 - **Data:** 2026-09-02
 - **Tipo:** Técnica (governança/descoberta)
 - **Versão:** `v0.2.0`
-- **Commit:** _(pendente — aguardando autorização de fechamento)_
-- **Tag:** `v0.2.0` → _(pendente)_
+- **Commit:** `fe1f89b`
+- **Tag:** `v0.2.0` → `fe1f89b`
 
 ## O que foi entregue
 
@@ -43,7 +43,7 @@ histórias.
 | Quebra proposta classifica em HN/HT | Aprovado | §9 |
 | Spec aprovada com data e autores | Aprovado | Cabeçalho |
 | Épico de negócio com visão e personas | Aprovado | `EPICO-NEGOCIO.md` §1 e §3 |
-| Kanban com histórias derivadas em ordem | Aprovado | 28 itens em seis fases |
+| Kanban com histórias derivadas em ordem | Aprovado | 31 itens em seis fases |
 
 ## Evidência de verificação
 
@@ -85,7 +85,7 @@ spec foram corrigidas depois que os catálogos fixaram a numeração final
 | SRE | `sre-agent` | Não aplicável | Sem impacto de ambiente |
 | Segurança | `security-specialist-agent` | Aprovado | Escopo exclui dado bancário real; fronteira de não aconselhamento registrada em §4 e §8 |
 | Arquitetura | `architect-reviewer-agent` | Aprovado | Quebra em histórias respeita dependências; nenhuma decisão de implementação antecipada |
-| Revisão final | `final-reviewer-agent` | Pendente | Aguarda autorização de commit e tag |
+| Revisão final | `final-reviewer-agent` | Aprovado | Fechamento verificado por `scripts/verificar-fechamento.sh v0.2.0` |
 
 ## Decisões tomadas durante a execução
 
@@ -107,6 +107,6 @@ spec foram corrigidas depois que os catálogos fixaram a numeração final
 
 - [x] Documentação criada e coerente
 - [x] `KANBAN-OFICIAL.md` atualizado
-- [ ] Commit semântico contém a chave `HT-001`
-- [ ] Commit não contém arquivos de outra história
-- [ ] Tag `v0.2.0` aponta para o mesmo hash do commit
+- [x] Commit semântico contém a chave `HT-001`
+- [x] Commit não contém arquivos de outra história
+- [x] Tag `v0.2.0` aponta para o mesmo hash do commit

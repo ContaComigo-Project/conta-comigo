@@ -12,8 +12,8 @@ max_lines: 300
 - **Data:** 2026-09-02
 - **Tipo:** Técnica (governança)
 - **Versão:** `v0.3.0`
-- **Commit:** _(pendente — aguardando autorização de fechamento)_
-- **Tag:** `v0.3.0` → _(pendente)_
+- **Commit:** `96ec972`
+- **Tag:** `v0.3.0` → `96ec972`
 
 ## O que foi entregue
 
@@ -79,7 +79,7 @@ os temas, porque são o núcleo de risco do produto e precisam ser lidas juntas.
 | SRE | `sre-agent` | Não aplicável | Sem impacto de ambiente |
 | Segurança | `security-specialist-agent` | Aprovado | `RN-012` a `RN-016` cobrem consentimento, isolamento entre pessoas e exclusão; `RN-017` a `RN-019` fecham a fronteira do não aconselhamento |
 | Arquitetura | `architect-reviewer-agent` | Aprovado | Nenhum RF antecipa implementação; RN são invariantes independentes de interface |
-| Revisão final | `final-reviewer-agent` | Pendente | Aguarda autorização de commit e tag |
+| Revisão final | `final-reviewer-agent` | Aprovado | Fechamento verificado; correção do backlog em `9c063f7` (`v0.4.1`) |
 
 ## Decisões tomadas durante a execução
 
@@ -102,6 +102,7 @@ os temas, porque são o núcleo de risco do produto e precisam ser lidas juntas.
 
 - [x] Documentação criada e coerente
 - [x] `KANBAN-OFICIAL.md` atualizado
-- [ ] Commit semântico contém a chave `HT-002`
-- [ ] Commit não contém arquivos de outra história
-- [ ] Tag `v0.3.0` aponta para o mesmo hash do commit
+- [x] Commit semântico contém a chave `HT-002`
+- [x] Commit não contém arquivos de outra história
+- [x] Tag `v0.3.0` aponta para o mesmo hash do commit
+- [x] Correção posterior (frontend existente) entregue em `v0.4.1` → `9c063f7`

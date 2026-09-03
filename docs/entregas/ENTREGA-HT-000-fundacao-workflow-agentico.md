@@ -13,8 +13,8 @@ max_lines: 300
 - **Tipo:** Técnica
 - **Versão:** `v0.1.0`
 - **Commit da estrutura:** `5e38950` — 50 arquivos, 3.208 linhas
-- **Commit de fechamento:** este documento
-- **Tag:** `v0.1.0` → commit de fechamento
+- **Commit de fechamento:** `1a2f863`
+- **Tag:** `v0.1.0` → `1a2f863`
 
 ## Exceção registrada
 

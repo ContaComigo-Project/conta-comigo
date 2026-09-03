@@ -12,8 +12,8 @@ max_lines: 300
 - **Data:** 2026-09-02
 - **Tipo:** Técnica (governança)
 - **Versão:** `v0.4.0`
-- **Commit:** _(pendente — aguardando autorização de fechamento)_
-- **Tag:** `v0.4.0` → _(pendente)_
+- **Commit:** `f9ed24f`
+- **Tag:** `v0.4.0` → `f9ed24f`
 
 ## O que foi entregue
 
@@ -77,7 +77,7 @@ spec e catálogo não divergissem.
 | SRE | `sre-agent` | Aprovado com ressalva | `RNF-007` a `RNF-011` são verificáveis, mas nada os mede ainda: o harness segue sem comandos. Ressalva endereçada por `HT-005` |
 | Segurança | `security-specialist-agent` | Aprovado | `RNF-012` a `RNF-017` cobrem segredo, autorização no servidor, cifra em repouso, log limpo e saída de modelo como entrada não confiável |
 | Arquitetura | `architect-reviewer-agent` | Aprovado | `RNF-020` fixa adapters trocáveis; §3 do épico registra o que está decidido e o que não está |
-| Revisão final | `final-reviewer-agent` | Pendente | Aguarda autorização de commit e tag |
+| Revisão final | `final-reviewer-agent` | Aprovado | Fechamento verificado; correção do backlog em `9c063f7` (`v0.4.1`) |
 
 ## Decisões tomadas durante a execução
 
@@ -101,6 +101,7 @@ spec e catálogo não divergissem.
 
 - [x] Documentação criada e coerente
 - [x] `KANBAN-OFICIAL.md` atualizado
-- [ ] Commit semântico contém a chave `HT-003`
-- [ ] Commit não contém arquivos de outra história
-- [ ] Tag `v0.4.0` aponta para o mesmo hash do commit
+- [x] Commit semântico contém a chave `HT-003`
+- [x] Commit não contém arquivos de outra história
+- [x] Tag `v0.4.0` aponta para o mesmo hash do commit
+- [x] Correção posterior (frontend existente) entregue em `v0.4.1` → `9c063f7`
