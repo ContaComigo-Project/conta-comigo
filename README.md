@@ -248,6 +248,10 @@ Referência GitHub:
 
 ## Licença
 
-Projeto acadêmico licenciado sob a **MIT License** (salvo disposições em
-contrário no âmbito do IFSul / MOCITEC). Consulte o arquivo
-[`LICENSE`](./LICENSE) (quando disponibilizado) para mais detalhes.
+Este repositório **não possui licença aberta**. É um trabalho acadêmico
+desenvolvido no IFSul Campus Charqueadas e apresentado na MOCITEC.
+
+Sem licença declarada, valem os direitos autorais padrão: o código pode ser
+lido e avaliado, mas não há permissão de uso, cópia, modificação ou
+redistribuição. Para qualquer uso além da avaliação acadêmica, fale com os
+autores.
