@@ -8,8 +8,10 @@ applies_when:
   - criar commit de fechamento, tag ou push
 uses_rules:
   - main-push-quality-and-versioning
+  - commit-conventions
 complements:
   - final-reviewer-agent
+  - commit-conventions
 complemented_by:
   - product-manager
 outputs:
@@ -65,14 +67,16 @@ kanban atualizado e suíte de testes verde na árvore atual.
 
 | Tipo | Uso |
 | --- | --- |
-| `feat` | Capacidade nova percebida por alguém |
-| `fix` | Correção de comportamento errado |
-| `refactor` | Mudança interna sem alterar comportamento |
-| `test` | Só testes |
-| `docs` | Só documentação |
-| `chore` | Manutenção sem efeito em produto |
-| `perf` | Desempenho |
-| `build` / `ci` | Empacotamento e pipeline |
+| `feat` | New capability perceivable by a user or stakeholder |
+| `fix` | Wrong behavior correction |
+| `refactor` | Internal change without changing external behavior |
+| `test` | Tests only, no production code change |
+| `docs` | Documentation only |
+| `chore` | Maintenance with no product impact |
+| `perf` | Performance improvement |
+| `build` / `ci` | Packaging, bundler, binary, pipeline |
+
+Commit language, message template, story key, and `Generated-by-AI:` footer rules are defined and enforced exclusively by the `commit-conventions` skill. Consult it before writing any message.
 
 ## Antipadrões
 
