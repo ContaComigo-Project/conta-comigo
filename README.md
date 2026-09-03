@@ -106,8 +106,8 @@ do resumo submetido à mostra, acesse:
 ## Como Executar o Projeto
 
 > Atualmente apenas a camada **frontend** está materializada no repositório
-> (mock puro, sem backend integrado). O backend é descrito em
-> `docs/BACKEND_ARCHITECTURE.md`.
+> (mock puro, sem backend integrado). A arquitetura pretendida para o backend
+> está em [docs/jira-pessoal/EPICO-TECNICO.md](./docs/jira-pessoal/EPICO-TECNICO.md).
 
 ### Pré-requisitos
 
@@ -153,8 +153,9 @@ pnpm preview
 
 ### 5. (Backend futuro) Docker / .env
 
-A infraestrutura de containers está documentada em
-[docs/DOCKER.md](./docs/DOCKER.md). Quando a camada NestJS for adicionada,
+A infraestrutura de containers ainda não existe: ela é entregue pela história
+`HT-005`, e os comandos reprodutíveis ficam em
+[scripts/README.md](./scripts/README.md). Quando a camada NestJS for adicionada,
 copie `.env.example` → `.env` e preencha as chaves de
 `PLUGGY_CLIENT_ID / PLUGGY_CLIENT_SECRET` e `GOOGLE_GEMINI_API_KEY`.
 
@@ -167,11 +168,11 @@ copie `.env.example` → `.env` e preencha as chaves de
 | [Workflow Agêntico](./docs/WORKFLOW-AGENTICO.md) | Guia operacional: como puxar, executar, validar e fechar uma história |
 | [Kanban Oficial](./docs/jira-pessoal/KANBAN-OFICIAL.md) | Fonte única da próxima demanda |
 | [Resumo homologado MOCITEC](./docs/RESUMO-MOCITEC.md) | Texto completo submetido, aprovado e apresentado na Mostra |
-| [Arquitetura Frontend](./docs/FRONTEND_ARCHITECTURE.md) | Estrutura de pastas, rotas, layout, componentes, temas |
-| [Arquitetura Backend](./docs/BACKEND_ARCHITECTURE.md) | NestJS, Pluggy, Gemini / LangChain, persistência |
-| [Regras de Negócio](./docs/BUSINESS_RULES.md) | Semáforo orçamentário 70/90%, limites, LGPD, não aconselhamento |
-| [Docker](./docs/DOCKER.md) | Compose services, volumes, networks, portas |
-| [Estratégia de Testes](./docs/TESTS.md) | Vitest / Playwright / React Testing Library plan |
+| [Especificação SDD-001](./docs/spec-driven-development/SDD-001-contacomigo-poc.md) | Problema, personas, escopo, fluxos e decisões em aberto |
+| [Requisitos](./docs/requisitos/) | Catálogos de RF, RN e RNF com identificador estável |
+| [Épico de Negócio](./docs/jira-pessoal/EPICO-NEGOCIO.md) | Visão, personas, jornadas e regras de negócio |
+| [Épico Técnico](./docs/jira-pessoal/EPICO-TECNICO.md) | Arquitetura, segurança, testes, CI/CD e operação |
+| [Entregas](./docs/entregas/) | Registro cronológico de cada história concluída |
 
 ---
 
