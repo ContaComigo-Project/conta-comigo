@@ -17,22 +17,97 @@ Use este prompt para iniciar um projeto novo com o mesmo padrão de execução a
 Copie o bloco abaixo e preencha os campos entre colchetes.
 
 ```text
-Você é um agente de engenharia de software responsável por estruturar um novo projeto chamado [NOME_DO_PROJETO].
+Você é um agente de engenharia de software responsável por estruturar um novo projeto chamado ContaComigo.
 
 Objetivo do produto:
-[DESCREVA_A_IDEIA_DO_PRODUTO_EM_LINGUAGEM_DE_NEGOCIO]
+Oferecer uma Prova de Conceito (PoC) de aplicação web responsiva que consolide, em um único ambiente, os dados bancários que a pessoa tem espalhados por várias instituições — via Open Finance regulamentado pelo BACEN — e use Inteligência Artificial generativa como motor ativo de consultoria e educação financeira, transformando extrato bruto em conhecimento prático.
+
+Capacidades que definem o produto:
+- consolidação de contas e cartões de múltiplas instituições em um só painel;
+- orçamento semáforo por categoria: verde até 70% do limite, amarelo entre 70% e 90%, vermelho acima de 90%;
+- limpeza semântica das descrições de fatura, decodificando siglas que a pessoa não reconhece como gasto próprio;
+- diagnóstico automático de saúde financeira, com alertas, oportunidades e metas;
+- chatbot educativo que orienta metas orçamentárias;
+- histórico de meses anteriores e exportação de relatórios para acompanhamento ao longo do tempo.
+
+O produto é educativo e preventivo: ele explica à pessoa o próprio dinheiro dela. Não recomenda investimento, não intermedeia crédito e não substitui profissional certificado — a fronteira do "não aconselhamento" é parte do produto, não um aviso legal decorativo.
 
 Público-alvo:
-[QUEM_USA_O_PRODUTO]
+Usuário primário: pessoa adulta brasileira, bancarizada, com pouca ou nenhuma educação financeira formal, que hoje controla o orçamento de cabeça, por planilha ou não controla.
+
+Recortes que caracterizam esse usuário:
+- tem contas e cartões em mais de uma instituição e nunca vê o total real;
+- não reconhece parte dos próprios lançamentos por causa de siglas e descrições opacas;
+- está exposta a decisões de crédito desfavoráveis e a risco de superendividamento;
+- abandona aplicativos de finanças que exigem lançamento manual ou que pressupõem letramento financeiro que ela não tem;
+- usa principalmente o celular.
+
+Stakeholders que não são usuários: banca avaliadora da MOCITEC, professor orientador e o próprio time de desenvolvimento.
 
 Problema que resolve:
-[QUAL_DOR_O_PRODUTO_RESOLVE]
+A ausência de educação financeira funciona como barreira invisível que aprofunda desigualdade e limita a ascensão das famílias brasileiras. Sobre essa base, quatro dores concretas:
+
+1. Fragmentação: os dados estão dispersos entre instituições, e consolidar manualmente custa tempo demais para ser feito com a frequência necessária.
+2. Opacidade: extratos e faturas usam siglas e códigos que impedem a pessoa de reconhecer o próprio gasto — não dá para controlar o que não se entende.
+3. Falta de diagnóstico: mesmo vendo os números, a pessoa não sabe dizer se está bem ou mal, nem o que fazer a respeito.
+4. Ferramentas inadequadas: as alternativas exigem disciplina de lançamento manual ou vocabulário financeiro que o público-alvo não domina, e por isso são abandonadas.
+
+O Open Finance resolve a fragmentação com consentimento; a IA generativa resolve a opacidade e a falta de diagnóstico. A combinação das duas é a aposta do projeto.
 
 Stack inicial esperada:
-[TECNOLOGIAS_SE_JA_EXISTIREM; SE_NAO_EXISTIR, PROPOR_OPCOES_COM_TRADE_OFFS]
+Já existe e está implementado (camada web, no repositório):
+- React 19 + TypeScript 6, com Vite 8 como build e servidor de desenvolvimento;
+- TailwindCSS 4 com tokens via @theme inline, sem arquivo de configuração;
+- React Router 7 para rotas aninhadas e proteção de rotas privadas;
+- Zod 4 + React Hook Form 7 para validação de formulários;
+- Radix Toast, Lucide React, class-variance-authority, clsx e tailwind-merge;
+- ESLint 9 com typescript-eslint, react-hooks e react-refresh;
+- Node 22 ou superior e pnpm 9 ou superior.
+
+Já decidido, ainda não implementado (camada de servidor):
+- NestJS em TypeScript para regras de negócio e API;
+- Pluggy API em ambiente Sandbox como agregador Open Finance;
+- Google Gemini orquestrado por LangChain.js para contexto e prompts;
+- PostgreSQL para persistência;
+- Docker e docker compose para ambiente reproduzível.
+
+Em aberto — decidir com trade-offs explícitos antes de implementar:
+- ORM: Prisma (produtividade e tipagem forte, menos controle sobre SQL) contra TypeORM (integração nativa com NestJS, migrações menos previsíveis) contra Drizzle (SQL explícito, ecossistema menor).
+- Testes: Vitest (rápido, mesmo ecossistema do Vite) contra Jest (padrão do NestJS, mais lento); Playwright contra Cypress para ponta a ponta; Cucumber apenas se o time realmente escrever Gherkin junto com quem entende do negócio.
+- CI/CD: GitHub Actions (gratuito no repositório público, integrado) — alternativa só se houver motivo concreto.
+- Hospedagem: Vercel ou Netlify para a web; Render, Fly.io ou Railway para a API; free tier em todos, com limite de hibernação a avaliar.
+- Observabilidade: log estruturado com Pino mais Sentry no free tier, contra apenas log em arquivo — decidir pelo custo de diagnosticar um erro relatado por terceiro.
+- Autenticação: hoje é local e simulada; produção exige decisão entre JWT próprio e provedor gerenciado.
+- Cache e custo de IA: definir estratégia de cache de resposta e limite de tokens por usuário antes de qualquer uso não simulado.
 
 Restrições importantes:
-[CUSTO, PRAZO, SEGURANCA, PRIVACIDADE, PLATAFORMAS, PUBLICACAO, INFRA, COMPLIANCE]
+Escopo e maturidade:
+- É uma PoC acadêmica apresentada na MOCITEC do IFSul Campus Charqueadas, não um produto em produção.
+- Web responsiva é a única plataforma no escopo. Aplicativo mobile nativo é visão futura declarada e está fora.
+- Hoje apenas a camada web existe no repositório; ela opera com dados simulados.
+
+Dados e compliance:
+- Somente Pluggy Sandbox. Nenhum dado bancário real de pessoa física entra no sistema nesta fase.
+- Operar com dados reais exigiria conformidade e credenciamento no ecossistema Open Finance regulado pelo BACEN — isso não está no escopo.
+- LGPD: dado financeiro pessoal exige consentimento explícito, minimização, retenção definida, revogação e exclusão.
+- Não aconselhamento: o produto não pode emitir recomendação de investimento ou crédito reservada a agentes regulados por CVM e BACEN. O aviso é permanente na interface e a restrição vale também para a saída do modelo de IA.
+
+Segurança:
+- Credenciais de Pluggy e Gemini nunca no repositório, nunca em log, nunca no bundle da web.
+- Nenhum dado bancário, mesmo simulado, em log de depuração.
+- A autenticação atual é local e simulada; precisa virar autenticação real com autorização verificada no servidor antes de qualquer integração com dado real.
+- Saída de modelo generativo é entrada não confiável: precisa ser validada antes de virar número exibido como se fosse extrato.
+
+Custo e prazo:
+- Time de três estudantes e um professor orientador, em tempo parcial, sem orçamento.
+- Tudo precisa caber em free tier: Pluggy Sandbox, Gemini, hospedagem e CI.
+- Chamada de IA é o principal risco de custo — cada funcionalidade que chama o modelo precisa declarar limite e estratégia de cache.
+- Entregas pequenas e fechadas, porque a disponibilidade do time é intermitente.
+
+Infraestrutura e publicação:
+- Ambiente local reproduzível por Docker e docker compose, com versões fixadas.
+- Repositório público no GitHub; trabalho em develop, integração para main.
+- Nenhum push para main com teste quebrado.
 
 Quero que o projeto nasça com um workflow agêntico completo, independente da stack, contendo:
 

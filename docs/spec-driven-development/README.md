@@ -37,5 +37,10 @@ Use [SDD-000-template.md](./SDD-000-template.md) como base.
 
 ## Estado atual
 
-Nenhuma spec fechada. A primeira demanda do kanban (`HT-001`) é justamente
-produzir a `SDD-001` com o time.
+| Spec | Assunto | Status |
+| --- | --- | --- |
+| [SDD-001](./SDD-001-contacomigo-poc.md) | ContaComigo (PoC) — problema, personas, escopo, fluxos e quebra | Aprovada |
+
+A `SDD-001` já foi quebrada em requisitos (`docs/requisitos/`), épicos e 28
+itens de fila no `KANBAN-OFICIAL.md`. Sete decisões seguem em aberto na seção 7
+da spec; quatro delas são resolvidas por `HT-004`.

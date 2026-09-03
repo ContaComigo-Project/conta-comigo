@@ -5,7 +5,7 @@ document_type: story
 story_key: HT-001
 story_type: tecnica
 epic: EPIC-TEC-001
-status: Ready
+status: Em revisão
 max_lines: 300
 ---
 
@@ -13,7 +13,7 @@ max_lines: 300
 
 - **Tipo:** História técnica (governança/descoberta)
 - **Épico:** `EPIC-TEC-001`
-- **Estado:** Ready — **próxima demanda**
+- **Estado:** Em revisão — aguarda commit e tag `v0.2.0`
 - **Requisitos:** origina `RF`, `RN` e `RNF`
 - **Depende de:** `HT-000`
 - **Versão prevista:** `v0.2.0`
@@ -32,22 +32,22 @@ verificáveis, e para que o épico de negócio deixe de ser esqueleto.
 
 ## Critérios de aceite
 
-- [ ] Existe `docs/spec-driven-development/SDD-001-<assunto>.md` com todas as
+- [x] Existe `docs/spec-driven-development/SDD-001-contacomigo-poc.md` com todas as
       seções do template preenchidas
-- [ ] O problema está descrito com evidência, não com opinião
-- [ ] Existem no mínimo duas personas com objetivo e dor
-- [ ] A seção "Fora de escopo" lista pelo menos três exclusões explícitas
-- [ ] Toda decisão em aberto tem responsável e prazo
-- [ ] A seção "Quebra proposta" classifica cada item em `HN` ou `HT`
-- [ ] A spec está marcada como `Aprovada` com data e autores
-- [ ] `EPICO-NEGOCIO.md` teve, no mínimo, visão e personas preenchidas
-- [ ] `KANBAN-OFICIAL.md` recebeu as histórias derivadas, em ordem
+- [x] O problema está descrito com evidência, não com opinião
+- [x] Existem no mínimo duas personas com objetivo e dor
+- [x] A seção "Fora de escopo" lista pelo menos três exclusões explícitas
+- [x] Toda decisão em aberto tem responsável e prazo
+- [x] A seção "Quebra proposta" classifica cada item em `HN` ou `HT`
+- [x] A spec está marcada como `Aprovada` com data e autores
+- [x] `EPICO-NEGOCIO.md` teve, no mínimo, visão e personas preenchidas
+- [x] `KANBAN-OFICIAL.md` recebeu as histórias derivadas, em ordem
 
 ## RNF atendidos
 
 | RNF | Alvo | Como esta história prova |
 | --- | --- | --- |
-| _(a catalogar em `HT-003`)_ | Rastreabilidade de escopo | Toda história futura aponta para uma seção da `SDD-001` |
+| RNF-018 | Toda RN tem teste que a prova | A spec é a origem das RN catalogadas em `HT-002`; sem ela, não há o que rastrear |
 
 ## Impacto arquitetural
 
@@ -84,9 +84,9 @@ verificáveis, e para que o épico de negócio deixe de ser esqueleto.
 
 ## Definição de pronto
 
-- [ ] `SDD-001` aprovada e versionada
-- [ ] Épico de negócio atualizado
-- [ ] Histórias derivadas criadas e ordenadas no kanban
-- [ ] `docs/entregas/ENTREGA-HT-001-*.md` criado
+- [x] `SDD-001` aprovada e versionada
+- [x] Épico de negócio atualizado
+- [x] Histórias derivadas criadas e ordenadas no kanban
+- [x] `docs/entregas/ENTREGA-HT-001-*.md` criado
 - [ ] Commit semântico citando `HT-001`
 - [ ] Tag `v0.2.0` no mesmo hash
