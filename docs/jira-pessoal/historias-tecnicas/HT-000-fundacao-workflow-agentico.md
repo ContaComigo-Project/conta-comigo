@@ -53,7 +53,7 @@ caracteriza o fechamento.
 
 | RNF | Alvo | Como esta história prova |
 | --- | --- | --- |
-| _(a catalogar em `HT-003`)_ | Governança rastreável | Estrutura criada e verificável por inspeção de arquivos |
+| RNF-021 | Gates bloqueiam de fato | Cria as rules e os gates que as histórias seguintes executam |
 
 ## Impacto arquitetural
 

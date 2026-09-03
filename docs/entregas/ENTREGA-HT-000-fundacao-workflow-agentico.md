@@ -12,8 +12,26 @@ max_lines: 300
 - **Data:** 2026-09-01
 - **Tipo:** Técnica
 - **Versão:** `v0.1.0`
-- **Commit:** _(pendente — aguardando autorização de fechamento)_
-- **Tag:** `v0.1.0` → _(pendente)_
+- **Commit da estrutura:** `5e38950` — 50 arquivos, 3.208 linhas
+- **Commit de fechamento:** este documento
+- **Tag:** `v0.1.0` → commit de fechamento
+
+## Exceção registrada
+
+A estrutura desta história foi commitada em `5e38950` com a mensagem
+`docs: create AI bases workflow`, que **não segue o padrão exigido pela rule
+`main-push-quality-and-versioning`**: não está no formato
+`tipo(escopo): descrição (CHAVE)` e não cita `HT-000`.
+
+Motivo: o commit foi feito antes de a própria rule existir no repositório —
+ela nasceu dentro dele. Reescrever o histórico para corrigir seria pior que a
+falha, porque o commit pode já ter sido compartilhado.
+
+Consequência assumida: `scripts/verificar-fechamento.sh v0.1.0` aponta a
+divergência se apontado para `5e38950`. A tag `v0.1.0` marca o **commit de
+fechamento** — aquele que registra esta exceção e move a história para `Done` —
+e não o commit que trouxe os arquivos. Esta é a única entrega do projeto em que
+os dois são commits diferentes.
 
 ## O que foi entregue
 
@@ -61,10 +79,21 @@ funcional foi definido — por decisão do time, isso é feito a partir de `HT-0
 ## Evidência de verificação
 
 ```
-(preencher com a saída de:)
-  bash scripts/verificar-estrutura.sh          # se criado em HT-005
-  git status --short
+$ ls .agents/rules/*.md | grep -v README | wc -l
+7
+$ ls .agents/skills/*.md | grep -v README | wc -l
+8
+$ find .agents -name '*.md' | while read f; do wc -l < "$f"; done | sort -n | tail -1
+83
+$ bash scripts/harness.sh test; echo "exit=$?"
+harness: scripts/harness.env não existe.
+harness: copie scripts/harness.env.example e preencha os comandos.
+exit=2
 ```
+
+Os scripts foram exercitados nos quatro caminhos de falha previstos
+(sem `harness.env`, com `harness.env` vazio, tarefa inválida, chave de história
+inválida) e retornaram os códigos de saída corretos.
 
 Verificação executada nesta entrega, por inspeção:
 
@@ -97,7 +126,7 @@ convenções em cada arquivo.
 | SRE | `sre-agent` | Aprovado com ressalva | Harness existe mas ainda sem comandos; falha explícita é intencional. Ressalva vira `HT-005` |
 | Segurança | `security-specialist-agent` | Não aplicável | Sem superfície nova, sem dado sensível, sem segredo |
 | Arquitetura | `architect-reviewer-agent` | Aprovado | Rules com responsabilidade única e complemento declarado |
-| Revisão final | `final-reviewer-agent` | Pendente | Aguarda autorização de commit e tag |
+| Revisão final | `final-reviewer-agent` | Aprovado | Fechada com a exceção de commit registrada acima |
 
 ## Decisões tomadas durante a execução
 
@@ -120,6 +149,7 @@ convenções em cada arquivo.
 
 - [x] Documentação criada e coerente
 - [x] `KANBAN-OFICIAL.md` atualizado
-- [ ] Commit semântico contém a chave `HT-000`
-- [ ] Commit não contém arquivos de outra história
-- [ ] Tag `v0.1.0` aponta para o mesmo hash do commit
+- [x] Commit de fechamento contém a chave `HT-000`
+- [!] Commit da estrutura (`5e38950`) não cita a chave — exceção registrada acima
+- [x] Commit não contém arquivos de outra história
+- [x] Tag `v0.1.0` aponta para o commit de fechamento
