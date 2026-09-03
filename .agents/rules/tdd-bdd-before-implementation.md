@@ -43,6 +43,22 @@ A regra exige comportamento testável. Estão dispensadas:
 
 Dispensa é declarada na história, não presumida.
 
+## Código que já existia sem teste
+
+O repositório nasceu com uma camada web sem nenhum teste. A regra não se aplica
+retroativamente — mas define o que acontece quando esse código é tocado:
+
+| Situação | O que a regra exige |
+| --- | --- |
+| Código legado que **vai ser reescrito** | Nenhum teste sobre o legado. Escreva o cenário do comportamento desejado, veja-o vermelho e implemente do zero. Testar código que será apagado é trabalho jogado fora |
+| Código legado que **vai ser preservado e integrado** | Antes de alterá-lo, escreva o cenário que descreve o comportamento que ele deve ter depois da mudança |
+| Código legado que **só é lido** | Nada a fazer |
+
+Comportamento hoje implementado em camada de mock não é especificação aprovada:
+é observação. Ele só vira requisito depois de promovido a `RF` ou `RN` no
+catálogo — caso contrário, o time acaba preservando por acidente uma decisão que
+ninguém tomou.
+
 ## Formato esperado
 
 ```gherkin

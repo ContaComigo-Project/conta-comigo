@@ -3,7 +3,7 @@ name: workflow-agentico
 description: README operacional do workflow agêntico — como puxar, executar, validar, documentar e fechar uma história.
 document_type: operational_doc
 applies_when:
-  - iniciar a primeira história do projeto
+  - iniciar a próxima história do projeto
   - retomar o trabalho sem lembrar do processo
 max_lines: 300
 ---
@@ -47,30 +47,32 @@ commit semântico e tag no mesmo hash.
 Cada passo é uma volta do [Ralph Loop](../.agents/prompts/ralph-loop.md):
 Perceber → Orientar → Decidir → Agir → **Registrar**.
 
-## Como iniciar a primeira história
+## Como iniciar a próxima história
 
-A próxima demanda é **`HT-001` — Conduzir SDD-001 e registrar entendimento
-inicial**.
+A próxima demanda é **`HT-004` — Decidir tecnologias em aberto e registrar
+ADRs**.
 
 ```bash
 # 1. Confirmar a próxima demanda
 cat docs/jira-pessoal/KANBAN-OFICIAL.md
 
 # 2. Ler a história
-cat docs/jira-pessoal/historias-tecnicas/HT-001-sdd-inicial.md
+cat docs/jira-pessoal/historias-tecnicas/HT-004-decisoes-de-stack.md
 
 # 3. Criar a pasta de execução
-scripts/nova-historia.sh HT-001        # Windows: powershell -File scripts/nova-historia.ps1 HT-001
+scripts/nova-historia.sh HT-004        # Windows: powershell -File scripts/nova-historia.ps1 HT-004
 
 # 4. Preencher TASK.md e IMPLEMENTATION.md ANTES de qualquer trabalho
 
-# 5. Mover HT-001 para "Em execução" no kanban
+# 5. Mover HT-004 para "Em execução" no kanban
 ```
 
-Depois, com o time: copiar `docs/spec-driven-development/SDD-000-template.md`
-para `SDD-001-<assunto>.md` e preencher. Ao aprovar a spec, `HT-002` e `HT-003`
-transformam o entendimento em `RF`, `RN` e `RNF` numerados — e só então o
-backlog de produto passa a existir.
+`HT-004` fecha quatro decisões que travam o resto da fila — ORM, framework de
+teste, autenticação e hospedagem — e as registra como ADR. Ela não instala
+dependência nem escreve código: decide e explica o porquê.
+
+Da ordem 5 em diante, o item só ganha arquivo de história quando entra em
+`Ready`. Detalhar hoje o critério de aceite da ordem 27 seria adivinhação.
 
 ## Negócio ou técnica?
 

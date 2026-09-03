@@ -20,4 +20,10 @@ Arquivo: `ENTREGA-[CHAVE]-titulo-em-kebab-case.md`, a partir de
 
 | Data | Chave | Título | Versão | Commit | Tag |
 | --- | --- | --- | --- | --- | --- |
-| 2026-09-01 | `HT-000` | Fundação do workflow agêntico | `v0.1.0` | _(pendente)_ | _(pendente)_ |
+| 2026-09-01 | [`HT-000`](./ENTREGA-HT-000-fundacao-workflow-agentico.md) | Fundação do workflow agêntico | `v0.1.0` | _(pendente)_ | _(pendente)_ |
+| 2026-09-02 | [`HT-001`](./ENTREGA-HT-001-sdd-inicial.md) | SDD-001 e entendimento inicial | `v0.2.0` | _(pendente)_ | _(pendente)_ |
+| 2026-09-02 | [`HT-002`](./ENTREGA-HT-002-catalogo-rf-rn.md) | Catálogo RF/RN e épico de negócio | `v0.3.0` | _(pendente)_ | _(pendente)_ |
+| 2026-09-02 | [`HT-003`](./ENTREGA-HT-003-catalogo-rnf.md) | Catálogo RNF e épico técnico | `v0.4.0` | _(pendente)_ | _(pendente)_ |
+
+Quatro entregas estão em `Em revisão` aguardando um único ato de fechamento:
+commit semântico por história e tag apontando para o mesmo hash.
