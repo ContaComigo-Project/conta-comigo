@@ -170,6 +170,7 @@ copie `.env.example` → `.env` e preencha as chaves de
 | [Resumo homologado MOCITEC](./docs/RESUMO-MOCITEC.md) | Texto completo submetido, aprovado e apresentado na Mostra |
 | [Especificação SDD-001](./docs/spec-driven-development/SDD-001-contacomigo-poc.md) | Problema, personas, escopo, fluxos e decisões em aberto |
 | [Requisitos](./docs/requisitos/) | Catálogos de RF, RN e RNF com identificador estável |
+| [Decisões de Arquitetura](./docs/adr/) | ADRs: o porquê de cada escolha estrutural |
 | [Épico de Negócio](./docs/jira-pessoal/EPICO-NEGOCIO.md) | Visão, personas, jornadas e regras de negócio |
 | [Épico Técnico](./docs/jira-pessoal/EPICO-TECNICO.md) | Arquitetura, segurança, testes, CI/CD e operação |
 | [Entregas](./docs/entregas/) | Registro cronológico de cada história concluída |

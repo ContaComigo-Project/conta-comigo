@@ -55,6 +55,18 @@ Toda escolha estrutural relevante vira ADR com: contexto, alternativas,
 decisão e consequência. Decisão sem consequência declarada não é decisão, é
 preferência.
 
+## Decisões já tomadas neste projeto
+
+As regras acima são genéricas. O que elas significam concretamente aqui está em
+[`docs/adr/`](../../docs/adr/):
+
+| ADR | O que fixa |
+| --- | --- |
+| `ADR-001` | Backend hexagonal: estrutura de pastas, quais camadas podem importar o quê, e a checagem que quebra o build na violação |
+
+Conflito entre esta rule e um ADR resolve-se pelo ADR — ele é a decisão
+específica, e declara a consequência assumida.
+
 ## Sinais de violação
 
 - `import` de framework dentro do domínio.

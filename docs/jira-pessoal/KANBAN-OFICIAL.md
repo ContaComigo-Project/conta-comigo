@@ -83,7 +83,7 @@ o backlog passou a considerar o frontend existente.
 
 | Ordem | Chave | Título | Tipo | Estado | Depende de | UI hoje |
 | --- | --- | --- | --- | --- | --- | --- |
-| 10 | `HT-009` | Esqueleto do backend com domínio isolado e portas | Técnica | Backlog | HT-006 | — |
+| 10 | `HT-009` | Esqueleto do backend hexagonal (`ADR-001`) | Técnica | Backlog | HT-006, HT-004 | — |
 | 11 | `HT-010` | Persistência PostgreSQL, migrações e cifra em repouso | Técnica | Backlog | HT-009, HT-004 | — |
 | 12 | `HT-017` | Contrato de dados entre a web e a API | Técnica | Backlog | HT-016, HT-009 | Define como a UI atual passa a receber dado |
 | 13 | `HN-001` | Acesso: cadastro, login e encerramento de sessão | Negócio | Backlog | HT-010, HT-008, HT-017 | Telas prontas; `Login.tsx` faz `console.log` + `setTimeout` |
@@ -148,7 +148,10 @@ Ordens 5 a 30 na tabela acima.
 ## Grooming
 
 Arquivo de história é criado quando o item entra em `Ready`, não antes.
-Existem hoje como arquivo: `HT-000` a `HT-004`, `HT-016`, `HT-017`, `HT-018`.
+Existem hoje como arquivo: `HT-000` a `HT-004`, `HT-009`, `HT-016`, `HT-017`, `HT-018`.
+
+`HT-009` foi groomada cedo, fora da regra acima, porque `ADR-001` tornou seus
+critérios de aceite verificáveis — deixaram de ser adivinhação.
 
 **Nenhuma `HN` ganha arquivo antes de `HT-016`.** O inventário define quanto de
 cada tela é aproveitável, e isso muda o critério de aceite de quase todas elas.
@@ -164,6 +167,7 @@ cada tela é aproveitável, e isso muda o critério de aceite de quase todas ela
 | 2026-09-02 | `HT-004` | Backlog | Ready | Dependência concluída; arquivo criado |
 | 2026-09-02 | `HT-016` `HT-017` `HT-018` | — | Backlog | Inseridas após inventário do frontend existente revelar regra de negócio em `src/mocks/` |
 | 2026-09-02 | `HN-001` a `HN-012` | Backlog | Backlog | Reescritas como integração; coluna "UI hoje" adicionada |
+| 2026-09-02 | `HT-009` | Backlog | Backlog | Groomada após `ADR-001` fixar a arquitetura hexagonal |
 | 2026-09-02 | `HT-000` | Em revisão | Done | `v0.1.0` → `1a2f863` |
 | 2026-09-02 | `HT-001` | Em revisão | Done | `v0.2.0` → `fe1f89b` |
 | 2026-09-02 | `HT-002` | Em revisão | Done | `v0.3.0` → `96ec972` |

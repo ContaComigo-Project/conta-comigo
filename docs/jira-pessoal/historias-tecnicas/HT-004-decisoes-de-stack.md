@@ -20,6 +20,11 @@ max_lines: 300
 
 ## Problema técnico
 
+O estilo arquitetural **já está decidido** em
+[`ADR-001`](../../adr/ADR-001-arquitetura-hexagonal-no-backend.md): hexagonal,
+ports & adapters. Esta história não o revisita — ela escolhe o ferramental que
+precisa caber dentro dele.
+
 Quatro decisões travam toda a fila: ORM, framework de teste, autenticação e
 hospedagem. Enquanto elas estiverem em aberto, `HT-005` não consegue escrever o
 harness, `HT-006` não escolhe o executor de teste, `HT-010` não modela a
@@ -38,19 +43,25 @@ que o projeto é assim, e sabe o que precisaria mudar para reverter.
 
 | # | Decisão | Opções levantadas na `SDD-001` | Bloqueia |
 | --- | --- | --- | --- |
-| 1 | ORM | Prisma (produtividade e tipagem, menos controle do SQL) · TypeORM (integra com NestJS, migração menos previsível) · Drizzle (SQL explícito, ecossistema menor) | `HT-010` |
-| 2 | Teste funcional/BDD e unitário | Vitest + Playwright (mesmo ecossistema do Vite) · Jest + Cypress (padrão NestJS, mais lento) | `HT-006` |
-| 3 | Autenticação | JWT próprio (sem dependência, mais superfície para errar) · provedor gerenciado (menos código, dependência externa e limite de free tier) | `HN-001` |
-| 4 | Hospedagem | Vercel+Render · Netlify+Fly.io · Railway | `HT-015` |
+| 1 | ORM (**ADR-002**) | Prisma (produtividade e tipagem, menos controle do SQL) · TypeORM (integra com NestJS, migração menos previsível) · Drizzle (SQL explícito, ecossistema menor) | `HT-010` |
+| 2 | Teste e checagem de fronteira (**ADR-003**) | Vitest + Playwright (mesmo ecossistema do Vite) · Jest + Cypress (padrão NestJS, mais lento). Inclui a ferramenta que verifica as regras de importação de `ADR-001`: dependency-cruiser · eslint-plugin-boundaries · script próprio | `HT-006`, `HT-009` |
+| 3 | Autenticação (**ADR-004**) | JWT próprio (sem dependência, mais superfície para errar) · provedor gerenciado (menos código, dependência externa e limite de free tier) | `HN-001` |
+| 4 | Hospedagem (**ADR-005**) | Vercel+Render · Netlify+Fly.io · Railway | `HT-015` |
 
 ## Critérios de aceite
 
-- [ ] Existe um ADR por decisão em `docs/adr/ADR-00X-<assunto>.md`
+- [ ] Existe um ADR por decisão em `docs/adr/`, numerados de `ADR-002` a `ADR-005`
+- [ ] Nenhuma decisão contraria `ADR-001`: o ORM escolhido não pode exigir
+      decorator na entidade de domínio, e a ferramenta de teste precisa rodar
+      caso de uso sem subir framework
+- [ ] A decisão de teste nomeia a ferramenta que verifica as fronteiras de
+      importação e confirma que ela existe para a stack
 - [ ] Cada ADR registra contexto, ao menos duas alternativas, escolha e consequência
 - [ ] Cada ADR declara **o que precisaria acontecer para revertê-la**
 - [ ] Cada decisão declara o impacto no custo, e nenhuma sai do free tier (`RNF-011`)
 - [ ] A decisão de autenticação declara como `RNF-013` (autorização no servidor) será atendida
 - [ ] A decisão de ORM declara como `RNF-014` (cifra em repouso) será atendida
+      e como o modelo de persistência ficará separado da entidade de domínio
 - [ ] A decisão de teste declara como o rastreio RN→teste (`RNF-018`) será verificável
 - [ ] `EPICO-TECNICO.md` seção 3 atualizado: as quatro linhas saem de "Em aberto"
 - [ ] `SDD-001` seção 7 atualizada: as quatro questões saem de "em aberto"
@@ -109,7 +120,7 @@ Cenário: uma decisão fechada é rastreável até a consequência
 
 ## Definição de pronto
 
-- [ ] Quatro ADRs criados e aprovados
+- [ ] `ADR-002` a `ADR-005` criados e aprovados
 - [ ] `EPICO-TECNICO.md` e `SDD-001` atualizados
 - [ ] `docs/entregas/ENTREGA-HT-004-decisoes-de-stack.md` criado
 - [ ] `KANBAN-OFICIAL.md` atualizado, com `HT-016` movido para `Ready`

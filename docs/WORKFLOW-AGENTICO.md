@@ -22,6 +22,7 @@ commit semântico e tag no mesmo hash.
 | Entender o produto | [`docs/jira-pessoal/EPICO-NEGOCIO.md`](./jira-pessoal/EPICO-NEGOCIO.md) |
 | Entender o sistema | [`docs/jira-pessoal/EPICO-TECNICO.md`](./jira-pessoal/EPICO-TECNICO.md) |
 | Consultar requisito | [`docs/requisitos/`](./requisitos/) |
+| Saber por que o projeto é assim | [`docs/adr/`](./adr/) |
 | Registrar entendimento | [`docs/spec-driven-development/`](./spec-driven-development/) |
 | Saber o que é proibido | [`.agents/rules/`](../.agents/rules/) |
 | Saber quem faz o quê | [`.agents/skills/`](../.agents/skills/) |

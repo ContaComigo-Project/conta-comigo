@@ -33,36 +33,41 @@ Fonte: [`REQUISITOS-NAO-FUNCIONAIS.md`](../requisitos/REQUISITOS-NAO-FUNCIONAIS.
 | RNF | Categoria | Alvo | História |
 | --- | --- | --- | --- |
 | RNF-001 a RNF-004 | Desempenho e experiência | Painel p95 ≤ 2 s; feedback ≤ 1 s; 360 px; WCAG AA | `HN-002`, `HN-003`, `HN-007`, `HT-010` |
-| RNF-005, RNF-006 | Resiliência | Degradação graciosa; timeout ≤ 10 s e até 2 tentativas | `HT-011`, `HT-012` |
+| RNF-005, RNF-006 | Resiliência | Degradação graciosa; timeout ≤ 10 s e até 2 tentativas | `HT-011`, `HT-013` |
 | RNF-007 | Reprodutibilidade | Zero passo manual fora do harness | `HT-005` |
-| RNF-008 | Observabilidade | Erro rastreável sem acesso à máquina | `HT-009` |
-| RNF-009 a RNF-011 | Custo | Teto de IA por pessoa/dia, cache obrigatório, R$ 0 recorrente | `HT-012`, `HT-015` |
-| RNF-012 a RNF-017 | Segurança e privacidade | Zero segredo versionado; autorização no servidor; cifra em repouso; log limpo; saída de IA validada | `HT-008`, `HT-013`, `HT-014`, `HN-001`, `HN-012` |
-| RNF-018 a RNF-021 | Qualidade | Toda RN com teste; ≥ 80% no domínio; adapters trocáveis; gates bloqueantes | `HT-006`, `HT-007`, `HT-010` |
+| RNF-008 | Observabilidade | Erro rastreável sem acesso à máquina | `HT-012` |
+| RNF-009 a RNF-011 | Custo | Teto de IA por pessoa/dia, cache obrigatório, R$ 0 recorrente | `HT-013`, `HT-015` |
+| RNF-012 a RNF-017 | Segurança e privacidade | Zero segredo versionado; autorização no servidor; cifra em repouso; log limpo; saída de IA validada | `HT-008`, `HT-010`, `HT-012`, `HT-014`, `HN-001`, `HN-012` |
+| RNF-018 a RNF-021 | Qualidade | Toda RN com teste; ≥ 80% no domínio; fronteiras verificadas; gates bloqueantes | `HT-006`, `HT-007`, `HT-009` |
 
 ## 3. Arquitetura
 
-- **Estilo:** frontend web separado de API, com o domínio isolado no servidor
-  (ports/adapters). Decisão detalhada e ADRs em `HT-004`.
+- **Estilo:** **arquitetura hexagonal (ports & adapters)** no backend, com a
+  camada web separada como apresentação. Decidido em
+  [`ADR-001`](../adr/ADR-001-arquitetura-hexagonal-no-backend.md), que define
+  estrutura de pastas, regras de importação e forma de verificação.
+  O frontend **não** é hexagonal: consome o contrato de `HT-017`.
 - **Fronteiras:** o domínio financeiro não conhece NestJS, ORM, HTTP, Pluggy nem
   Gemini. Dependências apontam para dentro.
 - **Ports/adapters obrigatórios:** agregador Open Finance, provedor de IA,
-  persistência e relógio.
-- **Decisões:** registradas como ADR; decisão sem consequência declarada não é
-  decisão.
+  persistência e **relógio** — o relógio é porta porque `RN-003` e `RN-005` só
+  são testáveis com o tempo sob controle.
+- **Decisões:** registradas como ADR em [`docs/adr/`](../adr/); decisão sem
+  consequência declarada não é decisão.
 
 | Decisão | Alternativas | Escolha | Consequência |
 | --- | --- | --- | --- |
+| Estilo arquitetural do backend | Hexagonal / NestJS idiomático / Clean Architecture | **Hexagonal — `ADR-001`** | Domínio testável sem framework, banco ou rede; custo assumido: mais arquivos e indireção. Materializada por `HT-009` |
 | Camada web | React 19 + TS 6 + Vite 8 + Tailwind 4 | **Decidida e implementada** | 41 componentes, 5.930 linhas, 9 mocks, zero testes. Mudança de stack agora custaria a PoC inteira |
 | Destino do código web existente | Integrar como está / preservar UI e reescrever lógica / descartar | **Preservar a UI, reescrever a lógica** | Componentes e estilo ficam; toda regra hoje em `src/mocks/` é descartada e reimplementada no domínio, com teste antes. Executado por `HT-016`, `HT-017` e `HT-018` |
 | API | NestJS + TypeScript | **Decidida, não implementada** | Um só idioma no projeto; estrutura opinativa favorece fronteiras |
 | Agregador Open Finance | Pluggy Sandbox | **Decidida, não implementada** | Atrás de porta (`RNF-020`); troca continua possível |
 | Provedor de IA | Google Gemini + LangChain.js | **Decidida, não implementada** | Atrás de porta; custo é o principal risco (`RNF-009`) |
 | Persistência | PostgreSQL | **Decidida, não implementada** | Docker fixa a versão |
-| ORM | Prisma / TypeORM / Drizzle | **Em aberto** | Resolvida em `HT-004`, antes de `HT-013` |
-| Framework de teste | Vitest+Playwright / Jest+Cypress | **Em aberto** | Resolvida em `HT-004`, antes de `HT-006` |
-| Autenticação | JWT próprio / provedor gerenciado | **Em aberto** | Resolvida em `HT-004`, antes de `HN-001` |
-| Hospedagem | Vercel+Render / Netlify+Fly.io / Railway | **Em aberto** | Resolvida em `HT-015` |
+| ORM | Prisma / TypeORM / Drizzle | **Em aberto** | Resolvida em `HT-004` (ADR-002), antes de `HT-010`. Restrição de `ADR-001`: não pode acoplar o domínio |
+| Framework de teste | Vitest+Playwright / Jest+Cypress | **Em aberto** | Resolvida em `HT-004` (ADR-003), antes de `HT-006`. Inclui a ferramenta que verifica as fronteiras de `ADR-001` |
+| Autenticação | JWT próprio / provedor gerenciado | **Em aberto** | Resolvida em `HT-004` (ADR-004), antes de `HN-001` |
+| Hospedagem | Vercel+Render / Netlify+Fly.io / Railway | **Em aberto** | Resolvida em `HT-015` (ADR-005) |
 
 ## 4. Segurança e privacidade
 
@@ -72,7 +77,7 @@ Fonte: [`REQUISITOS-NAO-FUNCIONAIS.md`](../requisitos/REQUISITOS-NAO-FUNCIONAIS.
 | Autorização | Verificada **no servidor** em toda operação sobre dado de pessoa; teste negativo obrigatório por rota (`RNF-013`, `RN-015`) | `HT-008`, `HN-001` |
 | Dados sensíveis e retenção | Dado financeiro tratado como sensível mesmo em Sandbox; retenção e prazo de exclusão declarados à pessoa (`RNF-016`, `RN-013`, `RN-016`) | `HN-012` |
 | Segredos e credenciais | Chaves de Pluggy e Gemini fora do repositório, do log e do pacote da web; varredura no harness e no CI (`RNF-012`) | `HT-008` |
-| Cifra em repouso | Token de consentimento e credencial de agregador cifrados (`RNF-014`) | `HT-013` |
+| Cifra em repouso | Token de consentimento e credencial de agregador cifrados (`RNF-014`) | `HT-010` |
 | Saída do modelo | Tratada como entrada não confiável: validação de formato e coerência numérica antes de exibir (`RNF-017`, `RN-019`) | `HT-014` |
 | Dependências | Versões fixadas e verificação de vulnerabilidade no gate | `HT-007`, `HT-008` |
 
@@ -119,10 +124,10 @@ decididas em `HT-007` e `HT-015`.
 
 | Sinal | O que responde | Ferramenta |
 | --- | --- | --- |
-| Log estruturado | O que aconteceu, em qual requisição, sem dado pessoal (`RNF-008`, `RNF-015`) | Definida em `HT-009` |
-| Métrica de custo | Quantas chamadas de IA por pessoa por dia (`RNF-009`) | Contador próprio, `HT-012` |
-| Erro | Qual falha, onde, com correlação até a operação | Definida em `HT-009` |
-| Integração externa | Latência e taxa de falha de Pluggy e Gemini | `HT-011`, `HT-012` |
+| Log estruturado | O que aconteceu, em qual requisição, sem dado pessoal (`RNF-008`, `RNF-015`) | Definida em `HT-012` |
+| Métrica de custo | Quantas chamadas de IA por pessoa por dia (`RNF-009`) | Contador próprio, `HT-013` |
+| Erro | Qual falha, onde, com correlação até a operação | Definida em `HT-012` |
+| Integração externa | Latência e taxa de falha de Pluggy e Gemini | `HT-011`, `HT-013` |
 
 ## 9. Versionamento
 
@@ -140,7 +145,8 @@ entrega fecha com commit semântico citando a chave e tag no **mesmo hash**.
 | Risco | Impacto | Mitigação |
 | --- | --- | --- |
 | Custo de IA estourar o free tier | Paralisa o projeto | Teto por pessoa/dia e cache obrigatório (`RNF-009`, `RNF-010`) |
-| Regra de negócio vazar para controlador ou ORM | Torna a regra intestável e o sistema caro de mudar | `architecture-boundaries-and-solid` no gate de arquitetura |
+| Regra de negócio vazar para controlador ou ORM | Torna a regra intestável e o sistema caro de mudar | `ADR-001` + checagem de fronteira que quebra o build (`HT-009`) |
+| Time contornar a fronteira por pressa do prazo | Hexagonal exige resistir ao caminho natural do NestJS | A violação falha no gate, não depende de disciplina |
 | Acoplamento ao SDK do Pluggy ou do Gemini | Impede troca de provedor | Adapters atrás de porta (`RNF-020`) |
 | Segredo versionado por engano | Exposição de credencial | Varredura no harness e no CI (`RNF-012`) |
 | Backend nascer sem teste porque "é só PoC" | Dívida que inviabiliza as histórias de IA | `HT-006` antes de `HT-010`; ordem do kanban protege isso |
