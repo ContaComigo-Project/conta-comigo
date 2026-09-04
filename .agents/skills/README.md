@@ -21,7 +21,9 @@ Uma skill pode complementar outra, nunca substituir o veredito de um gate alheio
 | [sre-agent](./sre-agent/SKILL.md) | Gate | Validar ambiente, harness, CI/CD, observabilidade |
 | [security-specialist-agent](./security-specialist-agent/SKILL.md) | Gate | Validar autenticação, autorização, dados e segredos |
 | [architect-reviewer-agent](./architect-reviewer-agent/SKILL.md) | Gate | Validar fronteiras, SOLID e manutenibilidade |
+| [code-reviewer-agent](./code-reviewer-agent/SKILL.md) | Revisão / análise | Inspecionar diffs, bugs, segredos e padrões antes do commit |
 | [final-reviewer-agent](./final-reviewer-agent/SKILL.md) | Gate | Cruzar tudo e autorizar o fechamento |
+| [commit-crafter-agent](./commit-crafter-agent/SKILL.md) | Execução | Preparar staging seletivo e redigir commit semântico em inglês |
 | [git-operator](./git-operator/SKILL.md) | Execução | Commit semântico e tag no mesmo hash |
 | [commit-conventions](./commit-conventions/SKILL.md) | Execução / gate | Valida formato e metadados do commit, incluindo rodapé Gerado-por-IA com modelo |
 
