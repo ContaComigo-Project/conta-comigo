@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# Git pre-commit hook
+# Executa a validacao do staging antes de autorizar o commit.
+# Se qualquer checagem critica falhar, o commit e abortado.
+
+set -e
+
+# Detecta PowerShell no Windows ou bash no Linux/macOS
+if command -v pwsh >/dev/null 2>&1; then
+  pwsh -NoProfile -ExecutionPolicy Bypass -File scripts/validar-staging.ps1
+elif command -v powershell.exe >/dev/null 2>&1; then
+  powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/validar-staging.ps1
+else
+  bash scripts/validar-staging.sh
+fi

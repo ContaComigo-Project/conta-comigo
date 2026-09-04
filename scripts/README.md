@@ -15,8 +15,10 @@ CI — se divergirem, o CI deixa de ser prova.
 
 | Script | Para quê |
 | --- | --- |
+| `auditar-repositorio.sh` / `.ps1` | Auditoria de integridade do repositório (limites de linha, estrutura e links) |
 | `harness.sh` / `harness.ps1` | Executa as tarefas do projeto (setup, lint, testes, gates) |
 | `harness.env.example` | Registro dos comandos reais; copie para `harness.env` |
+| `instalar-hooks.sh` / `.ps1` | Configura o Git para acionar `.githooks/pre-commit` automaticamente |
 | `nova-historia.sh` / `.ps1` | Cria `docs/tasks/[CHAVE]/` a partir do template |
 | `validar-staging.sh` / `.ps1` | Valida arquivos staged antes do commit (segredos, limites, resíduos de debug) |
 | `verificar-fechamento.sh` / `.ps1` | Valida commit semântico, chave da história, entrega e tag no mesmo hash |
