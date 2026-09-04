@@ -19,8 +19,8 @@ ser quebrada em épico, requisitos e histórias no `KANBAN-OFICIAL.md`.
 ```
 SDD (entendimento)
   ├─> docs/requisitos/            (RF, RNF, RN com identificador estável)
-  ├─> docs/jira-pessoal/EPICO-NEGOCIO.md e EPICO-TECNICO.md
-  └─> docs/jira-pessoal/historias{,-tecnicas}/  ->  KANBAN-OFICIAL.md
+  ├─> docs/backlog/EPICO-NEGOCIO.md e EPICO-TECNICO.md
+  └─> docs/backlog/historias{,-tecnicas}/  ->  KANBAN-OFICIAL.md
 ```
 
 ## O que uma spec precisa responder

@@ -1,5 +1,5 @@
 ---
-name: jira-pessoal-indice
+name: backlog-indice
 description: Índice do backlog do projeto — kanban oficial, épicos, histórias de negócio e histórias técnicas.
 document_type: index
 applies_when:

@@ -40,5 +40,5 @@ echo "criado docs/tasks/${CHAVE}/ com TASK.md, IMPLEMENTATION.md e progress.txt"
 echo
 echo "próximos passos:"
 echo "  1. preencher TASK.md e IMPLEMENTATION.md antes de escrever código"
-echo "  2. mover ${CHAVE} para 'Em execução' no docs/jira-pessoal/KANBAN-OFICIAL.md"
+echo "  2. mover ${CHAVE} para 'Em execução' no docs/backlog/KANBAN-OFICIAL.md"
 echo "  3. seguir .agents/prompts/ralph-loop.md"

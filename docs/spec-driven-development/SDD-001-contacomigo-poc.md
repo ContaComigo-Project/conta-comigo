@@ -177,4 +177,4 @@ Catálogos completos em [`docs/requisitos/`](../requisitos/).
 | Publicação | `HT-015` | Técnico | Fecha a PoC apresentável |
 | Acesso, consentimento, painel, legibilidade, orçamento, histórico, IA, exportação, LGPD | `HN-001` a `HN-012` | Negócio | Comportamento percebido pela pessoa |
 
-Ordem detalhada em [`KANBAN-OFICIAL.md`](../jira-pessoal/KANBAN-OFICIAL.md).
+Ordem detalhada em [`KANBAN-OFICIAL.md`](../backlog/KANBAN-OFICIAL.md).

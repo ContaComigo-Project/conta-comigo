@@ -49,9 +49,9 @@ funcional foi definido — por decisão do time, isso é feito a partir de `HT-0
 | --- | --- |
 | `docs/spec-driven-development/` | Índice e template de spec |
 | `docs/requisitos/` | Catálogos `RF`, `RNF`, `RN` (vazios, com regras de preenchimento) |
-| `docs/jira-pessoal/` | `KANBAN-OFICIAL.md`, épico de negócio, épico técnico |
-| `docs/jira-pessoal/historias/` | Template de história de negócio |
-| `docs/jira-pessoal/historias-tecnicas/` | Template + `HT-000` e `HT-001` |
+| `docs/backlog/` | `KANBAN-OFICIAL.md`, épico de negócio, épico técnico |
+| `docs/backlog/historias/` | Template de história de negócio |
+| `docs/backlog/historias-tecnicas/` | Template + `HT-000` e `HT-001` |
 | `docs/tasks/_TEMPLATE/` | `TASK.md`, `IMPLEMENTATION.md`, `progress.txt` |
 | `docs/entregas/` | Índice e template de entrega |
 | `.agents/rules/` | 7 rules bloqueantes/recomendadas |
@@ -64,7 +64,7 @@ funcional foi definido — por decisão do time, isso é feito a partir de `HT-0
 
 | Critério | Resultado | Evidência |
 | --- | --- | --- |
-| Kanban oficial como fonte única | Aprovado | `docs/jira-pessoal/KANBAN-OFICIAL.md` com fila e próxima demanda |
+| Kanban oficial como fonte única | Aprovado | `docs/backlog/KANBAN-OFICIAL.md` com fila e próxima demanda |
 | Épicos de negócio e técnico | Aprovado | `EPICO-NEGOCIO.md`, `EPICO-TECNICO.md` |
 | Separação negócio/técnico | Aprovado | Diretórios e templates distintos |
 | Templates de execução | Aprovado | `docs/tasks/_TEMPLATE/` |

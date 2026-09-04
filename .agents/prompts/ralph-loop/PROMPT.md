@@ -23,7 +23,7 @@ PERCEBER -> ORIENTAR -> DECIDIR -> AGIR -> REGISTRAR
 
 Ler, nesta ordem, sem presumir memória:
 
-- `docs/jira-pessoal/KANBAN-OFICIAL.md` — qual é a próxima demanda
+- `docs/backlog/KANBAN-OFICIAL.md` — qual é a próxima demanda
 - o arquivo da história (`HN-XXX` ou `HT-XXX`)
 - `docs/tasks/[CHAVE]/progress.txt` — o que já foi feito
 - entregas relacionadas em `docs/entregas/`

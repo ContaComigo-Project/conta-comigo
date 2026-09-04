@@ -50,7 +50,7 @@ kanban atualizado e suíte de testes verde na árvore atual.
    Arquivo que não pertence à história sai do staging.
 4. **Commit semântico:**
    ```
-   tipo(escopo): descrição no imperativo (CHAVE)
+   type(scope): imperative description (KEY)
    ```
    Corpo opcional com o porquê; rodapé com `Refs: docs/entregas/...`.
 5. **Tag no mesmo hash:**

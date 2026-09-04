@@ -35,5 +35,5 @@ Write-Host "criado docs/tasks/$Chave/ com TASK.md, IMPLEMENTATION.md e progress.
 Write-Host ""
 Write-Host "proximos passos:"
 Write-Host "  1. preencher TASK.md e IMPLEMENTATION.md antes de escrever codigo"
-Write-Host "  2. mover $Chave para 'Em execucao' no docs/jira-pessoal/KANBAN-OFICIAL.md"
+Write-Host "  2. mover $Chave para 'Em execucao' no docs/backlog/KANBAN-OFICIAL.md"
 Write-Host "  3. seguir .agents/prompts/ralph-loop.md"

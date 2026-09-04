@@ -140,9 +140,9 @@ Crie ou proponha a seguinte estrutura inicial:
 
 - docs/spec-driven-development/
 - docs/requisitos/
-- docs/jira-pessoal/
-- docs/jira-pessoal/historias/
-- docs/jira-pessoal/historias-tecnicas/
+- docs/backlog/
+- docs/backlog/historias/
+- docs/backlog/historias-tecnicas/
 - docs/tasks/
 - docs/entregas/
 - .agents/rules/

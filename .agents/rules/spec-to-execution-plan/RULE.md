@@ -23,7 +23,7 @@ executa o kanban, e ninguém sabe o que está entregue. Existe uma fila só.
 
 ## Obrigações
 
-1. **`docs/jira-pessoal/KANBAN-OFICIAL.md` é a única fonte da próxima demanda.**
+1. **`docs/backlog/KANBAN-OFICIAL.md` é a única fonte da próxima demanda.**
    Nenhuma execução começa por spec, conversa, ideia ou item de outro quadro.
 2. **SDD não é fila.** A spec alimenta requisitos, épicos e histórias. Ela
    complementa a história oficial; nunca a substitui.

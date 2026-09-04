@@ -33,7 +33,7 @@ caracteriza o fechamento.
 
 ## Critérios de aceite
 
-- [x] Existe `docs/jira-pessoal/KANBAN-OFICIAL.md` como fonte única, com fila
+- [x] Existe `docs/backlog/KANBAN-OFICIAL.md` como fonte única, com fila
       cronológica e próxima demanda explícita
 - [x] Existem épico de negócio e épico técnico, ainda que como esqueleto
 - [x] Histórias de negócio e técnicas têm diretórios e templates separados

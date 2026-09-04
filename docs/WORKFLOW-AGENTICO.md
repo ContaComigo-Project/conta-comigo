@@ -18,9 +18,9 @@ commit semântico e tag no mesmo hash.
 
 | Preciso de… | Vá para |
 | --- | --- |
-| Saber o que fazer agora | [`docs/jira-pessoal/KANBAN-OFICIAL.md`](./jira-pessoal/KANBAN-OFICIAL.md) |
-| Entender o produto | [`docs/jira-pessoal/EPICO-NEGOCIO.md`](./jira-pessoal/EPICO-NEGOCIO.md) |
-| Entender o sistema | [`docs/jira-pessoal/EPICO-TECNICO.md`](./jira-pessoal/EPICO-TECNICO.md) |
+| Saber o que fazer agora | [`docs/backlog/KANBAN-OFICIAL.md`](./backlog/KANBAN-OFICIAL.md) |
+| Entender o produto | [`docs/backlog/EPICO-NEGOCIO.md`](./backlog/EPICO-NEGOCIO.md) |
+| Entender o sistema | [`docs/backlog/EPICO-TECNICO.md`](./backlog/EPICO-TECNICO.md) |
 | Consultar requisito | [`docs/requisitos/`](./requisitos/) |
 | Saber por que o projeto é assim | [`docs/adr/`](./adr/) |
 | Registrar entendimento | [`docs/spec-driven-development/`](./spec-driven-development/) |
@@ -55,10 +55,10 @@ ADRs**.
 
 ```bash
 # 1. Confirmar a próxima demanda
-cat docs/jira-pessoal/KANBAN-OFICIAL.md
+cat docs/backlog/KANBAN-OFICIAL.md
 
 # 2. Ler a história
-cat docs/jira-pessoal/historias-tecnicas/HT-004-decisoes-de-stack.md
+cat docs/backlog/historias-tecnicas/HT-004-decisoes-de-stack.md
 
 # 3. Criar a pasta de execução
 scripts/nova-historia.sh HT-004        # Windows: powershell -File scripts/nova-historia.ps1 HT-004
@@ -101,7 +101,7 @@ Gate reprovado devolve a história para `Em execução` com a lista do que falta
 git status --short                    # inspecionar antes de qualquer add
 git add <caminhos da história>        # staging seletivo, nunca -A
 git diff --cached --stat              # conferir o que vai no commit
-git commit -m "feat(escopo): descrição no imperativo (HT-XXX)"
+git commit -m "feat(scope): imperative description (HT-XXX)"
 git tag -a v0.2.0 -m "HT-XXX — título da entrega"
 scripts/verificar-fechamento.sh v0.2.0
 ```

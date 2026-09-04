@@ -17,9 +17,9 @@ complemented_by:
   - executor-agent
 outputs:
   - docs/requisitos/*
-  - docs/jira-pessoal/EPICO-*.md
-  - docs/jira-pessoal/historias{,-tecnicas}/*
-  - docs/jira-pessoal/KANBAN-OFICIAL.md
+  - docs/backlog/EPICO-*.md
+  - docs/backlog/historias{,-tecnicas}/*
+  - docs/backlog/KANBAN-OFICIAL.md
   - docs/entregas/*
 max_lines: 300
 ---
