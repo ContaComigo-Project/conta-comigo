@@ -16,10 +16,12 @@ max_lines: 300
 
 ## Fonte da verdade
 
-- `.agents/prompts/*` é a **fonte da verdade** oficial e versionada no git.
-- Arquivos dentro de `.claude/prompts/` são propriedade da IDE (configuração
-  local por instalação); não servem de referência para a equipe. Qualquer regra
-  definitiva deve ser copiada para `.agents/`.
+- `.agents/prompts/*` é a **fonte da verdade** oficial e versionada no git. Todo
+  assistente, membro da equipe e processo deve ler e editar APENAS aqui.
+- Cópias de conveniência para inicialização de IDEs específicas são de
+  responsabilidade LOCAL da instalação de cada pessoa; nunca são versionadas
+  e nunca servem de referência compartilhada. Em qualquer conflito, vence
+  `.agents/*`.
 
 ## Estrutura obrigatória de um prompt
 

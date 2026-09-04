@@ -128,7 +128,11 @@ scripts/verificar-fechamento.sh v0.2.0
 
 ## Nota sobre ferramenta
 
-Rules e skills vivem em `.agents/` porque descrevem o processo do time, não a
-configuração de um assistente específico. Para acioná-las como skills nativas do
-Claude Code, crie espelhos em `.claude/skills/<nome>/SKILL.md` apontando para o
-arquivo canônico em `.agents/skills/`.
+Rules e skills vivem **exclusivamente** em `.agents/` porque descrevem o processo
+do time (versão git, compartilhada pela equipe), não a configuração de um
+assistente ou IDE específicos.
+
+Se uma IDE específica só ler atalhos de caminhos locais particulares
+(ex: Claude Code, Cursor, Trae), crie **na sua máquina** — sem versionar —
+cópias de conveniência apontando para os arquivos canônicos em `.agents/`.
+O que vale para a equipe é sempre o que está em `.agents/*` e `docs/*`.

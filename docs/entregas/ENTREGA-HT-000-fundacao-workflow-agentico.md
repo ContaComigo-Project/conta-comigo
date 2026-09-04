@@ -132,7 +132,7 @@ convenções em cada arquivo.
 
 | Decisão | Motivo | Impacto futuro |
 | --- | --- | --- |
-| Rules e skills em `.agents/`, não em `.claude/` | O workflow é independente de ferramenta de IA | Se o time quiser acionar por `/skill` no Claude Code, cria-se espelho em `.claude/skills/` |
+| Rules e skills em `.agents/` (única fonte da verdade versionada) | O workflow é independente de ferramenta de IA | Se alguém quiser acionar por atalho numa IDE específica (Claude Code, Cursor, Trae etc.), cria um espelho LOCAL na máquina — não versionado — apontando para `.agents/` |
 | Catálogos de requisitos criados vazios | Requisitos são decisão do time, feita em `HT-001`–`HT-003` | Nenhuma história de produto entra em `Ready` antes disso |
 | Harness falha em vez de assumir stack | Stack indefinida; um harness silencioso mentiria | `HT-004` decide stack, `HT-005` preenche comandos |
 | Chaves `HN-XXX` e `HT-XXX` com três dígitos | Ordenação estável e legível | Limite prático de 999 histórias por tipo |
