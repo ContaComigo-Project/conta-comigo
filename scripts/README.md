@@ -18,7 +18,8 @@ CI — se divergirem, o CI deixa de ser prova.
 | `harness.sh` / `harness.ps1` | Executa as tarefas do projeto (setup, lint, testes, gates) |
 | `harness.env.example` | Registro dos comandos reais; copie para `harness.env` |
 | `nova-historia.sh` / `.ps1` | Cria `docs/tasks/[CHAVE]/` a partir do template |
-| `verificar-fechamento.sh` | Valida commit semântico, chave da história, entrega e tag no mesmo hash |
+| `validar-staging.sh` / `.ps1` | Valida arquivos staged antes do commit (segredos, limites, resíduos de debug) |
+| `verificar-fechamento.sh` / `.ps1` | Valida commit semântico, chave da história, entrega e tag no mesmo hash |
 
 ## Uso
 
@@ -57,10 +58,14 @@ comando que as levanta. O critério para usar Docker é um só: **o ambiente
 precisa ser idêntico em qualquer máquina**. Onde isso já é verdade sem
 contêiner, Docker é custo sem retorno.
 
-## Fechamento de entrega
+## Validação de staging e fechamento de entrega
 
 ```bash
-scripts/verificar-fechamento.sh v0.2.0
+# Validar arquivos preparados no staging antes do commit
+scripts/validar-staging.sh             # Windows: powershell -File scripts/validar-staging.ps1
+
+# Validar fechamento da entrega após commit e tag
+scripts/verificar-fechamento.sh v0.2.0 # Windows: powershell -File scripts/verificar-fechamento.ps1 v0.2.0
 ```
 
 Verifica que a tag existe, aponta para o commit de fechamento, que a mensagem é

@@ -39,13 +39,14 @@ commit semântico e tag no mesmo hash.
 4. IMPLEMENTAR código mínimo até ficar verde
 5. REFATORAR  com os funcionais verdes, sem tocar nos testes
 6. COBRIR     testes unitários e casos de borda
-7. VALIDAR    gates marcados na história
+7. VALIDAR    gates da história + code-reviewer-agent (diff limpo)
 8. DOCUMENTAR docs/entregas/ENTREGA-HT-XXX-*.md
-9. FECHAR     commit semântico (CHAVE) + tag vX.Y.Z no mesmo hash
+9. FECHAR     final-reviewer-agent -> commit-crafter-agent (staging seletivo)
+              -> git-operator: commit semântico (CHAVE) + tag no mesmo hash
 10. ATUALIZAR kanban: Done + histórico
 ```
 
-Cada passo é uma volta do [Ralph Loop](../.agents/prompts/ralph-loop.md):
+Cada passo é uma volta do [Ralph Loop](../.agents/prompts/ralph-loop/PROMPT.md):
 Perceber → Orientar → Decidir → Agir → **Registrar**.
 
 ## Como iniciar a próxima história
@@ -83,15 +84,18 @@ Da ordem 5 em diante, o item só ganha arquivo de história quando entra em
 | É infraestrutura, qualidade, segurança, CI/CD, operação, publicação, observabilidade ou governança? | `HT-XXX` — história técnica |
 | As duas coisas? | Duas histórias |
 
-## Gates
+## Gates e Revisão
 
-| Gate | Skill | Aciona quando |
+| Gate / Papel | Skill | Aciona quando |
 | --- | --- | --- |
 | QA | `qa-agent` | Sempre que houver comportamento testável |
 | SRE | `sre-agent` | Ambiente, build, pipeline, publicação, operação |
 | Segurança | `security-specialist-agent` | Autenticação, autorização, dado pessoal, segredo, integração |
 | Arquitetura | `architect-reviewer-agent` | Módulo, contrato, dependência ou padrão novo |
-| Revisão final | `final-reviewer-agent` | Sempre, antes do commit de entrega |
+| Revisão de Diff | `code-reviewer-agent` | Inspecionar diff linha a linha (bugs, segredos, prints, clean code) |
+| Revisão Final | `final-reviewer-agent` | Sempre, antes do commit de entrega (cruza critérios e gates) |
+| Preparo de Commit | `commit-crafter-agent` | Staging seletivo e composição da mensagem em inglês + rodapé de IA |
+| Operador Git | `git-operator` | Execução do commit e emissão de tag no mesmo hash |
 
 Gate reprovado devolve a história para `Em execução` com a lista do que falta.
 
@@ -101,9 +105,10 @@ Gate reprovado devolve a história para `Em execução` com a lista do que falta
 git status --short                    # inspecionar antes de qualquer add
 git add <caminhos da história>        # staging seletivo, nunca -A
 git diff --cached --stat              # conferir o que vai no commit
+scripts/validar-staging.sh            # Windows: powershell -File scripts/validar-staging.ps1
 git commit -m "feat(scope): imperative description (HT-XXX)"
 git tag -a v0.2.0 -m "HT-XXX — título da entrega"
-scripts/verificar-fechamento.sh v0.2.0
+scripts/verificar-fechamento.sh v0.2.0 # Windows: powershell -File scripts/verificar-fechamento.ps1 v0.2.0
 ```
 
 | Regra | Consequência de violar |
@@ -122,7 +127,7 @@ scripts/verificar-fechamento.sh v0.2.0
 | Requisito funcional | `RF-XXX` |
 | Requisito não funcional | `RNF-XXX` |
 | Regra de negócio | `RN-XXX` |
-| Commit | `tipo(escopo): descrição (CHAVE)` |
+| Commit | `type(scope): imperative description (KEY)` |
 | Versão | `vMAJOR.MINOR.PATCH` |
 | Rule / skill / prompt | frontmatter + responsabilidade única + ≤ 300 linhas |
 
