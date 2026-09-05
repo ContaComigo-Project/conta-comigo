@@ -12,8 +12,8 @@ max_lines: 300
 - **Data:** 2026-09-05
 - **Tipo:** Técnica (governança)
 - **Versão:** `v0.6.0`
-- **Commit:** `[preenchido no fechamento]`
-- **Tag:** `v0.6.0` → `[mesmo hash]`
+- **Commit:** `5ebeb8a`
+- **Tag:** `v0.6.0` → `5ebeb8a`
 
 ## O que foi entregue
 

@@ -13,3 +13,4 @@
 2026-09-05 00:51 | REGISTRAR | RN-024 e RN-025 marcadas como Descartada no catálogo com motivo; legenda atualizada | docs/requisitos/REGRAS-DE-NEGOCIO.md
 2026-09-05 00:52 | REGISTRAR | notas de escopo (rotas mortas, console.log, identidade real) adicionadas ao kanban | docs/backlog/KANBAN-OFICIAL.md
 2026-09-05 00:53 | REGISTRAR | ENTREGA-HT-016-inventario-frontend.md criado; gates de segurança/arquitetura/final aplicados | docs/entregas/
+2026-09-05 01:00 | AGIR | commit de fechamento 5ebeb8a criado; tag v0.6.0; verificar-fechamento verde | git

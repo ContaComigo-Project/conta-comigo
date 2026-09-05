@@ -87,7 +87,7 @@ o backlog passou a considerar o frontend existente.
 | Ordem | Chave | Título | Tipo | Estado | Depende de | RNF |
 | --- | --- | --- | --- | --- | --- | --- |
 | 4 | `HT-004` | Decidir tecnologias em aberto e registrar ADRs | Técnica | **Done** | HT-003 | — |
-| 5 | `HT-016` | Inventário do frontend existente e destino dos mocks | Técnica | **Em revisão** | HT-004 | RNF-018, RNF-020 |
+| 5 | `HT-016` | Inventário do frontend existente e destino dos mocks | Técnica | **Done** | HT-004 | RNF-018, RNF-020 |
 | 6 | `HT-005` | Harness local reprodutível com docker compose | Técnica | Backlog | HT-004 | RNF-007 |
 | 7 | `HT-006` | Infraestrutura de testes funcional/BDD e unitário | Técnica | Backlog | HT-005 | RNF-018, RNF-019 |
 | 8 | `HT-007` | Pipeline de CI com gates bloqueantes | Técnica | Backlog | HT-006 | RNF-021 |
@@ -142,16 +142,16 @@ o backlog passou a considerar o frontend existente.
 ## Quadro
 
 ### Ready
-- _(vazio — `HT-016` em revisão, WIP 1)_
+- _(vazio — WIP 1)_
 
 ### Em execução
 - _(vazio)_
 
 ### Em revisão
-- `HT-016` — Inventário do frontend existente e destino dos mocks
+- _(vazio)_
 
 ### Done
-- `HT-000` `v0.1.0` · `HT-001` `v0.2.0` · `HT-002` `v0.3.0` · `HT-003` `v0.4.0` · `HT-004` `v0.5.0`
+- `HT-000` `v0.1.0` · `HT-001` `v0.2.0` · `HT-002` `v0.3.0` · `HT-003` `v0.4.0` · `HT-004` `v0.5.0` · `HT-016` `v0.6.0`
 
 Todas verificadas por `scripts/verificar-fechamento.sh`: tag e commit no mesmo
 hash, mensagem semântica citando a chave, documento de entrega presente.
@@ -193,3 +193,4 @@ cada tela é aproveitável, e isso muda o critério de aceite de quase todas ela
 | 2026-09-05 | `HT-004` | Em revisão | Done | `v0.5.0` → `a1fa811` |
 | 2026-09-05 | `HT-016` | Ready | Em execução | `docs/tasks/HT-016/` criado com TASK e IMPLEMENTATION |
 | 2026-09-05 | `HT-016` | Em execução | Em revisão | Inventário completo; aguardando gates e fechamento |
+| 2026-09-05 | `HT-016` | Em revisão | Done | `v0.6.0` → `5ebeb8a` |
