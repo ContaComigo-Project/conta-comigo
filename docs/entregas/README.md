@@ -27,6 +27,7 @@ Arquivo: `ENTREGA-[CHAVE]-titulo-em-kebab-case.md`, a partir de
 | 2026-09-02 | `HT-002` `HT-003` | Correção: backlog incorpora o frontend existente | `v0.4.1` | `9c063f7` | `v0.4.1` |
 | 2026-09-05 | [`HT-004`](./ENTREGA-HT-004-decisoes-de-stack.md) | Decisões de stack registradas como ADR-002..005 | `v0.5.0` | `a1fa811` | `v0.5.0` |
 | 2026-09-05 | [`HT-016`](./ENTREGA-HT-016-inventario-frontend.md) | Inventário do frontend e destino dos mocks | `v0.6.0` | `5ebeb8a` | `v0.6.0` |
+| 2026-09-05 | `HT-016` | Correção: telas do dashboard mantidas com "Em construção" | `v0.6.1` | `c3bfb55` | `v0.6.1` |
 
 Toda linha acima foi verificada por `scripts/verificar-fechamento.sh`: a tag
 aponta para o mesmo hash do commit de fechamento, e a mensagem cita a chave.

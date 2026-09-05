@@ -107,8 +107,17 @@ alinhada com `RN-001`.
 
 ## Verificação de fechamento
 
-- [ ] Testes e gates aplicáveis verdes
-- [ ] Commit semântico contém a chave `HT-016`
-- [ ] Commit não contém arquivos de outra história
-- [ ] Tag `v0.6.0` aponta para o mesmo hash do commit
-- [ ] `KANBAN-OFICIAL.md` atualizado
+- [x] Testes e gates aplicáveis verdes
+- [x] Commit semântico contém a chave `HT-016`
+- [x] Commit não contém arquivos de outra história
+- [x] Tag `v0.6.0` aponta para o mesmo hash do commit
+- [x] `KANBAN-OFICIAL.md` atualizado
+
+## Correção posterior (`v0.6.1` → `c3bfb55`)
+
+As telas `/dashboard/investimentos`, `/bancos`, `/configuracoes` e `/metas`
+foram reclassificadas de "links mortos" para **telas mantidas**: o link leva a
+uma tela com o estado **"Em construção"** em um primeiro momento, e a decisão
+de implementar ou cortar cada uma fica com o product-manager antes do fim da
+PoC. `docs/inventario-frontend.md` (§1.3, §1.6, §5), notas do kanban e este
+documento foram atualizados.
