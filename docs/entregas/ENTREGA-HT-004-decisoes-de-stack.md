@@ -12,8 +12,8 @@ max_lines: 300
 - **Data:** 2026-09-05
 - **Tipo:** Técnica (governança)
 - **Versão:** `v0.5.0`
-- **Commit:** `c048700`
-- **Tag:** `v0.5.0` → `c048700`
+- **Commit:** `a1fa811`
+- **Tag:** `v0.5.0` → `a1fa811`
 
 ## O que foi entregue
 

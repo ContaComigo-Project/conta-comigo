@@ -177,4 +177,4 @@ cada tela é aproveitável, e isso muda o critério de aceite de quase todas ela
 | 2026-09-05 | `HT-004` | Ready | Em execução | `docs/tasks/HT-004/` criado com TASK e IMPLEMENTATION |
 | 2026-09-05 | `HT-016` | Backlog | Ready | `HT-004` concluída; dependência resolvida |
 | 2026-09-05 | `HT-004` | Em execução | Em revisão | ADRs e artefatos produzidos; aguardando gates e fechamento |
-| 2026-09-05 | `HT-004` | Em revisão | Done | `v0.5.0` → `c048700` |
+| 2026-09-05 | `HT-004` | Em revisão | Done | `v0.5.0` → `a1fa811` |
