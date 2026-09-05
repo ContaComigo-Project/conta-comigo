@@ -24,7 +24,8 @@ max_lines: 300
   **mais de 25 regras de negócio** localizadas com arquivo e linha.
 - **`RN-024` e `RN-025` resolvidas**: descartadas como regra de domínio, com
   motivo registrado no catálogo — a única fonte de faixa passa a ser `RN-001`.
-- **Notas de escopo no kanban**: rotas mortas (`HN-003`), `console.log` de
+- **Notas de escopo no kanban**: telas do dashboard mantidas com "Em construção"
+  (decidir implementar/cortar), `console.log` de
   credenciais (`HN-001`) e identidade pessoal real em mocks (`HT-018`).
 - **Insumo para `HT-017` e `HT-018`**: contrato deve separar número e
   formatação; mocks apontados para remoção.
@@ -44,7 +45,7 @@ Nenhum código do frontend foi alterado (fora de escopo declarado).
 | Critério | Resultado | Evidência |
 | --- | --- | --- |
 | Inventário lista os componentes com caminho, RF, classificação e motivo | Aprovado | §1 com 41 linhas |
-| Componente sem RF marcado como decisão | Aprovado | §1.6 (landing) e §5 (rotas mortas) |
+| Componente sem RF marcado como decisão | Aprovado | §1.6 (landing) e §5 (telas "Em construção") |
 | 9 mocks classificados (contrato/massa/descarta) | Aprovado | §2 tabela completa |
 | Toda regra de negócio em `src/` listada com arquivo e linha | Aprovado | §3.1 e §3.2 (R1–R24) |
 | `RN-024` e `RN-025` saem de Rascunho | Aprovado | Status `Descartada` no catálogo + §4 |
@@ -94,7 +95,7 @@ alinhada com `RN-001`.
 | `RN-024` descartada (cap 200 é de UI, não do dado) | Truncar dado esconde estouro; `RN-001` opera sobre valor real | Domínio calcula % real; barra capa exibição |
 | `RN-025` descartada (sem arredondamento antes da faixa) | 70,04% viraria verde, contrariando `RN-001` | Faixa determinística por comparação exata |
 | Landing permanece "sem requisito" (institucional) | Não é funcionalidade de produto; não vira RF | Fora do catálogo, preservada |
-| Links mortos removidos em `HN-003` | Rotas inexistentes são bug de navegação | Nota no kanban |
+| Telas do dashboard mantidas com "Em construção" | Páginas candidatas a implementar ou cortar; links não são bug | Nota no kanban; decisão com o product-manager |
 
 ## Dívida assumida
 

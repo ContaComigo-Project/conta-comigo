@@ -28,7 +28,7 @@ max_lines: 300
   re-hardcoded nas views.
 - **Riscos encontrados:** `console.log` de credenciais em `Login.tsx:23` e
   `Register.tsx:53`; identidade pessoal real em `mocks/user.mock.ts:3-5`;
-  rotas mortas na navegação; edição de limite sem persistência.
+  rotas da navegação apontando para telas "Em construção"; edição de limite sem persistência.
 - **Candidatos a extração para o domínio:** `resolveStatus`, `recomputeCategory`,
   faixas 70/90, gastos fixos (moradia + 60% alimentação), simulador de compra
   (impacto > 0,25 vermelho / > 0,12 amarelo), parser de valor monetário,
@@ -61,9 +61,9 @@ max_lines: 300
 
 | Caminho | RF | Classificação | Motivo |
 | --- | --- | --- | --- |
-| `pages/dashboard/DashboardLayout.tsx` | — | **Adapta** | Estrutura; os links herdados de `Sidebar`/`BottomDock` apontam rotas inexistentes |
-| `pages/dashboard/components/Sidebar.tsx` | — | **Adapta** | Links para `/dashboard/investimentos`, `/bancos`, `/configuracoes`, `/metas` **não existem** (rotas mortas) — decisão na seção 5 |
-| `pages/dashboard/components/BottomDock.tsx` | — | **Adapta** | Idem (rotas mortas) |
+| `pages/dashboard/DashboardLayout.tsx` | — | **Mantém** | Estrutura; a navegação de `Sidebar`/`BottomDock` aponta para telas que serão **mantidas** com estado "Em construção" em um primeiro momento (ver §5) |
+| `pages/dashboard/components/Sidebar.tsx` | — | **Mantém** | Links para `/dashboard/investimentos`, `/bancos`, `/configuracoes`, `/metas` — telas **mantidas**; em um primeiro momento levam a "Em construção" (ver §5) |
+| `pages/dashboard/components/BottomDock.tsx` | — | **Mantém** | Idem (telas mantidas, "Em construção" por enquanto) |
 | `pages/dashboard/components/AIChatWidget.tsx` | RF-020, RF-021 | **Adapta** | Thresholds 70/90 e `resolveStatus` duplicados (R9), atraso de "digitando" 1100 ms; `HN-010` integra ao provedor de IA e ao aviso permanente |
 
 ### 1.4 `pages/dashboard/overview/`
@@ -113,9 +113,9 @@ max_lines: 300
 **Componentes "sem requisito" (decisão registrada):** os 11 arquivos de
 `landing/` não servem a nenhum `RF` — são a página institucional pública do
 produto, fora do catálogo de requisitos. Não viram RF novo; permanecem como
-apresentação de marketing. As rotas mortas de `Sidebar`/`BottomDock`
-(`/dashboard/investimentos`, `/bancos`, `/configuracoes`, `/metas`) são bug de
-navegação — ver seção 5.
+apresentação de marketing. Os links de `Sidebar`/`BottomDock`
+(`/dashboard/investimentos`, `/bancos`, `/configuracoes`, `/metas`) são **telas
+mantidas** com estado "Em construção" em um primeiro momento — ver seção 5.
 
 ---
 
@@ -203,7 +203,7 @@ faixa aprovado é o de `RN-001`.
 
 | Achado | Evidência | Impacto no backlog |
 | --- | --- | --- |
-| **Rotas mortas** na navegação do dashboard | `Sidebar.tsx`, `BottomDock.tsx` apontam para `/dashboard/investimentos`, `/bancos`, `/configuracoes`, `/metas` — rotas inexistentes | **Decisão:** remover os links mortos em `HN-003` (painel consolidado); se uma página nascer (ex.: gestão de conexões), o link volta. Registrado no kanban |
+| **Navegação para telas "Em construção"** | `Sidebar.tsx`, `BottomDock.tsx` apontam para `/dashboard/investimentos`, `/bancos`, `/configuracoes`, `/metas` | **Decisão:** as telas são **mantidas**; em um primeiro momento o link leva a uma tela com o estado **"Em construção"**. A decisão de implementar cada uma ou cortá-la fica com o product-manager antes do fim da PoC. Registrado no kanban |
 | **`console.log` de credenciais e dados pessoais** | `Login.tsx:23`, `Register.tsx:53` | Risco de segurança; remover na reescrita de `HN-001`. Evidência para o gate de segurança |
 | **Identidade pessoal real em mock** | `mocks/user.mock.ts:3-5`, `chat.mock.ts:235` ("Olá Raul!") | Substituir por identidade fictícia em `HT-018` (remoção dos mocks) — dado pessoal não deve sobreviver à PoC |
 | **Edição de limite sem persistência** | `use-expenses-state.ts:60-62` | Confirma que `HN-006` precisa de persistência real (já prevista) |
@@ -218,7 +218,7 @@ faixa aprovado é o de `RN-001`.
   design — apenas `mocks/` são descartados como fonte de regra.
 - **Nenhum comportamento observado ficou indefinido:** cada regra aponta para
   arquivo+linha e para a história que a consome, ou está marcada como decisão
-  registrada (landing, rotas mortas).
+  registrada (landing, telas "Em construção").
 - **Insumo para `HT-017`:** o contrato deve entregar número e formatação
   separados (`RN-006`), saldo único (sem duplicação número+string), e
   categorias/orçamento com schema derivado de `budget.mock.ts`.

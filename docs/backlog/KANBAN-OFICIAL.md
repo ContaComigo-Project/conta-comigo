@@ -33,9 +33,10 @@ uma tem a coluna "UI hoje" dizendo o que já está pronto na tela.
 
 ## Notas do inventário (`HT-016`, `docs/inventario-frontend.md`)
 
-- `HN-003` ganha escopo explícito: **remover os links mortos** de `Sidebar` e
-  `BottomDock` (`/dashboard/investimentos`, `/bancos`, `/configuracoes`,
-  `/metas` — rotas inexistentes).
+- **Navegação do dashboard:** as telas `/dashboard/investimentos`, `/bancos`,
+  `/configuracoes` e `/metas` **são mantidas**; em um primeiro momento o link
+  leva a uma tela com o estado **"Em construção"**. A decisão de implementar ou
+  cortar cada uma fica com o product-manager antes do fim da PoC.
 - `HN-001` precisa **eliminar o `console.log` de credenciais** (`Login.tsx:23`,
   `Register.tsx:53`) durante a reescrita de autenticação.
 - `HT-018` precisa **substituir a identidade pessoal real dos mocks**
