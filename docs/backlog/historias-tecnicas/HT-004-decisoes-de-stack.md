@@ -5,7 +5,7 @@ document_type: story
 story_key: HT-004
 story_type: tecnica
 epic: EPIC-TEC-001
-status: Ready
+status: Em revisão
 max_lines: 300
 ---
 

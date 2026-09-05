@@ -19,10 +19,10 @@ para a decisão ser revertida.
 | ADR | Decisão | Status | História |
 | --- | --- | --- | --- |
 | [ADR-001](./ADR-001-arquitetura-hexagonal-no-backend.md) | Arquitetura hexagonal (ports & adapters) no backend | Aceita | `HT-003` |
-| ADR-002 | ORM da camada de persistência | Pendente | `HT-004` |
-| ADR-003 | Framework de teste funcional e unitário | Pendente | `HT-004` |
-| ADR-004 | Autenticação | Pendente | `HT-004` |
-| ADR-005 | Hospedagem | Pendente | `HT-015` |
+| [ADR-002](./ADR-002-orm-prisma.md) | ORM Prisma com PostgreSQL | Aceita | `HT-004` |
+| [ADR-003](./ADR-003-testes-vitest-playwright.md) | Testes com Vitest + Playwright + dependency-cruiser | Aceita | `HT-004` |
+| [ADR-004](./ADR-004-autenticacao-jwt-proprio.md) | Autenticação própria com JWT | Aceita | `HT-004` |
+| [ADR-005](./ADR-005-hospedagem-adiada.md) | Hospedagem adiada — dev local primeiro | Aceita | `HT-004` (provedores em `HT-015`) |
 
 ## Convenções
 

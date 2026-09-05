@@ -64,10 +64,10 @@ Fonte: [`REQUISITOS-NAO-FUNCIONAIS.md`](../requisitos/REQUISITOS-NAO-FUNCIONAIS.
 | Agregador Open Finance | Pluggy Sandbox | **Decidida, não implementada** | Atrás de porta (`RNF-020`); troca continua possível |
 | Provedor de IA | Google Gemini + LangChain.js | **Decidida, não implementada** | Atrás de porta; custo é o principal risco (`RNF-009`) |
 | Persistência | PostgreSQL | **Decidida, não implementada** | Docker fixa a versão |
-| ORM | Prisma / TypeORM / Drizzle | **Em aberto** | Resolvida em `HT-004` (ADR-002), antes de `HT-010`. Restrição de `ADR-001`: não pode acoplar o domínio |
-| Framework de teste | Vitest+Playwright / Jest+Cypress | **Em aberto** | Resolvida em `HT-004` (ADR-003), antes de `HT-006`. Inclui a ferramenta que verifica as fronteiras de `ADR-001` |
-| Autenticação | JWT próprio / provedor gerenciado | **Em aberto** | Resolvida em `HT-004` (ADR-004), antes de `HN-001` |
-| Hospedagem | Vercel+Render / Netlify+Fly.io / Railway | **Em aberto** | Resolvida em `HT-015` (ADR-005) |
+| ORM | Prisma / TypeORM / Drizzle | **Prisma + PostgreSQL — `ADR-002`** | Cliente tipado e migrações versionadas; modelo de persistência separado da entidade de domínio (`ADR-001`); cifra em repouso na borda (`RNF-014`). Materializado por `HT-010` |
+| Framework de teste | Vitest+Playwright / Jest+Cypress | **Vitest + Playwright + dependency-cruiser — `ADR-003`** | Um ecossistema (Vite) para web e backend; dependency-cruiser verifica as fronteiras de `ADR-001`; cobertura ≥ 80% no domínio. Materializado por `HT-006` |
+| Autenticação | JWT próprio / provedor gerenciado | **JWT próprio — `ADR-004`** | Custo zero garantido (`RNF-011`); autorização no servidor com teste negativo por rota (`RNF-013`); atrás de porta (`RNF-020`). Materializado por `HN-001` |
+| Hospedagem | Vercel+Render / Netlify+Fly.io / Railway | **Adiada — dev local primeiro — `ADR-005`** | Provedores decididos em `HT-015` com termos vigentes de free tier; critério fixo de R$ 0 recorrente (`RNF-011`) |
 
 ## 4. Segurança e privacidade
 

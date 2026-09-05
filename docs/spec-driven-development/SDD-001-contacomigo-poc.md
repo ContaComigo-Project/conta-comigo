@@ -147,12 +147,12 @@ Catálogos completos em [`docs/requisitos/`](../requisitos/).
 | Questão | Opções | Quem decide | Prazo |
 | --- | --- | --- | --- |
 | Personas são hipótese; falta validação | Teste com 3 a 5 pessoas do perfil / seguir por hipótese declarada | Time | Antes de `HN-007` (semáforo) |
-| ORM da camada de persistência | Prisma / TypeORM / Drizzle | `HT-004` | Antes de `HT-013` |
-| Framework de teste funcional e E2E | Vitest+Playwright / Jest+Cypress | `HT-004` | Antes de `HT-006` |
-| Autenticação real | JWT próprio / provedor gerenciado | `HT-004` | Antes de `HN-001` |
+| ~~ORM da camada de persistência~~ | **Resolvida:** Prisma + PostgreSQL — `ADR-002` | `HT-004` | Feito |
+| ~~Framework de teste funcional e E2E~~ | **Resolvida:** Vitest + Playwright + dependency-cruiser — `ADR-003` | `HT-004` | Feito |
+| ~~Autenticação real~~ | **Resolvida:** JWT próprio — `ADR-004` | `HT-004` | Feito |
 | Teto de custo por usuário/dia na IA | Definir número | `HT-012` | Antes de `HN-009` |
 | Prazo de exclusão após revogação | Imediato / até 24h / até 15 dias | Time + orientador | Antes de `HN-012` |
-| Hospedagem | Vercel+Render / Netlify+Fly.io / Railway | `HT-015` | Antes da publicação |
+| ~~Hospedagem~~ | **Adiada por decisão:** dev local primeiro; provedores em `HT-015` — `ADR-005` | `HT-004`/`HT-015` | Antes da publicação |
 
 ## 8. Riscos e premissas
 

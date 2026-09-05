@@ -5,7 +5,7 @@ document_type: story
 story_key: HT-016
 story_type: tecnica
 epic: EPIC-TEC-001
-status: Backlog
+status: Ready
 max_lines: 300
 ---
 

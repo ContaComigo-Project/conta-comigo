@@ -1,0 +1,15 @@
+# progress — HT-004
+# Diário append-only do ciclo Ralph. Uma linha por evento.
+# Formato: AAAA-MM-DD HH:MM | FASE | descrição objetiva | evidência
+# FASE: PERCEBER | ORIENTAR | DECIDIR | AGIR | REGISTRAR
+
+2026-09-05 00:20 | PERCEBER | li KANBAN-OFICIAL.md, HT-004-decisoes-de-stack.md, ADR-001 e ADR README | docs/backlog, docs/adr
+2026-09-05 00:21 | ORIENTAR | critérios de aceite de HT-004 comparados com ADR-001 e EPICO-TECNICO; conflito ADR-005 resolvido a favor da história | -
+2026-09-05 00:22 | DECIDIR | ORM Prisma+Postgres (time), teste Vitest+Playwright+dependency-cruiser (time), auth JWT próprio (time), hospedagem adiada (time) | question tool
+2026-09-05 00:23 | AGIR | bash scripts/nova-historia.sh HT-004 criou docs/tasks/HT-004/ | scripts/nova-historia.sh
+2026-09-05 00:24 | AGIR | preenchi TASK.md e IMPLEMENTATION.md da HT-004 | docs/tasks/HT-004/
+2026-09-05 00:25 | REGISTRAR | kanban move HT-004 para Em execução | docs/backlog/KANBAN-OFICIAL.md
+2026-09-05 00:26 | AGIR | escrita dos ADR-002..ADR-005 iniciada | docs/adr/
+2026-09-05 00:30 | AGIR | ADR-002 (Prisma), ADR-003 (Vitest+Playwright+dependency-cruiser), ADR-004 (JWT), ADR-005 (hospedagem adiada) escritos | docs/adr/
+2026-09-05 00:31 | REGISTRAR | ADR README, EPICO-TECNICO §3 e SDD-001 §7 atualizados; linhas saem de 'em aberto' | docs/adr/README.md, EPICO-TECNICO.md, SDD-001
+2026-09-05 00:32 | REGISTRAR | ENTREGA-HT-004-decisoes-de-stack.md criado; kanban move HT-004 para Em revisão e HT-016 para Ready | docs/entregas/, KANBAN-OFICIAL.md
