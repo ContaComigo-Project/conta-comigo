@@ -31,6 +31,19 @@ domínio, com teste antes.
 Consequência prática: a maioria das `HN` é **integração**, não construção. Cada
 uma tem a coluna "UI hoje" dizendo o que já está pronto na tela.
 
+## Notas do inventário (`HT-016`, `docs/inventario-frontend.md`)
+
+- `HN-003` ganha escopo explícito: **remover os links mortos** de `Sidebar` e
+  `BottomDock` (`/dashboard/investimentos`, `/bancos`, `/configuracoes`,
+  `/metas` — rotas inexistentes).
+- `HN-001` precisa **eliminar o `console.log` de credenciais** (`Login.tsx:23`,
+  `Register.tsx:53`) durante a reescrita de autenticação.
+- `HT-018` precisa **substituir a identidade pessoal real dos mocks**
+  (`user.mock.ts:3-5`, `chat.mock.ts:235`) por identidade fictícia ao remover a
+  camada de mock.
+- `RN-024` e `RN-025` foram **descartadas** pelo inventário; a única fonte de
+  faixa é `RN-001`.
+
 ## Próxima demanda
 
 **`HT-016` — Inventário do frontend existente e destino dos mocks.**
@@ -74,7 +87,7 @@ o backlog passou a considerar o frontend existente.
 | Ordem | Chave | Título | Tipo | Estado | Depende de | RNF |
 | --- | --- | --- | --- | --- | --- | --- |
 | 4 | `HT-004` | Decidir tecnologias em aberto e registrar ADRs | Técnica | **Done** | HT-003 | — |
-| 5 | `HT-016` | Inventário do frontend existente e destino dos mocks | Técnica | **Ready** | HT-004 | RNF-018, RNF-020 |
+| 5 | `HT-016` | Inventário do frontend existente e destino dos mocks | Técnica | **Em revisão** | HT-004 | RNF-018, RNF-020 |
 | 6 | `HT-005` | Harness local reprodutível com docker compose | Técnica | Backlog | HT-004 | RNF-007 |
 | 7 | `HT-006` | Infraestrutura de testes funcional/BDD e unitário | Técnica | Backlog | HT-005 | RNF-018, RNF-019 |
 | 8 | `HT-007` | Pipeline de CI com gates bloqueantes | Técnica | Backlog | HT-006 | RNF-021 |
@@ -129,13 +142,13 @@ o backlog passou a considerar o frontend existente.
 ## Quadro
 
 ### Ready
-- `HT-016` — Inventário do frontend existente e destino dos mocks
+- _(vazio — `HT-016` em revisão, WIP 1)_
 
 ### Em execução
-- _(vazio — WIP 1)_
+- _(vazio)_
 
 ### Em revisão
-- _(vazio)_
+- `HT-016` — Inventário do frontend existente e destino dos mocks
 
 ### Done
 - `HT-000` `v0.1.0` · `HT-001` `v0.2.0` · `HT-002` `v0.3.0` · `HT-003` `v0.4.0` · `HT-004` `v0.5.0`
@@ -178,3 +191,5 @@ cada tela é aproveitável, e isso muda o critério de aceite de quase todas ela
 | 2026-09-05 | `HT-016` | Backlog | Ready | `HT-004` concluída; dependência resolvida |
 | 2026-09-05 | `HT-004` | Em execução | Em revisão | ADRs e artefatos produzidos; aguardando gates e fechamento |
 | 2026-09-05 | `HT-004` | Em revisão | Done | `v0.5.0` → `a1fa811` |
+| 2026-09-05 | `HT-016` | Ready | Em execução | `docs/tasks/HT-016/` criado com TASK e IMPLEMENTATION |
+| 2026-09-05 | `HT-016` | Em execução | Em revisão | Inventário completo; aguardando gates e fechamento |

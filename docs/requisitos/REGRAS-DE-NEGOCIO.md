@@ -73,12 +73,13 @@ não valem como especificação.
 
 | ID | Regra observada | Onde está hoje | Pergunta que o time precisa responder | Status |
 | --- | --- | --- | --- | --- |
-| RN-024 | O percentual da categoria é limitado a 200%, mesmo que o gasto seja maior | `budget.mock.ts:91` — `Math.min(200, ...)` | É decisão de produto (não assustar) ou limitação de layout da barra? Se for de layout, o dado não deve ser truncado | Rascunho |
-| RN-025 | O percentual é arredondado para uma casa decimal antes de determinar a faixa | `budget.mock.ts:91` — `.toFixed(1)` | 70,04% arredonda para 70,0 e vira verde. Isso é aceitável na fronteira da faixa? | Rascunho |
+| RN-024 | O percentual da categoria é limitado a 200%, mesmo que o gasto seja maior | `budget.mock.ts:91` — `Math.min(200, ...)` | **Descartada** — `HT-016`: truncar o dado esconde a gravidade do estouro. O domínio calcula o percentual real; o cap visual da barra é implementação de UI. `RN-001`/`RN-006` operam sobre o valor real | Descartada |
+| RN-025 | O percentual é arredondado para uma casa decimal antes de determinar a faixa | `budget.mock.ts:91` — `.toFixed(1)` | **Descartada** — `HT-016`: arredondar antes da faixa cria fronteira ambígua (70,04% viraria verde). O domínio compara contra os limites exatos de `RN-001` (≤70, ≤90, >90); arredondamento é só de exibição | Descartada |
 
 Ambas interagem com `RN-001` e `RN-006`. `RN-025` em particular muda o resultado
 de um caso de borda que `RN-001` declara — precisa ser resolvida antes de `HN-007`.
 
 ## Legenda de status
 
-`Rascunho` → `Aprovado` → `Em execução` → `Entregue` → `Obsoleto`
+`Rascunho` → `Aprovado` → `Em execução` → `Entregue` → `Obsoleto` · `Descartada`
+(nunca foi aprovada como requisito; registra-se o motivo na coluna da regra)
