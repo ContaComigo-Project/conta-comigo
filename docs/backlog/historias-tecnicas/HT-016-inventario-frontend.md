@@ -59,16 +59,16 @@ de fonte de observação — não de especificação.
 
 ## Critérios de aceite
 
-- [ ] Existe `docs/inventario-frontend.md` listando os 41 componentes com:
+- [x] Existe `docs/inventario-frontend.md` listando os 41 componentes com:
       caminho, `RF` servido, classificação (mantém / adapta / descarta) e motivo
-- [ ] Todo componente sem `RF` correspondente está explicitamente marcado como
+- [x] Todo componente sem `RF` correspondente está explicitamente marcado como
       "sem requisito" — e vira decisão: promover a `RF` ou descartar
-- [ ] Os 9 arquivos de mock estão classificados: vira contrato de dados, vira
+- [x] Os 9 arquivos de mock estão classificados: vira contrato de dados, vira
       massa de teste, ou é descartado
-- [ ] Toda regra de negócio encontrada em `src/` está listada com o arquivo e a linha
-- [ ] `RN-024` e `RN-025` saem de `Rascunho`: aprovadas ou descartadas, com motivo registrado
-- [ ] Nenhum comportamento observado permanece em estado indefinido
-- [ ] `KANBAN-OFICIAL.md` atualizado se o inventário mudar o escopo de alguma `HN`
+- [x] Toda regra de negócio encontrada em `src/` está listada com o arquivo e a linha
+- [x] `RN-024` e `RN-025` saem de `Rascunho`: aprovadas ou descartadas, com motivo registrado
+- [x] Nenhum comportamento observado permanece em estado indefinido
+- [x] `KANBAN-OFICIAL.md` atualizado se o inventário mudar o escopo de alguma `HN`
 
 ```gherkin
 Cenário: nenhuma regra de negócio fica escondida no frontend
@@ -120,9 +120,9 @@ Cenário: nenhuma regra de negócio fica escondida no frontend
 
 ## Definição de pronto
 
-- [ ] `docs/inventario-frontend.md` criado e completo
-- [ ] `RN-024` e `RN-025` resolvidas no catálogo
-- [ ] `docs/entregas/ENTREGA-HT-016-inventario-frontend.md` criado
-- [ ] `KANBAN-OFICIAL.md` atualizado
-- [ ] Commit semântico citando `HT-016`
-- [ ] Tag `v0.6.0` no mesmo hash
+- [x] `docs/inventario-frontend.md` criado e completo
+- [x] `RN-024` e `RN-025` resolvidas no catálogo
+- [x] `docs/entregas/ENTREGA-HT-016-inventario-frontend.md` criado
+- [x] `KANBAN-OFICIAL.md` atualizado
+- [x] Commit semântico citando `HT-016`
+- [x] Tag `v0.6.0` no mesmo hash

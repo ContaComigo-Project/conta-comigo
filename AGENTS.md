@@ -71,11 +71,24 @@ Leu estes 4? Você sabe 95 % do que precisa para atuar aqui sem quebrar nada.
 
 ## 4. Próxima demanda hoje
 
-Em `docs/backlog/KANBAN-OFICIAL.md`, Ordem = 4, estado = **Ready**:
+Em `docs/backlog/KANBAN-OFICIAL.md`, a coluna `Ready` está **vazia**. Nada é
+puxável agora — puxar algo de `Backlog` direto quebra o fluxo de estados.
 
-> **`HT-004` — Decidir tecnologias em aberto e registrar decisões como ADRs (ADR-002 .. ADR-005).**
+Último item concluído: `HT-016` (Ordem 5) — `v0.6.0` → `5ebeb8a`, corrigido em
+`v0.6.1` → `c3bfb55`.
 
-Não há nenhuma outra história em `Ready` hoje. Qualquer trabalho que não seja HT-004 quebra WIP=1.
+Próximo da fila:
+
+> **`HT-005` — Harness local reprodutível com docker compose** (Ordem 6, estado
+> `Backlog`, depende de `HT-004` — já concluída).
+
+Ela ainda **não tem arquivo de história**: pela regra de grooming, o arquivo é
+criado quando o item entra em `Ready`. Então a próxima ação do time é groomar
+`HT-005` (criar `docs/backlog/historias-tecnicas/HT-005-harness-local.md` com
+critérios verificáveis) e movê-la para `Ready` — só depois ela é puxada.
+
+`HT-005` destrava a fila inteira: hoje `scripts/harness.env` não existe, então
+toda tarefa de gate falha com "comando não configurado".
 
 ---
 

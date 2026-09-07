@@ -51,29 +51,33 @@ Perceber → Orientar → Decidir → Agir → **Registrar**.
 
 ## Como iniciar a próxima história
 
-A próxima demanda é **`HT-004` — Decidir tecnologias em aberto e registrar
-ADRs**.
+Hoje a coluna `Ready` do kanban está **vazia** — `HT-016` (Ordem 5) foi a última
+concluída. O próximo da fila é **`HT-005` — Harness local reprodutível com
+docker compose** (Ordem 6, ainda em `Backlog`), e ele precisa ser groomado antes
+de ser puxado.
 
 ```bash
 # 1. Confirmar a próxima demanda
 cat docs/backlog/KANBAN-OFICIAL.md
 
-# 2. Ler a história
-cat docs/backlog/historias-tecnicas/HT-004-decisoes-de-stack.md
+# 2. Groomar: escrever o arquivo da história com critérios verificáveis
+cp docs/backlog/historias-tecnicas/_TEMPLATE-HISTORIA-TECNICA.md docs/backlog/historias-tecnicas/HT-005-harness-local.md
 
-# 3. Criar a pasta de execução
-scripts/nova-historia.sh HT-004        # Windows: powershell -File scripts/nova-historia.ps1 HT-004
+# 3. Mover HT-005 de "Backlog" para "Ready" no kanban
 
-# 4. Preencher TASK.md e IMPLEMENTATION.md ANTES de qualquer trabalho
+# 4. Criar a pasta de execução
+scripts/nova-historia.sh HT-005        # Windows: powershell -File scripts/nova-historia.ps1 HT-005
 
-# 5. Mover HT-004 para "Em execução" no kanban
+# 5. Preencher TASK.md e IMPLEMENTATION.md ANTES de qualquer trabalho
+
+# 6. Mover HT-005 para "Em execução" no kanban
 ```
 
-`HT-004` fecha quatro decisões que travam o resto da fila — ORM, framework de
-teste, autenticação e hospedagem — e as registra como ADR. Ela não instala
-dependência nem escreve código: decide e explica o porquê.
+`HT-005` destrava toda a fila: enquanto `scripts/harness.env` não existir,
+qualquer tarefa de `scripts/harness.sh` — inclusive `gates` — falha com
+"comando não configurado", e nenhuma história com código pode provar qualidade.
 
-Da ordem 5 em diante, o item só ganha arquivo de história quando entra em
+Da ordem 6 em diante, o item só ganha arquivo de história quando entra em
 `Ready`. Detalhar hoje o critério de aceite da ordem 27 seria adivinhação.
 
 ## Negócio ou técnica?

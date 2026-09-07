@@ -94,5 +94,5 @@ caracteriza o fechamento.
 - [x] Scripts falham de forma explícita quando não configurados
 - [x] `docs/entregas/ENTREGA-HT-000-fundacao-workflow-agentico.md` criado
 - [x] `KANBAN-OFICIAL.md` atualizado
-- [ ] Commit semântico citando `HT-000`
-- [ ] Tag `v0.1.0` apontando para o mesmo hash
+- [x] Commit semântico citando `HT-000`
+- [x] Tag `v0.1.0` apontando para o mesmo hash

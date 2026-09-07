@@ -50,23 +50,23 @@ que o projeto é assim, e sabe o que precisaria mudar para reverter.
 
 ## Critérios de aceite
 
-- [ ] Existe um ADR por decisão em `docs/adr/`, numerados de `ADR-002` a `ADR-005`
-- [ ] Nenhuma decisão contraria `ADR-001`: o ORM escolhido não pode exigir
+- [x] Existe um ADR por decisão em `docs/adr/`, numerados de `ADR-002` a `ADR-005`
+- [x] Nenhuma decisão contraria `ADR-001`: o ORM escolhido não pode exigir
       decorator na entidade de domínio, e a ferramenta de teste precisa rodar
       caso de uso sem subir framework
-- [ ] A decisão de teste nomeia a ferramenta que verifica as fronteiras de
+- [x] A decisão de teste nomeia a ferramenta que verifica as fronteiras de
       importação e confirma que ela existe para a stack
-- [ ] Cada ADR registra contexto, ao menos duas alternativas, escolha e consequência
-- [ ] Cada ADR declara **o que precisaria acontecer para revertê-la**
-- [ ] Cada decisão declara o impacto no custo, e nenhuma sai do free tier (`RNF-011`)
-- [ ] A decisão de autenticação declara como `RNF-013` (autorização no servidor) será atendida
-- [ ] A decisão de ORM declara como `RNF-014` (cifra em repouso) será atendida
+- [x] Cada ADR registra contexto, ao menos duas alternativas, escolha e consequência
+- [x] Cada ADR declara **o que precisaria acontecer para revertê-la**
+- [x] Cada decisão declara o impacto no custo, e nenhuma sai do free tier (`RNF-011`)
+- [x] A decisão de autenticação declara como `RNF-013` (autorização no servidor) será atendida
+- [x] A decisão de ORM declara como `RNF-014` (cifra em repouso) será atendida
       e como o modelo de persistência ficará separado da entidade de domínio
-- [ ] A decisão de teste declara como o rastreio RN→teste (`RNF-018`) será verificável
-- [ ] `EPICO-TECNICO.md` seção 3 atualizado: as quatro linhas saem de "Em aberto"
-- [ ] `SDD-001` seção 7 atualizada: as quatro questões saem de "em aberto"
-- [ ] Nenhuma dependência nova é adicionada ao `package.json` nesta história
-- [ ] A decisão de teste considera que a camada web tem 5.930 linhas sem
+- [x] A decisão de teste declara como o rastreio RN→teste (`RNF-018`) será verificável
+- [x] `EPICO-TECNICO.md` seção 3 atualizado: as quatro linhas saem de "Em aberto"
+- [x] `SDD-001` seção 7 atualizada: as quatro questões saem de "em aberto"
+- [x] Nenhuma dependência nova é adicionada ao `package.json` nesta história
+- [x] A decisão de teste considera que a camada web tem 5.930 linhas sem
       nenhum teste, e declara se ela entra ou não na medição de cobertura
 
 ```gherkin
@@ -120,9 +120,9 @@ Cenário: uma decisão fechada é rastreável até a consequência
 
 ## Definição de pronto
 
-- [ ] `ADR-002` a `ADR-005` criados e aprovados
-- [ ] `EPICO-TECNICO.md` e `SDD-001` atualizados
-- [ ] `docs/entregas/ENTREGA-HT-004-decisoes-de-stack.md` criado
-- [ ] `KANBAN-OFICIAL.md` atualizado, com `HT-016` movido para `Ready`
-- [ ] Commit semântico citando `HT-004`
-- [ ] Tag `v0.5.0` no mesmo hash
+- [x] `ADR-002` a `ADR-005` criados e aprovados
+- [x] `EPICO-TECNICO.md` e `SDD-001` atualizados
+- [x] `docs/entregas/ENTREGA-HT-004-decisoes-de-stack.md` criado
+- [x] `KANBAN-OFICIAL.md` atualizado, com `HT-016` movido para `Ready`
+- [x] Commit semântico citando `HT-004`
+- [x] Tag `v0.5.0` no mesmo hash

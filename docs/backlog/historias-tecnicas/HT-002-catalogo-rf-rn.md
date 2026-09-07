@@ -88,5 +88,5 @@ esqueleto — passando a mapear requisito para história.
 - [x] `EPICO-NEGOCIO.md` preenchido
 - [x] `docs/entregas/ENTREGA-HT-002-catalogo-rf-rn.md` criado
 - [x] `KANBAN-OFICIAL.md` atualizado
-- [ ] Commit semântico citando `HT-002`
-- [ ] Tag `v0.3.0` no mesmo hash
+- [x] Commit semântico citando `HT-002`
+- [x] Tag `v0.3.0` no mesmo hash

@@ -86,5 +86,5 @@ aberto e quem as resolve.
 - [x] `EPICO-TECNICO.md` preenchido, com decisões tomadas e em aberto
 - [x] `docs/entregas/ENTREGA-HT-003-catalogo-rnf.md` criado
 - [x] `KANBAN-OFICIAL.md` atualizado
-- [ ] Commit semântico citando `HT-003`
-- [ ] Tag `v0.4.0` no mesmo hash
+- [x] Commit semântico citando `HT-003`
+- [x] Tag `v0.4.0` no mesmo hash

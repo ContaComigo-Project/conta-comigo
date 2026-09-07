@@ -88,5 +88,5 @@ verificáveis, e para que o épico de negócio deixe de ser esqueleto.
 - [x] Épico de negócio atualizado
 - [x] Histórias derivadas criadas e ordenadas no kanban
 - [x] `docs/entregas/ENTREGA-HT-001-*.md` criado
-- [ ] Commit semântico citando `HT-001`
-- [ ] Tag `v0.2.0` no mesmo hash
+- [x] Commit semântico citando `HT-001`
+- [x] Tag `v0.2.0` no mesmo hash
