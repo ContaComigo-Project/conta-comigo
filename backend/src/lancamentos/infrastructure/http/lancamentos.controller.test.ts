@@ -8,7 +8,10 @@ import { RelogioFixo } from '../relogio/relogio-fixo';
 import { RepositorioDeLancamentosEmMemoria } from '../persistence/repositorio-em-memoria';
 import { titularId } from '../../domain/model/titular';
 
+import { EmissorJwt } from '../../../acesso/infrastructure/cripto/emissor-jwt';
+
 const TITULAR = titularId('titular-a');
+const autorizado = () => ({ authorization: `Bearer ${new EmissorJwt().emitir(TITULAR).valor}` });
 import { z } from 'zod';
 import { LancamentoDTO, resultadoDe } from '@contacomigo/contrato';
 
@@ -43,7 +46,7 @@ describe('GET /lancamentos/resumo-do-mes', () => {
   });
 
   it('GET /lancamentos responde no CONTRATO: Resultado<LancamentoDTO[]> valido pelo esquema (HT-017)', async () => {
-    const resposta = await fetch(baseUrl + '/lancamentos', { headers: { 'x-titular-id': TITULAR } });
+    const resposta = await fetch(baseUrl + '/lancamentos', { headers: autorizado() });
     expect(resposta.status).toBe(200);
     const corpo = await resposta.json();
     const parse = resultadoDe(z.array(LancamentoDTO)).safeParse(corpo);
@@ -62,7 +65,7 @@ describe('GET /lancamentos/resumo-do-mes', () => {
   });
 
   it('responde 200 com o resumo do mes de referencia do relogio', async () => {
-    const resposta = await fetch(baseUrl + '/lancamentos/resumo-do-mes', { headers: { 'x-titular-id': TITULAR } });
+    const resposta = await fetch(baseUrl + '/lancamentos/resumo-do-mes', { headers: autorizado() });
     expect(resposta.status).toBe(200);
     expect(await resposta.json()).toEqual({
       mes: { ano: 2026, mes: 1 },

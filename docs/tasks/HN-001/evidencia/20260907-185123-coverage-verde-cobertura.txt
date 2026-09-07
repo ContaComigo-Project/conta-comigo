@@ -1,0 +1,44 @@
+# evidência de execução — HN-001
+# Gerado por scripts/registrar-evidencia.sh. Não editar à mão.
+comando : scripts/harness.sh coverage
+data    : 2026-09-07 18:51:23 -0300
+commit  : 2a94e5d (árvore suja)
+sistema : MINGW64_NT-10.0-26200
+espera  : SUCESSO
+---------------------------------------------------------------
+harness: HARNESS_COVERAGE -> pnpm run coverage
+
+> conta-comigo@0.7.0 coverage C:\Users\migue\Documents\mocitec\conta-comigo
+> vitest run --coverage
+
+
+ RUN  v5.0.0 C:/Users/migue/Documents/mocitec/conta-comigo
+      Coverage enabled with v8
+
+
+ Test Files  16 passed (16)
+      Tests  96 passed (96)
+   Start at  18:51:24
+   Duration  10.03s (import 72%, tests 12%, transform 11%, worker 4%, setup 1%)
+
+    Isolate  16 workers spawned · ~518ms startup each (spawn + environment, per file)
+             at least ~666ms faster with isolate: false — reuses workers across files instead of one per file
+
+[34m % [39m[2mCoverage report from [22m[33mv8[39m
+-------------------|---------|----------|---------|---------|-------------------
+File               | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+-------------------|---------|----------|---------|---------|-------------------
+All files          |   96.87 |    92.85 |     100 |     100 |                   
+ ...s/domain/model |      75 |       50 |     100 |     100 |                   
+  titular.ts       |      75 |       50 |     100 |     100 | 6                 
+-------------------|---------|----------|---------|---------|-------------------
+
+=============================== Coverage summary ===============================
+Statements   : 96.87% ( 31/32 )
+Branches     : 92.85% ( 13/14 )
+Functions    : 100% ( 10/10 )
+Lines        : 100% ( 25/25 )
+================================================================================
+---------------------------------------------------------------
+EXIT_CODE=0
+SHA256=2ebd832ff8bb55867306dfb12f880fd77e2c87a554cf80916bb08753c094dcf1

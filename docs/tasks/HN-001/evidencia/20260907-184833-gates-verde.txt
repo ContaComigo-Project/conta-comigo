@@ -1,0 +1,117 @@
+# evidência de execução — HN-001
+# Gerado por scripts/registrar-evidencia.sh. Não editar à mão.
+comando : scripts/harness.sh gates
+data    : 2026-09-07 18:48:33 -0300
+commit  : 2a94e5d (árvore suja)
+sistema : MINGW64_NT-10.0-26200
+espera  : SUCESSO
+---------------------------------------------------------------
+harness: executando gates na ordem — falha no primeiro erro
+harness: HARNESS_LINT -> pnpm run lint
+
+> conta-comigo@0.7.0 lint C:\Users\migue\Documents\mocitec\conta-comigo
+> pnpm --filter client-contacomigo lint && pnpm run lint:fronteiras
+
+
+> client-contacomigo@0.0.0 lint C:\Users\migue\Documents\mocitec\conta-comigo\frontend
+> eslint .
+
+
+> conta-comigo@0.7.0 lint:fronteiras C:\Users\migue\Documents\mocitec\conta-comigo
+> depcruise --config .dependency-cruiser.cjs backend frontend/src
+
+
+✔ no dependency violations found (150 modules, 340 dependencies cruised)
+
+harness: HARNESS_TEST -> pnpm run test
+
+> conta-comigo@0.7.0 test C:\Users\migue\Documents\mocitec\conta-comigo
+> pnpm run test:unitario && pnpm run test:integracao && pnpm run test:funcional
+
+
+> conta-comigo@0.7.0 test:unitario C:\Users\migue\Documents\mocitec\conta-comigo
+> vitest run
+
+
+ RUN  v5.0.0 C:/Users/migue/Documents/mocitec/conta-comigo
+
+
+ Test Files  15 passed (15)
+      Tests  92 passed (92)
+   Start at  18:48:45
+   Duration  9.15s (import 70%, tests 16%, transform 12%, setup 1%, worker 1%)
+
+    Isolate  15 workers spawned · ~539ms startup each (spawn + environment, per file)
+             at least ~616ms faster with isolate: false — reuses workers across files instead of one per file
+
+
+> conta-comigo@0.7.0 test:integracao C:\Users\migue\Documents\mocitec\conta-comigo
+> vitest run --config vitest.integracao.config.ts
+
+
+ RUN  v5.0.0 C:/Users/migue/Documents/mocitec/conta-comigo
+
+
+ Test Files  1 passed (1)
+      Tests  4 passed (4)
+   Start at  18:48:55
+   Duration  570ms (tests 42%, import 34%, transform 21%, setup 2%, worker 1%)
+
+
+> conta-comigo@0.7.0 test:funcional C:\Users\migue\Documents\mocitec\conta-comigo
+> playwright test
+
+
+Running 2 tests using 2 workers
+
+  ✓  1 [chromium] › tests\funcional\fumaca.spec.ts:13:3 › fumaca — a web existente responde › a tela de login existe e tem formulario (3.7s)
+  ✓  2 [chromium] › tests\funcional\fumaca.spec.ts:7:3 › fumaca — a web existente responde › a landing abre com o titulo do produto (3.9s)
+
+  2 passed (7.0s)
+harness: HARNESS_COVERAGE -> pnpm run coverage
+
+> conta-comigo@0.7.0 coverage C:\Users\migue\Documents\mocitec\conta-comigo
+> vitest run --coverage
+
+
+ RUN  v5.0.0 C:/Users/migue/Documents/mocitec/conta-comigo
+      Coverage enabled with v8
+
+ ❯ backend/src/acesso/infrastructure/http/acesso.controller.test.ts (7 tests | 1 failed) 1161ms
+   ❯ HN-001 — acesso: cadastro, entrada e saida (7)
+     × RF-001 — cadastro cria a conta e a resposta nao carrega senha nem hash 397ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  backend/src/acesso/infrastructure/http/acesso.controller.test.ts > HN-001 — acesso: cadastro, entrada e saida > RF-001 — cadastro cria a conta e a resposta nao carrega senha nem hash
+AssertionError: expected 400 to be 201 // Object.is equality
+
+- Expected
++ Received
+
+- 201
++ 400
+
+ ❯ backend/src/acesso/infrastructure/http/acesso.controller.test.ts:38:29
+     36|   it('RF-001 — cadastro cria a conta e a resposta nao carrega senha ne…
+     37|     const resposta = await cadastrar(EMAIL);
+     38|     expect(resposta.status).toBe(201);
+       |                             ^
+     39|
+     40|     const corpo = await resposta.json();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 14 passed (15)
+      Tests  1 failed | 91 passed (92)
+   Start at  18:49:05
+   Duration  9.55s (import 72%, tests 14%, transform 9%, worker 4%, setup 1%)
+
+    Isolate  15 workers spawned · ~486ms startup each (spawn + environment, per file)
+             at least ~556ms faster with isolate: false — reuses workers across files instead of one per file
+
+ ELIFECYCLE  Command failed with exit code 1.
+---------------------------------------------------------------
+EXIT_CODE=1
+SHA256=7362c0ad0df5f584d7d7564a88c4e2c062c23b436d9d3ac08f57d3e7d00a0a1a

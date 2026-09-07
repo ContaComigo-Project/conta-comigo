@@ -3,6 +3,7 @@ import { defineConfig } from 'vitest/config';
 // Executor unitario do repositorio (ADR-003). Roda sem framework, banco ou rede.
 export default defineConfig({
   test: {
+    setupFiles: ['tests/setup.ts'],
     include: ['tests/**/*.test.ts', 'backend/src/**/*.test.ts', 'packages/**/src/**/*.test.ts', 'frontend/src/dados/**/*.test.ts'],
     // Fixtures de fronteira sao codigo deliberadamente ilegal: nunca executar.
     exclude: ['**/node_modules/**', 'tests/fronteiras/fixtures/**', 'tests/funcional/**', '**/*.integracao.test.ts'],

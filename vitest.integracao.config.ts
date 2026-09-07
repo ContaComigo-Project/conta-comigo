@@ -4,6 +4,7 @@ import { defineConfig } from 'vitest/config';
 // Separados do unitario para que `test-unitario` continue sem banco (ADR-003).
 export default defineConfig({
   test: {
+    setupFiles: ['tests/setup.ts'],
     include: ['backend/src/**/*.integracao.test.ts'],
     exclude: ['**/node_modules/**'],
     testTimeout: 30_000,

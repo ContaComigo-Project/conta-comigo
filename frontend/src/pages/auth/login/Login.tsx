@@ -1,14 +1,16 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { loginSchema, type LoginFormData } from '../../../validations/auth.schema';
 import { useToast } from '../../../hooks/use-toast';
+import { entrar, FalhaDeAcesso } from '../../../dados/acesso';
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   const {
     register,
@@ -18,19 +20,30 @@ export default function Login() {
     resolver: zodResolver(loginSchema),
   });
 
-  const onSubmit = (data: LoginFormData) => {
+  // A credencial NUNCA e registrada em log — nem em desenvolvimento (RNF-015).
+  // Ate HN-001 esta funcao registrava o objeto do formulario no console do
+  // navegador — a senha junto.
+  const onSubmit = async (data: LoginFormData) => {
     setIsLoading(true);
-    console.log('Login attempt:', data);
-
-    // Simulate API call
-    setTimeout(() => {
-      setIsLoading(false);
+    try {
+      await entrar({ email: data.email, senha: data.password });
       toast({
         variant: "success",
         title: "Login realizado!",
         description: "Redirecionando para a aplicação...",
       });
-    }, 1500);
+      navigate('/dashboard');
+    } catch (erro) {
+      // A mensagem vem da API e e deliberadamente a mesma para e-mail
+      // inexistente e senha errada (RF-002).
+      toast({
+        variant: "destructive",
+        title: "Não foi possível entrar",
+        description: erro instanceof FalhaDeAcesso ? erro.message : "Tente novamente.",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (

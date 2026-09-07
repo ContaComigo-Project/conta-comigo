@@ -7,6 +7,7 @@ import { TOKENS } from '../../domain/port/saida/tokens';
 import { RelogioFixo } from '../relogio/relogio-fixo';
 import { RepositorioDeLancamentosEmMemoria } from '../persistence/repositorio-em-memoria';
 import { titularId } from '../../domain/model/titular';
+import { EmissorJwt } from '../../../acesso/infrastructure/cripto/emissor-jwt';
 
 // RNF-013 e RN-015 — os tres casos negativos que a skill open-finance-security
 // exige de TODA rota que devolve dado de pessoa. Sem eles, o gate reprova.
@@ -15,6 +16,12 @@ import { titularId } from '../../domain/model/titular';
 // que um filtro ausente aparece — a rota devolveria o dado alheio junto.
 const A = titularId('titular-a');
 const B = titularId('titular-b');
+
+// Desde HN-001 a identidade vem de um access token assinado, nao mais de um
+// cabecalho forjavel. A guarda, o filtro e estes testes nao mudaram — so a
+// forma de dizer quem e quem.
+const emissor = new EmissorJwt();
+const comoTitular = (t: typeof A) => ({ authorization: `Bearer ${emissor.emitir(t).valor}` });
 
 const lancamento = (id: string, dono: typeof A, descricao: string) => ({
   id,
@@ -54,6 +61,11 @@ describe('RNF-013 / RN-015 — GET /lancamentos so devolve dado do proprio titul
   const pedir = (cabecalhos: Record<string, string> = {}) =>
     fetch(baseUrl + '/lancamentos', { headers: cabecalhos });
 
+  it('token invalido tambem e ausencia de credencial', async () => {
+    expect((await pedir({ authorization: 'Bearer nao-e-um-token' })).status).toBe(401);
+    expect((await pedir({ authorization: 'Basic abc' })).status).toBe(401);
+  });
+
   it('sem credencial: recusa a autenticacao e nao devolve conteudo', async () => {
     const resposta = await pedir();
     expect(resposta.status).toBe(401);
@@ -61,11 +73,11 @@ describe('RNF-013 / RN-015 — GET /lancamentos so devolve dado do proprio titul
   });
 
   it('credencial vazia tambem e ausencia de credencial', async () => {
-    expect((await pedir({ 'x-titular-id': '   ' })).status).toBe(401);
+    expect((await pedir({ authorization: '   ' })).status).toBe(401);
   });
 
   it('titular B recebe apenas o proprio lancamento — nada do titular A', async () => {
-    const resposta = await pedir({ 'x-titular-id': B });
+    const resposta = await pedir(comoTitular(B));
     expect(resposta.status).toBe(200);
     const corpo = await resposta.json();
     expect(corpo.estado).toBe('ok');
@@ -74,24 +86,24 @@ describe('RNF-013 / RN-015 — GET /lancamentos so devolve dado do proprio titul
   });
 
   it('titular A recebe os dois lancamentos dele', async () => {
-    const corpo = await (await pedir({ 'x-titular-id': A })).json();
+    const corpo = await (await pedir(comoTitular(A))).json();
     expect(corpo.dados.map((l: { id: string }) => l.id).sort()).toEqual(['de-a-1', 'de-a-2']);
   });
 
   it('o resumo do mes tambem respeita o titular', async () => {
-    const resposta = await fetch(baseUrl + '/lancamentos/resumo-do-mes', { headers: { 'x-titular-id': B } });
+    const resposta = await fetch(baseUrl + '/lancamentos/resumo-do-mes', { headers: comoTitular(B) });
     expect((await resposta.json()).quantidade).toBe(1);
   });
 
   it('o titular NAO vem da requisicao: parametro de query e ignorado', async () => {
     // Se `?titularId=` funcionasse, seria o vetor de ataque que a skill proibe.
-    const resposta = await fetch(baseUrl + '/lancamentos?titularId=' + A, { headers: { 'x-titular-id': B } });
+    const resposta = await fetch(baseUrl + '/lancamentos?titularId=' + A, { headers: comoTitular(B) });
     const corpo = await resposta.json();
     expect(corpo.dados.map((l: { id: string }) => l.id)).toEqual(['de-b-1']);
   });
 
   it('o contrato nao expoe o titular: titularId nao viaja no DTO', async () => {
-    const corpo = await (await pedir({ 'x-titular-id': A })).json();
+    const corpo = await (await pedir(comoTitular(A))).json();
     expect(Object.keys(corpo.dados[0])).not.toContain('titularId');
   });
 });

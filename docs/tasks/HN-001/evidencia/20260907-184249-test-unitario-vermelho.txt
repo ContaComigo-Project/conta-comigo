@@ -1,0 +1,91 @@
+# evidência de execução — HN-001
+# Gerado por scripts/registrar-evidencia.sh. Não editar à mão.
+comando : scripts/harness.sh test-unitario
+data    : 2026-09-07 18:42:49 -0300
+commit  : 2a94e5d (árvore suja)
+sistema : MINGW64_NT-10.0-26200
+espera  : FALHA (vermelho obrigatório)
+---------------------------------------------------------------
+harness: HARNESS_TEST_UNIT -> pnpm run test:unitario
+
+> conta-comigo@0.7.0 test:unitario C:\Users\migue\Documents\mocitec\conta-comigo
+> vitest run
+
+
+ RUN  v5.0.0 C:/Users/migue/Documents/mocitec/conta-comigo
+
+ ❯ backend/src/acesso/infrastructure/http/acesso.controller.test.ts (7 tests | 3 failed) 1574ms
+   ❯ HN-001 — acesso: cadastro, entrada e saida (7)
+     × RF-001 — e-mail duplicado e recusado sem revelar que o e-mail existe 40ms
+     × RF-002 — senha errada e e-mail inexistente dao a MESMA resposta 20ms
+     × RF-003 — encerrar sessao invalida o refresh 32ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  backend/src/acesso/infrastructure/http/acesso.controller.test.ts > HN-001 — acesso: cadastro, entrada e saida > RF-001 — e-mail duplicado e recusado sem revelar que o e-mail existe
+AssertionError: expected 201 to be 400 // Object.is equality
+
+- Expected
++ Received
+
+- 400
++ 201
+
+ ❯ backend/src/acesso/infrastructure/http/acesso.controller.test.ts:53:28
+     51|     const segunda = await cadastrar('duplicado@exemplo.com');
+     52|
+     53|     expect(segunda.status).toBe(400);
+       |                            ^
+     54|     const mensagem = JSON.stringify(await segunda.json()).toLowerCase(…
+     55|     for (const vazamento of ['ja existe', 'já existe', 'duplicad', 'ca…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+ FAIL  backend/src/acesso/infrastructure/http/acesso.controller.test.ts > HN-001 — acesso: cadastro, entrada e saida > RF-002 — senha errada e e-mail inexistente dao a MESMA resposta
+AssertionError: expected 200 to be 401 // Object.is equality
+
+- Expected
++ Received
+
+- 401
++ 200
+
+ ❯ backend/src/acesso/infrastructure/http/acesso.controller.test.ts:78:32
+     76|     const emailInexistente = await entrar('ninguem@exemplo.com', SENHA…
+     77|
+     78|     expect(senhaErrada.status).toBe(401);
+       |                                ^
+     79|     expect(emailInexistente.status).toBe(401);
+     80|     // Mesma mensagem: qualquer diferenca permite enumerar contas.
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯
+
+ FAIL  backend/src/acesso/infrastructure/http/acesso.controller.test.ts > HN-001 — acesso: cadastro, entrada e saida > RF-003 — encerrar sessao invalida o refresh
+AssertionError: expected 404 to be 401 // Object.is equality
+
+- Expected
++ Received
+
+- 401
++ 404
+
+ ❯ backend/src/acesso/infrastructure/http/acesso.controller.test.ts:102:30
+    100|     // Renovar com o refresh revogado nao pode devolver sessao nova.
+    101|     const renovacao = await post('/acesso/sessoes/renovacao', { refres…
+    102|     expect(renovacao.status).toBe(401);
+       |                              ^
+    103|   });
+    104|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/3]⎯
+
+
+ Test Files  1 failed | 14 passed (15)
+      Tests  3 failed | 88 passed (91)
+   Start at  18:42:50
+   Duration  8.90s (import 75%, tests 17%, transform 7%, worker 1%)
+
+ ELIFECYCLE  Command failed with exit code 1.
+---------------------------------------------------------------
+EXIT_CODE=1
+SHA256=acaa86ce2ca5a2fd15c0094deb9608a065673ac6acb133de8b6c893eea3367a1

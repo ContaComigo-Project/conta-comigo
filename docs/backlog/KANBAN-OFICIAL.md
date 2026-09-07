@@ -47,7 +47,12 @@ uma tem a coluna "UI hoje" dizendo o que já está pronto na tela.
 
 ## Próxima demanda
 
-**`HT-008` — Baseline de segurança** (ordem 9), em execução.
+**`HN-001` — Acesso: cadastro, login e encerramento de sessão** (ordem 13), em execução.
+
+É a primeira história de **negócio**: as três anteriores da fila (`HT-011`,
+`HT-012`) são técnicas e não bloqueiam. `HN-001` fecha a lacuna deixada por
+`HT-008` — a barreira por titular existe e é provada, mas quem afirma ser o
+titular ainda é um cabeçalho forjável.
 
 ### Dependência parcialmente resolvida
 
@@ -136,7 +141,7 @@ o backlog passou a considerar o frontend existente.
 | 10 | `HT-009` | Esqueleto do backend hexagonal (`ADR-001`) | Técnica | **Done** (puxada antes da 8 e da 9) | HT-006, HT-004 | `v0.9.0` |
 | 11 | `HT-010` | Persistência PostgreSQL, migrações e cifra em repouso | Técnica | **Done** | HT-009, HT-004 | `v0.10.0` |
 | 12 | `HT-017` | Contrato de dados entre a web e a API | Técnica | **Done** | HT-016, HT-009 | Define como a UI atual passa a receber dado |
-| 13 | `HN-001` | Acesso: cadastro, login e encerramento de sessão | Negócio | Backlog | HT-010, HT-008, HT-017 | Telas prontas; `Login.tsx` faz `console.log` + `setTimeout` |
+| 13 | `HN-001` | Acesso: cadastro, login e encerramento de sessão | Negócio | **Em revisão** | HT-010, HT-008, HT-017 | Telas prontas; `Login.tsx` faz `console.log` + `setTimeout` |
 | 14 | `HT-011` | Adaptador Pluggy Sandbox atrás da porta de agregação | Técnica | Backlog | HT-009 | — |
 
 ### Fase 3 — Consolidação e controle dos dados
@@ -184,6 +189,7 @@ o backlog passou a considerar o frontend existente.
 - _(vazio)_
 
 ### Em revisão
+- `HN-001` — Acesso (ordem 13) — commit local feito; **tag `v0.13.0` aguarda autorização humana**
 - `HT-008` — Baseline de segurança (ordem 9) — commit local feito; **tag `v0.12.0` aguarda autorização humana**
 
 ### Done
@@ -198,7 +204,7 @@ Ordens 5 a 30 na tabela acima.
 ## Grooming
 
 Arquivo de história é criado quando o item entra em `Ready`, não antes.
-Existem hoje como arquivo: `HT-000` a `HT-006`, `HT-008`, `HT-009`, `HT-010`, `HT-016`, `HT-017`, `HT-018`.
+Existem hoje como arquivo: `HT-000` a `HT-006`, `HT-008`, `HT-009`, `HT-010`, `HT-016`, `HT-017`, `HT-018` e `HN-001` — a primeira `HN` groomada, agora que `HT-016` definiu o aproveitamento das telas.
 
 `HT-009` foi groomada cedo, fora da regra acima, porque `ADR-001` tornou seus
 critérios de aceite verificáveis — deixaram de ser adivinhação.
@@ -253,3 +259,6 @@ cada tela é aproveitável, e isso muda o critério de aceite de quase todas ela
 | 2026-09-07 | `HT-017` | Em revisão | Done | `v0.11.0` → `1e011e4`; `verificar-fechamento` verde |
 | 2026-09-07 | `HT-008` | Backlog | Em execução | Puxada com `HT-007` adiada; o critério de varredura no CI fica pendente e registrado. Decisão do time |
 | 2026-09-07 | `HT-008` | Em execução | Em revisão | Barreira por titular provada por teste negativo e mutação; skill de Open Finance criada; 6 evidências; tag pendente |
+| 2026-09-07 | `HN-001` | Backlog | Ready | Dependências `HT-008`/`HT-010`/`HT-017` concluídas; primeira `HN` a ganhar arquivo |
+| 2026-09-07 | `HN-001` | Ready | Em execução | `docs/tasks/HN-001/` criado |
+| 2026-09-07 | `HN-001` | Em execução | Em revisão | Acesso real; identidade por token substitui o cabeçalho de `HT-008`; `console.log` de credenciais eliminado; tag pendente |

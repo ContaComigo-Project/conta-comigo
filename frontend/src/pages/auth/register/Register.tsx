@@ -6,6 +6,7 @@ import { registerSchema, type RegisterFormData } from '../../../validations/auth
 import { calculatePasswordStrength } from '../../../utils/password';
 import { formatCPF } from '../../../utils/formatters';
 import { useToast } from '../../../hooks/use-toast';
+import { criarConta, FalhaDeAcesso } from '../../../dados/acesso';
 
 export default function Register() {
   const [step, setStep] = useState(1);
@@ -48,20 +49,28 @@ export default function Register() {
     setStep(1);
   };
 
-  const onSubmit = (data: RegisterFormData) => {
+  // A credencial NUNCA e registrada em log — nem em desenvolvimento (RNF-015).
+  // Ate HN-001 esta funcao registrava o objeto do formulario no console.
+  const onSubmit = async (data: RegisterFormData) => {
     setIsLoading(true);
-    console.log('Register attempt:', data);
-
-    // Simulate API call
-    setTimeout(() => {
-      setIsLoading(false);
+    try {
+      await criarConta({ email: data.email, senha: data.password });
       toast({
         variant: "success",
         title: "Cadastro realizado!",
         description: "Sua conta foi criada. Redirecionando...",
       });
       navigate('/login');
-    }, 2000);
+    } catch (erro) {
+      // A recusa e uniforme: nao revela se o e-mail ja estava cadastrado (RF-001).
+      toast({
+        variant: "destructive",
+        title: "Não foi possível criar a conta",
+        description: erro instanceof FalhaDeAcesso ? erro.message : "Tente novamente.",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (

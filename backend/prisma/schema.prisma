@@ -21,3 +21,27 @@ model Lancamento {
   @@index([titularId])
   @@map("lancamentos")
 }
+
+// Contexto `acesso` (HN-001). A conta E o titular: nao ha tabela de usuario
+// separada. Guarda hash da senha, nunca a senha.
+model Conta {
+  id          String   @id
+  email       String   @unique
+  hashDaSenha String   @map("hash_da_senha")
+  criadaEm    DateTime @default(now()) @map("criada_em") @db.Timestamptz(3)
+
+  @@map("contas")
+}
+
+// Refresh token: o banco guarda o HASH dele. Se vazar, os refresh nao sao
+// utilizaveis (ADR-004, revogacao real).
+model Sessao {
+  id            String    @id
+  titularId     String    @map("titular_id")
+  hashDoRefresh String    @unique @map("hash_do_refresh")
+  expiraEm      DateTime  @map("expira_em") @db.Timestamptz(3)
+  revogadoEm    DateTime? @map("revogado_em") @db.Timestamptz(3)
+
+  @@index([titularId])
+  @@map("sessoes")
+}

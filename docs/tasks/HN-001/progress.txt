@@ -1,0 +1,10 @@
+# progress — HN-001
+# Diário append-only do ciclo Ralph. Uma linha por evento.
+# Formato: AAAA-MM-DD HH:MM | FASE | descrição objetiva | evidência
+# FASE: PERCEBER | ORIENTAR | DECIDIR | AGIR | REGISTRAR
+
+2026-09-07 18:42 | AGIR | seis criterios de acesso sobre casos de uso stub — harness test-unitario exit 1 (VERMELHO ESPERADO) | docs/tasks/HN-001/evidencia/20260907-184249-test-unitario-vermelho.txt
+2026-09-07 18:45 | AGIR | cadastro, autenticacao, renovacao e encerramento implementados — harness test-unitario exit 0 (VERDE) | docs/tasks/HN-001/evidencia/20260907-184453-test-unitario-verde.txt
+2026-09-07 18:49 | REGISTRAR | gates de ponta a ponta com acesso real e identidade por token — harness gates exit 1 (VERMELHO) | docs/tasks/HN-001/evidencia/20260907-184833-gates-verde.txt
+2026-09-07 18:50 | REGISTRAR | gates de ponta a ponta com acesso real e identidade por token — harness gates exit 0 (VERDE) | docs/tasks/HN-001/evidencia/20260907-184950-gates-verde-2.txt
+2026-09-07 18:51 | AGIR | cobertura do dominio com Email testado — harness coverage exit 0 (VERDE) | docs/tasks/HN-001/evidencia/20260907-185123-coverage-verde-cobertura.txt
