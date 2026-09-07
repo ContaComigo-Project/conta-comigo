@@ -1,0 +1,130 @@
+# evidência de execução — HT-011
+# Gerado por scripts/registrar-evidencia.sh. Não editar à mão.
+comando : scripts/harness.sh gates
+data    : 2026-09-07 19:27:12 -0300
+commit  : e294cb6 (árvore suja)
+sistema : MINGW64_NT-10.0-26200
+espera  : SUCESSO
+---------------------------------------------------------------
+harness: executando gates na ordem — falha no primeiro erro
+harness: HARNESS_LINT -> pnpm run lint
+
+> conta-comigo@0.7.0 lint C:\Users\migue\Documents\mocitec\conta-comigo
+> pnpm --filter client-contacomigo lint && pnpm run lint:fronteiras
+
+
+> client-contacomigo@0.0.0 lint C:\Users\migue\Documents\mocitec\conta-comigo\frontend
+> eslint .
+
+
+> conta-comigo@0.7.0 lint:fronteiras C:\Users\migue\Documents\mocitec\conta-comigo
+> depcruise --config .dependency-cruiser.cjs backend frontend/src
+
+
+✔ no dependency violations found (163 modules, 381 dependencies cruised)
+
+harness: HARNESS_TEST -> pnpm run test
+
+> conta-comigo@0.7.0 test C:\Users\migue\Documents\mocitec\conta-comigo
+> pnpm run test:unitario && pnpm run test:integracao && pnpm run test:funcional
+
+
+> conta-comigo@0.7.0 test:unitario C:\Users\migue\Documents\mocitec\conta-comigo
+> vitest run
+
+
+ RUN  v5.0.0 C:/Users/migue/Documents/mocitec/conta-comigo
+
+
+ Test Files  20 passed (20)
+      Tests  128 passed (128)
+   Start at  19:27:23
+   Duration  11.88s (import 67%, tests 17%, transform 15%, setup 1%, worker 1%)
+
+    Isolate  20 workers spawned · ~462ms startup each (spawn + environment, per file)
+             at least ~859ms faster with isolate: false — reuses workers across files instead of one per file
+
+
+> conta-comigo@0.7.0 test:integracao C:\Users\migue\Documents\mocitec\conta-comigo
+> vitest run --config vitest.integracao.config.ts
+
+
+ RUN  v5.0.0 C:/Users/migue/Documents/mocitec/conta-comigo
+
+
+ Test Files  1 passed (1)
+      Tests  4 passed (4)
+   Start at  19:27:36
+   Duration  759ms (tests 44%, import 31%, transform 21%, setup 2%, worker 2%)
+
+
+> conta-comigo@0.7.0 test:funcional C:\Users\migue\Documents\mocitec\conta-comigo
+> playwright test
+
+
+Running 2 tests using 2 workers
+
+  ✓  1 [chromium] › tests\funcional\fumaca.spec.ts:13:3 › fumaca — a web existente responde › a tela de login existe e tem formulario (2.2s)
+  ✓  2 [chromium] › tests\funcional\fumaca.spec.ts:7:3 › fumaca — a web existente responde › a landing abre com o titulo do produto (2.3s)
+
+  2 passed (6.7s)
+harness: HARNESS_COVERAGE -> pnpm run coverage
+
+> conta-comigo@0.7.0 coverage C:\Users\migue\Documents\mocitec\conta-comigo
+> vitest run --coverage
+
+
+ RUN  v5.0.0 C:/Users/migue/Documents/mocitec/conta-comigo
+      Coverage enabled with v8
+
+
+ Test Files  20 passed (20)
+      Tests  128 passed (128)
+   Start at  19:27:47
+   Duration  13.29s (import 60%, tests 20%, transform 16%, worker 3%, setup 1%)
+
+    Isolate  20 workers spawned · ~513ms startup each (spawn + environment, per file)
+             at least ~953ms faster with isolate: false — reuses workers across files instead of one per file
+
+[34m % [39m[2mCoverage report from [22m[33mv8[39m
+-------------------|---------|----------|---------|---------|-------------------
+File               | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+-------------------|---------|----------|---------|---------|-------------------
+All files          |   97.43 |    92.85 |     100 |     100 |                   
+ ...s/domain/model |      75 |       50 |     100 |     100 |                   
+  titular.ts       |      75 |       50 |     100 |     100 | 6                 
+-------------------|---------|----------|---------|---------|-------------------
+
+=============================== Coverage summary ===============================
+Statements   : 97.43% ( 38/39 )
+Branches     : 92.85% ( 13/14 )
+Functions    : 100% ( 13/13 )
+Lines        : 100% ( 29/29 )
+================================================================================
+harness: HARNESS_SECURITY -> pnpm run security
+
+> conta-comigo@0.7.0 security C:\Users\migue\Documents\mocitec\conta-comigo
+> node scripts/seguranca.mjs
+
+seguranca: varredura de segredo e de dependencia
+
+=== 1. Segredos (gitleaks)
+--- arvore de trabalho
+[90m10:28PM[0m [32mINF[0m [1mscanned ~78410884 bytes (78.41 MB) in 9.39s[0m
+[90m10:28PM[0m [32mINF[0m [1mno leaks found[0m
+--- historico de commits
+[90m10:28PM[0m [32mINF[0m [1m85 commits scanned.[0m
+[90m10:28PM[0m [32mINF[0m [1mscanned ~1628678 bytes (1.63 MB) in 7.51s[0m
+[90m10:28PM[0m [32mINF[0m [1mno leaks found[0m
+  [OK]    nenhum segredo detectado
+
+=== 2. Dependencias vulneraveis (osv-scanner)
+Scanned /repo/pnpm-lock.yaml file and found 595 packages
+No issues found
+  [OK]    nenhuma vulnerabilidade conhecida
+
+seguranca: aprovada
+harness: gates concluídos
+---------------------------------------------------------------
+EXIT_CODE=0
+SHA256=dc8738bde126c309e5aacb261c1678d845feef67010e885ff12b83efc0eca9ca

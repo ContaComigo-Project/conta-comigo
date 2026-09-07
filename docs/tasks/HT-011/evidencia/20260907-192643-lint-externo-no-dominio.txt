@@ -1,0 +1,32 @@
+# evidência de execução — HT-011
+# Gerado por scripts/registrar-evidencia.sh. Não editar à mão.
+comando : scripts/harness.sh lint
+data    : 2026-09-07 19:26:43 -0300
+commit  : e294cb6 (árvore suja)
+sistema : MINGW64_NT-10.0-26200
+espera  : FALHA (vermelho obrigatório)
+---------------------------------------------------------------
+harness: HARNESS_LINT -> pnpm run lint
+
+> conta-comigo@0.7.0 lint C:\Users\migue\Documents\mocitec\conta-comigo
+> pnpm --filter client-contacomigo lint && pnpm run lint:fronteiras
+
+
+> client-contacomigo@0.0.0 lint C:\Users\migue\Documents\mocitec\conta-comigo\frontend
+> eslint .
+
+
+> conta-comigo@0.7.0 lint:fronteiras C:\Users\migue\Documents\mocitec\conta-comigo
+> depcruise --config .dependency-cruiser.cjs backend frontend/src
+
+
+  error dominio-so-importa-dominio: backend/src/agregacao/domain/model/usa-framework-proposital.ts → node_modules/.pnpm/@nestjs+common@12.0.1_reflect-metadata@0.2.2_rxjs@7.8.2/node_modules/@nestjs/common/index.js
+  error dominio-sem-framework-nem-io: backend/src/agregacao/domain/model/usa-framework-proposital.ts → node_modules/.pnpm/@nestjs+common@12.0.1_reflect-metadata@0.2.2_rxjs@7.8.2/node_modules/@nestjs/common/index.js
+
+x 2 dependency violations (2 errors, 0 warnings). 164 modules, 382 dependencies cruised.
+
+ ELIFECYCLE  Command failed with exit code 2.
+ ELIFECYCLE  Command failed with exit code 2.
+---------------------------------------------------------------
+EXIT_CODE=2
+SHA256=ea94464e3f6c6c04f881040f29ffe2157915d392f7322500bb10d85a38a11c29

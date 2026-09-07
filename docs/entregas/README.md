@@ -35,6 +35,7 @@ Arquivo: `ENTREGA-[CHAVE]-titulo-em-kebab-case.md`, a partir de
 | 2026-09-07 | [`HT-017`](./ENTREGA-HT-017-contrato-de-dados.md) | Contrato de dados web↔API, origem falsa e RN-001 no domínio | `v0.11.0` | `1e011e4` | `v0.11.0` |
 | 2026-09-07 | [`HT-008`](./ENTREGA-HT-008-baseline-de-seguranca.md) | Baseline de segurança e skill de Open Finance | `v0.12.0` | a preencher | pendente |
 | 2026-09-07 | [`HN-001`](./ENTREGA-HN-001-acesso.md) | Acesso: cadastro, login e encerramento de sessão | `v0.13.0` | a preencher | pendente |
+| 2026-09-07 | [`HT-011`](./ENTREGA-HT-011-adaptador-pluggy.md) | Porta de agregação com adaptador Pluggy e política de resiliência | `v0.14.0` | a preencher | pendente |
 
 Toda linha acima foi verificada por `scripts/verificar-fechamento.sh`: a tag
 aponta para o mesmo hash do commit de fechamento, e a mensagem cita a chave.
