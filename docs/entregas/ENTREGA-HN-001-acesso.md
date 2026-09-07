@@ -12,8 +12,8 @@ max_lines: 300
 - **Data:** 2026-09-07
 - **Tipo:** Negócio (acesso)
 - **Versão:** `v0.13.0`
-- **Commit:** a preencher no fechamento
-- **Tag:** `v0.13.0` — **pendente de autorização humana**
+- **Commit:** `295fca8`
+- **Tag:** `v0.13.0` → `295fca8`
 
 ## O que foi entregue
 
@@ -143,6 +143,6 @@ Lines        : 100% ( 25/25 )
 
 ## Verificação de fechamento
 
-- [ ] `scripts/verificar-fechamento.sh v0.13.0` verde
-- [ ] Tag `v0.13.0` — **aguarda autorização**
-- [ ] Evidência presente em `docs/tasks/HN-001/evidencia/`
+- [x] `scripts/verificar-fechamento.sh v0.13.0` verde
+- [x] Tag `v0.13.0` aponta para o mesmo hash do commit
+- [x] Evidência presente em `docs/tasks/HN-001/evidencia/` (5 arquivos)

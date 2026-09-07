@@ -47,11 +47,14 @@ uma tem a coluna "UI hoje" dizendo o que já está pronto na tela.
 
 ## Próxima demanda
 
-**`HT-011` — Adaptador Pluggy Sandbox atrás da porta de agregação** (ordem 14).
+**`HN-002` — Conectar instituição com consentimento e sincronizar** (ordem 15).
 
-`HN-001` fechou o acesso; `HT-011` cria a porta obrigatória que falta de
-`ADR-001` e a política de falha de `RNF-005`/`RNF-006`, para que `HN-002` não
-comece pelo SDK dentro de um caso de uso.
+Todas as dependências estão prontas: `HN-001` deu a sessão, `HT-011` a porta de
+agregação com política de falha, `HT-010` a cifra em repouso — ainda sem uso — e
+`HT-008` a barreira por titular. É a primeira história a exercitar a skill
+`open-finance-security-agent` por inteiro: consentimento como registro de
+primeira classe, com escopo, expiração e revogação (`RN-012` a `RN-014`), e o
+token do agregador cifrado.
 
 É a primeira história de **negócio**: as três anteriores da fila (`HT-011`,
 `HT-012`) são técnicas e não bloqueiam. `HN-001` fecha a lacuna deixada por
@@ -136,7 +139,7 @@ o backlog passou a considerar o frontend existente.
 | 6 | `HT-005` | Harness local reprodutível com docker compose | Técnica | **Done** | HT-004 | `v0.7.0` |
 | 7 | `HT-006` | Infraestrutura de testes funcional/BDD e unitário | Técnica | **Done** | HT-005 | `v0.8.0` |
 | 8 | `HT-007` | Pipeline de CI com gates bloqueantes | Técnica | Backlog — **adiada**, ver nota | HT-006 | RNF-021 |
-| 9 | `HT-008` | Baseline de segurança: segredos, autorização, varredura | Técnica | **Em revisão** | ~~HT-007~~ (parcial — ver nota) | RNF-012, RNF-013, RNF-015 |
+| 9 | `HT-008` | Baseline de segurança: segredos, autorização, varredura | Técnica | **Done** | ~~HT-007~~ (parcial — ver nota) | `v0.12.0` |
 
 ### Fase 2 — Esqueleto do sistema e fronteira com a web
 
@@ -145,8 +148,8 @@ o backlog passou a considerar o frontend existente.
 | 10 | `HT-009` | Esqueleto do backend hexagonal (`ADR-001`) | Técnica | **Done** (puxada antes da 8 e da 9) | HT-006, HT-004 | `v0.9.0` |
 | 11 | `HT-010` | Persistência PostgreSQL, migrações e cifra em repouso | Técnica | **Done** | HT-009, HT-004 | `v0.10.0` |
 | 12 | `HT-017` | Contrato de dados entre a web e a API | Técnica | **Done** | HT-016, HT-009 | Define como a UI atual passa a receber dado |
-| 13 | `HN-001` | Acesso: cadastro, login e encerramento de sessão | Negócio | **Em revisão** | HT-010, HT-008, HT-017 | Telas prontas; `Login.tsx` faz `console.log` + `setTimeout` |
-| 14 | `HT-011` | Adaptador Pluggy Sandbox atrás da porta de agregação | Técnica | **Em revisão** | HT-009 | RNF-020, RNF-005, RNF-006 |
+| 13 | `HN-001` | Acesso: cadastro, login e encerramento de sessão | Negócio | **Done** `v0.13.0` | HT-010, HT-008, HT-017 | Telas prontas; `Login.tsx` faz `console.log` + `setTimeout` |
+| 14 | `HT-011` | Adaptador Pluggy Sandbox atrás da porta de agregação | Técnica | **Done** | HT-009 | `v0.14.0` |
 
 ### Fase 3 — Consolidação e controle dos dados
 
@@ -193,12 +196,10 @@ o backlog passou a considerar o frontend existente.
 - _(vazio)_
 
 ### Em revisão
-- `HT-011` — Adaptador Pluggy (ordem 14) — commit local feito; **tag `v0.14.0` aguarda autorização humana**
-- `HN-001` — Acesso (ordem 13) — commit local feito; **tag `v0.13.0` aguarda autorização humana**
-- `HT-008` — Baseline de segurança (ordem 9) — commit local feito; **tag `v0.12.0` aguarda autorização humana**
+- _(vazio)_
 
 ### Done
-- `HT-000` `v0.1.0` · `HT-001` `v0.2.0` · `HT-002` `v0.3.0` · `HT-003` `v0.4.0` · `HT-004` `v0.5.0` · `HT-016` `v0.6.0` · `HT-005` `v0.7.0` · `HT-006` `v0.8.0` · `HT-009` `v0.9.0` · `HT-010` `v0.10.0` · `HT-017` `v0.11.0`
+- `HT-000` `v0.1.0` · `HT-001` `v0.2.0` · `HT-002` `v0.3.0` · `HT-003` `v0.4.0` · `HT-004` `v0.5.0` · `HT-016` `v0.6.0` · `HT-005` `v0.7.0` · `HT-006` `v0.8.0` · `HT-009` `v0.9.0` · `HT-010` `v0.10.0` · `HT-017` `v0.11.0` · `HT-008` `v0.12.0` · `HN-001` `v0.13.0` · `HT-011` `v0.14.0`
 
 Todas verificadas por `scripts/verificar-fechamento.sh`: tag e commit no mesmo
 hash, mensagem semântica citando a chave, documento de entrega presente.
@@ -270,3 +271,6 @@ cada tela é aproveitável, e isso muda o critério de aceite de quase todas ela
 | 2026-09-07 | `HT-011` | Backlog | Ready | Dependência `HT-009` concluída; porta obrigatória de `ADR-001` ainda inexistente |
 | 2026-09-07 | `HT-011` | Ready | Em execução | `docs/tasks/HT-011/` criado (loop autônomo, volta 2) |
 | 2026-09-07 | `HT-011` | Em execução | Em revisão | Porta obrigatória de `ADR-001` criada; política de RNF-006 provada; axios removido após o gate de segurança reprovar; tag pendente |
+| 2026-09-07 | `HT-008` | Em revisão | Done | `v0.12.0` → `2a94e5d`; `verificar-fechamento` verde |
+| 2026-09-07 | `HN-001` | Em revisão | Done | `v0.13.0` → `295fca8`; `verificar-fechamento` verde |
+| 2026-09-07 | `HT-011` | Em revisão | Done | `v0.14.0` → `94eec6f`; `verificar-fechamento` verde |

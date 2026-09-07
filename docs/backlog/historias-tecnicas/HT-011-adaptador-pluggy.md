@@ -5,7 +5,7 @@ document_type: story
 story_key: HT-011
 story_type: tecnica
 epic: EPIC-TEC-001
-status: Em revisão
+status: Done
 max_lines: 300
 ---
 
@@ -13,7 +13,7 @@ max_lines: 300
 
 - **Tipo:** História técnica
 - **Épico:** `EPIC-TEC-001`
-- **Estado:** Em revisão (ordem 14)
+- **Estado:** Done (ordem 14) — `v0.14.0` → `94eec6f`
 - **Decisão que a rege:** [`ADR-001`](../../adr/ADR-001-arquitetura-hexagonal-no-backend.md)
 - **Requisitos:** `RNF-020`, `RNF-005`, `RNF-006`; habilita `RF-007`
 - **Depende de:** `HT-009` — `v0.9.0`
@@ -137,4 +137,4 @@ Cenário: painel sobrevive ao provedor fora
 - [x] Documentação operacional atualizada (`.env.example`)
 - [x] `docs/entregas/` criado
 - [x] `KANBAN-OFICIAL.md` atualizado
-- [ ] Commit semântico citando `HT-011` e tag no mesmo hash — commit feito; **tag aguarda autorização humana**
+- [x] Commit semântico citando `HT-011` e tag no mesmo hash

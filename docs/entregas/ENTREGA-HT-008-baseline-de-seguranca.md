@@ -12,8 +12,8 @@ max_lines: 300
 - **Data:** 2026-09-07
 - **Tipo:** Técnica (segurança)
 - **Versão:** `v0.12.0`
-- **Commit:** a preencher no fechamento
-- **Tag:** `v0.12.0` — **pendente de autorização humana**
+- **Commit:** `2a94e5d`
+- **Tag:** `v0.12.0` → `2a94e5d`
 
 ## O que foi entregue
 
@@ -142,6 +142,6 @@ harness: gates concluídos
 
 ## Verificação de fechamento
 
-- [ ] `scripts/verificar-fechamento.sh v0.12.0` verde
-- [ ] Tag `v0.12.0` — **aguarda autorização**
-- [ ] Evidência presente em `docs/tasks/HT-008/evidencia/`
+- [x] `scripts/verificar-fechamento.sh v0.12.0` verde
+- [x] Tag `v0.12.0` aponta para o mesmo hash do commit
+- [x] Evidência presente em `docs/tasks/HT-008/evidencia/` (7 arquivos)

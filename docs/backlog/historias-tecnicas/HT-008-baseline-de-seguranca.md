@@ -5,7 +5,7 @@ document_type: story
 story_key: HT-008
 story_type: tecnica
 epic: EPIC-TEC-001
-status: Em revisão
+status: Done
 max_lines: 300
 ---
 
@@ -13,7 +13,7 @@ max_lines: 300
 
 - **Tipo:** História técnica
 - **Épico:** `EPIC-TEC-001`
-- **Estado:** Em revisão (ordem 9)
+- **Estado:** Done (ordem 9) — `v0.12.0` → `2a94e5d`
 - **Decisão que a rege:** [`ADR-004`](../../adr/ADR-004-autenticacao-jwt-proprio.md), [`ADR-001`](../../adr/ADR-001-arquitetura-hexagonal-no-backend.md)
 - **Requisitos:** `RNF-012`, `RNF-013`, `RNF-015`; `RN-015`
 - **Depende de:** `HT-009` — `v0.9.0`; `HT-010` — `v0.10.0`. **`HT-007` (CI) está adiada** — ver "Fora de escopo"
@@ -145,4 +145,4 @@ Cenário: log não carrega dado financeiro
 - [x] Documentação operacional atualizada
 - [x] `docs/entregas/` criado
 - [x] `KANBAN-OFICIAL.md` atualizado
-- [ ] Commit semântico citando `HT-008` e tag no mesmo hash — commit feito; **tag aguarda autorização humana**
+- [x] Commit semântico citando `HT-008` e tag no mesmo hash

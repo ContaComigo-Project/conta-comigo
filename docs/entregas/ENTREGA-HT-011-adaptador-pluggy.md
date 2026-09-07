@@ -12,8 +12,8 @@ max_lines: 300
 - **Data:** 2026-09-07
 - **Tipo:** Técnica (integração externa)
 - **Versão:** `v0.14.0`
-- **Commit:** a preencher no fechamento
-- **Tag:** `v0.14.0` — **pendente de autorização humana**
+- **Commit:** `94eec6f`
+- **Tag:** `v0.14.0` → `94eec6f`
 
 ## O que foi entregue
 
@@ -141,6 +141,6 @@ seguranca: aprovada
 
 ## Verificação de fechamento
 
-- [ ] `scripts/verificar-fechamento.sh v0.14.0` verde
-- [ ] Tag `v0.14.0` — **aguarda autorização**
-- [ ] Evidência presente em `docs/tasks/HT-011/evidencia/`
+- [x] `scripts/verificar-fechamento.sh v0.14.0` verde
+- [x] Tag `v0.14.0` aponta para o mesmo hash do commit
+- [x] Evidência presente em `docs/tasks/HT-011/evidencia/` (8 arquivos)

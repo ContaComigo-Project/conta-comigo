@@ -5,7 +5,7 @@ document_type: story
 story_key: HN-001
 story_type: negocio
 epic: EPIC-NEG-001
-status: Em revisão
+status: Done
 max_lines: 300
 ---
 
@@ -13,7 +13,7 @@ max_lines: 300
 
 - **Tipo:** História de negócio
 - **Épico:** `EPIC-NEG-001`
-- **Estado:** Em revisão (ordem 13)
+- **Estado:** Done (ordem 13) — `v0.13.0` → `295fca8`
 - **Decisão que a rege:** [`ADR-004`](../../adr/ADR-004-autenticacao-jwt-proprio.md)
 - **Requisitos:** `RF-001`, `RF-002`, `RF-003`; `RN-015`
 - **Depende de:** `HT-010` — `v0.10.0`; `HT-017` — `v0.11.0`; `HT-008` — `v0.12.0`
@@ -127,4 +127,4 @@ Cenário: a senha nunca aparece em log nem em resposta
 - [x] `console.log` de credenciais eliminado de `Login.tsx` e `Register.tsx`
 - [x] `docs/entregas/` criado
 - [x] `KANBAN-OFICIAL.md` atualizado
-- [ ] Commit semântico citando `HN-001` e tag no mesmo hash — commit feito; **tag aguarda autorização humana**
+- [x] Commit semântico citando `HN-001` e tag no mesmo hash
