@@ -224,4 +224,4 @@ cada tela é aproveitável, e isso muda o critério de aceite de quase todas ela
 | 2026-09-07 | `HT-009` | Backlog | Ready | Puxada antes das ordens 8 e 9; arquivo já existia (groomada em `ADR-001`) |
 | 2026-09-07 | `HT-009` | Ready | Em execução | `docs/tasks/HT-009/` criado |
 | 2026-09-07 | `HT-009` | Em execução | Em revisão | Contexto `lancamentos` completo; gate de fronteiras corrigido e provado em código real; 11 evidências |
-| 2026-09-07 | `HT-009` | Em revisão | Done | `v0.9.0` → a preencher |
+| 2026-09-07 | `HT-009` | Em revisão | Done | `v0.9.0` → `b7f2945` |

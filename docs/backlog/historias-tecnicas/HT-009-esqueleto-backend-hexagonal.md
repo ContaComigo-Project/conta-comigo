@@ -13,7 +13,7 @@ max_lines: 300
 
 - **Tipo:** História técnica
 - **Épico:** `EPIC-TEC-001`
-- **Estado:** Done (ordem 10, puxada antes das ordens 8 e 9 — ver nota no kanban) — `v0.9.0`
+- **Estado:** Done (ordem 10, puxada antes das ordens 8 e 9 — ver nota no kanban) — `v0.9.0` → `b7f2945`
 - **Decisão que a rege:** [`ADR-001`](../../adr/ADR-001-arquitetura-hexagonal-no-backend.md)
 - **Requisitos:** `RNF-020`, `RNF-021`; habilita `RNF-018`
 - **Depende de:** `HT-006` (infra de testes) — `v0.8.0`; `HT-004` (ferramenta de fronteira) — `v0.5.0`

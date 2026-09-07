@@ -12,8 +12,8 @@ max_lines: 300
 - **Data:** 2026-09-07
 - **Tipo:** Técnica (arquitetura)
 - **Versão:** `v0.9.0`
-- **Commit:** a preencher no fechamento
-- **Tag:** `v0.9.0` no mesmo hash
+- **Commit:** `b7f2945`
+- **Tag:** `v0.9.0` → `b7f2945`
 
 ## O que foi entregue
 
@@ -135,6 +135,6 @@ harness: gates concluídos
 
 ## Verificação de fechamento
 
-- [ ] `scripts/verificar-fechamento.sh v0.9.0` verde
-- [ ] Tag `v0.9.0` aponta para o mesmo hash do commit
-- [ ] Evidência presente em `docs/tasks/HT-009/evidencia/`
+- [x] `scripts/verificar-fechamento.sh v0.9.0` verde
+- [x] Tag `v0.9.0` aponta para o mesmo hash do commit
+- [x] Evidência presente em `docs/tasks/HT-009/evidencia/` (11 arquivos)
