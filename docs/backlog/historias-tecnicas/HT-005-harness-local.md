@@ -5,7 +5,7 @@ document_type: story
 story_key: HT-005
 story_type: tecnica
 epic: EPIC-TEC-001
-status: Em revisão
+status: Done
 max_lines: 300
 ---
 
@@ -13,7 +13,7 @@ max_lines: 300
 
 - **Tipo:** História técnica
 - **Épico:** `EPIC-TEC-001`
-- **Estado:** Em revisão (ordem 6)
+- **Estado:** Done (ordem 6) — `v0.7.0` → `3f57b53`
 - **Decisão que a rege:** [`ADR-005`](../../adr/ADR-005-hospedagem-adiada.md)
 - **Requisitos:** `RNF-007`; habilita `RNF-021`
 - **Depende de:** `HT-004` (stack decidida) — concluída

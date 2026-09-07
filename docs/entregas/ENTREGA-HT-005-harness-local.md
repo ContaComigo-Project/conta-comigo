@@ -12,8 +12,8 @@ max_lines: 300
 - **Data:** 2026-09-07
 - **Tipo:** Técnica (ambiente e operação)
 - **Versão:** `v0.7.0`
-- **Commit:** a preencher no fechamento
-- **Tag:** `v0.7.0` no mesmo hash
+- **Commit:** `3f57b53`
+- **Tag:** `v0.7.0` → `3f57b53`
 
 ## O que foi entregue
 
@@ -142,6 +142,6 @@ Duas, ambas com os verdes preservados e reverificadas depois:
 
 ## Verificação de fechamento
 
-- [ ] `scripts/verificar-fechamento.sh v0.7.0` verde
-- [ ] Tag `v0.7.0` aponta para o mesmo hash do commit
-- [ ] Evidência presente em `docs/tasks/HT-005/evidencia/`
+- [x] `scripts/verificar-fechamento.sh v0.7.0` verde
+- [x] Tag `v0.7.0` aponta para o mesmo hash do commit
+- [x] Evidência presente em `docs/tasks/HT-005/evidencia/` (7 arquivos)

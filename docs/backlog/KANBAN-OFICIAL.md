@@ -201,4 +201,4 @@ cada tela é aproveitável, e isso muda o critério de aceite de quase todas ela
 | 2026-09-07 | `HT-005` | Backlog | Ready | Arquivo de história criado com critérios verificáveis; dependência `HT-004` concluída |
 | 2026-09-07 | `HT-005` | Ready | Em execução | `docs/tasks/HT-005/` criado com TASK e IMPLEMENTATION; vermelho inicial registrado em `evidencia/` |
 | 2026-09-07 | `HT-005` | Em execução | Em revisão | Harness preenchido; 7 evidências de execução em disco; gates SRE e Segurança aprovados |
-| 2026-09-07 | `HT-005` | Em revisão | Done | `v0.7.0` → a preencher |
+| 2026-09-07 | `HT-005` | Em revisão | Done | `v0.7.0` → `3f57b53` |
