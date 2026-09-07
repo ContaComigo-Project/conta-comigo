@@ -37,7 +37,7 @@ if (-not $StagedFiles) {
 # 2. Inspecionar arquivos proibidos / segredos
 Write-Host "`n1. Verificando presenca de arquivos proibidos ou segredos..."
 $PadroesProibidos = @(
-    '^\.env(\..+)?$',
+    '(^|[\\/])\.env(\..+)?$',
     '\.(pem|key|pkcs12|pfx|kdbx)$',
     'id_rsa',
     '(^|[\\/])node_modules[\\/]',

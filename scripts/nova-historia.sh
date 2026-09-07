@@ -41,4 +41,4 @@ echo
 echo "próximos passos:"
 echo "  1. preencher TASK.md e IMPLEMENTATION.md antes de escrever código"
 echo "  2. mover ${CHAVE} para 'Em execução' no docs/backlog/KANBAN-OFICIAL.md"
-echo "  3. seguir .agents/prompts/ralph-loop.md"
+echo "  3. seguir .agents/prompts/ralph-loop/PROMPT.md"

@@ -38,7 +38,7 @@ while IFS= read -r ARQUIVO; do
     continue
   fi
 
-  if [[ "${ARQUIVO}" =~ ^\.env(\..+)?$ ]] || \
+  if [[ "${ARQUIVO}" =~ (^|/)\.env(\..+)?$ ]] || \
      [[ "${ARQUIVO}" =~ \.(pem|key|pkcs12|pfx|kdbx)$ ]] || \
      [[ "${ARQUIVO}" =~ id_rsa ]] || \
      [[ "${ARQUIVO}" =~ (^|/)node_modules/ ]] || \
