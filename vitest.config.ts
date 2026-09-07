@@ -5,7 +5,7 @@ export default defineConfig({
   test: {
     include: ['tests/**/*.test.ts', 'backend/src/**/*.test.ts'],
     // Fixtures de fronteira sao codigo deliberadamente ilegal: nunca executar.
-    exclude: ['**/node_modules/**', 'tests/fronteiras/fixtures/**', 'tests/funcional/**'],
+    exclude: ['**/node_modules/**', 'tests/fronteiras/fixtures/**', 'tests/funcional/**', '**/*.integracao.test.ts'],
     testTimeout: 30_000,
     coverage: {
       provider: 'v8',

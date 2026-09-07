@@ -1,0 +1,21 @@
+// Modelo de PERSISTENCIA (ADR-002, regra 1). Nao e a entidade de dominio:
+// o repositorio em infrastructure/persistence/ traduz entre os dois.
+// O cliente gerado fica dentro de persistence/ — unico lugar que o conhece.
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/lancamentos/infrastructure/persistence/gerado"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Lancamento {
+  id                String   @id
+  descricao         String
+  valorEmCentavos   Int      @map("valor_em_centavos")
+  dataDeCompetencia DateTime @map("data_de_competencia") @db.Timestamptz(3)
+
+  @@map("lancamentos")
+}

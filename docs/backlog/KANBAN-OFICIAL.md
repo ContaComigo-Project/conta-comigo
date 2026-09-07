@@ -116,7 +116,7 @@ o backlog passou a considerar o frontend existente.
 | Ordem | Chave | Título | Tipo | Estado | Depende de | UI hoje |
 | --- | --- | --- | --- | --- | --- | --- |
 | 10 | `HT-009` | Esqueleto do backend hexagonal (`ADR-001`) | Técnica | **Done** (puxada antes da 8 e da 9) | HT-006, HT-004 | `v0.9.0` |
-| 11 | `HT-010` | Persistência PostgreSQL, migrações e cifra em repouso | Técnica | Backlog | HT-009, HT-004 | — |
+| 11 | `HT-010` | Persistência PostgreSQL, migrações e cifra em repouso | Técnica | **Em revisão** | HT-009, HT-004 | RNF-014 |
 | 12 | `HT-017` | Contrato de dados entre a web e a API | Técnica | Backlog | HT-016, HT-009 | Define como a UI atual passa a receber dado |
 | 13 | `HN-001` | Acesso: cadastro, login e encerramento de sessão | Negócio | Backlog | HT-010, HT-008, HT-017 | Telas prontas; `Login.tsx` faz `console.log` + `setTimeout` |
 | 14 | `HT-011` | Adaptador Pluggy Sandbox atrás da porta de agregação | Técnica | Backlog | HT-009 | — |
@@ -166,7 +166,7 @@ o backlog passou a considerar o frontend existente.
 - _(vazio)_
 
 ### Em revisão
-- _(vazio)_
+- `HT-010` — Persistência PostgreSQL, migrações e cifra em repouso (ordem 11) — commit local feito; **tag `v0.10.0` aguarda autorização humana**
 
 ### Done
 - `HT-000` `v0.1.0` · `HT-001` `v0.2.0` · `HT-002` `v0.3.0` · `HT-003` `v0.4.0` · `HT-004` `v0.5.0` · `HT-016` `v0.6.0` · `HT-005` `v0.7.0` · `HT-006` `v0.8.0` · `HT-009` `v0.9.0`
@@ -180,7 +180,7 @@ Ordens 5 a 30 na tabela acima.
 ## Grooming
 
 Arquivo de história é criado quando o item entra em `Ready`, não antes.
-Existem hoje como arquivo: `HT-000` a `HT-006`, `HT-009`, `HT-016`, `HT-017`, `HT-018`.
+Existem hoje como arquivo: `HT-000` a `HT-006`, `HT-009`, `HT-010`, `HT-016`, `HT-017`, `HT-018`.
 
 `HT-009` foi groomada cedo, fora da regra acima, porque `ADR-001` tornou seus
 critérios de aceite verificáveis — deixaram de ser adivinhação.
@@ -225,3 +225,6 @@ cada tela é aproveitável, e isso muda o critério de aceite de quase todas ela
 | 2026-09-07 | `HT-009` | Ready | Em execução | `docs/tasks/HT-009/` criado |
 | 2026-09-07 | `HT-009` | Em execução | Em revisão | Contexto `lancamentos` completo; gate de fronteiras corrigido e provado em código real; 11 evidências |
 | 2026-09-07 | `HT-009` | Em revisão | Done | `v0.9.0` → `b7f2945` |
+| 2026-09-07 | `HT-010` | Backlog | Ready | Arquivo de história criado pelo loop autônomo (volta 1); dependências `HT-009`/`HT-004` concluídas |
+| 2026-09-07 | `HT-010` | Ready | Em execução | `docs/tasks/HT-010/` criado (loop autônomo, volta 2) |
+| 2026-09-07 | `HT-010` | Em execução | Em revisão | Gates verdes com persistência real; 11 evidências; commit local; tag pendente de OK humano (loop autônomo, volta 6) |

@@ -16,11 +16,12 @@
     "lint:fronteiras": "depcruise --config .dependency-cruiser.cjs backend frontend/src",
     "test:unitario": "vitest run",
     "test:funcional": "playwright test",
-    "test": "pnpm run test:unitario && pnpm run test:funcional",
+    "test": "pnpm run test:unitario && pnpm run test:integracao && pnpm run test:funcional",
     "coverage": "vitest run --coverage",
     "security": "node scripts/seguranca.mjs",
     "start": "pnpm --filter client-contacomigo dev",
-    "start:api": "pnpm --filter @contacomigo/backend dev"
+    "start:api": "pnpm --filter @contacomigo/backend dev",
+    "test:integracao": "vitest run --config vitest.integracao.config.ts"
   },
   "devDependencies": {
     "@nestjs/common": "12.0.1",
@@ -32,5 +33,11 @@
     "reflect-metadata": "0.2.2",
     "typescript": "6.0.3",
     "vitest": "5.0.0"
+  },
+  "pnpm": {
+    "overrides": {
+      "deepmerge-ts": "8.0.0",
+      "mysql2": "3.23.1"
+    }
   }
 }

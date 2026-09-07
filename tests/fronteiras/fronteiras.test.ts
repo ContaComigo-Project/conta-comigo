@@ -25,11 +25,11 @@ interface Violacao {
 }
 
 function depcruise(args: string[]) {
-  return spawnSync(
-    process.platform === 'win32' ? 'pnpm.cmd' : 'pnpm',
-    ['exec', 'depcruise', '--config', CONFIG, ...args],
-    { cwd: RAIZ, encoding: 'utf8', shell: process.platform === 'win32' },
-  );
+  // Comando em UMA string: no Windows "pnpm" e .cmd e exige shell, e shell com
+  // args em array dispara o aviso DEP0190 do Node (argumentos nao escapados).
+  // Nenhum argumento aqui tem espaco ou vem de fora — sao literais deste teste.
+  const comando = ['pnpm', 'exec', 'depcruise', '--config', CONFIG, ...args].join(' ');
+  return spawnSync(comando, { cwd: RAIZ, encoding: 'utf8', shell: true });
 }
 
 function cruzar(subarvore: string) {

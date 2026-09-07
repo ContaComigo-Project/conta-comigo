@@ -21,6 +21,7 @@ Tarefas:
   lint            analise estatica e formatacao
   test-funcional  testes funcionais / BDD
   test-unitario   testes unitarios
+  test-integracao testes de integracao (precisam do PostgreSQL do compose)
   test            suite completa
   coverage        relatorio de cobertura
   security        verificacao de seguranca
@@ -85,6 +86,7 @@ $chaves = @{
   "lint"           = "HARNESS_LINT"
   "test-funcional" = "HARNESS_TEST_FUNCTIONAL"
   "test-unitario"  = "HARNESS_TEST_UNIT"
+  "test-integracao" = "HARNESS_TEST_INTEGRATION"
   "test"           = "HARNESS_TEST"
   "coverage"       = "HARNESS_COVERAGE"
   "security"       = "HARNESS_SECURITY"

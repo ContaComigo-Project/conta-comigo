@@ -1,0 +1,100 @@
+# evidência de execução — HT-010
+# Gerado por scripts/registrar-evidencia.sh. Não editar à mão.
+comando : scripts/harness.sh setup
+data    : 2026-09-07 14:34:36 -0300
+commit  : 110050e (árvore suja)
+sistema : MINGW64_NT-10.0-26200
+espera  : SUCESSO
+---------------------------------------------------------------
+harness: HARNESS_SETUP -> pnpm run setup
+
+> conta-comigo@0.7.0 setup C:\Users\migue\Documents\mocitec\conta-comigo
+> node scripts/setup-ambiente.mjs
+
+
+=== 1. Verificando pre-requisitos
+  [OK]    Node 24.11.0
+  [OK]    pnpm 10.32.1
+  [OK]    Docker version 28.5.1, build e180ab8
+  [OK]    Docker Compose version v2.40.3-desktop.1
+  [OK]    motor do Docker 28.5.1
+
+=== 2. Instalando dependencias com o lockfile congelado
+Scope: all 3 workspace projects
+Lockfile is up to date, resolution step is skipped
+Already up to date
+
+╭ Warning ─────────────────────────────────────────────────────────────────────╮
+│                                                                              │
+│   Ignored build scripts: @prisma/engines@7.10.0, esbuild@0.28.2,             │
+│   prisma@7.10.0.                                                             │
+│   Run "pnpm approve-builds" to pick which dependencies should be allowed     │
+│   to run scripts.                                                            │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+Done in 1s using pnpm v10.32.1
+  [OK]    dependencias instaladas
+
+=== 3. Navegadores de teste
+  [OK]    Chromium instalado
+
+=== 4. Subindo o PostgreSQL
+ Network conta-comigo_default  Creating
+ Network conta-comigo_default  Created
+ Volume conta-comigo_contacomigo-pgdata  Creating
+ Volume conta-comigo_contacomigo-pgdata  Created
+ Container conta-comigo-postgres  Creating
+ Container conta-comigo-postgres  Created
+ Container conta-comigo-postgres  Starting
+ Container conta-comigo-postgres  Started
+ Container conta-comigo-postgres  Waiting
+ Container conta-comigo-postgres  Healthy
+  [OK]    PostgreSQL saudavel (healthcheck aprovado)
+
+=== 5. Conferindo a conexao com o banco
+  [OK]    /var/run/postgresql:5432 - accepting connections
+
+=== 6. Migracoes
+
+> @contacomigo/backend@0.9.0 prisma:generate C:\Users\migue\Documents\mocitec\conta-comigo\backend
+> prisma generate
+
+Loaded Prisma config from prisma.config.ts.
+
+Prisma schema loaded from prisma\schema.prisma.
+
+✔ Generated Prisma Client (7.10.0) to .\src\lancamentos\infrastructure\persistence\gerado in 67ms
+
+  [OK]    cliente Prisma gerado
+
+> @contacomigo/backend@0.9.0 prisma:migrate C:\Users\migue\Documents\mocitec\conta-comigo\backend
+> prisma migrate deploy
+
+Loaded Prisma config from prisma.config.ts.
+
+Prisma schema loaded from prisma\schema.prisma.
+Datasource "db": PostgreSQL database "contacomigo", schema "public" at "localhost:5433"
+
+1 migration found in prisma/migrations
+
+Applying migration `20260907172751_inicial`
+
+The following migration(s) have been applied:
+
+migrations/
+  └─ 20260907172751_inicial/
+    └─ migration.sql
+
+All migrations have been successfully applied.
+  [OK]    migracoes aplicadas
+
+=== Ambiente pronto
+  Node    24.11.0
+  pnpm    10.32.1
+  Docker version 28.5.1, build e180ab8
+  Postgres  localhost:5433  (usuario e base: contacomigo)
+
+Proximo: scripts/harness.sh gates
+---------------------------------------------------------------
+EXIT_CODE=0
+SHA256=23b1820eca80c069fb3851155b11f7b5e1431a5c9e524315d57cd7811f49c764

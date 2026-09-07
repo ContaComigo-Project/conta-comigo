@@ -78,6 +78,13 @@ verde de ponta a ponta desde `HT-006`: `lint` (ESLint + dependency-cruiser),
 Variável vazia continua sendo uma declaração: o harness **falha explicitamente**
 com "comando não configurado" e código 3 em vez de fingir sucesso.
 
+Desde `HT-010` existe também `test-integracao` (Vitest com config própria), que
+fala com o PostgreSQL do compose; `test` roda unitário → integração → funcional.
+`setup` aplica as migrações do Prisma (`prisma generate` + `migrate deploy`);
+o esquema só evolui por migração commitada em `backend/prisma/migrations/`,
+nunca por `db push`. `ENCRYPTION_KEY` (32 bytes em hex) é exigida pelo utilitário
+de cifra em repouso — sem ela o código recusa operar, por desenho.
+
 ### Restrição ao editar `harness.env`
 
 O mesmo valor é executado por dois interpretadores — `harness.sh` faz `eval` em

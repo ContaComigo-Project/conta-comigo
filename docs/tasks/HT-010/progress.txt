@@ -1,0 +1,17 @@
+# progress — HT-010
+# Diário append-only do ciclo Ralph. Uma linha por evento.
+# Formato: AAAA-MM-DD HH:MM | FASE | descrição objetiva | evidência
+# FASE: PERCEBER | ORIENTAR | DECIDIR | AGIR | REGISTRAR
+
+2026-09-07 14:16 | PERCEBER | Ready tinha HT-010, Em execucao vazio; dependencias HT-009/HT-004 Done | KANBAN-OFICIAL.md
+2026-09-07 14:16 | DECIDIR | puxar HT-010: pasta de task, TASK e IMPLEMENTATION antes de codigo | executor-agent
+2026-09-07 14:16 | REGISTRAR | kanban HT-010 -> Em execucao; TASK.md e IMPLEMENTATION.md preenchidos | docs/tasks/HT-010/
+2026-09-07 14:20 | AGIR | cifra: 7 cenarios sobre stub que devolve texto claro — harness test-unitario exit 1 (VERMELHO ESPERADO) | docs/tasks/HT-010/evidencia/20260907-142047-test-unitario-vermelho-cifra.txt
+2026-09-07 14:21 | AGIR | repositorio Prisma: ida e volta sobre stub que nao persiste — harness test-integracao exit 1 (VERMELHO ESPERADO) | docs/tasks/HT-010/evidencia/20260907-142112-test-integracao-vermelho-integracao.txt
+2026-09-07 14:23 | AGIR | cifra AES-256-GCM implementada — harness test-unitario exit 0 (VERDE) | docs/tasks/HT-010/evidencia/20260907-142336-test-unitario-verde-cifra.txt
+2026-09-07 14:28 | AGIR | repositorio Prisma real contra o Postgres do compose — harness test-integracao exit 0 (VERDE) | docs/tasks/HT-010/evidencia/20260907-142813-test-integracao-verde-integracao.txt
+2026-09-07 14:29 | AGIR | @prisma/client em application/ quebra o lint — harness lint exit 2 (VERMELHO ESPERADO) | docs/tasks/HT-010/evidencia/20260907-142856-lint-prisma-fora-de-persistence.txt
+2026-09-07 14:30 | REGISTRAR | gates de ponta a ponta com persistencia real — harness gates exit 1 (VERMELHO) | docs/tasks/HT-010/evidencia/20260907-142906-gates-verde.txt
+2026-09-07 14:32 | REGISTRAR | gates de ponta a ponta com persistencia real (apos overrides de seguranca) — harness gates exit 0 (VERDE) | docs/tasks/HT-010/evidencia/20260907-143128-gates-verde-2.txt
+2026-09-07 14:34 | AGIR | maquina limpa: setup recria o banco e aplica a migracao — harness setup exit 0 (VERDE) | docs/tasks/HT-010/evidencia/20260907-143436-setup-maquina-limpa.txt
+2026-09-07 14:36 | REGISTRAR | gates finais com o modulo apontando para o repositorio Prisma — harness gates exit 0 (VERDE) | docs/tasks/HT-010/evidencia/20260907-143509-gates-verde-final.txt

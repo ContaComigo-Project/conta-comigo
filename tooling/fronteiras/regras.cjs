@@ -83,7 +83,10 @@ const opcoesComuns = {
   // do grafo e com ele a aresta domain/ -> @nestjs/common que as regras
   // precisam ver. HT-009 plantou um import real em domain/ e o gate passou
   // verde por causa disso; a evidencia esta em docs/tasks/HT-009/evidencia/.
-  doNotFollow: { path: 'node_modules' },
+  // O cliente Prisma gerado (persistence/gerado, gitignored) e tratado como
+  // node_modules: a aresta ate ele continua no grafo, mas nao entramos nele —
+  // tem ciclos internos que nao sao nossos.
+  doNotFollow: { path: ['node_modules', '/persistence/gerado/'] },
   exclude: { path: ['(^|/)(dist|coverage)/'] },
   tsPreCompilationDeps: true,
   tsConfig: { fileName: 'tsconfig.json' },

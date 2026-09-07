@@ -6,7 +6,7 @@ set -euo pipefail
 RAIZ="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 ARQUIVO_ENV="${RAIZ}/scripts/harness.env"
 
-TAREFAS="setup down build lint test-funcional test-unitario test coverage security run gates"
+TAREFAS="setup down build lint test-funcional test-unitario test-integracao test coverage security run gates"
 
 uso() {
   cat <<TXT
@@ -19,6 +19,7 @@ Tarefas:
   lint            análise estática e formatação
   test-funcional  testes funcionais / BDD
   test-unitario   testes unitários
+  test-integracao testes de integração (precisam do PostgreSQL do compose)
   test            suíte completa
   coverage        relatório de cobertura
   security        verificação de segurança
@@ -71,6 +72,7 @@ case "${tarefa}" in
   lint)           carregar_env; executar HARNESS_LINT ;;
   test-funcional) carregar_env; executar HARNESS_TEST_FUNCTIONAL ;;
   test-unitario)  carregar_env; executar HARNESS_TEST_UNIT ;;
+  test-integracao) carregar_env; executar HARNESS_TEST_INTEGRATION ;;
   test)           carregar_env; executar HARNESS_TEST ;;
   coverage)       carregar_env; executar HARNESS_COVERAGE ;;
   security)       carregar_env; executar HARNESS_SECURITY ;;

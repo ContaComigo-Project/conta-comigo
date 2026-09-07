@@ -1,0 +1,135 @@
+# evidência de execução — HT-010
+# Gerado por scripts/registrar-evidencia.sh. Não editar à mão.
+comando : scripts/harness.sh gates
+data    : 2026-09-07 14:29:06 -0300
+commit  : 110050e (árvore suja)
+sistema : MINGW64_NT-10.0-26200
+espera  : SUCESSO
+---------------------------------------------------------------
+harness: executando gates na ordem — falha no primeiro erro
+harness: HARNESS_LINT -> pnpm run lint
+
+> conta-comigo@0.7.0 lint C:\Users\migue\Documents\mocitec\conta-comigo
+> pnpm --filter client-contacomigo lint && pnpm run lint:fronteiras
+
+
+> client-contacomigo@0.0.0 lint C:\Users\migue\Documents\mocitec\conta-comigo\frontend
+> eslint .
+
+
+> conta-comigo@0.7.0 lint:fronteiras C:\Users\migue\Documents\mocitec\conta-comigo
+> depcruise --config .dependency-cruiser.cjs backend frontend/src
+
+
+✔ no dependency violations found (99 modules, 169 dependencies cruised)
+
+harness: HARNESS_TEST -> pnpm run test
+
+> conta-comigo@0.7.0 test C:\Users\migue\Documents\mocitec\conta-comigo
+> pnpm run test:unitario && pnpm run test:integracao && pnpm run test:funcional
+
+
+> conta-comigo@0.7.0 test:unitario C:\Users\migue\Documents\mocitec\conta-comigo
+> vitest run
+
+
+ RUN  v5.0.0 C:/Users/migue/Documents/mocitec/conta-comigo
+
+(node:8868) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+ Test Files  7 passed (7)
+      Tests  30 passed (30)
+   Start at  14:29:17
+   Duration  6.67s (import 88%, transform 6%, tests 5%, worker 1%)
+
+
+> conta-comigo@0.7.0 test:integracao C:\Users\migue\Documents\mocitec\conta-comigo
+> vitest run --config vitest.integracao.config.ts
+
+
+ RUN  v5.0.0 C:/Users/migue/Documents/mocitec/conta-comigo
+
+
+ Test Files  1 passed (1)
+      Tests  3 passed (3)
+   Start at  14:29:24
+   Duration  539ms (tests 44%, import 37%, transform 18%, worker 1%)
+
+
+> conta-comigo@0.7.0 test:funcional C:\Users\migue\Documents\mocitec\conta-comigo
+> playwright test
+
+
+Running 2 tests using 2 workers
+
+  ✓  1 [chromium] › tests\funcional\fumaca.spec.ts:13:3 › fumaca — a web existente responde › a tela de login existe e tem formulario (3.8s)
+  ✓  2 [chromium] › tests\funcional\fumaca.spec.ts:7:3 › fumaca — a web existente responde › a landing abre com o titulo do produto (4.4s)
+
+  2 passed (8.0s)
+harness: HARNESS_COVERAGE -> pnpm run coverage
+
+> conta-comigo@0.7.0 coverage C:\Users\migue\Documents\mocitec\conta-comigo
+> vitest run --coverage
+
+
+ RUN  v5.0.0 C:/Users/migue/Documents/mocitec/conta-comigo
+      Coverage enabled with v8
+
+(node:23432) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+ Test Files  7 passed (7)
+      Tests  30 passed (30)
+   Start at  14:29:35
+   Duration  7.27s (import 83%, transform 10%, tests 5%, worker 3%)
+
+[34m % [39m[2mCoverage report from [22m[33mv8[39m
+-------------------|---------|----------|---------|---------|-------------------
+File               | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+-------------------|---------|----------|---------|---------|-------------------
+-------------------|---------|----------|---------|---------|-------------------
+
+=============================== Coverage summary ===============================
+Statements   : 100% ( 9/9 )
+Branches     : 100% ( 2/2 )
+Functions    : 100% ( 4/4 )
+Lines        : 100% ( 7/7 )
+================================================================================
+harness: HARNESS_SECURITY -> pnpm run security
+
+> conta-comigo@0.7.0 security C:\Users\migue\Documents\mocitec\conta-comigo
+> node scripts/seguranca.mjs
+
+seguranca: varredura de segredo e de dependencia
+
+=== 1. Segredos (gitleaks)
+--- arvore de trabalho
+[90m5:29PM[0m [32mINF[0m [1mscanned ~77761999 bytes (77.76 MB) in 8.24s[0m
+[90m5:29PM[0m [32mINF[0m [1mno leaks found[0m
+--- historico de commits
+[90m5:29PM[0m [32mINF[0m [1m79 commits scanned.[0m
+[90m5:29PM[0m [32mINF[0m [1mscanned ~1247270 bytes (1.25 MB) in 5.43s[0m
+[90m5:29PM[0m [32mINF[0m [1mno leaks found[0m
+  [OK]    nenhum segredo detectado
+
+=== 2. Dependencias vulneraveis (osv-scanner)
+Scanned /repo/pnpm-lock.yaml file and found 580 packages
+Total 2 packages affected by 3 known vulnerabilities (0 Critical, 2 High, 1 Medium, 0 Low, 0 Unknown) from 1 ecosystem.
+3 vulnerabilities can be fixed.
+
+
++-------------------------------------+------+-----------+--------------+---------+---------------+---------------------+
+| OSV URL                             | CVSS | ECOSYSTEM | PACKAGE      | VERSION | FIXED VERSION | SOURCE              |
++-------------------------------------+------+-----------+--------------+---------+---------------+---------------------+
+| https://osv.dev/GHSA-ggr8-5vv4-36mx | 8.2  | npm       | deepmerge-ts | 7.1.5   | 8.0.0         | repo/pnpm-lock.yaml |
+| https://osv.dev/GHSA-3f6p-5ww8-9rcr | 8.2  | npm       | mysql2       | 3.15.3  | 3.22.0        | repo/pnpm-lock.yaml |
+| https://osv.dev/GHSA-rgwj-5xj2-c3m3 | 5.9  | npm       | mysql2       | 3.15.3  | 3.23.1        | repo/pnpm-lock.yaml |
++-------------------------------------+------+-----------+--------------+---------+---------------+---------------------+
+  [FALHA] osv-scanner encontrou vulnerabilidade
+
+seguranca: reprovada — 1 varredura(s) falharam
+ ELIFECYCLE  Command failed with exit code 1.
+---------------------------------------------------------------
+EXIT_CODE=1
+SHA256=07312eaaa671cc320f01850fc7a056b6ceac648abb718cf4c1374348df2b9552

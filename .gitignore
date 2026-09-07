@@ -7,6 +7,9 @@ dist-ssr/
 build/
 .next/
 
+# Cliente Prisma gerado: `harness setup` o regenera (prisma generate)
+backend/src/**/persistence/gerado/
+
 # Testes e cobertura
 coverage/
 test-results/

@@ -166,9 +166,15 @@ ok(smoke.saida.trim());
 // --- 6. Migracoes ----------------------------------------------------------
 passo('6. Migracoes');
 
-// Slot reservado. O fluxo de migracao chega com o Prisma em HT-010 (ADR-002).
-// Ate la nao ha esquema: declarar a ausencia e mais honesto que omitir o passo.
-console.log('  [PULA]  nenhum esquema ainda — o fluxo de migracao chega em HT-010.');
+// ADR-002 regra 3: esquema evolui por migracao commitada, nunca por `db push`.
+// `generate` cria o cliente tipado (gitignored); `migrate deploy` aplica o que
+// esta em backend/prisma/migrations no Postgres do compose.
+const geracao = executar('pnpm', ['--filter', '@contacomigo/backend', 'prisma:generate']);
+if (geracao.codigo !== 0) abortar('prisma generate falhou.', 'Veja a saida acima; o schema esta em backend/prisma/schema.prisma.');
+ok('cliente Prisma gerado');
+const migracao = executar('pnpm', ['--filter', '@contacomigo/backend', 'prisma:migrate']);
+if (migracao.codigo !== 0) abortar('prisma migrate deploy falhou.', 'Banco de pe? Para recomecar do zero: "pnpm run down" e depois "setup".');
+ok('migracoes aplicadas');
 
 // --- Resumo ----------------------------------------------------------------
 console.log('\n=== Ambiente pronto');
