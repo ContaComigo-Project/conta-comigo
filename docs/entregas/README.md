@@ -29,7 +29,7 @@ Arquivo: `ENTREGA-[CHAVE]-titulo-em-kebab-case.md`, a partir de
 | 2026-09-05 | [`HT-016`](./ENTREGA-HT-016-inventario-frontend.md) | Inventário do frontend e destino dos mocks | `v0.6.0` | `5ebeb8a` | `v0.6.0` |
 | 2026-09-05 | `HT-016` | Correção: telas do dashboard mantidas com "Em construção" | `v0.6.1` | `c3bfb55` | `v0.6.1` |
 | 2026-09-07 | [`HT-005`](./ENTREGA-HT-005-harness-local.md) | Harness local reprodutível com docker compose | `v0.7.0` | `3f57b53` | `v0.7.0` |
-| 2026-09-07 | [`HT-006`](./ENTREGA-HT-006-infraestrutura-de-testes.md) | Infraestrutura de testes e prova do gate de fronteiras | `v0.8.0` | a preencher | `v0.8.0` |
+| 2026-09-07 | [`HT-006`](./ENTREGA-HT-006-infraestrutura-de-testes.md) | Infraestrutura de testes e prova do gate de fronteiras | `v0.8.0` | `7e17dea` | `v0.8.0` |
 
 Toda linha acima foi verificada por `scripts/verificar-fechamento.sh`: a tag
 aponta para o mesmo hash do commit de fechamento, e a mensagem cita a chave.

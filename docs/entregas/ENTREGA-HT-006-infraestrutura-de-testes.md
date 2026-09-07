@@ -12,8 +12,8 @@ max_lines: 300
 - **Data:** 2026-09-07
 - **Tipo:** Técnica (qualidade)
 - **Versão:** `v0.8.0`
-- **Commit:** a preencher no fechamento
-- **Tag:** `v0.8.0` no mesmo hash
+- **Commit:** `7e17dea`
+- **Tag:** `v0.8.0` → `7e17dea`
 
 ## O que foi entregue
 
@@ -130,6 +130,6 @@ ERROR: Coverage for branches (0%) does not meet global threshold (80%)
 
 ## Verificação de fechamento
 
-- [ ] `scripts/verificar-fechamento.sh v0.8.0` verde
-- [ ] Tag `v0.8.0` aponta para o mesmo hash do commit
-- [ ] Evidência presente em `docs/tasks/HT-006/evidencia/`
+- [x] `scripts/verificar-fechamento.sh v0.8.0` verde
+- [x] Tag `v0.8.0` aponta para o mesmo hash do commit
+- [x] Evidência presente em `docs/tasks/HT-006/evidencia/` (8 arquivos)

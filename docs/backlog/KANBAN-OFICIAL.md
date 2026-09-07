@@ -204,4 +204,4 @@ cada tela é aproveitável, e isso muda o critério de aceite de quase todas ela
 | 2026-09-07 | `HT-006` | Backlog | Ready | Arquivo de história criado; `HT-005` concluída |
 | 2026-09-07 | `HT-006` | Ready | Em execução | `docs/tasks/HT-006/` criado com TASK e IMPLEMENTATION |
 | 2026-09-07 | `HT-006` | Em execução | Em revisão | `gates` verde de ponta a ponta; 8 evidências; QA, SRE e Arquitetura aprovados |
-| 2026-09-07 | `HT-006` | Em revisão | Done | `v0.8.0` → a preencher |
+| 2026-09-07 | `HT-006` | Em revisão | Done | `v0.8.0` → `7e17dea` |

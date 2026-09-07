@@ -13,7 +13,7 @@ max_lines: 300
 
 - **Tipo:** História técnica
 - **Épico:** `EPIC-TEC-001`
-- **Estado:** Done (ordem 7) — `v0.8.0`
+- **Estado:** Done (ordem 7) — `v0.8.0` → `7e17dea`
 - **Decisão que a rege:** [`ADR-003`](../../adr/ADR-003-testes-vitest-playwright.md), [`ADR-001`](../../adr/ADR-001-arquitetura-hexagonal-no-backend.md)
 - **Requisitos:** `RNF-018`, `RNF-019`; habilita `RNF-021`
 - **Depende de:** `HT-005` (harness) — concluída em `v0.7.0`
