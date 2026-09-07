@@ -6,6 +6,8 @@ import { LancamentosModule } from '../../lancamentos.module';
 import { TOKENS } from '../../domain/port/saida/tokens';
 import { RelogioFixo } from '../relogio/relogio-fixo';
 import { RepositorioDeLancamentosEmMemoria } from '../persistence/repositorio-em-memoria';
+import { z } from 'zod';
+import { LancamentoDTO, resultadoDe } from '@contacomigo/contrato';
 
 // Cenario funcional na fronteira HTTP: controller -> caso de uso -> adaptador
 // falso. Sobe o Nest de verdade em porta efemera; nao sobe banco nem navegador.
@@ -35,6 +37,25 @@ describe('GET /lancamentos/resumo-do-mes', () => {
 
   afterAll(async () => {
     await app.close();
+  });
+
+  it('GET /lancamentos responde no CONTRATO: Resultado<LancamentoDTO[]> valido pelo esquema (HT-017)', async () => {
+    const resposta = await fetch(baseUrl + '/lancamentos');
+    expect(resposta.status).toBe(200);
+    const corpo = await resposta.json();
+    const parse = resultadoDe(z.array(LancamentoDTO)).safeParse(corpo);
+    expect(parse.success, JSON.stringify(parse.success ? null : parse.error.issues)).toBe(true);
+    if (!parse.success || parse.data.estado !== 'ok') throw new Error('esperava estado ok');
+    expect(parse.data.dados).toHaveLength(2);
+    expect(parse.data.dados[0]).toEqual({
+      id: '1',
+      descricao: 'mercado',
+      categoria: null,
+      instituicao: { id: 'desconhecida', nome: 'Desconhecida' },
+      valorEmCentavos: 120_00,
+      tipo: 'credito',
+      dataDeCompetencia: '2026-01-10T12:00:00.000Z',
+    });
   });
 
   it('responde 200 com o resumo do mes de referencia do relogio', async () => {

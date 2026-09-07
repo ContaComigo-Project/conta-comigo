@@ -32,7 +32,18 @@ function criarRegras(raiz) {
       comment: 'ADR-001: domain/ importa apenas outros arquivos de domain/. Nada de application/, infrastructure/ ou externo.',
       severity: 'error',
       from: { path: DOMAIN, pathNot: MODULE },
-      to: { pathNot: [DOMAIN, 'node_modules/(typescript|tslib)/'], dependencyTypesNot: ['type-only'] },
+      // Sem excecao para `import type`: ADR-001 so tolera tipo puro em
+      // application/. HT-017 plantou `import type` do contrato em domain/ e o
+      // gate passou verde por causa da excecao que estava aqui.
+      to: { pathNot: [DOMAIN, 'node_modules/(typescript|tslib)/'] },
+    },
+    {
+      name: 'dominio-nao-conhece-transporte',
+      comment: 'HT-017: pacotes do workspace (packages/*, ex. @contacomigo/contrato) resolvem por symlink, nao por node_modules — a regra de npm nao os ve. Transporte nunca entra em domain/ nem em application/.',
+      severity: 'error',
+      from: { path: [DOMAIN, APPLICATION], pathNot: MODULE },
+      // Symlink do pnpm pode aparecer como packages/... ou node_modules/@contacomigo/...
+      to: { path: '(^|/)packages/|node_modules/@contacomigo/' },
     },
     {
       name: 'dominio-sem-framework-nem-io',

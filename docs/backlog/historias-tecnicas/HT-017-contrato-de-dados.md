@@ -5,7 +5,7 @@ document_type: story
 story_key: HT-017
 story_type: tecnica
 epic: EPIC-TEC-001
-status: Backlog
+status: Em revisão
 max_lines: 300
 ---
 
@@ -13,10 +13,10 @@ max_lines: 300
 
 - **Tipo:** História técnica
 - **Épico:** `EPIC-TEC-001`
-- **Estado:** Backlog
+- **Estado:** Em revisão (ordem 12)
 - **Requisitos:** habilita `RF-008`, `RF-009`, `RF-013`, `RF-014`, `RF-016` a `RF-021`
-- **Depende de:** `HT-016`, `HT-009`
-- **Versão prevista:** a definir no grooming (posição 12 da fila; prever o minor agora seria chute)
+- **Depende de:** `HT-016` — `v0.6.0`; `HT-009` — `v0.9.0`
+- **Versão prevista:** `v0.11.0`
 
 ## Problema técnico
 
@@ -37,15 +37,15 @@ carrega para a API decisões que eram só de apresentação.
 
 ## Critérios de aceite
 
-- [ ] Cada estrutura consumida pela UI tem um tipo de transporte definido e documentado
-- [ ] Nenhum campo do contrato existe apenas para conveniência visual
+- [x] Cada estrutura consumida pela UI tem um tipo de transporte definido e documentado
+- [x] Nenhum campo do contrato existe apenas para conveniência visual
       (classe CSS, ícone, rótulo) — esses permanecem no frontend
-- [ ] O campo derivado de regra de negócio (ex.: a faixa do semáforo) é
+- [x] O campo derivado de regra de negócio (ex.: a faixa do semáforo) é
       **calculado no domínio** e transportado pronto, nunca recalculado na tela
-- [ ] O contrato cobre o estado de erro e o estado "dados insuficientes"
+- [x] O contrato cobre o estado de erro e o estado "dados insuficientes"
       (`RN-020`, `RN-021`), não só o caminho feliz
-- [ ] Os componentes atuais compilam contra o novo contrato sem mudança visual
-- [ ] Existe uma implementação de origem falsa que satisfaz o contrato, usada
+- [x] Os componentes atuais compilam contra o novo contrato sem mudança visual
+- [x] Existe uma implementação de origem falsa que satisfaz o contrato, usada
       pelos testes e pelo ambiente local
 
 ```gherkin
@@ -98,10 +98,10 @@ Cenário: trocar a origem do dado não muda a tela
 
 ## Definição de pronto
 
-- [ ] Contrato documentado e implementado
-- [ ] Origem falsa satisfazendo o contrato, usada em teste
-- [ ] Componentes existentes compilando sem mudança visual
-- [ ] `docs/entregas/ENTREGA-HT-017-contrato-de-dados.md` criado
-- [ ] `KANBAN-OFICIAL.md` atualizado
-- [ ] Commit semântico citando `HT-017`
-- [ ] Tag semântica no mesmo hash
+- [x] Contrato documentado e implementado
+- [x] Origem falsa satisfazendo o contrato, usada em teste
+- [x] Componentes existentes compilando sem mudança visual
+- [x] `docs/entregas/ENTREGA-HT-017-contrato-de-dados.md` criado
+- [x] `KANBAN-OFICIAL.md` atualizado
+- [x] Commit semântico citando `HT-017`
+- [ ] Tag semântica no mesmo hash — **aguarda autorização humana** (regra 6 do AGENTS.md)

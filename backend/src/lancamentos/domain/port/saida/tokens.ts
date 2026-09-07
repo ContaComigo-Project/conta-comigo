@@ -4,4 +4,5 @@ export const TOKENS = {
   RepositorioDeLancamentos: Symbol.for('lancamentos/RepositorioDeLancamentos'),
   Relogio: Symbol.for('lancamentos/Relogio'),
   ConsultarResumoDoMes: Symbol.for('lancamentos/ConsultarResumoDoMes'),
+  ListarLancamentos: Symbol.for('lancamentos/ListarLancamentos'),
 } as const;

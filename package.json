@@ -24,6 +24,7 @@
     "test:integracao": "vitest run --config vitest.integracao.config.ts"
   },
   "devDependencies": {
+    "@contacomigo/contrato": "workspace:*",
     "@nestjs/common": "12.0.1",
     "@playwright/test": "1.63.0",
     "@prisma/client": "7.10.0",

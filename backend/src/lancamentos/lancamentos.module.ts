@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConsultarResumoDoMesUseCase } from './application/consultar-resumo-do-mes';
+import { ListarLancamentosUseCase } from './application/listar-lancamentos';
 import type { Relogio } from './domain/port/saida/relogio';
 import type { RepositorioDeLancamentos } from './domain/port/saida/repositorio-de-lancamentos';
 import { TOKENS } from './domain/port/saida/tokens';
@@ -17,6 +18,11 @@ import { RelogioDoSistema } from './infrastructure/relogio/relogio-do-sistema';
   providers: [
     { provide: TOKENS.Relogio, useClass: RelogioDoSistema },
     { provide: TOKENS.RepositorioDeLancamentos, useFactory: () => new RepositorioDeLancamentosPrisma() },
+    {
+      provide: TOKENS.ListarLancamentos,
+      inject: [TOKENS.RepositorioDeLancamentos],
+      useFactory: (repositorio: RepositorioDeLancamentos) => new ListarLancamentosUseCase(repositorio),
+    },
     {
       provide: TOKENS.ConsultarResumoDoMes,
       inject: [TOKENS.RepositorioDeLancamentos, TOKENS.Relogio],

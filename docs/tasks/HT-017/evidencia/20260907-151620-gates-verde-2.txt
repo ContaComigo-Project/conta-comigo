@@ -1,0 +1,121 @@
+# evidência de execução — HT-017
+# Gerado por scripts/registrar-evidencia.sh. Não editar à mão.
+comando : scripts/harness.sh gates
+data    : 2026-09-07 15:16:20 -0300
+commit  : a419cf4 (árvore suja)
+sistema : MINGW64_NT-10.0-26200
+espera  : SUCESSO
+---------------------------------------------------------------
+harness: executando gates na ordem — falha no primeiro erro
+harness: HARNESS_LINT -> pnpm run lint
+
+> conta-comigo@0.7.0 lint C:\Users\migue\Documents\mocitec\conta-comigo
+> pnpm --filter client-contacomigo lint && pnpm run lint:fronteiras
+
+
+> client-contacomigo@0.0.0 lint C:\Users\migue\Documents\mocitec\conta-comigo\frontend
+> eslint .
+
+
+> conta-comigo@0.7.0 lint:fronteiras C:\Users\migue\Documents\mocitec\conta-comigo
+> depcruise --config .dependency-cruiser.cjs backend frontend/src
+
+
+✔ no dependency violations found (117 modules, 216 dependencies cruised)
+
+harness: HARNESS_TEST -> pnpm run test
+
+> conta-comigo@0.7.0 test C:\Users\migue\Documents\mocitec\conta-comigo
+> pnpm run test:unitario && pnpm run test:integracao && pnpm run test:funcional
+
+
+> conta-comigo@0.7.0 test:unitario C:\Users\migue\Documents\mocitec\conta-comigo
+> vitest run
+
+
+ RUN  v5.0.0 C:/Users/migue/Documents/mocitec/conta-comigo
+
+
+ Test Files  10 passed (10)
+      Tests  62 passed (62)
+   Start at  15:16:29
+   Duration  7.76s (import 86%, transform 8%, tests 6%, worker 1%)
+
+
+> conta-comigo@0.7.0 test:integracao C:\Users\migue\Documents\mocitec\conta-comigo
+> vitest run --config vitest.integracao.config.ts
+
+
+ RUN  v5.0.0 C:/Users/migue/Documents/mocitec/conta-comigo
+
+
+ Test Files  1 passed (1)
+      Tests  3 passed (3)
+   Start at  15:16:37
+   Duration  493ms (tests 42%, import 37%, transform 20%, worker 1%)
+
+
+> conta-comigo@0.7.0 test:funcional C:\Users\migue\Documents\mocitec\conta-comigo
+> playwright test
+
+
+Running 2 tests using 2 workers
+
+  ✓  1 [chromium] › tests\funcional\fumaca.spec.ts:13:3 › fumaca — a web existente responde › a tela de login existe e tem formulario (1.2s)
+  ✓  2 [chromium] › tests\funcional\fumaca.spec.ts:7:3 › fumaca — a web existente responde › a landing abre com o titulo do produto (1.6s)
+
+  2 passed (4.2s)
+harness: HARNESS_COVERAGE -> pnpm run coverage
+
+> conta-comigo@0.7.0 coverage C:\Users\migue\Documents\mocitec\conta-comigo
+> vitest run --coverage
+
+
+ RUN  v5.0.0 C:/Users/migue/Documents/mocitec/conta-comigo
+      Coverage enabled with v8
+
+
+ Test Files  10 passed (10)
+      Tests  62 passed (62)
+   Start at  15:16:44
+   Duration  6.43s (import 83%, transform 8%, tests 5%, worker 4%)
+
+[34m % [39m[2mCoverage report from [22m[33mv8[39m
+-------------------|---------|----------|---------|---------|-------------------
+File               | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+-------------------|---------|----------|---------|---------|-------------------
+-------------------|---------|----------|---------|---------|-------------------
+
+=============================== Coverage summary ===============================
+Statements   : 100% ( 17/17 )
+Branches     : 100% ( 10/10 )
+Functions    : 100% ( 5/5 )
+Lines        : 100% ( 12/12 )
+================================================================================
+harness: HARNESS_SECURITY -> pnpm run security
+
+> conta-comigo@0.7.0 security C:\Users\migue\Documents\mocitec\conta-comigo
+> node scripts/seguranca.mjs
+
+seguranca: varredura de segredo e de dependencia
+
+=== 1. Segredos (gitleaks)
+--- arvore de trabalho
+[90m6:16PM[0m [32mINF[0m [1mscanned ~77890146 bytes (77.89 MB) in 6.04s[0m
+[90m6:16PM[0m [32mINF[0m [1mno leaks found[0m
+--- historico de commits
+[90m6:17PM[0m [32mINF[0m [1m80 commits scanned.[0m
+[90m6:17PM[0m [32mINF[0m [1mscanned ~1356796 bytes (1.36 MB) in 4.66s[0m
+[90m6:17PM[0m [32mINF[0m [1mno leaks found[0m
+  [OK]    nenhum segredo detectado
+
+=== 2. Dependencias vulneraveis (osv-scanner)
+Scanned /repo/pnpm-lock.yaml file and found 580 packages
+No issues found
+  [OK]    nenhuma vulnerabilidade conhecida
+
+seguranca: aprovada
+harness: gates concluídos
+---------------------------------------------------------------
+EXIT_CODE=0
+SHA256=ad516a9fd47b8ee19ca0fc2eb81ac19f32b0687d0d7b9835a2c7280eb8e3b2f9

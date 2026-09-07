@@ -1,0 +1,25 @@
+# evidência de execução — HT-017
+# Gerado por scripts/registrar-evidencia.sh. Não editar à mão.
+comando : scripts/harness.sh test-unitario
+data    : 2026-09-07 15:07:05 -0300
+commit  : a419cf4 (árvore suja)
+sistema : MINGW64_NT-10.0-26200
+espera  : SUCESSO
+---------------------------------------------------------------
+harness: HARNESS_TEST_UNIT -> pnpm run test:unitario
+
+> conta-comigo@0.7.0 test:unitario C:\Users\migue\Documents\mocitec\conta-comigo
+> vitest run
+
+
+ RUN  v5.0.0 C:/Users/migue/Documents/mocitec/conta-comigo
+
+
+ Test Files  10 passed (10)
+      Tests  60 passed (60)
+   Start at  15:07:06
+   Duration  5.92s (import 86%, transform 8%, tests 5%, worker 1%)
+
+---------------------------------------------------------------
+EXIT_CODE=0
+SHA256=e1c0c44ff13164cd4ad547292fe41bd57c0764c7567914491eafead5827f7b7d
