@@ -20,6 +20,7 @@ CI — se divergirem, o CI deixa de ser prova.
 | `harness.env.example` | Registro dos comandos reais; copie para `harness.env` |
 | `instalar-hooks.sh` / `.ps1` | Configura o Git para acionar `.githooks/pre-commit` automaticamente |
 | `nova-historia.sh` / `.ps1` | Cria `docs/tasks/[CHAVE]/` a partir do template |
+| `registrar-evidencia.sh` / `.ps1` | Executa uma tarefa do harness e grava a saída real como evidência da história |
 | `validar-staging.sh` / `.ps1` | Valida arquivos staged antes do commit (segredos, limites, resíduos de debug) |
 | `verificar-fechamento.sh` / `.ps1` | Valida commit semântico, chave da história, entrega e tag no mesmo hash |
 
@@ -32,6 +33,33 @@ scripts/harness.sh setup
 scripts/harness.sh test-funcional
 scripts/harness.sh gates
 ```
+
+## Evidência de execução
+
+A rule `test-evidence-quality` exige que a saída no documento de entrega seja a
+saída real do comando, copiada, e a rule `tdd-bdd-before-implementation` exige
+que o vermelho seja registrado antes do código. `registrar-evidencia` existe
+para que isso não dependa de memória nem de boa-fé:
+
+```bash
+# passo do vermelho obrigatório — falhar aqui é o resultado esperado
+scripts/registrar-evidencia.sh HT-006 AGIR test-funcional "cenário da RN-001" --esperar-falha --rotulo vermelho
+
+# depois do código mínimo
+scripts/registrar-evidencia.sh HT-006 AGIR test-funcional "RN-001 verde" --rotulo verde
+```
+
+Ele executa a tarefa pelo harness, grava a saída crua em
+`docs/tasks/[CHAVE]/evidencia/` com commit, data e `EXIT_CODE`, e acrescenta uma
+linha ao `progress.txt` apontando para o arquivo. Não existe parâmetro que
+aceite texto de saída: a única fonte é a execução.
+
+`--esperar-falha` inverte o veredito — se o comando passar quando deveria
+falhar, o script sai com erro. É o que impede pular o vermelho.
+
+`verificar-fechamento` cruza os blocos de saída do documento de entrega com os
+arquivos de evidência e reprova o fechamento se algum trecho não existir em
+disco.
 
 ```powershell
 # Windows PowerShell

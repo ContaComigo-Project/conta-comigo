@@ -84,6 +84,49 @@ if ($Chave) {
     }
 }
 
+# 5. evidencia de execucao em disco
+# Historia sem comportamento testavel (documentacao) nao tem evidencia: nesse
+# caso avisa, nao reprova. Quando a pasta existe, ela passa a ter dentes.
+if ($Chave) {
+    $PastaEvidencia = "docs/tasks/$Chave/evidencia"
+    $Arquivos = @()
+    if (Test-Path $PastaEvidencia) {
+        $Arquivos = @(Get-ChildItem -Path $PastaEvidencia -Filter "*.txt" -ErrorAction SilentlyContinue)
+    }
+
+    if ($Arquivos.Count -gt 0) {
+        Passar "evidencia de execucao presente em $PastaEvidencia"
+
+        $ConteudoEvidencia = $Arquivos | ForEach-Object { Get-Content $_.FullName }
+        if ($ConteudoEvidencia -match "EXIT_CODE=0") {
+            Passar "existe execucao verde registrada"
+        } else {
+            Falhar "nenhuma evidencia com EXIT_CODE=0 em $PastaEvidencia"
+        }
+
+        # A saida no documento de entrega tem de ser a saida real, copiada.
+        $Entrega = Get-ChildItem -Path "docs/entregas" -Filter "ENTREGA-$Chave-*.md" -ErrorAction SilentlyContinue | Select-Object -First 1
+        if ($Entrega) {
+            $Dentro = $false
+            $Orfas = 0
+            foreach ($Linha in (Get-Content $Entrega.FullName)) {
+                if ($Linha -match '^```') { $Dentro = -not $Dentro; continue }
+                if (-not $Dentro) { continue }
+                if ([string]::IsNullOrWhiteSpace($Linha)) { continue }
+                if ($ConteudoEvidencia -notcontains $Linha) { $Orfas++ }
+            }
+
+            if ($Orfas -eq 0) {
+                Passar "blocos de saida da entrega conferem com a evidencia em disco"
+            } else {
+                Falhar "$Orfas linha(s) de saida na entrega nao existem na evidencia (reescrita a mao?)"
+            }
+        }
+    } else {
+        Write-Host "  [AVISO] sem evidencia de execucao para $Chave (esperado apenas em historia de documentacao)"
+    }
+}
+
 Write-Host ""
 if ($Falhas -eq 0) {
     Write-Host "fechamento verificado: $Tag -> $HashCommit" -ForegroundColor Green

@@ -71,6 +71,43 @@ if [ -n "${CHAVE}" ]; then
   fi
 fi
 
+# 5. evidencia de execucao em disco
+# Historia sem comportamento testavel (documentacao) nao tem evidencia: nesse
+# caso avisa, nao reprova. Quando a pasta existe, ela passa a ter dentes.
+if [ -n "${CHAVE}" ]; then
+  PASTA_EVIDENCIA="docs/tasks/${CHAVE}/evidencia"
+  if [ -d "${PASTA_EVIDENCIA}" ] && [ -n "$(ls -A "${PASTA_EVIDENCIA}" 2>/dev/null)" ]; then
+    passar "evidencia de execucao presente em ${PASTA_EVIDENCIA}"
+
+    if grep -q "EXIT_CODE=0" "${PASTA_EVIDENCIA}"/*.txt 2>/dev/null; then
+      passar "existe execucao verde registrada"
+    else
+      falhar "nenhuma evidencia com EXIT_CODE=0 em ${PASTA_EVIDENCIA}"
+    fi
+
+    # A saida no documento de entrega tem de ser a saida real, copiada.
+    ENTREGA="$(ls docs/entregas/ENTREGA-"${CHAVE}"-*.md 2>/dev/null | head -n 1)"
+    if [ -n "${ENTREGA}" ]; then
+      LINHAS_ORFAS=0
+      while IFS= read -r LINHA; do
+        [ -z "${LINHA}" ] && continue
+        case "${LINHA}" in \`\`\`*) continue ;; esac
+        if ! grep -qFx -- "${LINHA}" "${PASTA_EVIDENCIA}"/*.txt 2>/dev/null; then
+          LINHAS_ORFAS=$((LINHAS_ORFAS + 1))
+        fi
+      done < <(awk '/^```/{f=!f; next} f' "${ENTREGA}")
+
+      if [ "${LINHAS_ORFAS}" -eq 0 ]; then
+        passar "blocos de saida da entrega conferem com a evidencia em disco"
+      else
+        falhar "${LINHAS_ORFAS} linha(s) de saida na entrega nao existem na evidencia (reescrita a mao?)"
+      fi
+    fi
+  else
+    echo "  [AVISO] sem evidencia de execucao para ${CHAVE} (esperado apenas em historia de documentacao)"
+  fi
+fi
+
 echo
 if [ "${FALHAS}" -eq 0 ]; then
   echo "fechamento verificado: ${TAG} -> ${HASH_COMMIT}"
