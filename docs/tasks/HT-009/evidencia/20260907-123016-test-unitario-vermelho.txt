@@ -1,0 +1,215 @@
+# evidência de execução — HT-009
+# Gerado por scripts/registrar-evidencia.sh. Não editar à mão.
+comando : scripts/harness.sh test-unitario
+data    : 2026-09-07 12:30:17 -0300
+commit  : ff16a13 (árvore suja)
+sistema : MINGW64_NT-10.0-26200
+espera  : FALHA (vermelho obrigatório)
+---------------------------------------------------------------
+harness: HARNESS_TEST_UNIT -> pnpm run test:unitario
+
+> conta-comigo@0.7.0 test:unitario C:\Users\migue\Documents\mocitec\conta-comigo
+> vitest run
+
+[33m(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - ESM syntax in a file loaded as CommonJS (vitest.config.ts:1:1). Use a `.mjs` extension or set `"type": "module"` in the closest package.json
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.[39m
+
+ RUN  v5.0.0 C:/Users/migue/Documents/mocitec/conta-comigo
+
+ ❯ backend/src/lancamentos/domain/mes-de-referencia.test.ts (5 tests | 4 failed) 19ms
+   ❯ RN-003 — mes de referencia no fuso de Sao Paulo (5)
+     × 31/01 as 23:59 em Sao Paulo e janeiro 12ms
+     × 01/02 as 00:01 em Sao Paulo e fevereiro 1ms
+     × instante que ja e dia 1 em UTC mas ainda e dia 28 em Sao Paulo fica no mes anterior 1ms
+     × virada de ano: 31/12 as 22:00 SP e dezembro do ano anterior 1ms
+ ❯ backend/src/lancamentos/application/consultar-resumo-do-mes.test.ts (2 tests | 2 failed) 13ms
+   ❯ ConsultarResumoDoMes (2)
+     × soma apenas os lancamentos do mes de referencia do relogio (RN-003) 10ms
+     × sem lancamentos, o resumo e zero e ainda informa o mes 1ms
+ ❯ backend/src/lancamentos/infrastructure/http/lancamentos.controller.test.ts (1 test | 1 failed) 2523ms
+   ❯ GET /lancamentos/resumo-do-mes (1)
+     × responde 200 com o resumo do mes de referencia do relogio 50ms
+(node:12932) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 7 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  backend/src/lancamentos/application/consultar-resumo-do-mes.test.ts > ConsultarResumoDoMes > soma apenas os lancamentos do mes de referencia do relogio (RN-003)
+AssertionError: expected { ano: +0, mes: +0 } to deeply equal { ano: 2026, mes: 1 }
+
+- Expected
++ Received
+
+  {
+-   "ano": 2026,
+-   "mes": 1,
++   "ano": 0,
++   "mes": 0,
+  }
+
+ ❯ backend/src/lancamentos/application/consultar-resumo-do-mes.test.ts:27:24
+     25|     const duracaoMs = performance.now() - inicio;
+     26|
+     27|     expect(resumo.mes).toEqual({ ano: 2026, mes: 1 });
+       |                        ^
+     28|     expect(resumo.quantidade).toBe(2);
+     29|     expect(resumo.totalEmCentavos).toBe(35_50);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/7]⎯
+
+ FAIL  backend/src/lancamentos/application/consultar-resumo-do-mes.test.ts > ConsultarResumoDoMes > sem lancamentos, o resumo e zero e ainda informa o mes
+AssertionError: expected { mes: { ano: +0, mes: +0 }, …(2) } to deeply equal { mes: { ano: 2026, mes: 6 }, …(2) }
+
+- Expected
++ Received
+
+  {
+    "mes": {
+-     "ano": 2026,
+-     "mes": 6,
++     "ano": 0,
++     "mes": 0,
+    },
+    "quantidade": 0,
+    "totalEmCentavos": 0,
+  }
+
+ ❯ backend/src/lancamentos/application/consultar-resumo-do-mes.test.ts:36:20
+     34|     const relogio = new RelogioFixo(new Date('2026-06-10T15:00:00Z'));
+     35|     const resumo = await new ConsultarResumoDoMesUseCase(new Repositor…
+     36|     expect(resumo).toEqual({ mes: { ano: 2026, mes: 6 }, quantidade: 0…
+       |                    ^
+     37|   });
+     38| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/7]⎯
+
+ FAIL  backend/src/lancamentos/domain/mes-de-referencia.test.ts > RN-003 — mes de referencia no fuso de Sao Paulo > 31/01 as 23:59 em Sao Paulo e janeiro
+AssertionError: expected { ano: +0, mes: +0 } to deeply equal { ano: 2026, mes: 1 }
+
+- Expected
++ Received
+
+  {
+-   "ano": 2026,
+-   "mes": 1,
++   "ano": 0,
++   "mes": 0,
+  }
+
+ ❯ backend/src/lancamentos/domain/mes-de-referencia.test.ts:10:63
+      8|   it('31/01 as 23:59 em Sao Paulo e janeiro', () => {
+      9|     // 23:59 SP = 02:59 UTC do dia seguinte
+     10|     expect(mesDeReferencia(new Date('2026-02-01T02:59:00Z'))).toEqual(…
+       |                                                               ^
+     11|   });
+     12|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/7]⎯
+
+ FAIL  backend/src/lancamentos/domain/mes-de-referencia.test.ts > RN-003 — mes de referencia no fuso de Sao Paulo > 01/02 as 00:01 em Sao Paulo e fevereiro
+AssertionError: expected { ano: +0, mes: +0 } to deeply equal { ano: 2026, mes: 2 }
+
+- Expected
++ Received
+
+  {
+-   "ano": 2026,
+-   "mes": 2,
++   "ano": 0,
++   "mes": 0,
+  }
+
+ ❯ backend/src/lancamentos/domain/mes-de-referencia.test.ts:14:63
+     12|
+     13|   it('01/02 as 00:01 em Sao Paulo e fevereiro', () => {
+     14|     expect(mesDeReferencia(new Date('2026-02-01T03:01:00Z'))).toEqual(…
+       |                                                               ^
+     15|   });
+     16|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/7]⎯
+
+ FAIL  backend/src/lancamentos/domain/mes-de-referencia.test.ts > RN-003 — mes de referencia no fuso de Sao Paulo > instante que ja e dia 1 em UTC mas ainda e dia 28 em Sao Paulo fica no mes anterior
+AssertionError: expected { ano: +0, mes: +0 } to deeply equal { ano: 2026, mes: 2 }
+
+- Expected
++ Received
+
+  {
+-   "ano": 2026,
+-   "mes": 2,
++   "ano": 0,
++   "mes": 0,
+  }
+
+ ❯ backend/src/lancamentos/domain/mes-de-referencia.test.ts:19:63
+     17|   it('instante que ja e dia 1 em UTC mas ainda e dia 28 em Sao Paulo f…
+     18|     // 00:30 UTC de 01/03 = 21:30 SP de 28/02
+     19|     expect(mesDeReferencia(new Date('2026-03-01T00:30:00Z'))).toEqual(…
+       |                                                               ^
+     20|   });
+     21|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/7]⎯
+
+ FAIL  backend/src/lancamentos/domain/mes-de-referencia.test.ts > RN-003 — mes de referencia no fuso de Sao Paulo > virada de ano: 31/12 as 22:00 SP e dezembro do ano anterior
+AssertionError: expected { ano: +0, mes: +0 } to deeply equal { ano: 2026, mes: 12 }
+
+- Expected
++ Received
+
+  {
+-   "ano": 2026,
+-   "mes": 12,
++   "ano": 0,
++   "mes": 0,
+  }
+
+ ❯ backend/src/lancamentos/domain/mes-de-referencia.test.ts:24:63
+     22|   it('virada de ano: 31/12 as 22:00 SP e dezembro do ano anterior', ()…
+     23|     // 01:00 UTC de 01/01/2027 = 22:00 SP de 31/12/2026
+     24|     expect(mesDeReferencia(new Date('2027-01-01T01:00:00Z'))).toEqual(…
+       |                                                               ^
+     25|   });
+     26|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/7]⎯
+
+ FAIL  backend/src/lancamentos/infrastructure/http/lancamentos.controller.test.ts > GET /lancamentos/resumo-do-mes > responde 200 com o resumo do mes de referencia do relogio
+AssertionError: expected {} to deeply equal { mes: { ano: 2026, mes: 1 }, …(2) }
+
+- Expected
++ Received
+
+- {
+-   "mes": {
+-     "ano": 2026,
+-     "mes": 1,
+-   },
+-   "quantidade": 1,
+-   "totalEmCentavos": 12000,
+- }
++ {}
+
+ ❯ backend/src/lancamentos/infrastructure/http/lancamentos.controller.test.ts:43:35
+     41|     const resposta = await fetch(baseUrl + '/lancamentos/resumo-do-mes…
+     42|     expect(resposta.status).toBe(200);
+     43|     expect(await resposta.json()).toEqual({
+       |                                   ^
+     44|       mes: { ano: 2026, mes: 1 },
+     45|       quantidade: 1,
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/7]⎯
+
+
+ Test Files  3 failed | 2 passed (5)
+      Tests  7 failed | 12 passed (19)
+   Start at  12:30:18
+   Duration  5.65s (import 72%, tests 26%, transform 2%)
+
+ ELIFECYCLE  Command failed with exit code 1.
+---------------------------------------------------------------
+EXIT_CODE=1
+SHA256=2463259ba33278b651cb882123e69f011ab3a00ca5d4777f1e51f62fc4cfa526

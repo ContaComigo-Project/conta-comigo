@@ -1,7 +1,23 @@
 {
   "name": "@contacomigo/backend",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.9.0",
   "type": "module",
-  "description": "Stub. A estrutura hexagonal de ADR-001 nasce em HT-009; os scripts de teste, em HT-006."
+  "description": "API do ContaComigo. Arquitetura hexagonal por contexto (ADR-001): domain/ nao conhece framework, banco nem rede.",
+  "scripts": {
+    "dev": "tsx watch src/main.ts",
+    "start": "tsx src/main.ts",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@nestjs/common": "12.0.1",
+    "@nestjs/core": "12.0.1",
+    "@nestjs/platform-express": "12.0.1",
+    "reflect-metadata": "0.2.2",
+    "rxjs": "7.8.2"
+  },
+  "devDependencies": {
+    "@nestjs/testing": "12.0.1",
+    "tsx": "4.23.13"
+  }
 }

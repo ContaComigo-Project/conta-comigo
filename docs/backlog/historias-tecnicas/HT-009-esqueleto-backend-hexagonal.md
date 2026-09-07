@@ -5,7 +5,7 @@ document_type: story
 story_key: HT-009
 story_type: tecnica
 epic: EPIC-TEC-001
-status: Backlog
+status: Done
 max_lines: 300
 ---
 
@@ -13,11 +13,11 @@ max_lines: 300
 
 - **Tipo:** História técnica
 - **Épico:** `EPIC-TEC-001`
-- **Estado:** Backlog (ordem 10)
+- **Estado:** Done (ordem 10, puxada antes das ordens 8 e 9 — ver nota no kanban) — `v0.9.0`
 - **Decisão que a rege:** [`ADR-001`](../../adr/ADR-001-arquitetura-hexagonal-no-backend.md)
 - **Requisitos:** `RNF-020`, `RNF-021`; habilita `RNF-018`
-- **Depende de:** `HT-006` (infra de testes), `HT-004` (ferramenta de fronteira)
-- **Versão prevista:** a definir no grooming
+- **Depende de:** `HT-006` (infra de testes) — `v0.8.0`; `HT-004` (ferramenta de fronteira) — `v0.5.0`
+- **Versão prevista:** `v0.9.0`
 
 ## Problema técnico
 
@@ -37,19 +37,19 @@ build**. A partir daí, cada história de negócio só preenche os espaços.
 
 ## Critérios de aceite
 
-- [ ] A estrutura por contexto de `ADR-001` existe, com um contexto de exemplo
+- [x] A estrutura por contexto de `ADR-001` existe, com um contexto de exemplo
       atravessando todas as camadas
-- [ ] O contexto de exemplo tem: entidade de domínio, porta de entrada, porta de
+- [x] O contexto de exemplo tem: entidade de domínio, porta de entrada, porta de
       saída, caso de uso, controller e adaptador de persistência falso
-- [ ] O `<contexto>.module.ts` liga porta a adaptador por **token**, não por
+- [x] O `<contexto>.module.ts` liga porta a adaptador por **token**, não por
       classe concreta
-- [ ] Nenhuma entidade de domínio tem decorator de ORM, de validação de
+- [x] Nenhuma entidade de domínio tem decorator de ORM, de validação de
       transporte ou de serialização
-- [ ] Existe a porta `Relogio`, com implementação real e implementação fixa para
+- [x] Existe a porta `Relogio`, com implementação real e implementação fixa para
       teste — `RN-003` e `RN-005` dependem disso
-- [ ] A checagem de fronteiras de importação roda em `scripts/harness.sh lint`
-- [ ] A checagem **bloqueia**: existe teste que prova que ela falha
-- [ ] O caso de uso de exemplo tem teste que roda sem banco, sem HTTP e sem
+- [x] A checagem de fronteiras de importação roda em `scripts/harness.sh lint`
+- [x] A checagem **bloqueia**: existe teste que prova que ela falha
+- [x] O caso de uso de exemplo tem teste que roda sem banco, sem HTTP e sem
       framework
 
 ```gherkin
@@ -122,10 +122,10 @@ Cenário: o tempo esta sob controle do teste
 
 ## Definição de pronto
 
-- [ ] Estrutura de `ADR-001` implementada e executável
-- [ ] Checagem de fronteiras no harness, bloqueante e testada
-- [ ] Cenários funcionais escritos antes do código e verdes
-- [ ] Refatoração feita após o verde
-- [ ] `docs/entregas/ENTREGA-HT-009-*.md` criado
-- [ ] `KANBAN-OFICIAL.md` atualizado
-- [ ] Commit semântico citando `HT-009` e tag no mesmo hash
+- [x] Estrutura de `ADR-001` implementada e executável
+- [x] Checagem de fronteiras no harness, bloqueante e testada
+- [x] Cenários funcionais escritos antes do código e verdes
+- [x] Refatoração feita após o verde
+- [x] `docs/entregas/ENTREGA-HT-009-*.md` criado
+- [x] `KANBAN-OFICIAL.md` atualizado
+- [x] Commit semântico citando `HT-009` e tag no mesmo hash

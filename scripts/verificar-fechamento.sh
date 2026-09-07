@@ -95,7 +95,10 @@ if [ -n "${CHAVE}" ]; then
         if ! grep -qFx -- "${LINHA}" "${PASTA_EVIDENCIA}"/*.txt 2>/dev/null; then
           LINHAS_ORFAS=$((LINHAS_ORFAS + 1))
         fi
-      done < <(awk '/^```/{f=!f; next} f' "${ENTREGA}")
+      # So os blocos da secao "Evidencia de testes" precisam ser saida real:
+      # uma arvore de diretorios ou um trecho de config cercado em outra secao
+      # nao e evidencia e nao tem por que existir em disco.
+      done < <(awk '/^## /{s=($0 ~ /^## Evid/)} s && /^```/{f=!f; next} s && f' "${ENTREGA}")
 
       if [ "${LINHAS_ORFAS}" -eq 0 ]; then
         passar "blocos de saida da entrega conferem com a evidencia em disco"

@@ -108,8 +108,12 @@ if ($Chave) {
         $Entrega = Get-ChildItem -Path "docs/entregas" -Filter "ENTREGA-$Chave-*.md" -ErrorAction SilentlyContinue | Select-Object -First 1
         if ($Entrega) {
             $Dentro = $false
+            $Secao = $false
             $Orfas = 0
+            # So os blocos da secao "Evidencia de testes" precisam ser saida real.
             foreach ($Linha in (Get-Content $Entrega.FullName)) {
+                if ($Linha -match '^## ') { $Secao = ($Linha -match '^## Evid'); $Dentro = $false; continue }
+                if (-not $Secao) { continue }
                 if ($Linha -match '^```') { $Dentro = -not $Dentro; continue }
                 if (-not $Dentro) { continue }
                 if ([string]::IsNullOrWhiteSpace($Linha)) { continue }

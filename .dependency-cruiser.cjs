@@ -9,6 +9,7 @@ module.exports = {
   options: {
     ...opcoesComuns,
     // Fixtures sao codigo deliberadamente ilegal: fora do lint de producao.
-    exclude: { path: ['(^|/)(dist|coverage|node_modules)/', '^tests/fronteiras/fixtures/'] },
+    // node_modules NAO entra aqui — ver comentario em opcoesComuns.
+    exclude: { path: [...opcoesComuns.exclude.path, '^tests/fronteiras/fixtures/'] },
   },
 };

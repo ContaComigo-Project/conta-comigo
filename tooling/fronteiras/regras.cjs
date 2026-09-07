@@ -79,7 +79,12 @@ function criarRegras(raiz) {
 }
 
 const opcoesComuns = {
+  // node_modules fica em doNotFollow, NUNCA em exclude: "exclude" apaga o pacote
+  // do grafo e com ele a aresta domain/ -> @nestjs/common que as regras
+  // precisam ver. HT-009 plantou um import real em domain/ e o gate passou
+  // verde por causa disso; a evidencia esta em docs/tasks/HT-009/evidencia/.
   doNotFollow: { path: 'node_modules' },
+  exclude: { path: ['(^|/)(dist|coverage)/'] },
   tsPreCompilationDeps: true,
   tsConfig: { fileName: 'tsconfig.json' },
   enhancedResolveOptions: { exportsFields: ['exports'], conditionNames: ['import', 'require', 'node', 'default', 'types'], mainFields: ['module', 'main', 'types', 'typings'] },

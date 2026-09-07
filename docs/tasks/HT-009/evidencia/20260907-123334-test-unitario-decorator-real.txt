@@ -1,0 +1,58 @@
+# evidência de execução — HT-009
+# Gerado por scripts/registrar-evidencia.sh. Não editar à mão.
+comando : scripts/harness.sh test-unitario
+data    : 2026-09-07 12:33:34 -0300
+commit  : ff16a13 (árvore suja)
+sistema : MINGW64_NT-10.0-26200
+espera  : FALHA (vermelho obrigatório)
+---------------------------------------------------------------
+harness: HARNESS_TEST_UNIT -> pnpm run test:unitario
+
+> conta-comigo@0.7.0 test:unitario C:\Users\migue\Documents\mocitec\conta-comigo
+> vitest run
+
+[33m(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - ESM syntax in a file loaded as CommonJS (vitest.config.ts:1:1). Use a `.mjs` extension or set `"type": "module"` in the closest package.json
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.[39m
+
+ RUN  v5.0.0 C:/Users/migue/Documents/mocitec/conta-comigo
+
+ ❯ tests/fronteiras/sem-decorator-no-dominio.test.ts (3 tests | 1 failed) 25ms
+   ❯ ADR-001 — dominio sem decorator (3)
+     × nenhum arquivo em backend/src/**/domain/ usa decorator 17ms
+(node:12600) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/fronteiras/sem-decorator-no-dominio.test.ts > ADR-001 — dominio sem decorator > nenhum arquivo em backend/src/**/domain/ usa decorator
+AssertionError: expected [ Array(1) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "backend\\src\\lancamentos\\domain\\model\\violacao-proposital.ts",
++ ]
+
+ ❯ tests/fronteiras/sem-decorator-no-dominio.test.ts:40:24
+     38|       .filter((c) => DECORATOR.test(readFileSync(c, 'utf8')))
+     39|       .map((c) => relative(RAIZ, c));
+     40|     expect(infratores).toEqual([]);
+       |                        ^
+     41|   });
+     42|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 4 passed (5)
+      Tests  1 failed | 18 passed (19)
+   Start at  12:33:35
+   Duration  5.50s (import 90%, tests 5%, transform 4%, worker 1%)
+
+ ELIFECYCLE  Command failed with exit code 1.
+---------------------------------------------------------------
+EXIT_CODE=1
+SHA256=a2a30bc0c1b5b91e9868b74eccb5035dc68f3428e00575761bbba65f2ecc67ac

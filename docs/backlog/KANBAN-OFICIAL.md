@@ -47,13 +47,28 @@ uma tem a coluna "UI hoje" dizendo o que já está pronto na tela.
 
 ## Próxima demanda
 
-**`HT-007` — Pipeline de CI com gates bloqueantes.**
+**`HT-010` — Persistência PostgreSQL, migrações e cifra em repouso** (ordem 11),
+ou `HT-007` se o time decidir fazer o push de `develop`.
 
-`scripts/harness.sh gates` fecha verde de ponta a ponta desde `HT-006`. Falta
-levar exatamente o mesmo comando ao CI (`ADR-005`: "o que roda localmente roda
-no CI") e tornar o gate **bloqueante de fato** com proteção de branch — exit
-code sozinho só pinta o check de vermelho; quem impede o merge é a configuração
-do repositório no GitHub, que exige ação humana.
+### Nota de reordenação (2026-09-07)
+
+`HT-007` (CI) e `HT-008` (baseline de segurança, que depende dela) foram
+**adiadas** por decisão do time; `HT-009` foi puxada antes. Motivo registrado
+conforme `spec-to-execution-plan`, obrigação 7:
+
+- O sinal de verdade que o ciclo precisa já existe localmente desde `HT-006`
+  (`harness gates` verde e bloqueante; evidência amarrada ao fechamento). O CI
+  protege a etapa de push/merge, que o loop local não executa (regra 6 do
+  `AGENTS.md`: push só com autorização humana).
+- Metade de `HT-007` depende de ação fora do repositório — push, proteção de
+  branch no GitHub, PR de prova. Sem o remoto atualizado ela ficaria pela
+  metade, esperando.
+- Com `HT-009` pronta, o PR de prova de `HT-007` pode violar uma fronteira em
+  código real em vez de fixture.
+
+**Consequência assumida:** `RNF-021` ("gates bloqueiam de fato") fica satisfeito
+só localmente até `HT-007`. `HT-007` volta a `Ready` quando o time decidir fazer
+o push de `develop`.
 
 ## Fluxo de estados
 
@@ -93,14 +108,14 @@ o backlog passou a considerar o frontend existente.
 | 5 | `HT-016` | Inventário do frontend existente e destino dos mocks | Técnica | **Done** | HT-004 | RNF-018, RNF-020 |
 | 6 | `HT-005` | Harness local reprodutível com docker compose | Técnica | **Done** | HT-004 | `v0.7.0` |
 | 7 | `HT-006` | Infraestrutura de testes funcional/BDD e unitário | Técnica | **Done** | HT-005 | `v0.8.0` |
-| 8 | `HT-007` | Pipeline de CI com gates bloqueantes | Técnica | Backlog | HT-006 | RNF-021 |
+| 8 | `HT-007` | Pipeline de CI com gates bloqueantes | Técnica | Backlog — **adiada**, ver nota | HT-006 | RNF-021 |
 | 9 | `HT-008` | Baseline de segurança: segredos, autorização, varredura | Técnica | Backlog | HT-007 | RNF-012, RNF-013, RNF-015 |
 
 ### Fase 2 — Esqueleto do sistema e fronteira com a web
 
 | Ordem | Chave | Título | Tipo | Estado | Depende de | UI hoje |
 | --- | --- | --- | --- | --- | --- | --- |
-| 10 | `HT-009` | Esqueleto do backend hexagonal (`ADR-001`) | Técnica | Backlog | HT-006, HT-004 | — |
+| 10 | `HT-009` | Esqueleto do backend hexagonal (`ADR-001`) | Técnica | **Done** (puxada antes da 8 e da 9) | HT-006, HT-004 | `v0.9.0` |
 | 11 | `HT-010` | Persistência PostgreSQL, migrações e cifra em repouso | Técnica | Backlog | HT-009, HT-004 | — |
 | 12 | `HT-017` | Contrato de dados entre a web e a API | Técnica | Backlog | HT-016, HT-009 | Define como a UI atual passa a receber dado |
 | 13 | `HN-001` | Acesso: cadastro, login e encerramento de sessão | Negócio | Backlog | HT-010, HT-008, HT-017 | Telas prontas; `Login.tsx` faz `console.log` + `setTimeout` |
@@ -154,7 +169,7 @@ o backlog passou a considerar o frontend existente.
 - _(vazio)_
 
 ### Done
-- `HT-000` `v0.1.0` · `HT-001` `v0.2.0` · `HT-002` `v0.3.0` · `HT-003` `v0.4.0` · `HT-004` `v0.5.0` · `HT-016` `v0.6.0` · `HT-005` `v0.7.0` · `HT-006` `v0.8.0`
+- `HT-000` `v0.1.0` · `HT-001` `v0.2.0` · `HT-002` `v0.3.0` · `HT-003` `v0.4.0` · `HT-004` `v0.5.0` · `HT-016` `v0.6.0` · `HT-005` `v0.7.0` · `HT-006` `v0.8.0` · `HT-009` `v0.9.0`
 
 Todas verificadas por `scripts/verificar-fechamento.sh`: tag e commit no mesmo
 hash, mensagem semântica citando a chave, documento de entrega presente.
@@ -205,3 +220,8 @@ cada tela é aproveitável, e isso muda o critério de aceite de quase todas ela
 | 2026-09-07 | `HT-006` | Ready | Em execução | `docs/tasks/HT-006/` criado com TASK e IMPLEMENTATION |
 | 2026-09-07 | `HT-006` | Em execução | Em revisão | `gates` verde de ponta a ponta; 8 evidências; QA, SRE e Arquitetura aprovados |
 | 2026-09-07 | `HT-006` | Em revisão | Done | `v0.8.0` → `7e17dea` |
+| 2026-09-07 | `HT-007` `HT-008` | Backlog | Backlog (adiadas) | Decisão do time; motivo na nota de reordenação |
+| 2026-09-07 | `HT-009` | Backlog | Ready | Puxada antes das ordens 8 e 9; arquivo já existia (groomada em `ADR-001`) |
+| 2026-09-07 | `HT-009` | Ready | Em execução | `docs/tasks/HT-009/` criado |
+| 2026-09-07 | `HT-009` | Em execução | Em revisão | Contexto `lancamentos` completo; gate de fronteiras corrigido e provado em código real; 11 evidências |
+| 2026-09-07 | `HT-009` | Em revisão | Done | `v0.9.0` → a preencher |
