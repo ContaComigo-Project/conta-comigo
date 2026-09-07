@@ -1,0 +1,20 @@
+# evidência de execução — HT-005
+# Gerado por scripts/registrar-evidencia.sh. Não editar à mão.
+comando : scripts/harness.sh lint
+data    : 2026-09-07 11:18:14 -0300
+commit  : af73267 (árvore suja)
+sistema : MINGW64_NT-10.0-26200
+espera  : SUCESSO
+---------------------------------------------------------------
+harness: HARNESS_LINT -> pnpm run lint
+
+> conta-comigo@0.7.0 lint C:\Users\migue\Documents\mocitec\conta-comigo
+> pnpm --filter client-contacomigo lint
+
+
+> client-contacomigo@0.0.0 lint C:\Users\migue\Documents\mocitec\conta-comigo\frontend
+> eslint .
+
+---------------------------------------------------------------
+EXIT_CODE=0
+SHA256=5f655087b77c20510bee10141051fc62c00b78809906ad05682b0a8f4946beed

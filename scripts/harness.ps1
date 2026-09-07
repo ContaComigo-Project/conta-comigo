@@ -34,7 +34,11 @@ e preencha os comandos do projeto (historia HT-005).
 
 function Get-Comandos {
   if (-not (Test-Path $arquivoEnv)) {
-    Write-Error "harness: scripts/harness.env nao existe. Copie harness.env.example e preencha os comandos."
+    # Codigo 2, identico ao harness.sh: o CI compara os dois e uma divergencia
+    # de codigo de saida faz o mesmo erro parecer dois problemas diferentes.
+    [Console]::Error.WriteLine("harness: scripts/harness.env nao existe.")
+    [Console]::Error.WriteLine("harness: copie scripts/harness.env.example e preencha os comandos.")
+    exit 2
   }
   $mapa = @{}
   foreach ($linha in Get-Content $arquivoEnv -Encoding utf8) {
@@ -52,14 +56,23 @@ function Invoke-Tarefa {
 
   $comando = $Comandos[$Chave]
   if ([string]::IsNullOrWhiteSpace($comando)) {
-    Write-Error "harness: comando nao configurado ($Chave). Defina-o em scripts/harness.env."
+    # Codigo 3, identico ao harness.sh.
+    [Console]::Error.WriteLine("harness: comando nao configurado ($Chave).")
+    [Console]::Error.WriteLine("harness: defina-o em scripts/harness.env antes de usar esta tarefa.")
+    exit 3
   }
 
   Write-Host "harness: $Chave -> $comando"
   Push-Location $raiz
   try {
     & cmd.exe /c $comando
-    if ($LASTEXITCODE -ne 0) { Write-Error "harness: $Chave falhou com codigo $LASTEXITCODE" }
+    $codigo = $LASTEXITCODE
+    if ($codigo -ne 0) {
+      # Propaga o codigo real da ferramenta em vez de achatar tudo em 1: o
+      # gate precisa distinguir "teste reprovou" de "harness mal configurado".
+      [Console]::Error.WriteLine("harness: $Chave falhou com codigo $codigo")
+      exit $codigo
+    }
   } finally {
     Pop-Location
   }

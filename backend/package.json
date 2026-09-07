@@ -1,0 +1,7 @@
+{
+  "name": "@contacomigo/backend",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "description": "Stub. A estrutura hexagonal de ADR-001 nasce em HT-009; os scripts de teste, em HT-006."
+}

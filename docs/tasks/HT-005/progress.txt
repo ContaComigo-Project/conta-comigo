@@ -1,0 +1,12 @@
+# progress — HT-005
+# Diário append-only do ciclo Ralph. Uma linha por evento.
+# Formato: AAAA-MM-DD HH:MM | FASE | descrição objetiva | evidência
+# FASE: PERCEBER | ORIENTAR | DECIDIR | AGIR | REGISTRAR
+
+2026-09-07 11:07 | AGIR | estado inicial: harness sem comandos configurados — harness gates exit 2 (VERMELHO ESPERADO) | docs/tasks/HT-005/evidencia/20260907-110750-gates-vermelho-inicial.txt
+2026-09-07 11:18 | AGIR | ambiente sobe do zero com Postgres saudavel — harness setup exit 0 (VERDE) | docs/tasks/HT-005/evidencia/20260907-111811-setup-verde.txt
+2026-09-07 11:18 | AGIR | lint pelo harness — harness lint exit 0 (VERDE) | docs/tasks/HT-005/evidencia/20260907-111814-lint-verde.txt
+2026-09-07 11:18 | AGIR | build pelo harness — harness build exit 0 (VERDE) | docs/tasks/HT-005/evidencia/20260907-111821-build-verde.txt
+2026-09-07 11:18 | AGIR | varredura de segredo e dependencia — harness security exit 0 (VERDE) | docs/tasks/HT-005/evidencia/20260907-111835-security-verde.txt
+2026-09-07 11:18 | AGIR | tarefa nao configurada falha explicita — harness test-unitario exit 3 (VERMELHO ESPERADO) | docs/tasks/HT-005/evidencia/20260907-111848-test-unitario-falha-esperada.txt
+2026-09-07 11:21 | AGIR | ciclo completo: setup apos down remover o volume — harness setup exit 0 (VERDE) | docs/tasks/HT-005/evidencia/20260907-112100-setup-maquina-limpa.txt

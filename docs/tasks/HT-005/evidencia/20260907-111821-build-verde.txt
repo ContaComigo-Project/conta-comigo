@@ -1,0 +1,42 @@
+# evidência de execução — HT-005
+# Gerado por scripts/registrar-evidencia.sh. Não editar à mão.
+comando : scripts/harness.sh build
+data    : 2026-09-07 11:18:21 -0300
+commit  : af73267 (árvore suja)
+sistema : MINGW64_NT-10.0-26200
+espera  : SUCESSO
+---------------------------------------------------------------
+harness: HARNESS_BUILD -> pnpm run build
+
+> conta-comigo@0.7.0 build C:\Users\migue\Documents\mocitec\conta-comigo
+> pnpm --filter client-contacomigo build
+
+
+> client-contacomigo@0.0.0 build C:\Users\migue\Documents\mocitec\conta-comigo\frontend
+> tsc -b && vite build
+
+[36mvite v8.2.2 [32mbuilding client environment for production...[36m[39m
+transforming...
+✓ 2031 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                               1.07 kB │ gzip:   0.57 kB
+dist/assets/logo-banrisul-DbZDWex5.png        6.48 kB
+dist/assets/logo-bradesco-DcPUZIr_.png       21.77 kB
+dist/assets/logo-btg-pactual-BQxymCRQ.png    23.65 kB
+dist/assets/logo-nubank-BiErrU2I.png         30.03 kB
+dist/assets/logo-open-finance-CZupYhgY.png   31.87 kB
+dist/assets/logo-santander-F7_XuzEF.png      89.65 kB
+dist/assets/logo-itau-RNrjJJar.png          168.38 kB
+dist/assets/index-BpIJ5Cf_.css               81.57 kB │ gzip:  12.65 kB
+dist/assets/index-BEuM6KTA.js               575.44 kB │ gzip: 165.68 kB
+
+[32m✓ built in 526ms[39m
+[33m[plugin builtin:vite-reporter] 
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.[39m
+---------------------------------------------------------------
+EXIT_CODE=0
+SHA256=1d016274d69bf6a11d020450e17b7f1de6d14ea7f4498993967f06a1e1db31f3

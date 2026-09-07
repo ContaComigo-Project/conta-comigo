@@ -1,0 +1,18 @@
+{
+  "name": "conta-comigo",
+  "private": true,
+  "version": "0.7.0",
+  "description": "ContaComigo — orquestracao do workspace. Nenhuma dependencia de produto vive aqui.",
+  "packageManager": "pnpm@10.32.1",
+  "engines": {
+    "node": ">=24.11.0 <25"
+  },
+  "scripts": {
+    "setup": "node scripts/setup-ambiente.mjs",
+    "down": "docker compose down -v",
+    "build": "pnpm --filter client-contacomigo build",
+    "lint": "pnpm --filter client-contacomigo lint",
+    "security": "node scripts/seguranca.mjs",
+    "start": "pnpm --filter client-contacomigo dev"
+  }
+}

@@ -70,11 +70,26 @@ powershell -File scripts/harness.ps1 gates
 
 ## Estado atual
 
-`harness.env` ainda não existe e os comandos não estão definidos: a stack será
-decidida em `HT-004` e os comandos preenchidos em `HT-005`.
+`scripts/harness.env` existe desde `HT-005` e registra os comandos do projeto.
+Estão preenchidos: `setup`, `down`, `build`, `lint`, `security` e `run`.
 
-Até lá o harness **falha explicitamente** com "comando não configurado". Isso é
-intencional: um harness que finge sucesso é pior que um harness ausente.
+Continuam **vazios** `HARNESS_TEST_FUNCTIONAL`, `HARNESS_TEST_UNIT`,
+`HARNESS_TEST` e `HARNESS_COVERAGE`: as ferramentas de teste chegam em `HT-006`.
+Enquanto isso, essas tarefas **falham explicitamente** com "comando não
+configurado" e código de saída 3 — e `gates` para nelas. Isso é intencional: um
+harness que finge sucesso é pior que um harness ausente.
+
+### Restrição ao editar `harness.env`
+
+O mesmo valor é executado por dois interpretadores — `harness.sh` faz `eval` em
+bash e `harness.ps1` chama `cmd.exe /c`. Por isso **todo valor é
+`pnpm run <script>`** e nada mais: passos múltiplos, condicionais e detecção de
+sistema vivem em `package.json` e em `scripts/*.mjs`, que são idênticos nos dois
+sistemas por construção.
+
+Os dois harness retornam os **mesmos códigos de saída**: `2` para `harness.env`
+ausente, `3` para comando não configurado, e o código real da ferramenta quando
+ela falha.
 
 `harness.env` é versionado: ele é o registro de comandos do projeto, igual para
 todo mundo, e não contém segredo. Credenciais continuam fora do repositório, em

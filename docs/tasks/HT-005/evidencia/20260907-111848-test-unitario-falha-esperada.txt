@@ -1,0 +1,13 @@
+# evidência de execução — HT-005
+# Gerado por scripts/registrar-evidencia.sh. Não editar à mão.
+comando : scripts/harness.sh test-unitario
+data    : 2026-09-07 11:18:48 -0300
+commit  : af73267 (árvore suja)
+sistema : MINGW64_NT-10.0-26200
+espera  : FALHA (vermelho obrigatório)
+---------------------------------------------------------------
+harness: comando não configurado (HARNESS_TEST_UNIT).
+harness: defina-o em scripts/harness.env antes de usar esta tarefa.
+---------------------------------------------------------------
+EXIT_CODE=3
+SHA256=3879375e746f83b0985dda208f4f8b3e1480b61a761bb61208beed7563cf59ed

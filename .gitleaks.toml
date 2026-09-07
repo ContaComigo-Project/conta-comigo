@@ -1,0 +1,37 @@
+# Configuracao do gitleaks para o ContaComigo.
+#
+# Regra do projeto: nenhum segredo versionado (RNF-012). As excecoes abaixo
+# sao explicitas, justificadas e revisaveis em diff — uma allowlist silenciosa
+# seria pior que nenhuma varredura.
+
+[extend]
+useDefault = true
+
+[[rules]]
+id = "contacomigo-chave-de-ambiente-preenchida"
+description = "Variavel de segredo do .env.example preenchida com valor real"
+# .env.example deve ter apenas string vazia nos campos de segredo. Se alguem
+# commitar um valor ali, o gate acusa.
+regex = '''(?i)(JWT_SECRET|JWT_REFRESH_SECRET|ENCRYPTION_KEY|PLUGGY_CLIENT_SECRET|GEMINI_API_KEY)\s*=\s*"[^"]{1,}"'''
+path = '''\.env\.example$'''
+
+[allowlist]
+description = "Excecoes justificadas"
+
+paths = [
+  # Credencial do PostgreSQL local. Nao protege nada: o banco so existe na
+  # maquina de quem desenvolve, criado e destruido por `harness setup/down`,
+  # e nao ha ambiente remoto ate HT-015 (ADR-005). Fica versionada para que
+  # `setup` funcione em maquina limpa sem passo manual (RNF-007). Se algum dia
+  # este compose apontar para um banco real, esta linha sai e a senha vai para
+  # variavel de ambiente.
+  '''^docker-compose\.yml$''',
+
+  # Evidencia de execucao: saida crua de comandos, versionada de proposito
+  # para o gate de QA. Pode conter strings que parecem chave (hashes de
+  # commit, ids de contêiner) sem ser segredo.
+  '''^docs/tasks/[^/]+/evidencia/''',
+
+  # Lockfile: hashes de integridade nao sao credenciais.
+  '''^pnpm-lock\.yaml$''',
+]
