@@ -92,8 +92,8 @@ Ordem obrigatória por história com comportamento testável:
 
 | Camada | Ferramenta | Escopo | Gate |
 | --- | --- | --- | --- |
-| Funcional/BDD | _(decidida em `HT-004`)_ | Um cenário por critério de aceite; um teste por RN | Bloqueante |
-| Unitário | _(decidida em `HT-004`)_ | Domínio e casos de borda; ≥ 80% no domínio | Bloqueante |
+| Funcional/BDD | Playwright em Chromium (`ADR-003`) | Um cenário por critério de aceite; um teste por RN | Bloqueante |
+| Unitário | Vitest (`ADR-003`) | Domínio e casos de borda; ≥ 80% no domínio | Bloqueante |
 | Estático/lint | ESLint 9 + typescript-eslint (web); mesma base na API | Todo o repositório | Bloqueante |
 | Segurança | Varredura de segredo e de dependência | Todo o repositório | Bloqueante |
 | Acessibilidade | Verificação de contraste e teclado | Telas com semáforo e formulários | Bloqueante em `HN-007` |

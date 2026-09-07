@@ -1,0 +1,126 @@
+# evidência de execução — HT-006
+# Gerado por scripts/registrar-evidencia.sh. Não editar à mão.
+comando : scripts/harness.sh test-unitario
+data    : 2026-09-07 12:10:28 -0300
+commit  : 64ca4eb (árvore suja)
+sistema : MINGW64_NT-10.0-26200
+espera  : FALHA (vermelho obrigatório)
+---------------------------------------------------------------
+harness: HARNESS_TEST_UNIT -> pnpm run test:unitario
+
+> conta-comigo@0.7.0 test:unitario C:\Users\migue\Documents\mocitec\conta-comigo
+> vitest run
+
+[33m(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - ESM syntax in a file loaded as CommonJS (vitest.config.ts:1:1). Use a `.mjs` extension or set `"type": "module"` in the closest package.json
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.[39m
+
+ RUN  v5.0.0 C:/Users/migue/Documents/mocitec/conta-comigo
+
+(node:22588) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+ ❯ tests/fronteiras/fronteiras.test.ts (8 tests | 6 failed) 9ms
+   ❯ fronteiras de ADR-001 — arvore que viola (6)
+     × ADR-001 — @nestjs/common em domain/ e nomeado com regra e arquivo 3ms
+     × ADR-002 — @prisma/client em domain/ e nomeado 0ms
+     × ADR-001 — application/ importando infrastructure/ e nomeado 0ms
+     × ADR-002 — @prisma/client fora de infrastructure/persistence/ e nomeado 0ms
+     × toda violacao reportada tem severidade error — nenhuma regra foi afrouxada 0ms
+   ❯ fronteiras de ADR-001 — arvore limpa (controle) (2)
+     × o gate aprova (codigo de saida zero) 1ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 6 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/fronteiras/fronteiras.test.ts > fronteiras de ADR-001 — arvore que viola > ADR-001 — @nestjs/common em domain/ e nomeado com regra e arquivo
+AssertionError: []: expected undefined to be defined
+ ❯ tests/fronteiras/fronteiras.test.ts:53:61
+     51|   it('ADR-001 — @nestjs/common em domain/ e nomeado com regra e arquiv…
+     52|     const v = violacaoDe(resultado.violacoes, 'dominio-sem-framework-n…
+     53|     expect(v, JSON.stringify(resultado.violacoes, null, 2)).toBeDefine…
+       |                                                             ^
+     54|     expect(v?.rule.severity).toBe('error');
+     55|     expect(v?.to).toContain('@nestjs/common');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/6]⎯
+
+ FAIL  tests/fronteiras/fronteiras.test.ts > fronteiras de ADR-001 — arvore que viola > ADR-002 — @prisma/client em domain/ e nomeado
+AssertionError: expected undefined to be defined
+ ❯ tests/fronteiras/fronteiras.test.ts:60:15
+     58|   it('ADR-002 — @prisma/client em domain/ e nomeado', () => {
+     59|     const v = violacaoDe(resultado.violacoes, 'dominio-sem-framework-n…
+     60|     expect(v).toBeDefined();
+       |               ^
+     61|     expect(v?.to).toContain('@prisma/client');
+     62|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/6]⎯
+
+ FAIL  tests/fronteiras/fronteiras.test.ts > fronteiras de ADR-001 — arvore que viola > ADR-001 — application/ importando infrastructure/ e nomeado
+AssertionError: expected undefined to be defined
+ ❯ tests/fronteiras/fronteiras.test.ts:66:15
+     64|   it('ADR-001 — application/ importando infrastructure/ e nomeado', ()…
+     65|     const v = violacaoDe(resultado.violacoes, 'application-nao-conhece…
+     66|     expect(v).toBeDefined();
+       |               ^
+     67|     expect(v?.to).toContain('infrastructure/persistence/repositorio.ts…
+     68|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/6]⎯
+
+ FAIL  tests/fronteiras/fronteiras.test.ts > fronteiras de ADR-001 — arvore que viola > ADR-002 — @prisma/client fora de infrastructure/persistence/ e nomeado
+AssertionError: expected undefined to be defined
+ ❯ tests/fronteiras/fronteiras.test.ts:72:15
+     70|   it('ADR-002 — @prisma/client fora de infrastructure/persistence/ e n…
+     71|     const v = violacaoDe(resultado.violacoes, 'prisma-so-em-persistenc…
+     72|     expect(v).toBeDefined();
+       |               ^
+     73|   });
+     74|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/6]⎯
+
+ FAIL  tests/fronteiras/fronteiras.test.ts > fronteiras de ADR-001 — arvore que viola > toda violacao reportada tem severidade error — nenhuma regra foi afrouxada
+AssertionError: expected 0 to be greater than 0
+ ❯ tests/fronteiras/fronteiras.test.ts:76:40
+     74|
+     75|   it('toda violacao reportada tem severidade error — nenhuma regra foi…
+     76|     expect(resultado.violacoes.length).toBeGreaterThan(0);
+       |                                        ^
+     77|     for (const v of resultado.violacoes) expect(v.rule.severity).toBe(…
+     78|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/6]⎯
+
+ FAIL  tests/fronteiras/fronteiras.test.ts > fronteiras de ADR-001 — arvore limpa (controle) > o gate aprova (codigo de saida zero)
+AssertionError: expected '\n  ERROR: Can\'t open config file \'…' to be '' // Object.is equality
+
+- Expected
++ Received
+
++
++   ERROR: Can't open config file 'tooling\fronteiras\fixtures.cjs' for reading. Does it exist?
++          - You can create a config file by running 'npx dependency-cruiser --init'
++          - If you intended to run without a config file use --no-config
++
++
+
+ ❯ tests/fronteiras/fronteiras.test.ts:85:30
+     83|
+     84|   it('o gate aprova (codigo de saida zero)', () => {
+     85|     expect(resultado.stderr).toBe('');
+       |                              ^
+     86|     expect(resultado.status).toBe(0);
+     87|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/6]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  6 failed | 2 passed (8)
+   Start at  12:10:29
+   Duration  2.40s (import 98%, transform 1%)
+
+ ELIFECYCLE  Command failed with exit code 1.
+---------------------------------------------------------------
+EXIT_CODE=1
+SHA256=aa550e0ab475d56b7a2b3abcf665e253a5c62a5840834ad1f10b46e9fd40c249

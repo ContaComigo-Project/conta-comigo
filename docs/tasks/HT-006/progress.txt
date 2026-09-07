@@ -1,0 +1,13 @@
+# progress — HT-006
+# Diário append-only do ciclo Ralph. Uma linha por evento.
+# Formato: AAAA-MM-DD HH:MM | FASE | descrição objetiva | evidência
+# FASE: PERCEBER | ORIENTAR | DECIDIR | AGIR | REGISTRAR
+
+2026-09-07 12:10 | AGIR | teste de fronteiras escrito; ainda sem regras nem config — harness test-unitario exit 1 (VERMELHO ESPERADO) | docs/tasks/HT-006/evidencia/20260907-121028-test-unitario-vermelho.txt
+2026-09-07 12:16 | AGIR | dominio sem teste derruba o limiar de 80% — harness coverage exit 1 (VERMELHO ESPERADO) | docs/tasks/HT-006/evidencia/20260907-121612-coverage-limiar-arma.txt
+2026-09-07 12:16 | AGIR | mutacao: regra enfraquecida para info deixa o teste vermelho — harness test-unitario exit 1 (VERMELHO ESPERADO) | docs/tasks/HT-006/evidencia/20260907-121643-test-unitario-mutacao.txt
+2026-09-07 12:16 | AGIR | fronteiras: 8 cenarios verdes — harness test-unitario exit 0 (VERDE) | docs/tasks/HT-006/evidencia/20260907-121650-test-unitario-verde.txt
+2026-09-07 12:17 | AGIR | eslint + dependency-cruiser em backend e frontend/src — harness lint exit 0 (VERDE) | docs/tasks/HT-006/evidencia/20260907-121657-lint-verde.txt
+2026-09-07 12:17 | AGIR | fumaca Playwright em Chromium — harness test-funcional exit 0 (VERDE) | docs/tasks/HT-006/evidencia/20260907-121706-test-funcional-verde.txt
+2026-09-07 12:17 | AGIR | cobertura roda com alvo no dominio (vazio ate HT-009) — harness coverage exit 0 (VERDE) | docs/tasks/HT-006/evidencia/20260907-121711-coverage-verde.txt
+2026-09-07 12:18 | REGISTRAR | gates de ponta a ponta — harness gates exit 0 (VERDE) | docs/tasks/HT-006/evidencia/20260907-121719-gates-verde.txt

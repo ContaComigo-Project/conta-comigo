@@ -11,8 +11,24 @@
     "setup": "node scripts/setup-ambiente.mjs",
     "down": "docker compose down -v",
     "build": "pnpm --filter client-contacomigo build",
-    "lint": "pnpm --filter client-contacomigo lint",
+    "lint": "pnpm --filter client-contacomigo lint && pnpm run lint:fronteiras",
+    "lint:fronteiras": "depcruise --config .dependency-cruiser.cjs backend frontend/src",
+    "test:unitario": "vitest run",
+    "test:funcional": "playwright test",
+    "test": "pnpm run test:unitario && pnpm run test:funcional",
+    "coverage": "vitest run --coverage",
     "security": "node scripts/seguranca.mjs",
     "start": "pnpm --filter client-contacomigo dev"
+  },
+  "devDependencies": {
+    "@nestjs/common": "12.0.1",
+    "@playwright/test": "1.63.0",
+    "@prisma/client": "7.10.0",
+    "@types/node": "^24.13.3",
+    "@vitest/coverage-v8": "5.0.0",
+    "dependency-cruiser": "18.2.0",
+    "reflect-metadata": "0.2.2",
+    "typescript": "6.0.3",
+    "vitest": "5.0.0"
   }
 }

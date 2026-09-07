@@ -70,14 +70,13 @@ powershell -File scripts/harness.ps1 gates
 
 ## Estado atual
 
-`scripts/harness.env` existe desde `HT-005` e registra os comandos do projeto.
-Estão preenchidos: `setup`, `down`, `build`, `lint`, `security` e `run`.
+`scripts/harness.env` registra todos os comandos do projeto e `gates` fecha
+verde de ponta a ponta desde `HT-006`: `lint` (ESLint + dependency-cruiser),
+`test-unitario` (Vitest), `test-funcional` (Playwright em Chromium), `coverage`
+(alvo `backend/src/**/domain/`, limiar 80%) e `security` (gitleaks + osv-scanner).
 
-Continuam **vazios** `HARNESS_TEST_FUNCTIONAL`, `HARNESS_TEST_UNIT`,
-`HARNESS_TEST` e `HARNESS_COVERAGE`: as ferramentas de teste chegam em `HT-006`.
-Enquanto isso, essas tarefas **falham explicitamente** com "comando não
-configurado" e código de saída 3 — e `gates` para nelas. Isso é intencional: um
-harness que finge sucesso é pior que um harness ausente.
+Variável vazia continua sendo uma declaração: o harness **falha explicitamente**
+com "comando não configurado" e código 3 em vez de fingir sucesso.
 
 ### Restrição ao editar `harness.env`
 

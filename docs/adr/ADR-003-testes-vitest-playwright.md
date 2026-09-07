@@ -102,7 +102,8 @@ Regras concretas que derivam da escolha:
 
 ```
 scripts/harness.sh test-funcional   # Playwright: um cenário por critério de aceite
-scripts/harness.sh test-unit        # Vitest: domínio + borda, cobertura >= 80%
+scripts/harness.sh test-unitario    # Vitest: domínio + borda
+scripts/harness.sh coverage         # cobertura >= 80% no domínio
 scripts/harness.sh lint             # dependency-cruiser: fronteiras de ADR-001
 ```
 

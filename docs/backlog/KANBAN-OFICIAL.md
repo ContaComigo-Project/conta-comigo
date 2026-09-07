@@ -47,14 +47,13 @@ uma tem a coluna "UI hoje" dizendo o que já está pronto na tela.
 
 ## Próxima demanda
 
-**`HT-006` — Infraestrutura de testes funcional/BDD e unitário.**
+**`HT-007` — Pipeline de CI com gates bloqueantes.**
 
-`HT-005` entregou o harness: `setup`, `lint`, `build` e `security` já dão
-veredito real. Faltam as quatro tarefas de teste, que continuam falhando com
-"comando não configurado" — e é por isso que `gates` ainda não fecha verde de
-ponta a ponta. `HT-006` instala Vitest, Playwright e dependency-cruiser
-(`ADR-003`) e entrega o teste que **prova que a checagem de fronteiras bloqueia**
-(`ADR-001`), sem depender do backend, que só nasce em `HT-009`.
+`scripts/harness.sh gates` fecha verde de ponta a ponta desde `HT-006`. Falta
+levar exatamente o mesmo comando ao CI (`ADR-005`: "o que roda localmente roda
+no CI") e tornar o gate **bloqueante de fato** com proteção de branch — exit
+code sozinho só pinta o check de vermelho; quem impede o merge é a configuração
+do repositório no GitHub, que exige ação humana.
 
 ## Fluxo de estados
 
@@ -93,7 +92,7 @@ o backlog passou a considerar o frontend existente.
 | 4 | `HT-004` | Decidir tecnologias em aberto e registrar ADRs | Técnica | **Done** | HT-003 | — |
 | 5 | `HT-016` | Inventário do frontend existente e destino dos mocks | Técnica | **Done** | HT-004 | RNF-018, RNF-020 |
 | 6 | `HT-005` | Harness local reprodutível com docker compose | Técnica | **Done** | HT-004 | `v0.7.0` |
-| 7 | `HT-006` | Infraestrutura de testes funcional/BDD e unitário | Técnica | Backlog | HT-005 | RNF-018, RNF-019 |
+| 7 | `HT-006` | Infraestrutura de testes funcional/BDD e unitário | Técnica | **Done** | HT-005 | `v0.8.0` |
 | 8 | `HT-007` | Pipeline de CI com gates bloqueantes | Técnica | Backlog | HT-006 | RNF-021 |
 | 9 | `HT-008` | Baseline de segurança: segredos, autorização, varredura | Técnica | Backlog | HT-007 | RNF-012, RNF-013, RNF-015 |
 
@@ -155,7 +154,7 @@ o backlog passou a considerar o frontend existente.
 - _(vazio)_
 
 ### Done
-- `HT-000` `v0.1.0` · `HT-001` `v0.2.0` · `HT-002` `v0.3.0` · `HT-003` `v0.4.0` · `HT-004` `v0.5.0` · `HT-016` `v0.6.0` · `HT-005` `v0.7.0`
+- `HT-000` `v0.1.0` · `HT-001` `v0.2.0` · `HT-002` `v0.3.0` · `HT-003` `v0.4.0` · `HT-004` `v0.5.0` · `HT-016` `v0.6.0` · `HT-005` `v0.7.0` · `HT-006` `v0.8.0`
 
 Todas verificadas por `scripts/verificar-fechamento.sh`: tag e commit no mesmo
 hash, mensagem semântica citando a chave, documento de entrega presente.
@@ -166,7 +165,7 @@ Ordens 5 a 30 na tabela acima.
 ## Grooming
 
 Arquivo de história é criado quando o item entra em `Ready`, não antes.
-Existem hoje como arquivo: `HT-000` a `HT-005`, `HT-009`, `HT-016`, `HT-017`, `HT-018`.
+Existem hoje como arquivo: `HT-000` a `HT-006`, `HT-009`, `HT-016`, `HT-017`, `HT-018`.
 
 `HT-009` foi groomada cedo, fora da regra acima, porque `ADR-001` tornou seus
 critérios de aceite verificáveis — deixaram de ser adivinhação.
@@ -202,3 +201,7 @@ cada tela é aproveitável, e isso muda o critério de aceite de quase todas ela
 | 2026-09-07 | `HT-005` | Ready | Em execução | `docs/tasks/HT-005/` criado com TASK e IMPLEMENTATION; vermelho inicial registrado em `evidencia/` |
 | 2026-09-07 | `HT-005` | Em execução | Em revisão | Harness preenchido; 7 evidências de execução em disco; gates SRE e Segurança aprovados |
 | 2026-09-07 | `HT-005` | Em revisão | Done | `v0.7.0` → `3f57b53` |
+| 2026-09-07 | `HT-006` | Backlog | Ready | Arquivo de história criado; `HT-005` concluída |
+| 2026-09-07 | `HT-006` | Ready | Em execução | `docs/tasks/HT-006/` criado com TASK e IMPLEMENTATION |
+| 2026-09-07 | `HT-006` | Em execução | Em revisão | `gates` verde de ponta a ponta; 8 evidências; QA, SRE e Arquitetura aprovados |
+| 2026-09-07 | `HT-006` | Em revisão | Done | `v0.8.0` → a preencher |
