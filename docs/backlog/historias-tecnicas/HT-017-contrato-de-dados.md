@@ -5,7 +5,7 @@ document_type: story
 story_key: HT-017
 story_type: tecnica
 epic: EPIC-TEC-001
-status: Em revisão
+status: Done
 max_lines: 300
 ---
 
@@ -13,7 +13,7 @@ max_lines: 300
 
 - **Tipo:** História técnica
 - **Épico:** `EPIC-TEC-001`
-- **Estado:** Em revisão (ordem 12)
+- **Estado:** Done (ordem 12) — `v0.11.0` → `1e011e4`
 - **Requisitos:** habilita `RF-008`, `RF-009`, `RF-013`, `RF-014`, `RF-016` a `RF-021`
 - **Depende de:** `HT-016` — `v0.6.0`; `HT-009` — `v0.9.0`
 - **Versão prevista:** `v0.11.0`
@@ -104,4 +104,4 @@ Cenário: trocar a origem do dado não muda a tela
 - [x] `docs/entregas/ENTREGA-HT-017-contrato-de-dados.md` criado
 - [x] `KANBAN-OFICIAL.md` atualizado
 - [x] Commit semântico citando `HT-017`
-- [ ] Tag semântica no mesmo hash — **aguarda autorização humana** (regra 6 do AGENTS.md)
+- [x] Tag semântica no mesmo hash

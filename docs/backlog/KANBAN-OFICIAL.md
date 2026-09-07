@@ -47,8 +47,16 @@ uma tem a coluna "UI hoje" dizendo o que já está pronto na tela.
 
 ## Próxima demanda
 
-**`HT-010` — Persistência PostgreSQL, migrações e cifra em repouso** (ordem 11),
-ou `HT-007` se o time decidir fazer o push de `develop`.
+`Ready` está vazio. Dois caminhos, ambos legítimos:
+
+- **`HT-011` — Adaptador Pluggy Sandbox** (ordem 14): depende só de `HT-009`,
+  concluída. É o próximo passo que não exige nada de fora do repositório.
+- **`HT-007` — CI com gates bloqueantes** (ordem 8, adiada): volta a fazer
+  sentido assim que `develop` for publicado, porque a proteção de branch e o
+  PR de prova acontecem no GitHub.
+
+`HT-010` (`v0.10.0`) e `HT-017` (`v0.11.0`) fecharam; com o contrato no lugar,
+`HN-001` só espera `HT-008`.
 
 ### Nota de reordenação (2026-09-07)
 
@@ -116,8 +124,8 @@ o backlog passou a considerar o frontend existente.
 | Ordem | Chave | Título | Tipo | Estado | Depende de | UI hoje |
 | --- | --- | --- | --- | --- | --- | --- |
 | 10 | `HT-009` | Esqueleto do backend hexagonal (`ADR-001`) | Técnica | **Done** (puxada antes da 8 e da 9) | HT-006, HT-004 | `v0.9.0` |
-| 11 | `HT-010` | Persistência PostgreSQL, migrações e cifra em repouso | Técnica | **Em revisão** | HT-009, HT-004 | RNF-014 |
-| 12 | `HT-017` | Contrato de dados entre a web e a API | Técnica | **Em revisão** | HT-016, HT-009 | Define como a UI atual passa a receber dado |
+| 11 | `HT-010` | Persistência PostgreSQL, migrações e cifra em repouso | Técnica | **Done** | HT-009, HT-004 | `v0.10.0` |
+| 12 | `HT-017` | Contrato de dados entre a web e a API | Técnica | **Done** | HT-016, HT-009 | Define como a UI atual passa a receber dado |
 | 13 | `HN-001` | Acesso: cadastro, login e encerramento de sessão | Negócio | Backlog | HT-010, HT-008, HT-017 | Telas prontas; `Login.tsx` faz `console.log` + `setTimeout` |
 | 14 | `HT-011` | Adaptador Pluggy Sandbox atrás da porta de agregação | Técnica | Backlog | HT-009 | — |
 
@@ -166,11 +174,10 @@ o backlog passou a considerar o frontend existente.
 - _(vazio)_
 
 ### Em revisão
-- `HT-017` — Contrato de dados entre a web e a API (ordem 12) — commit local feito; **tag `v0.11.0` aguarda autorização humana**
-- `HT-010` — Persistência PostgreSQL, migrações e cifra em repouso (ordem 11) — commit local feito; **tag `v0.10.0` aguarda autorização humana**
+- _(vazio)_
 
 ### Done
-- `HT-000` `v0.1.0` · `HT-001` `v0.2.0` · `HT-002` `v0.3.0` · `HT-003` `v0.4.0` · `HT-004` `v0.5.0` · `HT-016` `v0.6.0` · `HT-005` `v0.7.0` · `HT-006` `v0.8.0` · `HT-009` `v0.9.0`
+- `HT-000` `v0.1.0` · `HT-001` `v0.2.0` · `HT-002` `v0.3.0` · `HT-003` `v0.4.0` · `HT-004` `v0.5.0` · `HT-016` `v0.6.0` · `HT-005` `v0.7.0` · `HT-006` `v0.8.0` · `HT-009` `v0.9.0` · `HT-010` `v0.10.0` · `HT-017` `v0.11.0`
 
 Todas verificadas por `scripts/verificar-fechamento.sh`: tag e commit no mesmo
 hash, mensagem semântica citando a chave, documento de entrega presente.
@@ -232,3 +239,5 @@ cada tela é aproveitável, e isso muda o critério de aceite de quase todas ela
 | 2026-09-07 | `HT-017` | Backlog | Ready | Dependências `HT-016`/`HT-009` concluídas; versão fixada `v0.11.0` (loop autônomo) |
 | 2026-09-07 | `HT-017` | Ready | Em execução | `docs/tasks/HT-017/` criado (loop autônomo, volta 2) |
 | 2026-09-07 | `HT-017` | Em execução | Em revisão | Contrato, RN-001, origem falsa e endpoint verdes; 2 furos do gate de fronteiras fechados; commit local; tag pendente (loop autônomo, volta 11) |
+| 2026-09-07 | `HT-010` | Em revisão | Done | `v0.10.0` → `a419cf4`; `verificar-fechamento` verde |
+| 2026-09-07 | `HT-017` | Em revisão | Done | `v0.11.0` → `1e011e4`; `verificar-fechamento` verde |

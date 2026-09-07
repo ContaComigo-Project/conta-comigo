@@ -12,8 +12,8 @@ max_lines: 300
 - **Data:** 2026-09-07
 - **Tipo:** Técnica (fronteira apresentação↔domínio)
 - **Versão:** `v0.11.0`
-- **Commit:** a preencher no fechamento
-- **Tag:** `v0.11.0` — **pendente de autorização humana**
+- **Commit:** `1e011e4`
+- **Tag:** `v0.11.0` → `1e011e4`
 
 ## O que foi entregue
 
@@ -136,6 +136,6 @@ Gates finais:
 
 ## Verificação de fechamento
 
-- [ ] `scripts/verificar-fechamento.sh v0.11.0` verde
-- [ ] Tag `v0.11.0` — **aguarda autorização**
-- [ ] Evidência presente em `docs/tasks/HT-017/evidencia/` (12 arquivos)
+- [x] `scripts/verificar-fechamento.sh v0.11.0` verde
+- [x] Tag `v0.11.0` aponta para o mesmo hash do commit
+- [x] Evidência presente em `docs/tasks/HT-017/evidencia/` (12 arquivos)

@@ -12,8 +12,8 @@ max_lines: 300
 - **Data:** 2026-09-07
 - **Tipo:** Técnica (persistência)
 - **Versão:** `v0.10.0`
-- **Commit:** a preencher no fechamento
-- **Tag:** `v0.10.0` — **pendente de autorização humana**
+- **Commit:** `a419cf4`
+- **Tag:** `v0.10.0` → `a419cf4`
 
 ## O que foi entregue
 
@@ -134,6 +134,6 @@ harness: gates concluídos
 
 ## Verificação de fechamento
 
-- [ ] `scripts/verificar-fechamento.sh v0.10.0` verde
-- [ ] Tag `v0.10.0` aponta para o mesmo hash do commit — **aguarda autorização**
-- [ ] Evidência presente em `docs/tasks/HT-010/evidencia/`
+- [x] `scripts/verificar-fechamento.sh v0.10.0` verde
+- [x] Tag `v0.10.0` aponta para o mesmo hash do commit
+- [x] Evidência presente em `docs/tasks/HT-010/evidencia/` (9 arquivos)

@@ -5,7 +5,7 @@ document_type: story
 story_key: HT-010
 story_type: tecnica
 epic: EPIC-TEC-001
-status: Em revisão
+status: Done
 max_lines: 300
 ---
 
@@ -13,7 +13,7 @@ max_lines: 300
 
 - **Tipo:** História técnica
 - **Épico:** `EPIC-TEC-001`
-- **Estado:** Em revisão (ordem 11)
+- **Estado:** Done (ordem 11) — `v0.10.0` → `a419cf4`
 - **Decisão que a rege:** [`ADR-002`](../../adr/ADR-002-orm-prisma.md), [`ADR-001`](../../adr/ADR-001-arquitetura-hexagonal-no-backend.md)
 - **Requisitos:** `RNF-014`; `RNF-020`; `RNF-007`
 - **Depende de:** `HT-009` (esqueleto e porta `RepositorioDeLancamentos`) — `v0.9.0`; `HT-004` (Prisma decidido) — `v0.5.0`
@@ -133,4 +133,4 @@ Cenário: dado sensível não chega ao banco em texto claro
 - [x] Documentação operacional atualizada (`scripts/README.md`, `.env.example`)
 - [x] `docs/entregas/` criado
 - [x] `KANBAN-OFICIAL.md` atualizado
-- [ ] Commit semântico citando `HT-010` e tag no mesmo hash — commit feito; **tag aguarda autorização humana** (regra 6 do AGENTS.md)
+- [x] Commit semântico citando `HT-010` e tag no mesmo hash
