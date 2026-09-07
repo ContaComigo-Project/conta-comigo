@@ -6,6 +6,9 @@ import { LancamentosModule } from '../../lancamentos.module';
 import { TOKENS } from '../../domain/port/saida/tokens';
 import { RelogioFixo } from '../relogio/relogio-fixo';
 import { RepositorioDeLancamentosEmMemoria } from '../persistence/repositorio-em-memoria';
+import { titularId } from '../../domain/model/titular';
+
+const TITULAR = titularId('titular-a');
 import { z } from 'zod';
 import { LancamentoDTO, resultadoDe } from '@contacomigo/contrato';
 
@@ -24,8 +27,8 @@ describe('GET /lancamentos/resumo-do-mes', () => {
       .overrideProvider(TOKENS.RepositorioDeLancamentos)
       .useValue(
         new RepositorioDeLancamentosEmMemoria([
-          { id: '1', descricao: 'mercado', valorEmCentavos: 120_00, dataDeCompetencia: new Date('2026-01-10T12:00:00Z') },
-          { id: '2', descricao: 'farmacia', valorEmCentavos: 30_00, dataDeCompetencia: new Date('2026-02-05T12:00:00Z') },
+          { id: '1', titularId: TITULAR, descricao: 'mercado', valorEmCentavos: 120_00, dataDeCompetencia: new Date('2026-01-10T12:00:00Z') },
+          { id: '2', titularId: TITULAR, descricao: 'farmacia', valorEmCentavos: 30_00, dataDeCompetencia: new Date('2026-02-05T12:00:00Z') },
         ]),
       )
       .compile();
@@ -40,7 +43,7 @@ describe('GET /lancamentos/resumo-do-mes', () => {
   });
 
   it('GET /lancamentos responde no CONTRATO: Resultado<LancamentoDTO[]> valido pelo esquema (HT-017)', async () => {
-    const resposta = await fetch(baseUrl + '/lancamentos');
+    const resposta = await fetch(baseUrl + '/lancamentos', { headers: { 'x-titular-id': TITULAR } });
     expect(resposta.status).toBe(200);
     const corpo = await resposta.json();
     const parse = resultadoDe(z.array(LancamentoDTO)).safeParse(corpo);
@@ -59,7 +62,7 @@ describe('GET /lancamentos/resumo-do-mes', () => {
   });
 
   it('responde 200 com o resumo do mes de referencia do relogio', async () => {
-    const resposta = await fetch(baseUrl + '/lancamentos/resumo-do-mes');
+    const resposta = await fetch(baseUrl + '/lancamentos/resumo-do-mes', { headers: { 'x-titular-id': TITULAR } });
     expect(resposta.status).toBe(200);
     expect(await resposta.json()).toEqual({
       mes: { ano: 2026, mes: 1 },

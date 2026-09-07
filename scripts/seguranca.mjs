@@ -64,14 +64,14 @@ let falhas = 0;
 //                                      continua recuperavel por quem clonar.
 // Usar so "git" (o antigo "detect") deixa passar arquivo ainda nao commitado,
 // que e justamente o caso que este gate precisa barrar.
-function gitleaks(subcomando, rotulo) {
+function gitleaks(subcomando, rotulo, alvo = '/repo') {
   console.log(`--- ${rotulo}`);
   return executar('docker', [
     'run', '--rm',
     '-v', `${RAIZ}:/repo`,
     GITLEAKS,
     subcomando,
-    '/repo',
+    alvo,
     '--config=/repo/.gitleaks.toml',
     '--redact',
     '--no-banner',
@@ -82,6 +82,14 @@ function gitleaks(subcomando, rotulo) {
 console.log('=== 1. Segredos (gitleaks)');
 const naArvore = gitleaks('dir', 'arvore de trabalho');
 const noHistorico = gitleaks('git', 'historico de commits');
+
+// O PACOTE COMPILADO DA WEB (frontend/dist) tambem e coberto pela varredura da
+// arvore, e nao por acaso: `gitleaks dir` le o filesystem e NAO respeita o
+// .gitignore — verificado em HT-008 plantando uma chave em coverage/, que e
+// gitignored, e observando a deteccao. Isso importa porque o bundle e onde uma
+// chave embutida por engano acaba parando (RNF-012), e ele nunca esta no git.
+// tests/seguranca/allowlist.test.ts impede que alguem coloque dist/ na
+// allowlist e apague essa cobertura sem perceber.
 
 if (naArvore === 0 && noHistorico === 0) {
   console.log('  [OK]    nenhum segredo detectado\n');

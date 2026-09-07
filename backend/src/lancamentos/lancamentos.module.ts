@@ -6,6 +6,7 @@ import type { RepositorioDeLancamentos } from './domain/port/saida/repositorio-d
 import { TOKENS } from './domain/port/saida/tokens';
 import { LancamentosController } from './infrastructure/http/lancamentos.controller';
 import { RepositorioDeLancamentosPrisma } from './infrastructure/persistence/repositorio-prisma';
+import { IdentidadeDoCabecalho } from './infrastructure/http/identidade-do-cabecalho';
 import { RelogioDoSistema } from './infrastructure/relogio/relogio-do-sistema';
 
 // Wiring: o unico lugar que conhece o concreto (ADR-001). Porta -> adaptador
@@ -17,6 +18,7 @@ import { RelogioDoSistema } from './infrastructure/relogio/relogio-do-sistema';
   controllers: [LancamentosController],
   providers: [
     { provide: TOKENS.Relogio, useClass: RelogioDoSistema },
+    { provide: TOKENS.Identidade, useClass: IdentidadeDoCabecalho },
     { provide: TOKENS.RepositorioDeLancamentos, useFactory: () => new RepositorioDeLancamentosPrisma() },
     {
       provide: TOKENS.ListarLancamentos,

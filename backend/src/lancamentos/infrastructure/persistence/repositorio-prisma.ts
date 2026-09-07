@@ -1,5 +1,6 @@
 import { PrismaPg } from '@prisma/adapter-pg';
 import type { Lancamento } from '../../domain/model/lancamento';
+import type { TitularId } from '../../domain/model/titular';
 import type { RepositorioDeLancamentos } from '../../domain/port/saida/repositorio-de-lancamentos';
 import { PrismaClient, type Lancamento as LinhaDeLancamento } from './gerado/client';
 
@@ -23,8 +24,13 @@ export class RepositorioDeLancamentosPrisma implements RepositorioDeLancamentos 
     });
   }
 
-  async listarTodos(): Promise<readonly Lancamento[]> {
-    const linhas = await this.prisma.lancamento.findMany({ orderBy: { dataDeCompetencia: 'asc' } });
+  // O filtro vai na CONSULTA (RN-015). Filtrar depois, em memoria, ja teria
+  // trazido o dado alheio para dentro do processo — e para o log.
+  async listarDoTitular(titularId: TitularId): Promise<readonly Lancamento[]> {
+    const linhas = await this.prisma.lancamento.findMany({
+      where: { titularId },
+      orderBy: { dataDeCompetencia: 'asc' },
+    });
     return linhas.map(paraEntidade);
   }
 
@@ -39,12 +45,19 @@ export class RepositorioDeLancamentosPrisma implements RepositorioDeLancamentos 
 }
 
 function paraLinha(l: Lancamento): LinhaDeLancamento {
-  return { id: l.id, descricao: l.descricao, valorEmCentavos: l.valorEmCentavos, dataDeCompetencia: l.dataDeCompetencia };
+  return {
+    id: l.id,
+    titularId: l.titularId,
+    descricao: l.descricao,
+    valorEmCentavos: l.valorEmCentavos,
+    dataDeCompetencia: l.dataDeCompetencia,
+  };
 }
 
 function paraEntidade(linha: LinhaDeLancamento): Lancamento {
   return {
     id: linha.id,
+    titularId: linha.titularId as TitularId,
     descricao: linha.descricao,
     valorEmCentavos: linha.valorEmCentavos,
     dataDeCompetencia: linha.dataDeCompetencia,

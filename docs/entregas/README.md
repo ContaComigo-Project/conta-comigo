@@ -33,6 +33,7 @@ Arquivo: `ENTREGA-[CHAVE]-titulo-em-kebab-case.md`, a partir de
 | 2026-09-07 | [`HT-009`](./ENTREGA-HT-009-esqueleto-backend-hexagonal.md) | Esqueleto hexagonal do backend, contexto `lancamentos` | `v0.9.0` | `b7f2945` | `v0.9.0` |
 | 2026-09-07 | [`HT-010`](./ENTREGA-HT-010-persistencia-postgresql.md) | Persistência PostgreSQL com Prisma e cifra em repouso | `v0.10.0` | `a419cf4` | `v0.10.0` |
 | 2026-09-07 | [`HT-017`](./ENTREGA-HT-017-contrato-de-dados.md) | Contrato de dados web↔API, origem falsa e RN-001 no domínio | `v0.11.0` | `1e011e4` | `v0.11.0` |
+| 2026-09-07 | [`HT-008`](./ENTREGA-HT-008-baseline-de-seguranca.md) | Baseline de segurança e skill de Open Finance | `v0.12.0` | a preencher | pendente |
 
 Toda linha acima foi verificada por `scripts/verificar-fechamento.sh`: a tag
 aponta para o mesmo hash do commit de fechamento, e a mensagem cita a chave.

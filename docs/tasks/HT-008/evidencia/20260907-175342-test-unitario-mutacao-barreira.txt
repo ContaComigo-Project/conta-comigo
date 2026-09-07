@@ -1,0 +1,71 @@
+# evidência de execução — HT-008
+# Gerado por scripts/registrar-evidencia.sh. Não editar à mão.
+comando : scripts/harness.sh test-unitario
+data    : 2026-09-07 17:53:42 -0300
+commit  : 01725c6 (árvore suja)
+sistema : MINGW64_NT-10.0-26200
+espera  : FALHA (vermelho obrigatório)
+---------------------------------------------------------------
+harness: HARNESS_TEST_UNIT -> pnpm run test:unitario
+
+> conta-comigo@0.7.0 test:unitario C:\Users\migue\Documents\mocitec\conta-comigo
+> vitest run
+
+
+ RUN  v5.0.0 C:/Users/migue/Documents/mocitec/conta-comigo
+
+ ❯ backend/src/lancamentos/infrastructure/http/guarda-de-titular.test.ts (7 tests | 2 failed) 444ms
+   ❯ RNF-013 / RN-015 — GET /lancamentos so devolve dado do proprio titular (7)
+     × sem credencial: recusa a autenticacao e nao devolve conteudo 55ms
+     × credencial vazia tambem e ausencia de credencial 7ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  backend/src/lancamentos/infrastructure/http/guarda-de-titular.test.ts > RNF-013 / RN-015 — GET /lancamentos so devolve dado do proprio titular > sem credencial: recusa a autenticacao e nao devolve conteudo
+AssertionError: expected 200 to be 401 // Object.is equality
+
+- Expected
++ Received
+
+- 401
++ 200
+
+ ❯ backend/src/lancamentos/infrastructure/http/guarda-de-titular.test.ts:59:29
+     57|   it('sem credencial: recusa a autenticacao e nao devolve conteudo', a…
+     58|     const resposta = await pedir();
+     59|     expect(resposta.status).toBe(401);
+       |                             ^
+     60|     expect(await resposta.text()).not.toContain('mercado do A');
+     61|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  backend/src/lancamentos/infrastructure/http/guarda-de-titular.test.ts > RNF-013 / RN-015 — GET /lancamentos so devolve dado do proprio titular > credencial vazia tambem e ausencia de credencial
+AssertionError: expected 200 to be 401 // Object.is equality
+
+- Expected
++ Received
+
+- 401
++ 200
+
+ ❯ backend/src/lancamentos/infrastructure/http/guarda-de-titular.test.ts:64:61
+     62|
+     63|   it('credencial vazia tambem e ausencia de credencial', async () => {
+     64|     expect((await pedir({ 'x-titular-id': '   ' })).status).toBe(401);
+       |                                                             ^
+     65|   });
+     66|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed | 12 passed (13)
+      Tests  2 failed | 78 passed (80)
+   Start at  17:53:43
+   Duration  7.76s (import 81%, transform 9%, tests 8%, worker 1%)
+
+ ELIFECYCLE  Command failed with exit code 1.
+---------------------------------------------------------------
+EXIT_CODE=1
+SHA256=fbadade468cb6ac08a710b1fe2c67921843f7082ef6c86555298f6dc2e38e52e

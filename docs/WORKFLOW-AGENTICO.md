@@ -95,6 +95,7 @@ Da ordem 6 em diante, o item só ganha arquivo de história quando entra em
 | QA | `qa-agent` | Sempre que houver comportamento testável |
 | SRE | `sre-agent` | Ambiente, build, pipeline, publicação, operação |
 | Segurança | `security-specialist-agent` | Autenticação, autorização, dado pessoal, segredo, integração |
+| Segurança de Open Finance | `open-finance-security-agent` | Consentimento, credencial de agregador, isolamento entre titulares, retenção de dado financeiro |
 | Arquitetura | `architect-reviewer-agent` | Módulo, contrato, dependência ou padrão novo |
 | Revisão de Diff | `code-reviewer-agent` | Inspecionar diff linha a linha (bugs, segredos, prints, clean code) |
 | Revisão Final | `final-reviewer-agent` | Sempre, antes do commit de entrega (cruza critérios e gates) |

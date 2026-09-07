@@ -1,11 +1,14 @@
 import { describe, expect, it } from 'vitest';
 import { ConsultarResumoDoMesUseCase } from './consultar-resumo-do-mes';
 import type { Lancamento } from '../domain/model/lancamento';
+import { titularId } from '../domain/model/titular';
 import type { Relogio } from '../domain/port/saida/relogio';
 import type { RepositorioDeLancamentos } from '../domain/port/saida/repositorio-de-lancamentos';
 
+const TITULAR = titularId('titular-a');
+
 function lancamento(id: string, valorEmCentavos: number, competenciaUtc: string): Lancamento {
-  return { id, descricao: 'lancamento ' + id, valorEmCentavos, dataDeCompetencia: new Date(competenciaUtc) };
+  return { id, titularId: TITULAR, descricao: 'lancamento ' + id, valorEmCentavos, dataDeCompetencia: new Date(competenciaUtc) };
 }
 
 // Fakes construidos aqui, a partir das PORTAS. O teste de application/ nao
@@ -14,7 +17,7 @@ function lancamento(id: string, valorEmCentavos: number, competenciaUtc: string)
 // de quem cumpra o contrato; isso e exatamente o que o hexagono promete.
 const relogioEm = (instanteUtc: string): Relogio => ({ agora: () => new Date(instanteUtc) });
 const repositorioCom = (itens: readonly Lancamento[]): RepositorioDeLancamentos => ({
-  listarTodos: async () => itens,
+  listarDoTitular: async () => itens,
 });
 
 // Caso de uso testado sem banco, sem HTTP e sem framework.
@@ -30,7 +33,7 @@ describe('ConsultarResumoDoMes', () => {
     ]);
 
     const inicio = performance.now();
-    const resumo = await new ConsultarResumoDoMesUseCase(repositorio, relogio).executar();
+    const resumo = await new ConsultarResumoDoMesUseCase(repositorio, relogio).executar(TITULAR);
     const duracaoMs = performance.now() - inicio;
 
     expect(resumo.mes).toEqual({ ano: 2026, mes: 1 });
@@ -41,7 +44,7 @@ describe('ConsultarResumoDoMes', () => {
 
   it('sem lancamentos, o resumo e zero e ainda informa o mes', async () => {
     const relogio = relogioEm('2026-06-10T15:00:00Z');
-    const resumo = await new ConsultarResumoDoMesUseCase(repositorioCom([]), relogio).executar();
+    const resumo = await new ConsultarResumoDoMesUseCase(repositorioCom([]), relogio).executar(TITULAR);
     expect(resumo).toEqual({ mes: { ano: 2026, mes: 6 }, quantidade: 0, totalEmCentavos: 0 });
   });
 });

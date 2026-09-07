@@ -1,4 +1,5 @@
 import type { MesDeReferencia } from '../../mes-de-referencia';
+import type { TitularId } from '../../model/titular';
 
 export interface ResumoDoMes {
   readonly mes: MesDeReferencia;
@@ -8,5 +9,5 @@ export interface ResumoDoMes {
 
 // Porta de entrada (driving): o que o mundo externo pode pedir ao dominio.
 export interface ConsultarResumoDoMes {
-  executar(): Promise<ResumoDoMes>;
+  executar(titularId: TitularId): Promise<ResumoDoMes>;
 }

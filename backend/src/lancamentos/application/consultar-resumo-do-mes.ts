@@ -1,5 +1,6 @@
 import { mesDeReferencia, mesmoMes } from '../domain/mes-de-referencia';
 import type { ConsultarResumoDoMes, ResumoDoMes } from '../domain/port/entrada/consultar-resumo-do-mes';
+import type { TitularId } from '../domain/model/titular';
 import type { Relogio } from '../domain/port/saida/relogio';
 import type { RepositorioDeLancamentos } from '../domain/port/saida/repositorio-de-lancamentos';
 
@@ -11,9 +12,9 @@ export class ConsultarResumoDoMesUseCase implements ConsultarResumoDoMes {
     private readonly relogio: Relogio,
   ) {}
 
-  async executar(): Promise<ResumoDoMes> {
+  async executar(titularId: TitularId): Promise<ResumoDoMes> {
     const mes = mesDeReferencia(this.relogio.agora());
-    const doMes = (await this.repositorio.listarTodos()).filter((l) =>
+    const doMes = (await this.repositorio.listarDoTitular(titularId)).filter((l) =>
       mesmoMes(mesDeReferencia(l.dataDeCompetencia), mes),
     );
     return {

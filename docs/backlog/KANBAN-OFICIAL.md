@@ -47,7 +47,17 @@ uma tem a coluna "UI hoje" dizendo o que já está pronto na tela.
 
 ## Próxima demanda
 
-`Ready` está vazio. Dois caminhos, ambos legítimos:
+**`HT-008` — Baseline de segurança** (ordem 9), em execução.
+
+### Dependência parcialmente resolvida
+
+`HT-008` depende de `HT-007` (CI), que segue adiada. `RNF-012` exige varredura
+de segredo "no harness **e** no CI": a metade do harness é entregue aqui, a
+metade do CI fica **pendente e registrada** na entrega, não marcada como feita.
+Os outros dois requisitos da história (`RNF-013` autorização, `RNF-015` log) não
+dependem de CI e são verificáveis localmente.
+
+Depois dela, os caminhos abertos são:
 
 - **`HT-011` — Adaptador Pluggy Sandbox** (ordem 14): depende só de `HT-009`,
   concluída. É o próximo passo que não exige nada de fora do repositório.
@@ -117,7 +127,7 @@ o backlog passou a considerar o frontend existente.
 | 6 | `HT-005` | Harness local reprodutível com docker compose | Técnica | **Done** | HT-004 | `v0.7.0` |
 | 7 | `HT-006` | Infraestrutura de testes funcional/BDD e unitário | Técnica | **Done** | HT-005 | `v0.8.0` |
 | 8 | `HT-007` | Pipeline de CI com gates bloqueantes | Técnica | Backlog — **adiada**, ver nota | HT-006 | RNF-021 |
-| 9 | `HT-008` | Baseline de segurança: segredos, autorização, varredura | Técnica | Backlog | HT-007 | RNF-012, RNF-013, RNF-015 |
+| 9 | `HT-008` | Baseline de segurança: segredos, autorização, varredura | Técnica | **Em revisão** | ~~HT-007~~ (parcial — ver nota) | RNF-012, RNF-013, RNF-015 |
 
 ### Fase 2 — Esqueleto do sistema e fronteira com a web
 
@@ -174,7 +184,7 @@ o backlog passou a considerar o frontend existente.
 - _(vazio)_
 
 ### Em revisão
-- _(vazio)_
+- `HT-008` — Baseline de segurança (ordem 9) — commit local feito; **tag `v0.12.0` aguarda autorização humana**
 
 ### Done
 - `HT-000` `v0.1.0` · `HT-001` `v0.2.0` · `HT-002` `v0.3.0` · `HT-003` `v0.4.0` · `HT-004` `v0.5.0` · `HT-016` `v0.6.0` · `HT-005` `v0.7.0` · `HT-006` `v0.8.0` · `HT-009` `v0.9.0` · `HT-010` `v0.10.0` · `HT-017` `v0.11.0`
@@ -188,7 +198,7 @@ Ordens 5 a 30 na tabela acima.
 ## Grooming
 
 Arquivo de história é criado quando o item entra em `Ready`, não antes.
-Existem hoje como arquivo: `HT-000` a `HT-006`, `HT-009`, `HT-010`, `HT-016`, `HT-017`, `HT-018`.
+Existem hoje como arquivo: `HT-000` a `HT-006`, `HT-008`, `HT-009`, `HT-010`, `HT-016`, `HT-017`, `HT-018`.
 
 `HT-009` foi groomada cedo, fora da regra acima, porque `ADR-001` tornou seus
 critérios de aceite verificáveis — deixaram de ser adivinhação.
@@ -241,3 +251,5 @@ cada tela é aproveitável, e isso muda o critério de aceite de quase todas ela
 | 2026-09-07 | `HT-017` | Em execução | Em revisão | Contrato, RN-001, origem falsa e endpoint verdes; 2 furos do gate de fronteiras fechados; commit local; tag pendente (loop autônomo, volta 11) |
 | 2026-09-07 | `HT-010` | Em revisão | Done | `v0.10.0` → `a419cf4`; `verificar-fechamento` verde |
 | 2026-09-07 | `HT-017` | Em revisão | Done | `v0.11.0` → `1e011e4`; `verificar-fechamento` verde |
+| 2026-09-07 | `HT-008` | Backlog | Em execução | Puxada com `HT-007` adiada; o critério de varredura no CI fica pendente e registrado. Decisão do time |
+| 2026-09-07 | `HT-008` | Em execução | Em revisão | Barreira por titular provada por teste negativo e mutação; skill de Open Finance criada; 6 evidências; tag pendente |

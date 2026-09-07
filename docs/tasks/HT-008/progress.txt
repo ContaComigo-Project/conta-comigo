@@ -1,0 +1,12 @@
+# progress — HT-008
+# Diário append-only do ciclo Ralph. Uma linha por evento.
+# Formato: AAAA-MM-DD HH:MM | FASE | descrição objetiva | evidência
+# FASE: PERCEBER | ORIENTAR | DECIDIR | AGIR | REGISTRAR
+
+2026-09-07 17:45 | AGIR | redator e guarda de titular sobre stubs: log intacto e rota sem barreira — harness test-unitario exit 1 (VERMELHO ESPERADO) | docs/tasks/HT-008/evidencia/20260907-174523-test-unitario-vermelho.txt
+2026-09-07 17:47 | AGIR | filtro por titular na consulta, contra o Postgres real — harness test-integracao exit 0 (VERDE) | docs/tasks/HT-008/evidencia/20260907-174744-test-integracao-verde-isolamento.txt
+2026-09-07 17:49 | AGIR | chave embutida no bundle da web e detectada — harness security exit 1 (VERMELHO ESPERADO) | docs/tasks/HT-008/evidencia/20260907-174839-security-bundle-com-segredo.txt
+2026-09-07 17:50 | AGIR | chave no bundle da web e detectada mesmo com a fonte ja limpa — harness security exit 1 (VERMELHO ESPERADO) | docs/tasks/HT-008/evidencia/20260907-175016-security-bundle-com-segredo.txt
+2026-09-07 17:53 | AGIR | mutacao: sem a guarda, o teste negativo fica vermelho — harness test-unitario exit 0 (VERDE INESPERADO) | docs/tasks/HT-008/evidencia/20260907-175307-test-unitario-mutacao-guarda.txt
+2026-09-07 17:53 | AGIR | mutacao: sem guarda E sem checagem, a barreira some e o teste fica vermelho — harness test-unitario exit 1 (VERMELHO ESPERADO) | docs/tasks/HT-008/evidencia/20260907-175342-test-unitario-mutacao-barreira.txt
+2026-09-07 17:55 | REGISTRAR | gates de ponta a ponta com barreira por titular, redator e allowlist guardada — harness gates exit 0 (VERDE) | docs/tasks/HT-008/evidencia/20260907-175401-gates-verde.txt

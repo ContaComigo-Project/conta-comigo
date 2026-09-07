@@ -13,9 +13,11 @@ datasource db {
 
 model Lancamento {
   id                String   @id
+  titularId         String   @map("titular_id")
   descricao         String
   valorEmCentavos   Int      @map("valor_em_centavos")
   dataDeCompetencia DateTime @map("data_de_competencia") @db.Timestamptz(3)
 
+  @@index([titularId])
   @@map("lancamentos")
 }

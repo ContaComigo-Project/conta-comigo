@@ -1,7 +1,8 @@
 import type { Lancamento } from '../../model/lancamento';
+import type { TitularId } from '../../model/titular';
 
-// Porta de entrada: listar os lancamentos conhecidos. Filtro por periodo chega
-// com RF-009 (HN-003); aqui e o minimo que o contrato precisa para existir.
+// Porta de entrada: listar os lancamentos DO TITULAR. Filtro por periodo chega
+// com RF-009 (HN-003).
 export interface ListarLancamentos {
-  executar(): Promise<readonly Lancamento[]>;
+  executar(titularId: TitularId): Promise<readonly Lancamento[]>;
 }
