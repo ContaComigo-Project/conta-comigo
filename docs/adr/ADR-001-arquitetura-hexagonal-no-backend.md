@@ -73,12 +73,12 @@ borda; o módulo NestJS é o único lugar que liga porta a implementação.
 
 ```
 backend/src/
-  <contexto>/                      orcamento, consentimento, lancamentos, ia
+  <contexto>/                      access, aggregation, transactions, budget
     domain/
       model/                       entidades e objetos de valor
       port/
-        entrada/                   interfaces dos casos de uso (driving)
-        saida/                     interfaces de repositório e provedor (driven)
+        driving/                   interfaces dos casos de uso (driving)
+        driven/                    interfaces de repositório e provedor (driven)
       <regra>.ts                   regra de domínio pura
     application/                   implementação dos casos de uso
     infrastructure/

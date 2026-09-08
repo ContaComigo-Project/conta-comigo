@@ -1,11 +1,11 @@
 import { describe, expect, it } from 'vitest';
 import { z } from 'zod';
 import {
-  BancoConectadoDTO,
-  CategoriaDeGastoDTO,
+  ConnectedBankDTO,
+  SpendingCategoryDTO,
   CategoriaDeOrcamentoDTO,
   Faixa,
-  LancamentoDTO,
+  TransactionDTO,
   ResumoDoMesDTO,
   resultadoDe,
 } from './index';
@@ -14,39 +14,39 @@ import {
 // o inventario (HT-016) marcou como acidente visual sao REJEITADOS. Se alguem
 // tentar colocar `formattedAmount` no transporte, este teste fica vermelho.
 
-const lancamentoValido = {
+const transactionValido = {
   id: 'txn_001',
-  descricao: 'Uber',
+  description: 'Uber',
   estabelecimento: 'Uber Brasil',
   categoria: { id: 'transporte', nome: 'Transporte' },
   instituicao: { id: 'nubank', nome: 'Nubank' },
-  valorEmCentavos: -3490,
+  amountInCents: -3490,
   tipo: 'debito',
-  dataDeCompetencia: '2026-09-05T15:30:00.000Z',
+  dueDate: '2026-09-05T15:30:00.000Z',
 };
 
-describe('contrato — LancamentoDTO', () => {
-  it('aceita um lancamento valido', () => {
-    expect(LancamentoDTO.safeParse(lancamentoValido).success).toBe(true);
+describe('contrato — TransactionDTO', () => {
+  it('aceita um transaction valido', () => {
+    expect(TransactionDTO.safeParse(transactionValido).success).toBe(true);
   });
 
   it('exige valor inteiro em centavos (RN-006)', () => {
-    expect(LancamentoDTO.safeParse({ ...lancamentoValido, valorEmCentavos: -34.9 }).success).toBe(false);
+    expect(TransactionDTO.safeParse({ ...transactionValido, amountInCents: -34.9 }).success).toBe(false);
   });
 
   it('exige data ISO', () => {
-    expect(LancamentoDTO.safeParse({ ...lancamentoValido, dataDeCompetencia: '05/09/2026' }).success).toBe(false);
+    expect(TransactionDTO.safeParse({ ...transactionValido, dueDate: '05/09/2026' }).success).toBe(false);
   });
 
   it('rejeita campos de apresentacao: formattedAmount, formattedDate, categoryIcon, bankColor', () => {
     for (const campo of ['formattedAmount', 'formattedDate', 'categoryIcon', 'bankColor']) {
-      const r = LancamentoDTO.safeParse({ ...lancamentoValido, [campo]: 'x' });
+      const r = TransactionDTO.safeParse({ ...transactionValido, [campo]: 'x' });
       expect(r.success, `${campo} deveria ser rejeitado`).toBe(false);
     }
   });
 
   it('tipo e debito ou credito', () => {
-    expect(LancamentoDTO.safeParse({ ...lancamentoValido, tipo: 'debit' }).success).toBe(false);
+    expect(TransactionDTO.safeParse({ ...transactionValido, tipo: 'debit' }).success).toBe(false);
   });
 });
 
@@ -61,14 +61,14 @@ describe('contrato — ResumoDoMesDTO', () => {
   });
 });
 
-describe('contrato — orcamento', () => {
+describe('contrato — budget', () => {
   it('faixa e um dos quatro valores de RN-001/RN-002', () => {
     for (const f of ['verde', 'amarela', 'vermelha', 'sem-limite']) expect(Faixa.safeParse(f).success).toBe(true);
     expect(Faixa.safeParse('amarelo').success).toBe(false);
     expect(Faixa.safeParse('verde-claro').success).toBe(false);
   });
 
-  it('categoria de orcamento transporta a faixa pronta e rejeita classes CSS', () => {
+  it('categoria de budget transporta a faixa pronta e rejeita classes CSS', () => {
     const valida = {
       categoria: { id: 'alimentacao', nome: 'Alimentacao' },
       mes: { ano: 2026, mes: 9 },
@@ -96,28 +96,28 @@ describe('contrato — orcamento', () => {
 describe('contrato — banco e categoria de gasto', () => {
   it('banco conectado sem cor nem iniciais, status em portugues', () => {
     const valido = { id: 'nubank', nome: 'Nubank', saldoEmCentavos: 152030, status: 'ativo', ultimaSincronizacao: '2026-09-07T12:00:00.000Z' };
-    expect(BancoConectadoDTO.safeParse(valido).success).toBe(true);
-    expect(BancoConectadoDTO.safeParse({ ...valido, color: '#8B5CF6' }).success).toBe(false);
-    expect(BancoConectadoDTO.safeParse({ ...valido, status: 'active' }).success).toBe(false);
+    expect(ConnectedBankDTO.safeParse(valido).success).toBe(true);
+    expect(ConnectedBankDTO.safeParse({ ...valido, color: '#8B5CF6' }).success).toBe(false);
+    expect(ConnectedBankDTO.safeParse({ ...valido, status: 'active' }).success).toBe(false);
   });
 
   it('categoria de gasto transporta total, nao cor nem icone', () => {
     const valida = { categoria: { id: 'mercado', nome: 'Mercado' }, totalEmCentavos: 45000 };
-    expect(CategoriaDeGastoDTO.safeParse(valida).success).toBe(true);
-    expect(CategoriaDeGastoDTO.safeParse({ ...valida, color: '#fff' }).success).toBe(false);
+    expect(SpendingCategoryDTO.safeParse(valida).success).toBe(true);
+    expect(SpendingCategoryDTO.safeParse({ ...valida, color: '#fff' }).success).toBe(false);
   });
 });
 
-describe('contrato — Resultado<T> (RN-020, RN-021)', () => {
-  const esquema = resultadoDe(z.array(LancamentoDTO));
+describe('contrato — Result<T> (RN-020, RN-021)', () => {
+  const esquema = resultadoDe(z.array(TransactionDTO));
 
   it('estado ok carrega dados', () => {
-    expect(esquema.safeParse({ estado: 'ok', dados: [lancamentoValido] }).success).toBe(true);
+    expect(esquema.safeParse({ estado: 'ok', dados: [transactionValido] }).success).toBe(true);
   });
 
-  it('estado erro carrega codigo e mensagem, sem dados', () => {
-    expect(esquema.safeParse({ estado: 'erro', codigo: 'provedor-indisponivel', mensagem: 'Pluggy fora' }).success).toBe(true);
-    expect(esquema.safeParse({ estado: 'erro' }).success).toBe(false);
+  it('estado error carrega codigo e mensagem, sem dados', () => {
+    expect(esquema.safeParse({ estado: 'error', codigo: 'provedor-indisponivel', mensagem: 'Pluggy fora' }).success).toBe(true);
+    expect(esquema.safeParse({ estado: 'error' }).success).toBe(false);
   });
 
   it('estado dados-insuficientes carrega motivo', () => {

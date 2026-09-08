@@ -4,7 +4,7 @@ import type { INestApplication } from '@nestjs/common';
 // Documentacao OpenAPI da API (HT-019). Configuracao global de infraestrutura,
 // no mesmo nivel de app.module.ts: nao pertence a nenhum contexto e nao toca
 // domain/ nem application/ (ADR-001). A spec e gerada a partir dos controllers
-// registrados; os schemas de corpo vem dos schemas zod do @contacomigo/contrato
+// registrados; os schemas de body vem dos schemas zod do @contacomigo/contrato
 // (toJSONSchema), entao a documentacao nunca diverge do contrato.
 //
 // UI em /api/docs; a spec JSON em /api-json (customizado via jsonDocumentUrl,

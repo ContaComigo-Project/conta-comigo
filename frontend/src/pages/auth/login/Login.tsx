@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { loginSchema, type LoginFormData } from '../../../validations/auth.schema';
 import { useToast } from '../../../hooks/use-toast';
-import { entrar, FalhaDeAcesso } from '../../../dados/acesso';
+import { signIn, AccessFailure } from '../../../dados/access';
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
@@ -26,7 +26,7 @@ export default function Login() {
   const onSubmit = async (data: LoginFormData) => {
     setIsLoading(true);
     try {
-      await entrar({ email: data.email, senha: data.password });
+      await signIn({ email: data.email, senha: data.password });
       toast({
         variant: "success",
         title: "Login realizado!",
@@ -39,7 +39,7 @@ export default function Login() {
       toast({
         variant: "destructive",
         title: "Não foi possível entrar",
-        description: erro instanceof FalhaDeAcesso ? erro.message : "Tente novamente.",
+        description: erro instanceof AccessFailure ? erro.message : "Tente novamente.",
       });
     } finally {
       setIsLoading(false);

@@ -1,0 +1,14 @@
+# progress — HT-020
+# Diário append-only do ciclo Ralph. Uma linha por evento.
+# Formato: AAAA-MM-DD HH:MM | FASE | descrição objetiva | evidência
+# FASE: PERCEBER | ORIENTAR | DECIDIR | AGIR | REGISTRAR
+
+2026-09-07 23:00 | PERCEBER | usuário decidiu padronizar o backend em EN; escopo medido: 81 arquivos backend, 10 contrato, 6 dados web, 32 refs port/entrada|saida | find/grep
+2026-09-07 23:02 | ORIENTAR | história HT-020 groomada (mapa de renomeação); kanban Ready e Em execução; TASK/IMPLEMENTATION preenchidos | docs
+2026-09-07 23:05 | AGIR | git mv contextos acesso→access, agregacao→aggregation, lancamentos→transactions, orcamento→budget e port/entrada→driving, port/saida→driven | git mv
+2026-09-07 23:08 | AGIR | sed global do mapa (paths, DTOs, símbolos) em 101 arquivos; git mv dos arquivos PT→EN | scripts
+2026-09-07 23:10 | AGIR | typecheck revelou bugs do sed: @contacomigo→@accountcomigo, toContain→toAccountin, error→errorr, URLs de banco; corrigidos | tsc
+2026-09-07 23:12 | AGIR | schema.prisma renomeado (Transaction/Account/Session com @@map); prisma generate regenerou o client; typecheck backend verde | prisma
+2026-09-07 23:13 | AGIR | frontend: sed em pages (imports dados/access), funções de acesso (signIn/signOut/createAccount), string de UI revertida; build web verde | tsc
+2026-09-07 23:14 | AGIR | suíte 136 verdes; integração 4 verdes (config .integration.test.ts); fronteiras 165 módulos sem violação; funcional 2 verdes; build ok | pnpm
+2026-09-07 23:15 | REGISTRAR | ADR-001 atualizado (driving/driven, contextos EN); auditoria 100%; ENTREGA-HT-020 criada; kanban Em revisão | docs

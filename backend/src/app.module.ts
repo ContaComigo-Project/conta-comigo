@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
-import { AcessoModule } from './acesso/acesso.module';
-import { AgregacaoModule } from './agregacao/agregacao.module';
-import { LancamentosModule } from './lancamentos/lancamentos.module';
+import { AccessModule } from './access/access.module';
+import { AggregationModule } from './aggregation/aggregation.module';
+import { TransactionsModule } from './transactions/transactions.module';
 
 // Um modulo por contexto (ADR-001). Novos contextos entram aqui.
-@Module({ imports: [AcessoModule, AgregacaoModule, LancamentosModule] })
+@Module({ imports: [AccessModule, AggregationModule, TransactionsModule] })
 export class AppModule {}

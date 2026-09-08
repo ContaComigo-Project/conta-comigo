@@ -1,47 +1,47 @@
-// Modelo de PERSISTENCIA (ADR-002, regra 1). Nao e a entidade de dominio:
-// o repositorio em infrastructure/persistence/ traduz entre os dois.
-// O cliente gerado fica dentro de persistence/ — unico lugar que o conhece.
+// Persistence model (ADR-002, rule 1). NOT the domain entity: the repository in
+// infrastructure/persistence/ translates between the two. The generated client
+// lives inside persistence/ — the only place that knows it.
 
 generator client {
   provider = "prisma-client"
-  output   = "../src/lancamentos/infrastructure/persistence/gerado"
+  output   = "../src/transactions/infrastructure/persistence/gerado"
 }
 
 datasource db {
   provider = "postgresql"
 }
 
-model Lancamento {
-  id                String   @id
-  titularId         String   @map("titular_id")
-  descricao         String
-  valorEmCentavos   Int      @map("valor_em_centavos")
-  dataDeCompetencia DateTime @map("data_de_competencia") @db.Timestamptz(3)
+model Transaction {
+  id            String   @id
+  holderId      String   @map("titular_id")
+  description   String   @map("descricao")
+  amountInCents Int      @map("valor_em_centavos")
+  dueDate       DateTime @map("data_de_competencia") @db.Timestamptz(3)
 
-  @@index([titularId])
+  @@index([holderId])
   @@map("lancamentos")
 }
 
-// Contexto `acesso` (HN-001). A conta E o titular: nao ha tabela de usuario
-// separada. Guarda hash da senha, nunca a senha.
-model Conta {
-  id          String   @id
-  email       String   @unique
-  hashDaSenha String   @map("hash_da_senha")
-  criadaEm    DateTime @default(now()) @map("criada_em") @db.Timestamptz(3)
+// Access context (HN-001). The account IS the holder: there is no separate user
+// table. Stores the password hash, never the password.
+model Account {
+  id           String   @id
+  email        String   @unique
+  passwordHash String   @map("hash_da_senha")
+  createdAt    DateTime @default(now()) @map("criada_em") @db.Timestamptz(3)
 
   @@map("contas")
 }
 
-// Refresh token: o banco guarda o HASH dele. Se vazar, os refresh nao sao
-// utilizaveis (ADR-004, revogacao real).
-model Sessao {
-  id            String    @id
-  titularId     String    @map("titular_id")
-  hashDoRefresh String    @unique @map("hash_do_refresh")
-  expiraEm      DateTime  @map("expira_em") @db.Timestamptz(3)
-  revogadoEm    DateTime? @map("revogado_em") @db.Timestamptz(3)
+// Refresh token: the database stores its HASH. If it leaks, the refreshes are
+// unusable (ADR-004, real revocation).
+model Session {
+  id               String    @id
+  holderId         String    @map("titular_id")
+  refreshTokenHash String    @unique @map("hash_do_refresh")
+  expiresAt        DateTime  @map("expira_em") @db.Timestamptz(3)
+  revokedAt        DateTime? @map("revogado_em") @db.Timestamptz(3)
 
-  @@index([titularId])
+  @@index([holderId])
   @@map("sessoes")
 }

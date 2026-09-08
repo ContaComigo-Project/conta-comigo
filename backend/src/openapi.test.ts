@@ -8,16 +8,16 @@ import { configurarOpenApi } from './openapi';
 // Teste de controle de HT-019: a API e descoberta pela propria documentacao.
 // Sobe o Nest de verdade em porta efemera com o Swagger configurado e prova
 // que a UI responde e que a spec lista os endpoints existentes. Nenhum
-// endpoint de negocio e chamado aqui; o AppModule sobe com o agregador falso
+// endpoint de negocio e chamado aqui; o AppModule sobe com o aggregator falso
 // quando nao ha credencial Pluggy no ambiente.
 process.env.JWT_SECRET ??= 'segredo-apenas-de-teste-nao-usar-em-lugar-nenhum';
 
 const ENDPOINTS_ESPERADOS = [
-  '/acesso/contas',
-  '/acesso/sessoes',
-  '/acesso/sessoes/renovacao',
-  '/lancamentos',
-  '/lancamentos/resumo-do-mes',
+  '/access/accounts',
+  '/access/sessions',
+  '/access/sessions/refresh',
+  '/transactions',
+  '/transactions/month-summary',
 ];
 
 describe('HT-019 — a API e descoberta pela propria documentacao', () => {
@@ -37,39 +37,39 @@ describe('HT-019 — a API e descoberta pela propria documentacao', () => {
   });
 
   it('GET /api/docs responde 200 (UI Swagger)', async () => {
-    const resposta = await fetch(url + '/api/docs');
-    expect(resposta.status).toBe(200);
+    const response = await fetch(url + '/api/docs');
+    expect(response.status).toBe(200);
   });
 
   it('GET /api-json responde 200 com spec OpenAPI valida', async () => {
-    const resposta = await fetch(url + '/api-json');
-    expect(resposta.status).toBe(200);
-    const spec = (await resposta.json()) as { openapi?: string; paths?: Record<string, unknown> };
+    const response = await fetch(url + '/api-json');
+    expect(response.status).toBe(200);
+    const spec = (await response.json()) as { openapi?: string; paths?: Record<string, unknown> };
     expect(spec.openapi).toBeDefined();
     expect(spec.paths).toBeDefined();
   });
 
   it('a spec lista os 6 endpoints existentes', async () => {
-    const resposta = await fetch(url + '/api-json');
-    const spec = (await resposta.json()) as {
+    const response = await fetch(url + '/api-json');
+    const spec = (await response.json()) as {
       paths: Record<string, Record<string, unknown>>;
     };
 
     const caminhos = Object.keys(spec.paths).sort();
     expect(caminhos).toEqual([...ENDPOINTS_ESPERADOS].sort());
 
-    // /acesso/sessoes tem POST e DELETE; o restante, um metodo cada: 6 no total.
+    // /access/sessions tem POST e DELETE; o restante, um metodo cada: 6 no total.
     const metodos = Object.values(spec.paths).flatMap((p) => Object.keys(p));
     expect(metodos.sort()).toEqual(['delete', 'get', 'get', 'post', 'post', 'post']);
   });
 
-  it('os endpoints de lancamentos exigem autenticacao Bearer na spec', async () => {
-    const resposta = await fetch(url + '/api-json');
-    const spec = (await resposta.json()) as {
+  it('os endpoints de transactions exigem autenticacao Bearer na spec', async () => {
+    const response = await fetch(url + '/api-json');
+    const spec = (await response.json()) as {
       paths: Record<string, Record<string, { security?: Array<Record<string, unknown>> }>>;
     };
 
-    for (const caminho of ['/lancamentos', '/lancamentos/resumo-do-mes']) {
+    for (const caminho of ['/transactions', '/transactions/month-summary']) {
       const operacoes = spec.paths[caminho];
       for (const operacao of Object.values(operacoes)) {
         const seguranca = operacao.security ?? [];

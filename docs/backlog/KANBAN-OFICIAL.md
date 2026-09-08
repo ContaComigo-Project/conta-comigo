@@ -47,19 +47,21 @@ uma tem a coluna "UI hoje" dizendo o que já está pronto na tela.
 
 ## Próxima demanda
 
-**`HT-019` — Documentação OpenAPI/Swagger da API** (ordem 19, `Ready`).
+**`HT-020` — Padronizar código e estrutura do backend em inglês** (ordem 20,
+`Ready`).
 
-Puxada **antes da ordem natural** por decisão do time (2026-09-07): documentar a
-API existente ajuda as histórias de integração seguintes (`HN-002`, `HN-003`) e
-dá ao time um mapa testável dos endpoints. Depois dela, a fila volta a `HN-002`
-(ordem 15).
+Puxada **antes da ordem natural** por decisão do time (2026-09-07): o custo de
+renomear cresce com o código, e as próximas histórias (`HN-002`, `HN-003`)
+escrevem exatamente nos módulos e no contrato que serão padronizados. Refactor
+puro — suíte verde antes e depois, zero mudança de comportamento, `ADR-001`
+atualizado.
 
-Originalmente o próximo da fila era `HN-002` — Conectar instituição com
-consentimento e sincronizar. Todas as dependências estão prontas: `HN-001` deu a
-sessão, `HT-011` a porta de agregação com política de falha, `HT-010` a cifra em
-repouso e `HT-008` a barreira por titular. Ela é a primeira história a exercitar
-a skill `open-finance-security-agent` por inteiro: consentimento como registro
-de primeira classe, com escopo, expiração e revogação (`RN-012` a `RN-014`), e o
+Depois dela, a fila volta a `HN-002` — Conectar instituição com consentimento e
+sincronizar. Todas as dependências estão prontas: `HN-001` deu a sessão, `HT-011`
+a porta de agregação com política de falha, `HT-010` a cifra em repouso e
+`HT-008` a barreira por titular. Ela é a primeira história a exercitar a skill
+`open-finance-security-agent` por inteiro: consentimento como registro de
+primeira classe, com escopo, expiração e revogação (`RN-012` a `RN-014`), e o
 token do agregador cifrado.
 
 É a primeira história de **negócio**: as três anteriores da fila (`HT-011`,
@@ -166,33 +168,34 @@ o backlog passou a considerar o frontend existente.
 | 17 | `HN-003` | Painel consolidado de saldos, cartões e lançamentos | Negócio | Backlog | HN-002, HT-017 | `MetricsCards`, `SpendingChart`, `TransactionsListView`, `MonthPicker`, `QuickFilterBar` |
 | 18 | `HT-012` | Observabilidade mínima: log estruturado e erro rastreável | Técnica | Backlog | HT-009 | — |
 | 19 | `HT-019` | Documentação OpenAPI/Swagger da API | Técnica | **Done** | HT-009, HT-010, HN-001 | — |
+| 20 | `HT-020` | Padronizar código e estrutura do backend em inglês | Técnica | **Em revisão** | HT-009, HT-010, HT-011, HN-001 | — |
 
 ### Fase 4 — Camada de inteligência
 
 | Ordem | Chave | Título | Tipo | Estado | Depende de | UI hoje |
 | --- | --- | --- | --- | --- | --- | --- |
-| 20 | `HT-013` | Adaptador Gemini/LangChain com teto de custo e cache | Técnica | Backlog | HT-009 | — |
-| 21 | `HT-014` | Guarda de saída da IA: validação, coerência e fronteira | Técnica | Backlog | HT-013 | — |
-| 22 | `HN-004` | Descrição legível do lançamento (limpeza semântica) | Negócio | Backlog | HN-003, HT-014 | Lista existe; **sem tratamento de descrição** |
-| 23 | `HN-005` | Categorização automática e correção manual | Negócio | Backlog | HN-004 | Categorias exibidas; **sem correção manual** |
+| 21 | `HT-013` | Adaptador Gemini/LangChain com teto de custo e cache | Técnica | Backlog | HT-009 | — |
+| 22 | `HT-014` | Guarda de saída da IA: validação, coerência e fronteira | Técnica | Backlog | HT-013 | — |
+| 23 | `HN-004` | Descrição legível do lançamento (limpeza semântica) | Negócio | Backlog | HN-003, HT-014 | Lista existe; **sem tratamento de descrição** |
+| 24 | `HN-005` | Categorização automática e correção manual | Negócio | Backlog | HN-004 | Categorias exibidas; **sem correção manual** |
 
 ### Fase 5 — Orçamento e histórico
 
 | Ordem | Chave | Título | Tipo | Estado | Depende de | UI hoje |
 | --- | --- | --- | --- | --- | --- | --- |
-| 24 | `HN-006` | Definir e editar limite mensal por categoria | Negócio | Backlog | HN-005 | `CategoryCard` já edita limite inline, sem persistir |
-| 25 | `HN-007` | Orçamento semáforo e aviso ao cruzar faixa | Negócio | Backlog | HN-006 | Barras e faixas prontas; **a regra sai de `budget.mock.ts` para o domínio** |
-| 26 | `HN-008` | Histórico de 6 meses e problemas recorrentes | Negócio | Backlog | HN-007 | `HistoricalOverview` completo, sobre dados simulados |
+| 25 | `HN-006` | Definir e editar limite mensal por categoria | Negócio | Backlog | HN-005 | `CategoryCard` já edita limite inline, sem persistir |
+| 26 | `HN-007` | Orçamento semáforo e aviso ao cruzar faixa | Negócio | Backlog | HN-006 | Barras e faixas prontas; **a regra sai de `budget.mock.ts` para o domínio** |
+| 27 | `HN-008` | Histórico de 6 meses e problemas recorrentes | Negócio | Backlog | HN-007 | `HistoricalOverview` completo, sobre dados simulados |
 
 ### Fase 6 — Consultoria educativa, limpeza e publicação
 
 | Ordem | Chave | Título | Tipo | Estado | Depende de | UI hoje |
 | --- | --- | --- | --- | --- | --- | --- |
-| 27 | `HN-009` | Diagnóstico de saúde financeira e insights | Negócio | Backlog | HN-007, HT-014 | `AIInsightPanel` existe, com insights fixos |
-| 28 | `HN-010` | Chatbot educativo com aviso permanente | Negócio | Backlog | HN-009 | `AIChatWidget` existe, com respostas roteirizadas |
-| 29 | `HN-011` | Simulação de compra e exportação PDF/CSV | Negócio | Backlog | HN-008 | `ExportDropdown` existe; **não gera arquivo** |
-| 30 | `HT-018` | Remover a lógica de negócio e os mocks do frontend | Técnica | Backlog | HN-010, HN-011 | Fecha a fronteira aberta em `HT-017` |
-| 31 | `HT-015` | Publicação da PoC e verificação de custo zero | Técnica | Backlog | HT-018 | — |
+| 28 | `HN-009` | Diagnóstico de saúde financeira e insights | Negócio | Backlog | HN-007, HT-014 | `AIInsightPanel` existe, com insights fixos |
+| 29 | `HN-010` | Chatbot educativo com aviso permanente | Negócio | Backlog | HN-009 | `AIChatWidget` existe, com respostas roteirizadas |
+| 30 | `HN-011` | Simulação de compra e exportação PDF/CSV | Negócio | Backlog | HN-008 | `ExportDropdown` existe; **não gera arquivo** |
+| 31 | `HT-018` | Remover a lógica de negócio e os mocks do frontend | Técnica | Backlog | HN-010, HN-011 | Fecha a fronteira aberta em `HT-017` |
+| 32 | `HT-015` | Publicação da PoC e verificação de custo zero | Técnica | Backlog | HT-018 | — |
 
 ## Quadro
 
@@ -203,7 +206,7 @@ o backlog passou a considerar o frontend existente.
 - _(vazio)_
 
 ### Em revisão
-- _(vazio)_
+- `HT-020` — Padronizar código e estrutura do backend em inglês
 
 ### Done
 - `HT-000` `v0.1.0` · `HT-001` `v0.2.0` · `HT-002` `v0.3.0` · `HT-003` `v0.4.0` · `HT-004` `v0.5.0` · `HT-016` `v0.6.0` · `HT-005` `v0.7.0` · `HT-006` `v0.8.0` · `HT-009` `v0.9.0` · `HT-010` `v0.10.0` · `HT-017` `v0.11.0` · `HT-008` `v0.12.0` · `HN-001` `v0.13.0` · `HT-011` `v0.14.0` · `HT-019` `v0.15.0`
@@ -212,7 +215,7 @@ Todas verificadas por `scripts/verificar-fechamento.sh`: tag e commit no mesmo
 hash, mensagem semântica citando a chave, documento de entrega presente.
 
 ### Backlog
-Ordens 5 a 31 na tabela acima.
+Ordens 5 a 32 na tabela acima.
 
 ## Grooming
 
@@ -289,3 +292,7 @@ cada tela é aproveitável, e isso muda o critério de aceite de quase todas ela
 | 2026-09-07 | `HT-019` | Ready | Em execução | `docs/tasks/HT-019/` criado com TASK e IMPLEMENTATION |
 | 2026-09-07 | `HT-019` | Em execução | Em revisão | Swagger instalado e provado: spec com 6 endpoints e Bearer; 132 testes verdes; fronteiras intactas |
 | 2026-09-07 | `HT-019` | Em revisão | Done | `v0.15.0` → `ddc9bbe`; `verificar-fechamento` verde |
+| 2026-09-07 | `HT-020` | — | Backlog | Inserida: padronizar backend em inglês; ordens 20–31 renumeradas para 21–32 |
+| 2026-09-07 | `HT-020` | Backlog | Ready | Groomada com mapa de renomeação; puxada antes da ordem natural por decisão do time |
+| 2026-09-07 | `HT-020` | Ready | Em execução | `docs/tasks/HT-020/` criado com TASK e IMPLEMENTATION |
+| 2026-09-07 | `HT-020` | Em execução | Em revisão | Renomeação completa; 136+4+2 testes verdes; fronteiras e build ok; ADR-001 atualizado |

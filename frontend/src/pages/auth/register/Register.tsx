@@ -6,7 +6,7 @@ import { registerSchema, type RegisterFormData } from '../../../validations/auth
 import { calculatePasswordStrength } from '../../../utils/password';
 import { formatCPF } from '../../../utils/formatters';
 import { useToast } from '../../../hooks/use-toast';
-import { criarConta, FalhaDeAcesso } from '../../../dados/acesso';
+import { createAccount, AccessFailure } from '../../../dados/access';
 
 export default function Register() {
   const [step, setStep] = useState(1);
@@ -54,7 +54,7 @@ export default function Register() {
   const onSubmit = async (data: RegisterFormData) => {
     setIsLoading(true);
     try {
-      await criarConta({ email: data.email, senha: data.password });
+      await createAccount({ email: data.email, senha: data.password });
       toast({
         variant: "success",
         title: "Cadastro realizado!",
@@ -66,7 +66,7 @@ export default function Register() {
       toast({
         variant: "destructive",
         title: "Não foi possível criar a conta",
-        description: erro instanceof FalhaDeAcesso ? erro.message : "Tente novamente.",
+        description: erro instanceof AccessFailure ? erro.message : "Tente novamente.",
       });
     } finally {
       setIsLoading(false);
@@ -304,7 +304,7 @@ export default function Register() {
                 {isLoading ? (
                   <>Carregando&nbsp;&nbsp;<i className="fas fa-spinner fa-spin"></i></>
                 ) : (
-                  <>Criar Conta</>
+                  <>Criar Account</>
                 )}
               </button>
             </div>
