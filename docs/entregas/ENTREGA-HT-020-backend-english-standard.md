@@ -152,7 +152,7 @@ Pastas e pacote de fronteira renomeados para EN:
 Suíte verde: 136 unit + 4 integração + 2 funcional; fronteiras 165 módulos;
 auditoria 100%.
 
-## Correção posterior (`v0.16.3` → `[preenchido no fechamento]`)
+## Correção posterior (`v0.16.3` → `ef8fffd`)
 
 Pastas e nomes do gate de fronteiras em EN:
 
