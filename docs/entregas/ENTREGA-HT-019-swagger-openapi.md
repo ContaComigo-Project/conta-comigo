@@ -12,8 +12,8 @@ max_lines: 300
 - **Data:** 2026-09-07
 - **Tipo:** Técnica
 - **Versão:** `v0.15.0`
-- **Commit:** `[preenchido no fechamento]`
-- **Tag:** `v0.15.0` → `[mesmo hash]`
+- **Commit:** `ddc9bbe`
+- **Tag:** `v0.15.0` → `ddc9bbe`
 
 ## O que foi entregue
 
