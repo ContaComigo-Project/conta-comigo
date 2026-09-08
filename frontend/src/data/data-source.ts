@@ -1,4 +1,4 @@
-import type { ConnectedBankDTO, SpendingCategoryDTO, TransactionDTO, Result } from '@contacomigo/contract';
+import type { ConnectedBankDTO, ConsolidatedSummaryDTO, SpendingCategoryDTO, TransactionDTO, Result } from '@contacomigo/contract';
 
 // Porta da web para a origem do dado (HT-017). Hoje a implementacao e falsa
 // (massa dos mocks no formato do contrato); a real chama a API. Trocar uma pela
@@ -7,4 +7,5 @@ export interface DataSource {
   listarTransactions(): Promise<Result<TransactionDTO[]>>;
   listarBancosConectados(): Promise<Result<ConnectedBankDTO[]>>;
   listarCategoriasDeGasto(): Promise<Result<SpendingCategoryDTO[]>>;
+  resumoConsolidado(): Promise<Result<ConsolidatedSummaryDTO>>;
 }

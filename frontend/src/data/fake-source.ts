@@ -95,4 +95,16 @@ export class FakeSource implements DataSource {
     });
     return ok(dados);
   }
+
+  async resumoConsolidado() {
+    const saldo = mockConnectedBanks.reduce((soma, b) => soma + centavos(b.balance), 0);
+    return ok({
+      mes: { ano: new Date().getFullYear(), mes: new Date().getMonth() + 1 },
+      saldoTotalEmCentavos: saldo,
+      faturaDoCartaoEmCentavos: 0,
+      gastosDoMesEmCentavos: -mockTransactions.filter((t) => t.amount < 0).reduce((s, t) => s + centavos(t.amount), 0),
+      receitasDoMesEmCentavos: 0,
+      quantidadeDeLancamentos: mockTransactions.length,
+    });
+  }
 }
