@@ -22,3 +22,5 @@
 2026-09-07 23:45 | PERCEBER | time aponta: pastas tests/fronteiras e tooling/fronteiras e arquivos de teste ainda em PT | -
 2026-09-07 23:46 | AGIR | correção v0.16.3: tests/fronteiras→tests/boundaries, tooling/fronteiras→tooling/boundaries, arquivos EN (production-config, boundaries, no-decorator-in-domain), script lint:fronteiras→lint:boundaries | git mv + sed
 2026-09-07 23:48 | AGIR | suíte 136 verdes; integração 4; funcional 2; lint:boundaries verde; build ok; auditoria 100% | pnpm
+2026-09-07 23:50 | PERCEBER | time aponta: fixtures limpo/violacao e pasta seguranca ainda em PT | -
+2026-09-07 23:51 | AGIR | fixtures clean/violation e tests/security; refs atualizadas; suíte e boundaries verdes | git mv

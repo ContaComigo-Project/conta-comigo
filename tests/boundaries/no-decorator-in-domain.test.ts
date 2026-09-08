@@ -41,7 +41,7 @@ describe('ADR-001 — domain without decorator', () => {
   });
 
   it('control: the illegal HT-006 fixture would be caught by this same rule', () => {
-    const fixture = join(ROOT, 'tests', 'boundaries', 'fixtures', 'violacao', 'budget', 'domain', 'model', 'band-nestjs.ts');
+    const fixture = join(ROOT, 'tests', 'boundaries', 'fixtures', 'violation', 'budget', 'domain', 'model', 'band-nestjs.ts');
     expect(DECORATOR.test(readFileSync(fixture, 'utf8'))).toBe(true);
   });
 });

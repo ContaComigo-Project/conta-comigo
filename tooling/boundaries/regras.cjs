@@ -16,7 +16,7 @@
 
 /**
  * @param {string} root  path, relative to repo root, of the context tree
- *                       (e.g. "backend/src" or "tests/boundaries/fixtures/limpo")
+ *                       (e.g. "backend/src" or "tests/boundaries/fixtures/clean")
  */
 function createRules(root) {
   const r = root.replace(/\\/g, '/').replace(/\/$/, '');

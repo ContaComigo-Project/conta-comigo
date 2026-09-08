@@ -162,6 +162,8 @@ Pastas e nomes do gate de fronteiras em EN:
   `no-decorator-in-domain.test.ts` (conteúdo traduzido em EN).
 - Script `lint:fronteiras` → **`lint:boundaries`** no `package.json` e no
   `scripts/harness.env`, com referências em docs atualizadas.
+- Fixtures do gate: `limpo`→`clean` e `violacao`→`violation`; pasta
+  `tests/seguranca` → `tests/security`.
 
 Suíte verde: 136 unit + 4 integração + 2 funcional; `lint:boundaries` verde;
 auditoria 100%.

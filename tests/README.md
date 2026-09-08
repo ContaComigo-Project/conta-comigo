@@ -17,11 +17,11 @@ backend, contract, web data and governance in a single run (ADR-003).
 
 | Suite | Command | What it proves | Where it lives |
 | --- | --- | --- | --- |
-| Unit | `pnpm run test:unitario` | Domain rules and edge cases; RN tracked by `RN-XXX` scenario name | `backend/src/**/*.test.ts`, `packages/contract/src/*.test.ts`, `frontend/src/data/*.test.ts`, `tests/boundaries/*.test.ts`, `tests/seguranca/*.test.ts` |
+| Unit | `pnpm run test:unitario` | Domain rules and edge cases; RN tracked by `RN-XXX` scenario name | `backend/src/**/*.test.ts`, `packages/contract/src/*.test.ts`, `frontend/src/data/*.test.ts`, `tests/boundaries/*.test.ts`, `tests/security/*.test.ts` |
 | Integration | `pnpm run test:integracao` | Real persistence against the compose PostgreSQL | `backend/src/**/infrastructure/persistence/*.integration.test.ts` |
 | Functional/BDD | `pnpm run test:funcional` | One scenario per acceptance criterion, in a real browser (Playwright) | `tests/funcional/*.spec.ts` |
 | Boundaries | `pnpm run lint:boundaries` | `ADR-001` (hexagonal) and `ADR-002` (Prisma confined) over `backend` and `frontend/src` | via `.dependency-cruiser.cjs` + `tooling/boundaries/` |
-| Security | `pnpm run security` + `tests/seguranca/` | Secret scan (gitleaks) and allowlist guard | `.gitleaks.toml`, `tests/seguranca/allowlist.test.ts` |
+| Security | `pnpm run security` + `tests/security/` | Secret scan (gitleaks) and allowlist guard | `.gitleaks.toml`, `tests/security/allowlist.test.ts` |
 
 ## Rules
 

@@ -51,7 +51,7 @@ function violationOf(violations: Violation[], rule: string, file: string) {
 }
 
 describe('boundaries of ADR-001 — violating tree', () => {
-  const result = cruise('violacao');
+  const result = cruise('violation');
 
   it('the gate rejects (exit code different from zero)', () => {
     expect(result.status).not.toBe(0);
@@ -94,7 +94,7 @@ describe('boundaries of ADR-001 — violating tree', () => {
 });
 
 describe('boundaries of ADR-001 — clean tree (control)', () => {
-  const result = cruise('limpo');
+  const result = cruise('clean');
 
   it('the gate approves (exit code zero)', () => {
     expect(result.stderr).toBe('');

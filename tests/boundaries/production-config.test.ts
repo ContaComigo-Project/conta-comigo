@@ -34,7 +34,7 @@ describe('production dependency-cruiser config', () => {
   });
 
   it('excludes the illegal fixtures from the production lint', () => {
-    const fixture = 'tests/boundaries/fixtures/violacao/budget/domain/model/band-nestjs.ts';
+    const fixture = 'tests/boundaries/fixtures/violation/budget/domain/model/band-nestjs.ts';
     expect(toList(config.options.exclude?.path).some((p) => new RegExp(p).test(fixture))).toBe(true);
   });
 

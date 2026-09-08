@@ -30,7 +30,7 @@ One rule list runs over two different targets:
    `pnpm run lint:boundaries`, blocking in the harness and in CI.
 2. **Fixtures** (`tests/boundaries/fixtures/{limpo,violacao}`) — the test
    `tests/boundaries/` proves that **each rule rejects what it should** (the
-   `violacao` tree fails, the `limpo` tree passes).
+   `violation` tree fails, the `clean` tree passes).
 
 If a rule changes, it changes in one place and the behavior proof keeps covering
 both trees. History of closed gate gaps is in `docs/tasks/HT-009/evidencia/` and
