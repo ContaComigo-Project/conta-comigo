@@ -9,6 +9,12 @@ import type { HolderId } from '../../model/holder';
 export interface RepositorioDeTransactions {
   listarDoHolder(holderId: HolderId): Promise<readonly Transaction[]>;
 
+  /**
+   * Persists transactions from a sync with dedup by (holderId, externalId)
+   * (RN-008): the same external id and due date is stored once.
+   */
+  salvarSincronizados(lancamentos: readonly Transaction[]): Promise<void>;
+
   /** Deletes every transaction of a holder (RN-016, account deletion). */
   deleteByHolder(holderId: HolderId): Promise<void>;
 }

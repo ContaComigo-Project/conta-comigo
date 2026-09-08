@@ -1,4 +1,8 @@
+import { randomUUID } from 'node:crypto';
 import type { OpenFinanceAggregator } from '../../aggregation/domain/port/driven/open-finance-aggregator';
+import type { ExternalAccountRepository } from '../../transactions/domain/port/driven/external-account-repository';
+import type { RepositorioDeTransactions } from '../../transactions/domain/port/driven/transaction-repository';
+import type { HolderId } from '../../transactions/domain/model/holder';
 import { estaAtivo } from '../domain/model/consent';
 import type { ConsentRepository } from '../domain/port/driven/consent-repository';
 import type { ResultadoDaSincronizacao, SyncInstitution, SyncInstitutionInput } from '../domain/port/driving/consent';
@@ -6,7 +10,8 @@ import type { ResultadoDaSincronizacao, SyncInstitution, SyncInstitutionInput } 
 // RF-007: synchronize the connected institution. No consent active = no sync
 // (RN-012); the consent is always looked up scoped to the holder (RN-015);
 // aggregator failure degrades as a structured result, never an exception
-// (RNF-005/006). The period requested is the consent window (90 days).
+// (RNF-005/006). The synced data is persisted: transactions dedup by external
+// id (RN-008) and the external accounts snapshot is replaced (RN-009 source).
 
 export const PERIODO_DE_SINCRONIZACAO_DIAS = 90;
 
@@ -14,6 +19,8 @@ export class SyncInstitutionUseCase implements SyncInstitution {
   constructor(
     private readonly repo: ConsentRepository,
     private readonly aggregator: OpenFinanceAggregator,
+    private readonly contas: ExternalAccountRepository,
+    private readonly lancamentos: RepositorioDeTransactions,
   ) {}
 
   async executar(input: SyncInstitutionInput): Promise<ResultadoDaSincronizacao> {
@@ -39,6 +46,31 @@ export class SyncInstitutionUseCase implements SyncInstitution {
         ? { tipo: 'agregador-indisponivel' }
         : { tipo: 'agregador-recusou', motivo: lancamentos.motivo };
     }
+
+    // Persist: external accounts snapshot (RN-009 source) and transactions with
+    // dedup by external id (RN-008).
+    const holder = input.holderId as HolderId;
+    await this.contas.salvarSincronizadas(
+      contas.dados.map((c) => ({
+        id: randomUUID(),
+        holderId: holder,
+        externalId: c.idExterno,
+        institutionId: c.instituicao,
+        type: c.tipo,
+        balanceInCents: c.saldoEmCentavos,
+      })),
+      holder,
+    );
+    await this.lancamentos.salvarSincronizados(
+      lancamentos.dados.map((l) => ({
+        id: randomUUID(),
+        holderId: holder,
+        description: l.descriptionOriginal,
+        amountInCents: l.amountInCents,
+        dueDate: l.dueDate,
+        externalId: l.idExterno,
+      })),
+    );
 
     await this.repo.updateLastSyncAt(consent.id, input.agora);
     return {

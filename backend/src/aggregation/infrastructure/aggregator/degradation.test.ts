@@ -46,8 +46,10 @@ describe('RNF-005 — o painel sobrevive ao provedor fora', () => {
       .overrideProvider(TOKENS.RepositorioDeTransactions)
       .useValue(
         new RepositorioDeTransactionsEmMemoria([
-          { id: 'ja-no-banco-1', holderId: TITULAR, description: 'mercado', amountInCents: 12_000, dueDate: new Date('2026-01-10T12:00:00Z') },
-          { id: 'ja-no-banco-2', holderId: TITULAR, description: 'farmacia', amountInCents: 3_000, dueDate: new Date('2026-01-12T12:00:00Z') },
+          { id: 'ja-no-banco-1', holderId: TITULAR, description: 'mercado', amountInCents: 12_000, dueDate: new Date('2026-01-10T12:00:00Z') , externalId: null
+    },
+          { id: 'ja-no-banco-2', holderId: TITULAR, description: 'farmacia', amountInCents: 3_000, dueDate: new Date('2026-01-12T12:00:00Z') , externalId: null
+    },
         ]),
       )
       .compile();

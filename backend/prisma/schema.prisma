@@ -17,9 +17,26 @@ model Transaction {
   description   String   @map("descricao")
   amountInCents Int      @map("valor_em_centavos")
   dueDate       DateTime @map("data_de_competencia") @db.Timestamptz(3)
+  externalId    String?  @map("identificador_externo")
 
   @@index([holderId])
+  @@index([holderId, externalId])
   @@map("lancamentos")
+}
+
+// External account as persisted for the consolidated panel (HN-003). The type
+// separates active accounts (checking/savings) from credit cards: the card
+// enters the panel as a bill, never summed into the balance (RN-009).
+model ExternalAccount {
+  id               String @id
+  holderId         String @map("titular_id")
+  externalId       String @map("identificador_externo")
+  institutionId    String @map("institution_id")
+  type             String @map("tipo")
+  balanceInCents   Int    @map("saldo_em_centavos")
+
+  @@index([holderId])
+  @@map("contas_externas")
 }
 
 // Access context (HN-001). The account IS the holder: there is no separate user

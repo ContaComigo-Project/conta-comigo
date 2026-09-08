@@ -1,0 +1,14 @@
+# progress — HN-003
+# Diário append-only do ciclo Ralph. Uma linha por evento.
+# Formato: AAAA-MM-DD HH:MM | FASE | descrição objetiva | evidência
+# FASE: PERCEBER | ORIENTAR | DECIDIR | AGIR | REGISTRAR
+
+2026-09-08 02:00 | PERCEBER | li RF-008/009, RN-006..009/015, month-summary e o inventário da UI do painel | docs, backend
+2026-09-08 02:02 | ORIENTAR | escopo: persistir sync (dedup RN-008) + contas externas + resumo consolidado RN-009; UI real fica para a última milha | -
+2026-09-08 02:05 | AGIR | grooming HN-003 + kanban Ready/Em execução + TASK/IMPLEMENTATION | docs
+2026-09-08 02:15 | AGIR | Transaction.externalId + tabela ExternalAccount + migração; salvarSincronizados (dedup) + repositórios | prisma, domain
+2026-09-08 02:25 | AGIR | SyncInstitution persiste contas e lançamentos; ConsolidatedSummary (RN-006..009) + DTO + GET /dashboard/summary | backend
+2026-09-08 02:35 | AGIR | testes de regra: RN-009 saldo/cartão, RN-007 estorno, RN-006 centavos, RN-008 dedup, RN-015 isolamento | test:unit
+2026-09-08 02:45 | AGIR | suíte 166+9+2 verdes; fronteiras verdes; build ok; auditoria 100% | pnpm
+2026-09-08 02:50 | AGIR | validação de ponta a ponta: cadastro→login→consent→sync→GET /dashboard/summary (saldo 1.326.045, fatura -87.450) | curl
+2026-09-08 02:52 | REGISTRAR | ENTREGA-HN-003 criada; kanban Em revisão | docs/entregas, KANBAN

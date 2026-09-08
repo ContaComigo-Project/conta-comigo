@@ -30,8 +30,8 @@ describe('GET /transactions/month-summary', () => {
       .overrideProvider(TOKENS.RepositorioDeTransactions)
       .useValue(
         new RepositorioDeTransactionsEmMemoria([
-          { id: '1', holderId: TITULAR, description: 'mercado', amountInCents: 120_00, dueDate: new Date('2026-01-10T12:00:00Z') },
-          { id: '2', holderId: TITULAR, description: 'farmacia', amountInCents: 30_00, dueDate: new Date('2026-02-05T12:00:00Z') },
+          { id: '1', holderId: TITULAR, description: 'mercado', amountInCents: 120_00, dueDate: new Date('2026-01-10T12:00:00Z') , externalId: null },
+          { id: '2', holderId: TITULAR, description: 'farmacia', amountInCents: 30_00, dueDate: new Date('2026-02-05T12:00:00Z') , externalId: null },
         ]),
       )
       .compile();

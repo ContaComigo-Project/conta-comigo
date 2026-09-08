@@ -1,11 +1,15 @@
 import { Module } from '@nestjs/common';
 import { GetMonthSummaryUseCase } from './application/month-summary';
+import { GetConsolidatedSummaryUseCase } from './application/consolidated-summary';
 import { ListarTransactionsUseCase } from './application/list-transactions';
 import type { Clock } from './domain/port/driven/clock';
 import type { RepositorioDeTransactions } from './domain/port/driven/transaction-repository';
 import { TOKENS } from './domain/port/driven/tokens';
 import { TransactionsController } from './infrastructure/http/transactions.controller';
+import { DashboardController } from './infrastructure/http/dashboard.controller';
 import { RepositorioDeTransactionsPrisma } from './infrastructure/persistence/prisma-repository';
+import { ExternalAccountRepositoryPrisma } from './infrastructure/persistence/external-account-repository-prisma';
+import type { ExternalAccountRepository } from './domain/port/driven/external-account-repository';
 import { AccessModule } from '../access/access.module';
 import { TokenIdentity } from './infrastructure/http/token-identity';
 import { SystemClock } from './infrastructure/clock/system-clock';
@@ -17,11 +21,12 @@ import { SystemClock } from './infrastructure/clock/system-clock';
 // existindo para teste (o teste HTTP o injeta pelo mesmo token).
 @Module({
   imports: [AccessModule],
-  controllers: [TransactionsController],
+  controllers: [TransactionsController, DashboardController],
   providers: [
     { provide: TOKENS.Clock, useClass: SystemClock },
     { provide: TOKENS.Identity, useClass: TokenIdentity },
     { provide: TOKENS.RepositorioDeTransactions, useFactory: () => new RepositorioDeTransactionsPrisma() },
+    { provide: TOKENS.ExternalAccountRepository, useFactory: () => new ExternalAccountRepositoryPrisma() },
     {
       provide: TOKENS.ListarTransactions,
       inject: [TOKENS.RepositorioDeTransactions],
@@ -33,7 +38,13 @@ import { SystemClock } from './infrastructure/clock/system-clock';
       useFactory: (repositorio: RepositorioDeTransactions, clock: Clock) =>
         new GetMonthSummaryUseCase(repositorio, clock),
     },
+    {
+      provide: TOKENS.GetConsolidatedSummary,
+      inject: [TOKENS.ExternalAccountRepository, TOKENS.RepositorioDeTransactions, TOKENS.Clock],
+      useFactory: (contas: ExternalAccountRepository, repositorio: RepositorioDeTransactions, clock: Clock) =>
+        new GetConsolidatedSummaryUseCase(contas, repositorio, clock),
+    },
   ],
-  exports: [TOKENS.RepositorioDeTransactions],
+  exports: [TOKENS.RepositorioDeTransactions, TOKENS.ExternalAccountRepository],
 })
 export class TransactionsModule {}

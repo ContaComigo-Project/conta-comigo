@@ -6,3 +6,4 @@ export * from './budget';
 export * from './bank';
 export * from './category';
 export * from './consent';
+export * from './consolidated-summary';

@@ -19,6 +19,7 @@ import type { RepositorioDeAccounts } from '../access/domain/port/driven/account
 import type { SessionRepository } from '../access/domain/port/driven/session-repository';
 import { TOKENS_ACCESS } from '../access/domain/port/driven/tokens';
 import type { RepositorioDeTransactions } from '../transactions/domain/port/driven/transaction-repository';
+import type { ExternalAccountRepository } from '../transactions/domain/port/driven/external-account-repository';
 
 // Wiring (ADR-001): port -> adapter by token. The consent context consumes the
 // aggregation port (imported module) and the access token issuer.
@@ -42,9 +43,18 @@ import type { RepositorioDeTransactions } from '../transactions/domain/port/driv
     },
     {
       provide: TOKENS_CONSENT.SyncInstitution,
-      inject: [TOKENS_CONSENT.ConsentRepository, TOKENS_AGGREGATION.OpenFinanceAggregator],
-      useFactory: (repo: InstanceType<typeof ConsentRepositoryPrisma>, aggregator: OpenFinanceAggregator) =>
-        new SyncInstitutionUseCase(repo, aggregator),
+      inject: [
+        TOKENS_CONSENT.ConsentRepository,
+        TOKENS_AGGREGATION.OpenFinanceAggregator,
+        TOKENS.ExternalAccountRepository,
+        TOKENS.RepositorioDeTransactions,
+      ],
+      useFactory: (
+        repo: InstanceType<typeof ConsentRepositoryPrisma>,
+        aggregator: OpenFinanceAggregator,
+        contas: ExternalAccountRepository,
+        lancamentos: RepositorioDeTransactions,
+      ) => new SyncInstitutionUseCase(repo, aggregator, contas, lancamentos),
     },
     {
       provide: TOKENS_CONSENT.RevokeConsent,

@@ -159,7 +159,7 @@ o backlog passou a considerar o frontend existente.
 | --- | --- | --- | --- | --- | --- | --- |
 | 15 | `HN-002` | Conectar instituição com consentimento e sincronizar | Negócio | **Done** | HN-001, HT-011 | `ConnectedBanksWidget` existe; falta fluxo de consentimento |
 | 16 | `HN-012` | Revogar consentimento e excluir conta e dados | Negócio | **Done** | HN-002 | **Sem tela** — construção do zero |
-| 17 | `HN-003` | Painel consolidado de saldos, cartões e lançamentos | Negócio | Backlog | HN-002, HT-017 | `MetricsCards`, `SpendingChart`, `TransactionsListView`, `MonthPicker`, `QuickFilterBar` |
+| 17 | `HN-003` | Painel consolidado de saldos, cartões e lançamentos | Negócio | **Em revisão** | HN-002, HT-017 | `MetricsCards`, `SpendingChart`, `TransactionsListView`, `MonthPicker`, `QuickFilterBar` |
 | 18 | `HT-012` | Observabilidade mínima: log estruturado e erro rastreável | Técnica | Backlog | HT-009 | — |
 | 19 | `HT-019` | Documentação OpenAPI/Swagger da API | Técnica | **Done** | HT-009, HT-010, HN-001 | — |
 | 20 | `HT-020` | Padronizar código e estrutura do backend em inglês | Técnica | **Done** | HT-009, HT-010, HT-011, HN-001 | — |
@@ -194,13 +194,13 @@ o backlog passou a considerar o frontend existente.
 ## Quadro
 
 ### Ready
-- _(vazio — `HN-012` em execução, WIP 1)_
+- _(vazio — `HN-003` em execução, WIP 1)_
 
 ### Em execução
 - _(vazio)_
 
 ### Em revisão
-- _(vazio)_
+- `HN-003` — Painel consolidado de saldos, cartões e lançamentos
 
 ### Done
 - `HT-000` `v0.1.0` · `HT-001` `v0.2.0` · `HT-002` `v0.3.0` · `HT-003` `v0.4.0` · `HT-004` `v0.5.0` · `HT-016` `v0.6.0` · `HT-005` `v0.7.0` · `HT-006` `v0.8.0` · `HT-009` `v0.9.0` · `HT-010` `v0.10.0` · `HT-017` `v0.11.0` · `HT-008` `v0.12.0` · `HN-001` `v0.13.0` · `HT-011` `v0.14.0` · `HT-019` `v0.15.0` · `HT-020` `v0.16.0`

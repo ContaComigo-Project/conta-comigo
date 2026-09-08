@@ -11,4 +11,9 @@ export interface Transaction {
   readonly amountInCents: number;
   /** Data de competencia — a que define o mes de referencia (RN-003). */
   readonly dueDate: Date;
+  /**
+   * Identificador externo do agregador (RN-008): mesma instituicao, mesmo
+   * identificador e mesma data => mesmo lancamento, nao duplica.
+   */
+  readonly externalId: string | null;
 }

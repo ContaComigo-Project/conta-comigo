@@ -12,6 +12,7 @@ const transaction: Transaction = {
   description: 'Farmacia Sao Joao',
   amountInCents: -8740,
   dueDate: new Date('2026-09-05T15:30:00.000Z'),
+  externalId: 'ext-1',
 };
 
 const texto = (v: unknown) => JSON.stringify(redigir(v));

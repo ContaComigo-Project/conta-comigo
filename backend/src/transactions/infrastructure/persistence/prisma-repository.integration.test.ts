@@ -27,6 +27,7 @@ describe('RepositorioDeTransactionsPrisma — ida e volta no PostgreSQL real', (
       description: 'mercado',
       amountInCents: 12_345,
       dueDate: new Date('2026-01-31T23:59:00-03:00'),
+      externalId: 'ext-original',
     };
 
     await repositorio.salvar(original);
@@ -44,15 +45,15 @@ describe('RepositorioDeTransactionsPrisma — ida e volta no PostgreSQL real', (
 
   it('varios transactions voltam todos, sem duplicar', async () => {
     for (const i of [1, 2, 3]) {
-      await repositorio.salvar({ id: `l-${i}`, holderId: TITULAR_A, description: `item ${i}`, amountInCents: i * 100, dueDate: new Date('2026-02-10T12:00:00Z') });
+      await repositorio.salvar({ id: `l-${i}`, holderId: TITULAR_A, description: `item ${i}`, amountInCents: i * 100, dueDate: new Date('2026-02-10T12:00:00Z') , externalId: null });
     }
     const ids = (await repositorio.listarDoHolder(TITULAR_A)).map((l) => l.id).sort();
     expect(ids).toEqual(['l-1', 'l-2', 'l-3']);
   });
 
   it('RN-015 — o filtro por holder acontece na consulta: dado de A nao volta para B', async () => {
-    await repositorio.salvar({ id: 'de-a', holderId: TITULAR_A, description: 'mercado', amountInCents: 100, dueDate: new Date('2026-02-10T12:00:00Z') });
-    await repositorio.salvar({ id: 'de-b', holderId: TITULAR_B, description: 'farmacia', amountInCents: 200, dueDate: new Date('2026-02-10T12:00:00Z') });
+    await repositorio.salvar({ id: 'de-a', holderId: TITULAR_A, description: 'mercado', amountInCents: 100, dueDate: new Date('2026-02-10T12:00:00Z') , externalId: null });
+    await repositorio.salvar({ id: 'de-b', holderId: TITULAR_B, description: 'farmacia', amountInCents: 200, dueDate: new Date('2026-02-10T12:00:00Z') , externalId: null });
 
     expect((await repositorio.listarDoHolder(TITULAR_B)).map((l) => l.id)).toEqual(['de-b']);
     expect((await repositorio.listarDoHolder(TITULAR_A)).map((l) => l.id)).toEqual(['de-a']);

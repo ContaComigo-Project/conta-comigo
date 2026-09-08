@@ -34,6 +34,31 @@ export class RepositorioDeTransactionsPrisma implements RepositorioDeTransaction
     return linhas.map(paraEntidade);
   }
 
+  async salvarSincronizados(lancamentos: readonly Transaction[]): Promise<void> {
+    const existentes = new Set<string>();
+    for (const l of lancamentos) {
+      if (l.externalId === null) continue;
+      const linha = await this.prisma.transaction.findFirst({
+        where: { holderId: l.holderId, externalId: l.externalId },
+        select: { id: true },
+      });
+      if (linha) existentes.add(l.externalId);
+    }
+    for (const l of lancamentos) {
+      if (l.externalId !== null && existentes.has(l.externalId)) continue;
+      await this.prisma.transaction.create({
+        data: {
+          id: l.id,
+          holderId: l.holderId,
+          description: l.description,
+          amountInCents: l.amountInCents,
+          dueDate: l.dueDate,
+          externalId: l.externalId,
+        },
+      });
+    }
+  }
+
   async deleteByHolder(holderId: HolderId): Promise<void> {
     await this.prisma.transaction.deleteMany({ where: { holderId } });
   }
@@ -55,6 +80,7 @@ function paraLinha(l: Transaction): LinhaDeTransaction {
     description: l.description,
     amountInCents: l.amountInCents,
     dueDate: l.dueDate,
+    externalId: l.externalId,
   };
 }
 
@@ -65,5 +91,6 @@ function paraEntidade(linha: LinhaDeTransaction): Transaction {
     description: linha.description,
     amountInCents: linha.amountInCents,
     dueDate: linha.dueDate,
+    externalId: linha.externalId,
   };
 }

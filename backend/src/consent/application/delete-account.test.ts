@@ -40,6 +40,7 @@ class ConsentsFake implements ConsentRepository {
 class TransactionsFake implements RepositorioDeTransactions {
   apagados: string[] = [];
   async listarDoHolder() { return []; }
+  async salvarSincronizados() {}
   async deleteByHolder(holderId: HolderId) { this.apagados.push(holderId); }
 }
 

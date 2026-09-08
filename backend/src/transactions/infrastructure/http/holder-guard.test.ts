@@ -28,6 +28,7 @@ const transaction = (id: string, dono: typeof A, description: string) => ({
   holderId: dono,
   description,
   amountInCents: 10_00,
+  externalId: null,
   dueDate: new Date('2026-01-10T12:00:00Z'),
 });
 
