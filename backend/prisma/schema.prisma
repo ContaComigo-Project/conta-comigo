@@ -44,6 +44,7 @@ model ExternalAccount {
 model Account {
   id           String   @id
   email        String   @unique
+  name         String   @default("")
   passwordHash String   @map("hash_da_senha")
   createdAt    DateTime @default(now()) @map("criada_em") @db.Timestamptz(3)
 

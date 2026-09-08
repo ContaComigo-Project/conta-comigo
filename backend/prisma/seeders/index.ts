@@ -36,8 +36,8 @@ async function seed() {
   const senhaHash = await hash(DEMO_SENHA, 10);
   await prisma.account.upsert({
     where: { id: HOLDER },
-    create: { id: HOLDER, email: DEMO_EMAIL, passwordHash: senhaHash },
-    update: { email: DEMO_EMAIL, passwordHash: senhaHash },
+    create: { id: HOLDER, email: DEMO_EMAIL, passwordHash: senhaHash, name: 'Usuário Demo' },
+    update: { email: DEMO_EMAIL, passwordHash: senhaHash, name: 'Usuário Demo' },
   });
   console.log(`seed: conta demo criada (${DEMO_EMAIL} / ${DEMO_SENHA})`);
 

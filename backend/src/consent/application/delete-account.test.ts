@@ -50,7 +50,7 @@ describe('HN-012 — excluir conta e dados (RF-025, RN-016, RN-015)', () => {
     const sessions = new SessionsFake();
     const consents = new ConsentsFake();
     const transactions = new TransactionsFake();
-    await accounts.salvar({ id: PESSOA_A, email: 'a@x.com' as never, passwordHash: 'hash' });
+    await accounts.salvar({ id: PESSOA_A, email: 'a@x.com' as never, passwordHash: 'hash', name: '' });
     const caso = new DeleteAccountUseCase(accounts, sessions, consents, transactions);
 
     const resultado = await caso.executar(PESSOA_A);
@@ -67,7 +67,7 @@ describe('HN-012 — excluir conta e dados (RF-025, RN-016, RN-015)', () => {
     const sessions = new SessionsFake();
     const consents = new ConsentsFake();
     const transactions = new TransactionsFake();
-    await accounts.salvar({ id: PESSOA_A, email: 'a@x.com' as never, passwordHash: 'hash' });
+    await accounts.salvar({ id: PESSOA_A, email: 'a@x.com' as never, passwordHash: 'hash', name: '' });
     const caso = new DeleteAccountUseCase(accounts, sessions, consents, transactions);
 
     const resultado = await caso.executar(holderId('holder-b'));

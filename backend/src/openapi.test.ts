@@ -14,6 +14,7 @@ process.env.JWT_SECRET ??= 'segredo-apenas-de-teste-nao-usar-em-lugar-nenhum';
 
 const ENDPOINTS_ESPERADOS = [
   '/access/accounts',
+  '/access/accounts/me',
   '/access/sessions',
   '/access/sessions/refresh',
   '/consents',
@@ -68,7 +69,7 @@ describe('HT-019 — a API e descoberta pela propria documentacao', () => {
     // cada: 12 no total.
     const metodos = Object.values(spec.paths).flatMap((p) => Object.keys(p));
     expect(metodos.sort()).toEqual([
-      'delete', 'delete', 'delete', 'get', 'get', 'get', 'get', 'post', 'post', 'post', 'post', 'post',
+      'delete', 'delete', 'delete', 'get', 'get', 'get', 'get', 'get', 'post', 'post', 'post', 'post', 'post',
     ]);
   });
 

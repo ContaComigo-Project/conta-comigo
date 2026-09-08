@@ -1,6 +1,8 @@
-import { Link, useLocation } from 'react-router-dom';
-import { LayoutGrid, ShoppingBag, TrendingUp, Landmark, Settings, ChevronRight } from 'lucide-react';
-import { mockUser } from '../../../mocks';
+import { useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { LayoutGrid, ShoppingBag, TrendingUp, Landmark, Settings, ChevronRight, LogOut } from 'lucide-react';
+import { useProfile } from '../../../data/use-profile';
+import { signOut } from '../../../data/access';
 
 const NAV_ITEMS = [
   { id: 'nav_overview',     label: 'Visão Geral',       Icon: LayoutGrid,  path: '/dashboard' },
@@ -12,6 +14,17 @@ const NAV_ITEMS = [
 
 export default function Sidebar() {
   const { pathname } = useLocation();
+  const navigate = useNavigate();
+  const perfil = useProfile();
+  const [menuAberto, setMenuAberto] = useState(false);
+
+  const sair = async () => {
+    try {
+      await signOut();
+    } finally {
+      navigate('/login', { replace: true });
+    }
+  };
 
   return (
     <aside
@@ -72,30 +85,45 @@ export default function Sidebar() {
         </span>
       </div>
 
-      <div className="px-3 pb-6 border-t border-slate-100 pt-4">
+      <div className="px-3 pb-6 border-t border-slate-100 pt-4 relative">
         <button
           id="sidebar-user-menu"
+          onClick={() => setMenuAberto((v) => !v)}
           className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-slate-50 transition-colors group cursor-pointer"
           aria-label="Menu do usuário"
+          aria-expanded={menuAberto}
         >
           <div
             className="w-9 h-9 rounded-xl flex items-center justify-center text-white text-xs font-bold shrink-0 shadow-sm"
-            style={{ backgroundColor: mockUser.avatarColor }}
+            style={{ backgroundColor: perfil.cor }}
           >
-            {mockUser.avatarInitials}
+            {perfil.iniciais}
           </div>
 
           <div className="flex flex-col items-start min-w-0">
             <span className="text-sm font-semibold text-slate-800 leading-tight truncate max-w-27.5">
-              {mockUser.name}
+              {perfil.nome}
             </span>
             <span className="text-[0.7rem] text-slate-400 truncate max-w-27.5">
-              {mockUser.email}
+              {perfil.email}
             </span>
           </div>
 
           <ChevronRight size={15} strokeWidth={2} className="text-slate-300 ml-auto group-hover:text-slate-500 transition-colors shrink-0" />
         </button>
+
+        {menuAberto && (
+          <div className="absolute bottom-20 left-3 right-3 bg-white border border-slate-100 rounded-xl shadow-lg p-1.5">
+            <button
+              id="sidebar-logout"
+              onClick={sair}
+              className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-red-600 hover:bg-red-50 transition-colors cursor-pointer"
+            >
+              <LogOut size={15} strokeWidth={2} />
+              Sair da conta
+            </button>
+          </div>
+        )}
       </div>
     </aside>
   );

@@ -1,4 +1,4 @@
-import { AccountDTO, SessionDTO, type CredentialsDTO, type CreateAccountDTO, type SessionDTO as Session } from '@contacomigo/contract';
+import { AccountDTO, AccountProfileDTO, SessionDTO, type CredentialsDTO, type CreateAccountDTO, type SessionDTO as Session } from '@contacomigo/contract';
 
 // Cliente de access da web (HN-001). Fala com a API pelo contrato; nenhuma
 // regra de negócio mora aqui.
@@ -69,4 +69,15 @@ export async function signOut() {
   const refreshToken = sessionAtual?.refreshToken;
   sessionAtual = null;
   if (refreshToken) await enviar('/access/sessions', 'DELETE', { refreshToken });
+}
+
+/** Perfil do titular autenticado — o nome vem do banco (HN-001). */
+export async function getProfile(): Promise<AccountProfileDTO> {
+  const token = getAccessToken();
+  if (!token) throw new AccessFailure('Sem sessão.');
+  const response = await fetch(`${BASE}/access/accounts/me`, { headers: { authorization: `Bearer ${token}` } });
+  if (!response.ok) throw new AccessFailure('Não foi possível buscar o perfil.');
+  const perfil = AccountProfileDTO.safeParse(await response.json());
+  if (!perfil.success) throw new AccessFailure('Resposta inesperada do servidor.');
+  return perfil.data;
 }

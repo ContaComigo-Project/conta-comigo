@@ -1,4 +1,5 @@
 import { Bell } from 'lucide-react';
+import { useProfile } from '../../../data/use-profile';
 import { mockUser } from '../../../mocks';
 
 function formatDate(): string {
@@ -39,11 +40,13 @@ function SyncBadge({ status }: { status: typeof mockUser.openFinanceStatus }) {
 }
 
 export default function WelcomeHeader() {
+  const perfil = useProfile();
+
   return (
     <header className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
       <div>
         <h1 className="text-2xl md:text-[1.7rem] font-bold text-slate-800 leading-tight">
-          Olá, {mockUser.firstName}!
+          Olá, {perfil.firstName}!
         </h1>
         <p className="mt-1 text-sm text-slate-400 font-medium">{formatDate()}</p>
       </div>

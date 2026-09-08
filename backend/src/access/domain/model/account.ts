@@ -6,4 +6,6 @@ export interface Account {
   readonly id: string;
   readonly email: Email;
   readonly passwordHash: string;
+  /** Display name from the profile; may be empty until edited. */
+  readonly name: string;
 }

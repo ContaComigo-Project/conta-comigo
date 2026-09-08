@@ -11,6 +11,7 @@ import { TOKENS_ACCESS } from './domain/port/driven/tokens';
 import { JwtIssuer } from './infrastructure/crypto/jwt-issuer';
 import { BcryptHasher } from './infrastructure/crypto/bcrypt-hasher';
 import { AccessController } from './infrastructure/http/access.controller';
+import { ProfileController } from './infrastructure/http/profile.controller';
 import { RepositorioDeAccountsPrisma } from './infrastructure/persistence/account-repository-prisma';
 import { SessionRepositoryPrisma } from './infrastructure/persistence/session-repository-prisma';
 import { TOKENS } from '../transactions/domain/port/driven/tokens';
@@ -20,7 +21,7 @@ import type { Clock } from '../transactions/domain/port/driven/clock';
 // Wiring do contexto `access`: porta -> adaptador por token (ADR-001).
 // A persistencia real dos dois repositorios entra junto da migracao.
 @Module({
-  controllers: [AccessController],
+  controllers: [AccessController, ProfileController],
   providers: [
     { provide: TOKENS.Clock, useClass: SystemClock },
     { provide: TOKENS_ACCESS.PasswordHasher, useFactory: () => new BcryptHasher() },

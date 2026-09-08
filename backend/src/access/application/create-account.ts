@@ -24,7 +24,7 @@ export class CriarAccountUseCase implements CriarAccount {
 
     if (await this.accounts.porEmail(email)) throw new RegistrationRefused();
 
-    const account: Account = { id: randomUUID(), email, passwordHash: await this.hash.gerar(senhaEmClaro) };
+    const account: Account = { id: randomUUID(), email, passwordHash: await this.hash.gerar(senhaEmClaro), name: '' };
     await this.accounts.salvar(account);
     return account;
   }

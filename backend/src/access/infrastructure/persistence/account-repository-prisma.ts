@@ -24,7 +24,7 @@ export class RepositorioDeAccountsPrisma implements RepositorioDeAccounts {
   }
 
   async salvar(account: Account): Promise<void> {
-    const linha = { id: account.id, email: account.email, passwordHash: account.passwordHash };
+    const linha = { id: account.id, email: account.email, passwordHash: account.passwordHash, name: account.name };
     await this.prisma.account.upsert({ where: { id: account.id }, create: linha, update: linha });
   }
 
@@ -38,5 +38,5 @@ export class RepositorioDeAccountsPrisma implements RepositorioDeAccounts {
 }
 
 function paraEntidade(linha: LinhaDeAccount | null): Account | null {
-  return linha ? { id: linha.id, email: fazerEmail(linha.email), passwordHash: linha.passwordHash } : null;
+  return linha ? { id: linha.id, email: fazerEmail(linha.email), passwordHash: linha.passwordHash, name: linha.name } : null;
 }
