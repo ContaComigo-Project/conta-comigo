@@ -52,7 +52,7 @@ describe('RNF-012 — the secret allowlist cannot blind the scan', () => {
   });
 
   it('no entry exempts the web or API source', () => {
-    const alvos = ['frontend/src/main.tsx', 'backend/src/main.ts', 'packages/contrato/src/index.ts'];
+    const alvos = ['frontend/src/main.tsx', 'backend/src/main.ts', 'packages/contract/src/index.ts'];
     for (const padrao of caminhos) {
       const regex = new RegExp(padrao);
       for (const alvo of alvos) {

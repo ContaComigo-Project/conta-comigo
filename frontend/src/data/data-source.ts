@@ -1,4 +1,4 @@
-import type { ConnectedBankDTO, SpendingCategoryDTO, TransactionDTO, Result } from '@contacomigo/contrato';
+import type { ConnectedBankDTO, SpendingCategoryDTO, TransactionDTO, Result } from '@contacomigo/contract';
 
 // Porta da web para a origem do dado (HT-017). Hoje a implementacao e falsa
 // (massa dos mocks no formato do contrato); a real chama a API. Trocar uma pela

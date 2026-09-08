@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { loginSchema, type LoginFormData } from '../../../validations/auth.schema';
 import { useToast } from '../../../hooks/use-toast';
-import { signIn, AccessFailure } from '../../../dados/access';
+import { signIn, AccessFailure } from '../../../data/access';
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);

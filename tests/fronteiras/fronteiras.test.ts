@@ -78,7 +78,7 @@ describe('fronteiras de ADR-001 — arvore que viola', () => {
   it('HT-017 — `import type` do contrato (pacote do workspace) em domain/ e nomeado', () => {
     const v = violacaoDe(resultado.violacoes, 'domain-avoids-workspace-transport', 'domain/model/band-contract.ts');
     expect(v, JSON.stringify(resultado.violacoes.map((x) => [x.rule.name, x.from]), null, 2)).toBeDefined();
-    expect(v?.to).toContain('packages/contrato');
+    expect(v?.to).toContain('packages/contract');
   });
 
   it('ADR-002 — @prisma/client fora de infrastructure/persistence/ e nomeado', () => {

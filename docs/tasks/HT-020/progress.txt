@@ -16,3 +16,6 @@
 2026-09-07 23:32 | AGIR | correção v0.16.1: contrato (bank/category/common/result + tipos Reference/Cents/ErrorCode + campos), tooling (regras do depcruiser EN + fixtures EN), tests (smoke/allowlist/setup/README EN), dados (equivalence EN, strings revertidas) | git mv + sed
 2026-09-07 23:35 | AGIR | overrides do pnpm movidos para pnpm-workspace.yaml (elimina warning no stderr do gate) | pnpm-workspace.yaml
 2026-09-07 23:36 | AGIR | suíte 136 verdes; fronteiras 165 módulos; integração 4; funcional 2; build ok; auditoria 100% | pnpm
+2026-09-07 23:40 | PERCEBER | time aponta: pastas packages/contrato e frontend/src/dados também deveriam ser EN | -
+2026-09-07 23:41 | AGIR | correção v0.16.2: packages/contrato→packages/contract (pacote @contacomigo/contract) e frontend/src/dados→frontend/src/data; imports, package.json, lock e vitest include atualizados | git mv + pnpm install
+2026-09-07 23:42 | AGIR | suíte 136 verdes; integração 4; funcional 2; fronteiras 165; build ok; auditoria 100% | pnpm

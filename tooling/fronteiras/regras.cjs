@@ -39,7 +39,7 @@ function createRules(root) {
     },
     {
       name: 'domain-avoids-workspace-transport',
-      comment: 'HT-017: workspace packages (packages/*, e.g. @contacomigo/contrato) resolve via symlink, not node_modules — the npm rule does not see them. Transport never enters domain/ nor application/.',
+      comment: 'HT-017: workspace packages (packages/*, e.g. @contacomigo/contract) resolve via symlink, not node_modules — the npm rule does not see them. Transport never enters domain/ nor application/.',
       severity: 'error',
       from: { path: [DOMAIN, APPLICATION], pathNot: MODULE },
       // pnpm symlink may appear as packages/... or node_modules/@contacomigo/...

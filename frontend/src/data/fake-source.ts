@@ -1,4 +1,4 @@
-import { ok, type ConnectedBankDTO, type SpendingCategoryDTO, type TransactionDTO } from '@contacomigo/contrato';
+import { ok, type ConnectedBankDTO, type SpendingCategoryDTO, type TransactionDTO } from '@contacomigo/contract';
 import { mockConnectedBanks } from '../mocks/connected-banks.mock';
 import { mockSpendingCategories } from '../mocks/spending-categories.mock';
 import { mockTransactions } from '../mocks/transactions.mock';

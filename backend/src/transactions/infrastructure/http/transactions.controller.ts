@@ -1,6 +1,6 @@
 import { Controller, Get, Inject, UnauthorizedException, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { ok, type TransactionDTO, type Result } from '@contacomigo/contrato';
+import { ok, type TransactionDTO, type Result } from '@contacomigo/contract';
 import type { GetMonthSummary } from '../../domain/port/driving/month-summary';
 import type { ListarTransactions } from '../../domain/port/driving/list-transactions';
 import type { Identity } from '../../domain/port/driven/identity';

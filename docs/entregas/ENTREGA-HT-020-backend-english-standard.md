@@ -137,3 +137,17 @@ Completada a padronização nos pontos que ficaram pendentes:
 
 Suíte verde: 136 unit + 4 integração + 2 funcional; fronteiras 165 módulos sem
 violação; auditoria 100%.
+
+## Correção posterior (`v0.16.2` → `[preenchido no fechamento]`)
+
+Pastas e pacote de fronteira renomeados para EN:
+
+- **`packages/contrato` → `packages/contract`** e pacote **`@contacomigo/contrato`
+  → `@contacomigo/contract`** (imports em backend/frontend/raiz, `pnpm-lock`,
+  docs e a regra do depcruiser).
+- **`frontend/src/dados` → `frontend/src/data`** (imports de Login/Register e
+  internos).
+- `vitest.config.ts` e `tests/README.md` atualizados para o novo caminho.
+
+Suíte verde: 136 unit + 4 integração + 2 funcional; fronteiras 165 módulos;
+auditoria 100%.

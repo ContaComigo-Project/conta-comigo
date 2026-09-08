@@ -1,4 +1,4 @@
-import { AccountDTO, SessionDTO, type CredentialsDTO, type CreateAccountDTO, type SessionDTO as Session } from '@contacomigo/contrato';
+import { AccountDTO, SessionDTO, type CredentialsDTO, type CreateAccountDTO, type SessionDTO as Session } from '@contacomigo/contract';
 
 // Cliente de access da web (HN-001). Fala com a API pelo contrato; nenhuma
 // regra de negócio mora aqui.

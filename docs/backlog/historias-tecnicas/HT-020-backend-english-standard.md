@@ -24,7 +24,7 @@ O `AGENTS.md` §5 define código em INGLÊS, mas o backend nasceu em português:
 contextos `acesso`, `agregacao`, `lancamentos`, `orcamento`; pastas
 `port/entrada` e `port/saida`; arquivos (`criar-conta.ts`, `autenticar.ts`,
 `guarda-de-titular.ts`), símbolos (`cadastrar()`, `titular()`) e DTOs do
-`@contacomigo/contrato` (`CriarContaDTO`, `SessaoDTO`, `LancamentoDTO`). O
+`@contacomigo/contract` (`CriarContaDTO`, `SessaoDTO`, `LancamentoDTO`). O
 ecossistema (TypeScript, NestJS, Prisma, zod) é todo em inglês — o PT vira
 ruído diário e viola a regra do próprio repositório.
 
@@ -57,7 +57,7 @@ tabelas existentes (migrações intactas).
 - [ ] Pastas de contexto renomeadas para `access`, `aggregation`, `transactions`, `budget`
 - [ ] `port/driving` e `port/driven` no lugar de `port/entrada` e `port/saida`
 - [ ] Nenhum token em português em nomes de arquivo, classe, função ou variável do backend
-- [ ] DTOs do `@contacomigo/contrato` em inglês e `frontend/src/dados` atualizado
+- [ ] DTOs do `@contacomigo/contract` em inglês e `frontend/src/data` atualizado
 - [ ] Modelos Prisma em inglês com `@@map` preservando as tabelas atuais
 - [ ] `pnpm run typecheck` verde no backend e na web
 - [ ] Suíte completa verde **antes e depois** (comportamento inalterado)
@@ -86,7 +86,7 @@ Cenário: o código do backend é consistente com a regra de idioma
 | --- | --- | --- |
 | Fronteiras/módulos | Renomeia | Nomes de pastas e `port/driving|driven`; estrutura lógica igual |
 | Dependências externas | Não | — |
-| Contratos públicos | Renomeia DTOs | `@contacomigo/contrato` renomeado; frontend atualizado na mesma entrega |
+| Contratos públicos | Renomeia DTOs | `@contacomigo/contract` renomeado; frontend atualizado na mesma entrega |
 | Dados e migração | Não | `@@map` preserva as tabelas; nenhuma migration muda |
 
 ## Riscos e plano de reversão
@@ -94,7 +94,7 @@ Cenário: o código do backend é consistente com a regra de idioma
 | Risco | Mitigação | Como reverter |
 | --- | --- | --- |
 | Import quebrado em renomeação | `typecheck` + testes apontam o erro exato | Corrigir o import; `git mv` preserva histórico |
-| Contrato renomeado quebrar o frontend | `frontend/src/dados` atualizado na mesma entrega | Atualizar o import |
+| Contrato renomeado quebrar o frontend | `frontend/src/data` atualizado na mesma entrega | Atualizar o import |
 | Renomear sem querer uma tabela | `@@map` explicita a tabela atual | Ajustar o `@@map` |
 
 ## Fora de escopo

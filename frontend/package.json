@@ -10,7 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@contacomigo/contrato": "workspace:*",
+    "@contacomigo/contract": "workspace:*",
     "@hookform/resolvers": "^5.2.2",
     "@radix-ui/react-toast": "^1.2.15",
     "class-variance-authority": "^0.7.1",

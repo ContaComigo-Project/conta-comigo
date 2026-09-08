@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { TransactionDTO, ConnectedBankDTO, SpendingCategoryDTO } from '@contacomigo/contrato';
+import { TransactionDTO, ConnectedBankDTO, SpendingCategoryDTO } from '@contacomigo/contract';
 import { mockConnectedBanks } from '../mocks/connected-banks.mock';
 import { mockSpendingCategories } from '../mocks/spending-categories.mock';
 import { mockTransactions } from '../mocks/transactions.mock';

@@ -2,7 +2,7 @@ import 'reflect-metadata';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { Test } from '@nestjs/testing';
 import type { INestApplication } from '@nestjs/common';
-import { AccountDTO, SessionDTO } from '@contacomigo/contrato';
+import { AccountDTO, SessionDTO } from '@contacomigo/contract';
 import { AccessModule } from '../../access.module';
 import { TOKENS_ACCESS } from '../../domain/port/driven/tokens';
 import { RepositorioDeAccountsEmMemoria } from '../persistence/account-repository-memory';

@@ -6,7 +6,7 @@ import { registerSchema, type RegisterFormData } from '../../../validations/auth
 import { calculatePasswordStrength } from '../../../utils/password';
 import { formatCPF } from '../../../utils/formatters';
 import { useToast } from '../../../hooks/use-toast';
-import { createAccount, AccessFailure } from '../../../dados/access';
+import { createAccount, AccessFailure } from '../../../data/access';
 
 export default function Register() {
   const [step, setStep] = useState(1);

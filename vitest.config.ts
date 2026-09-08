@@ -4,7 +4,7 @@ import { defineConfig } from 'vitest/config';
 export default defineConfig({
   test: {
     setupFiles: ['tests/setup.ts'],
-    include: ['tests/**/*.test.ts', 'backend/src/**/*.test.ts', 'packages/**/src/**/*.test.ts', 'frontend/src/dados/**/*.test.ts'],
+    include: ['tests/**/*.test.ts', 'backend/src/**/*.test.ts', 'packages/**/src/**/*.test.ts', 'frontend/src/data/**/*.test.ts'],
     // Fixtures de fronteira sao codigo deliberadamente ilegal: nunca executar.
     exclude: ['**/node_modules/**', 'tests/fronteiras/fixtures/**', 'tests/funcional/**', '**/*.integracao.test.ts'],
     testTimeout: 30_000,

@@ -1,6 +1,6 @@
 import { BadRequestException, Body, Controller, Delete, HttpCode, Inject, Post, UnauthorizedException } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { AccountDTO, CredentialsDTO, CreateAccountDTO, RefreshDTO, type SessionDTO } from '@contacomigo/contrato';
+import { AccountDTO, CredentialsDTO, CreateAccountDTO, RefreshDTO, type SessionDTO } from '@contacomigo/contract';
 import type { Authenticate, CriarAccount, EncerrarSession, RenovarSession } from '../../domain/port/driving/access';
 import { RegistrationRefused, InvalidCredentials } from '../../domain/port/driving/access';
 import { TOKENS_ACCESS } from '../../domain/port/driven/tokens';

@@ -13,7 +13,7 @@ import { JwtIssuer } from '../../../access/infrastructure/crypto/jwt-issuer';
 const TITULAR = holderId('holder-a');
 const autorizado = () => ({ authorization: `Bearer ${new JwtIssuer().emitir(TITULAR).valor}` });
 import { z } from 'zod';
-import { TransactionDTO, resultadoDe } from '@contacomigo/contrato';
+import { TransactionDTO, resultadoDe } from '@contacomigo/contract';
 
 // Cenario funcional na fronteira HTTP: controller -> caso de uso -> adaptador
 // falso. Sobe o Nest de verdade em porta efemera; nao sobe banco nem navegador.
@@ -56,8 +56,8 @@ describe('GET /transactions/month-summary', () => {
     expect(parse.data.dados[0]).toEqual({
       id: '1',
       description: 'mercado',
-      categoria: null,
-      instituicao: { id: 'desconhecida', nome: 'Desconhecida' },
+      category: null,
+      instituicao: { id: 'desconhecida', name: 'Desconhecida' },
       amountInCents: 120_00,
       tipo: 'credito',
       dueDate: '2026-01-10T12:00:00.000Z',

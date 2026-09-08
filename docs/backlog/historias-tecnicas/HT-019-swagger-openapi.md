@@ -24,14 +24,14 @@ A API NestJS existe e está testada (6 endpoints em `acesso` e `lancamentos`),
 mas **não há documentação acessível**: nenhum Swagger/OpenAPI. Quem precisa
 consumir a API — o próprio time nas histórias de integração (`HN-002`, `HN-003`)
 ou uma pessoa testando manualmente — lê o código-fonte dos controllers e dos
-DTOs em `packages/contrato` para descobrir o contrato. Isso custa tempo a cada
+DTOs em `packages/contract` para descobrir o contrato. Isso custa tempo a cada
 história e não há um mapa único dos endpoints, schemas e da segurança exigida.
 
 ## Resultado esperado
 
 A API expõe **UI Swagger em `/api/docs`** e **spec OpenAPI JSON em `/api-json`**
 documentando os 6 endpoints existentes, com schemas derivados dos DTOs do
-`@contacomigo/contrato` e com a guarda de titular marcada como segurança. Nenhuma
+`@contacomigo/contract` e com a guarda de titular marcada como segurança. Nenhuma
 fronteira do `ADR-001` é quebrada: decorators Swagger vivem só na camada
 `infrastructure/http/`.
 
@@ -42,7 +42,7 @@ fronteira do `ADR-001` é quebrada: decorators Swagger vivem só na camada
 - [ ] A spec lista os 6 endpoints: `POST /acesso/contas`, `POST /acesso/sessoes`,
       `POST /acesso/sessoes/renovacao`, `DELETE /acesso/sessoes`,
       `GET /lancamentos`, `GET /lancamentos/resumo-do-mes`
-- [ ] Schemas dos corpos/respostas derivados dos tipos do `@contacomigo/contrato`
+- [ ] Schemas dos corpos/respostas derivados dos tipos do `@contacomigo/contract`
       (ex.: `CriarContaDTO`, `CredenciaisDTO`, `SessaoDTO`, `LancamentoDTO`)
 - [ ] Os endpoints de `lancamentos` documentam a exigência de autenticação
       (guarda de titular) na especificação
@@ -57,7 +57,7 @@ Cenário: a API é descoberta pela própria documentação
   Quando alguém acessa GET /api-json
   Então a spec responde 200 com o schema OpenAPI
   E lista os 6 endpoints existentes com seus métodos e paths
-  E os schemas de corpo e resposta derivam do @contacomigo/contrato
+  E os schemas de corpo e resposta derivam do @contacomigo/contract
 ```
 
 ## RNF atendidos
@@ -73,7 +73,7 @@ Cenário: a API é descoberta pela própria documentação
 | --- | --- | --- |
 | Fronteiras/módulos | Não | Decorators Swagger só em `infrastructure/http/`; `domain/` e `application/` intactos |
 | Dependências externas | Sim | `@nestjs/swagger` entra no backend — documentação de transporte, não estrutural de domínio; sem ADR novo (não toca regra) |
-| Contratos públicos | Documenta | Os DTOs do `@contacomigo/contrato` são refletidos; nenhum campo muda |
+| Contratos públicos | Documenta | Os DTOs do `@contacomigo/contract` são refletidos; nenhum campo muda |
 | Dados e migração | Não | — |
 
 ## Riscos e plano de reversão

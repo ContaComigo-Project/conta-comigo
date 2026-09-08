@@ -4,14 +4,14 @@ import type { INestApplication } from '@nestjs/common';
 // Documentacao OpenAPI da API (HT-019). Configuracao global de infraestrutura,
 // no mesmo nivel de app.module.ts: nao pertence a nenhum contexto e nao toca
 // domain/ nem application/ (ADR-001). A spec e gerada a partir dos controllers
-// registrados; os schemas de body vem dos schemas zod do @contacomigo/contrato
+// registrados; os schemas de body vem dos schemas zod do @contacomigo/contract
 // (toJSONSchema), entao a documentacao nunca diverge do contrato.
 //
 // UI em /api/docs; a spec JSON em /api-json (customizado via jsonDocumentUrl,
 // em vez do default /api/docs-json).
 
 /**
- * Converte um schema zod do @contacomigo/contrato em schema OpenAPI.
+ * Converte um schema zod do @contacomigo/contract em schema OpenAPI.
  * O zod 4 gera JSON Schema 2020-12 (compatível com OpenAPI 3.1). O retorno é
  * `any` de propósito: o tipo `SchemaObject` do @nestjs/swagger não é exportado
  * publicamente (o package restringe exports ao `.` e `./plugin`), e o JSON
