@@ -159,33 +159,34 @@ o backlog passou a considerar o frontend existente.
 | 16 | `HN-012` | Revogar consentimento e excluir conta e dados | Negócio | Backlog | HN-002 | **Sem tela** — construção do zero |
 | 17 | `HN-003` | Painel consolidado de saldos, cartões e lançamentos | Negócio | Backlog | HN-002, HT-017 | `MetricsCards`, `SpendingChart`, `TransactionsListView`, `MonthPicker`, `QuickFilterBar` |
 | 18 | `HT-012` | Observabilidade mínima: log estruturado e erro rastreável | Técnica | Backlog | HT-009 | — |
+| 19 | `HT-019` | Documentação OpenAPI/Swagger da API | Técnica | Backlog | HT-009, HT-010, HN-001 | — |
 
 ### Fase 4 — Camada de inteligência
 
 | Ordem | Chave | Título | Tipo | Estado | Depende de | UI hoje |
 | --- | --- | --- | --- | --- | --- | --- |
-| 19 | `HT-013` | Adaptador Gemini/LangChain com teto de custo e cache | Técnica | Backlog | HT-009 | — |
-| 20 | `HT-014` | Guarda de saída da IA: validação, coerência e fronteira | Técnica | Backlog | HT-013 | — |
-| 21 | `HN-004` | Descrição legível do lançamento (limpeza semântica) | Negócio | Backlog | HN-003, HT-014 | Lista existe; **sem tratamento de descrição** |
-| 22 | `HN-005` | Categorização automática e correção manual | Negócio | Backlog | HN-004 | Categorias exibidas; **sem correção manual** |
+| 20 | `HT-013` | Adaptador Gemini/LangChain com teto de custo e cache | Técnica | Backlog | HT-009 | — |
+| 21 | `HT-014` | Guarda de saída da IA: validação, coerência e fronteira | Técnica | Backlog | HT-013 | — |
+| 22 | `HN-004` | Descrição legível do lançamento (limpeza semântica) | Negócio | Backlog | HN-003, HT-014 | Lista existe; **sem tratamento de descrição** |
+| 23 | `HN-005` | Categorização automática e correção manual | Negócio | Backlog | HN-004 | Categorias exibidas; **sem correção manual** |
 
 ### Fase 5 — Orçamento e histórico
 
 | Ordem | Chave | Título | Tipo | Estado | Depende de | UI hoje |
 | --- | --- | --- | --- | --- | --- | --- |
-| 23 | `HN-006` | Definir e editar limite mensal por categoria | Negócio | Backlog | HN-005 | `CategoryCard` já edita limite inline, sem persistir |
-| 24 | `HN-007` | Orçamento semáforo e aviso ao cruzar faixa | Negócio | Backlog | HN-006 | Barras e faixas prontas; **a regra sai de `budget.mock.ts` para o domínio** |
-| 25 | `HN-008` | Histórico de 6 meses e problemas recorrentes | Negócio | Backlog | HN-007 | `HistoricalOverview` completo, sobre dados simulados |
+| 24 | `HN-006` | Definir e editar limite mensal por categoria | Negócio | Backlog | HN-005 | `CategoryCard` já edita limite inline, sem persistir |
+| 25 | `HN-007` | Orçamento semáforo e aviso ao cruzar faixa | Negócio | Backlog | HN-006 | Barras e faixas prontas; **a regra sai de `budget.mock.ts` para o domínio** |
+| 26 | `HN-008` | Histórico de 6 meses e problemas recorrentes | Negócio | Backlog | HN-007 | `HistoricalOverview` completo, sobre dados simulados |
 
 ### Fase 6 — Consultoria educativa, limpeza e publicação
 
 | Ordem | Chave | Título | Tipo | Estado | Depende de | UI hoje |
 | --- | --- | --- | --- | --- | --- | --- |
-| 26 | `HN-009` | Diagnóstico de saúde financeira e insights | Negócio | Backlog | HN-007, HT-014 | `AIInsightPanel` existe, com insights fixos |
-| 27 | `HN-010` | Chatbot educativo com aviso permanente | Negócio | Backlog | HN-009 | `AIChatWidget` existe, com respostas roteirizadas |
-| 28 | `HN-011` | Simulação de compra e exportação PDF/CSV | Negócio | Backlog | HN-008 | `ExportDropdown` existe; **não gera arquivo** |
-| 29 | `HT-018` | Remover a lógica de negócio e os mocks do frontend | Técnica | Backlog | HN-010, HN-011 | Fecha a fronteira aberta em `HT-017` |
-| 30 | `HT-015` | Publicação da PoC e verificação de custo zero | Técnica | Backlog | HT-018 | — |
+| 27 | `HN-009` | Diagnóstico de saúde financeira e insights | Negócio | Backlog | HN-007, HT-014 | `AIInsightPanel` existe, com insights fixos |
+| 28 | `HN-010` | Chatbot educativo com aviso permanente | Negócio | Backlog | HN-009 | `AIChatWidget` existe, com respostas roteirizadas |
+| 29 | `HN-011` | Simulação de compra e exportação PDF/CSV | Negócio | Backlog | HN-008 | `ExportDropdown` existe; **não gera arquivo** |
+| 30 | `HT-018` | Remover a lógica de negócio e os mocks do frontend | Técnica | Backlog | HN-010, HN-011 | Fecha a fronteira aberta em `HT-017` |
+| 31 | `HT-015` | Publicação da PoC e verificação de custo zero | Técnica | Backlog | HT-018 | — |
 
 ## Quadro
 
@@ -205,12 +206,15 @@ Todas verificadas por `scripts/verificar-fechamento.sh`: tag e commit no mesmo
 hash, mensagem semântica citando a chave, documento de entrega presente.
 
 ### Backlog
-Ordens 5 a 30 na tabela acima.
+Ordens 5 a 31 na tabela acima.
 
 ## Grooming
 
 Arquivo de história é criado quando o item entra em `Ready`, não antes.
 Existem hoje como arquivo: `HT-000` a `HT-006`, `HT-008` a `HT-011`, `HT-016`, `HT-017`, `HT-018` e `HN-001` — a primeira `HN` groomada, agora que `HT-016` definiu o aproveitamento das telas.
+
+`HT-019` (Swagger/OpenAPI) foi inserida no `Backlog` em 2026-09-07 sem arquivo;
+ganha arquivo quando entrar em `Ready`.
 
 `HT-009` foi groomada cedo, fora da regra acima, porque `ADR-001` tornou seus
 critérios de aceite verificáveis — deixaram de ser adivinhação.
@@ -274,3 +278,4 @@ cada tela é aproveitável, e isso muda o critério de aceite de quase todas ela
 | 2026-09-07 | `HT-008` | Em revisão | Done | `v0.12.0` → `2a94e5d`; `verificar-fechamento` verde |
 | 2026-09-07 | `HN-001` | Em revisão | Done | `v0.13.0` → `295fca8`; `verificar-fechamento` verde |
 | 2026-09-07 | `HT-011` | Em revisão | Done | `v0.14.0` → `94eec6f`; `verificar-fechamento` verde |
+| 2026-09-07 | `HT-019` | — | Backlog | Inserida a pedido do time: documentação OpenAPI/Swagger da API; ordens 19–30 renumeradas para 20–31 |
