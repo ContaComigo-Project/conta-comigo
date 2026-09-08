@@ -19,3 +19,6 @@
 2026-09-07 23:40 | PERCEBER | time aponta: pastas packages/contrato e frontend/src/dados também deveriam ser EN | -
 2026-09-07 23:41 | AGIR | correção v0.16.2: packages/contrato→packages/contract (pacote @contacomigo/contract) e frontend/src/dados→frontend/src/data; imports, package.json, lock e vitest include atualizados | git mv + pnpm install
 2026-09-07 23:42 | AGIR | suíte 136 verdes; integração 4; funcional 2; fronteiras 165; build ok; auditoria 100% | pnpm
+2026-09-07 23:45 | PERCEBER | time aponta: pastas tests/fronteiras e tooling/fronteiras e arquivos de teste ainda em PT | -
+2026-09-07 23:46 | AGIR | correção v0.16.3: tests/fronteiras→tests/boundaries, tooling/fronteiras→tooling/boundaries, arquivos EN (production-config, boundaries, no-decorator-in-domain), script lint:fronteiras→lint:boundaries | git mv + sed
+2026-09-07 23:48 | AGIR | suíte 136 verdes; integração 4; funcional 2; lint:boundaries verde; build ok; auditoria 100% | pnpm

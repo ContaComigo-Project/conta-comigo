@@ -52,7 +52,7 @@ Ordem obrigatória:
 | 1 | Teste de controle: `/api/docs` 200 e `/api-json` com os 6 paths + Bearer nos lancamentos | Vermelho antes do código |
 | 2 | Instalar `@nestjs/swagger`, configurar `openapi.ts`, `main.ts`, anotar controllers | Teste verde |
 | 3 | Refatoração | Continua verde |
-| 4 | `lint:fronteiras`, `typecheck`, suíte unitária completa | Verdes |
+| 4 | `lint:boundaries`, `typecheck`, suíte unitária completa | Verdes |
 
 | Cenário | Regra que prova | Arquivo de teste |
 | --- | --- | --- |
@@ -63,7 +63,7 @@ Ordem obrigatória:
 | Gate | Necessário? | Comando/Evidência |
 | --- | --- | --- |
 | QA | Sim | `openapi.test.ts` verde; `/api/docs` e `/api-json` 200 |
-| SRE | Sim | `pnpm run build` (typecheck) verde; `lint:fronteiras` verde |
+| SRE | Sim | `pnpm run build` (typecheck) verde; `lint:boundaries` verde |
 | Segurança | Sim | Bearer documentado nos lancamentos; nenhum dado exposto pela UI de docs |
 | Arquitetura | Sim | `@nestjs/swagger` só em `infrastructure/http/`; `domain/` intacto |
 | Revisão final | Sim | Critérios de aceite + evidências |
@@ -72,7 +72,7 @@ Ordem obrigatória:
 
 | Risco | Probabilidade | Mitigação |
 | --- | --- | --- |
-| Decorator Swagger vazar para o domínio | Baixa | `lint:fronteiras` bloqueia import fora de `infrastructure/` |
+| Decorator Swagger vazar para o domínio | Baixa | `lint:boundaries` bloqueia import fora de `infrastructure/` |
 | Spec divergir do contrato | Média | Teste de controle compara os paths; schemas gerados do zod |
 | `@nestjs/swagger` incompatível com NestJS 12 | Baixa | Versão mais recente do pacote; ajustar se peer dep reclamar |
 

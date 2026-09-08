@@ -3,7 +3,7 @@
 //
 // Exported as a factory so the SAME rule list runs against the production tree
 // (backend/src) and against the test fixtures — and the test in
-// tests/fronteiras/ proves that each rule rejects what it should.
+// tests/boundaries/ proves that each rule rejects what it should.
 //
 // Source table: ADR-001, "Dependency rules" section:
 //   domain/          -> only TypeScript and other domain/; no framework, ORM, I/O
@@ -16,7 +16,7 @@
 
 /**
  * @param {string} root  path, relative to repo root, of the context tree
- *                       (e.g. "backend/src" or "tests/fronteiras/fixtures/limpo")
+ *                       (e.g. "backend/src" or "tests/boundaries/fixtures/limpo")
  */
 function createRules(root) {
   const r = root.replace(/\\/g, '/').replace(/\/$/, '');

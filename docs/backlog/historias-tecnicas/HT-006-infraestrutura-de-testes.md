@@ -46,12 +46,12 @@ Critério técnico também é verificável. Prefira comando reprodutível a desc
 - [x] `scripts/harness.sh lint` executa o dependency-cruiser sobre `backend/`
       e `frontend/src`
 - [x] `scripts/harness.sh test-unitario` executa o Vitest e lista os cenários
-      de `tests/fronteiras/`
+      de `tests/boundaries/`
 - [x] `scripts/harness.sh test-funcional` executa o Playwright em Chromium
       contra a web real, com ao menos um cenário de fumaça
 - [x] `scripts/harness.sh coverage` emite relatório com o domínio como alvo
 - [x] Falha esperada é detectada: dependency-cruiser sobre a fixture
-      `tests/fronteiras/fixtures/violacao` sai diferente de zero e **nomeia a
+      `tests/boundaries/fixtures/violacao` sai diferente de zero e **nomeia a
       regra** violada e o arquivo
 - [x] Falha esperada é detectada: enfraquecer uma regra para `info` deixa o
       teste de fronteiras **vermelho** — o teste guarda a regra, não a ferramenta
@@ -93,7 +93,7 @@ Cenário: árvore que respeita ADR-001 passa
 
 | Risco | Mitigação | Como reverter |
 | --- | --- | --- |
-| Fixtures ilegais entrarem no lint ou no build | Excluídas por caminho no dependency-cruiser e no tsconfig | Remover `tests/fronteiras/` |
+| Fixtures ilegais entrarem no lint ou no build | Excluídas por caminho no dependency-cruiser e no tsconfig | Remover `tests/boundaries/` |
 | Limiar de cobertura vacuamente verde sem domínio | `include` restrito ao domínio e `all: true`: o primeiro arquivo em `domain/` entra na medição sozinho | Ajustar limiar em `vitest.config.ts` |
 | Playwright exigir libs de sistema no Linux | Chromium só; libs ficam com o runner em `HT-007` | Marcar `test-funcional` como pendente de ambiente |
 
@@ -118,7 +118,7 @@ Cenário: árvore que respeita ADR-001 passa
 
 - [x] Comportamento testável coberto por cenário funcional antes do código
 - [x] Refatoração feita após os funcionais verdes
-- [ ] Testes unitários onde houver lógica — **parcial**: a lógica desta história (regras de fronteira) está coberta pelos 8 cenários de `fronteiras.test.ts`; os `scripts/*.mjs` herdados de `HT-005` seguem sem teste. Dívida registrada na entrega
+- [ ] Testes unitários onde houver lógica — **parcial**: a lógica desta história (regras de fronteira) está coberta pelos 8 cenários de `boundaries.test.ts`; os `scripts/*.mjs` herdados de `HT-005` seguem sem teste. Dívida registrada na entrega
 - [x] Gates marcados acima executados com evidência
 - [x] Documentação operacional atualizada
 - [x] `docs/entregas/` criado

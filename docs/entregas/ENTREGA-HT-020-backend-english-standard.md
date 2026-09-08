@@ -151,3 +151,17 @@ Pastas e pacote de fronteira renomeados para EN:
 
 Suíte verde: 136 unit + 4 integração + 2 funcional; fronteiras 165 módulos;
 auditoria 100%.
+
+## Correção posterior (`v0.16.3` → `[preenchido no fechamento]`)
+
+Pastas e nomes do gate de fronteiras em EN:
+
+- **`tests/fronteiras` → `tests/boundaries`** e **`tooling/fronteiras` →
+  `tooling/boundaries`**.
+- Arquivos: `production-config.test.ts`, `boundaries.test.ts`,
+  `no-decorator-in-domain.test.ts` (conteúdo traduzido em EN).
+- Script `lint:fronteiras` → **`lint:boundaries`** no `package.json` e no
+  `scripts/harness.env`, com referências em docs atualizadas.
+
+Suíte verde: 136 unit + 4 integração + 2 funcional; `lint:boundaries` verde;
+auditoria 100%.
