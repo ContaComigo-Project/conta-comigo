@@ -45,6 +45,8 @@ Leu estes 4? Você sabe 95 % do que precisa para atuar aqui sem quebrar nada.
 | Linha do tempo entregas (tag + hash) | [`docs/entregas/README.md`](docs/entregas/README.md) |
 | Planos de execução por história | [`docs/tasks/README.md`](docs/tasks/README.md) |
 | Scripts utilitários | [`scripts/README.md`](scripts/README.md) |
+| Suítes de teste do workspace | [`tests/README.md`](tests/README.md) |
+| Ferramenta de checagem de fronteiras | [`tooling/README.md`](tooling/README.md) |
 | Frontend (React + Vite) | [`frontend/README.md`](frontend/README.md) |
 | Inventário e arquitetura do frontend existente | [`docs/inventario-frontend.md`](docs/inventario-frontend.md) |
 
