@@ -157,7 +157,7 @@ o backlog passou a considerar o frontend existente.
 
 | Ordem | Chave | Título | Tipo | Estado | Depende de | UI hoje |
 | --- | --- | --- | --- | --- | --- | --- |
-| 15 | `HN-002` | Conectar instituição com consentimento e sincronizar | Negócio | **Ready** | HN-001, HT-011 | `ConnectedBanksWidget` existe; falta fluxo de consentimento |
+| 15 | `HN-002` | Conectar instituição com consentimento e sincronizar | Negócio | **Em revisão** | HN-001, HT-011 | `ConnectedBanksWidget` existe; falta fluxo de consentimento |
 | 16 | `HN-012` | Revogar consentimento e excluir conta e dados | Negócio | Backlog | HN-002 | **Sem tela** — construção do zero |
 | 17 | `HN-003` | Painel consolidado de saldos, cartões e lançamentos | Negócio | Backlog | HN-002, HT-017 | `MetricsCards`, `SpendingChart`, `TransactionsListView`, `MonthPicker`, `QuickFilterBar` |
 | 18 | `HT-012` | Observabilidade mínima: log estruturado e erro rastreável | Técnica | Backlog | HT-009 | — |
@@ -194,13 +194,13 @@ o backlog passou a considerar o frontend existente.
 ## Quadro
 
 ### Ready
-- `HN-002` — Conectar instituição com consentimento e sincronizar
+- _(vazio — WIP 1)_
 
 ### Em execução
 - _(vazio)_
 
 ### Em revisão
-- _(vazio)_
+- `HN-002` — Conectar instituição com consentimento e sincronizar
 
 ### Done
 - `HT-000` `v0.1.0` · `HT-001` `v0.2.0` · `HT-002` `v0.3.0` · `HT-003` `v0.4.0` · `HT-004` `v0.5.0` · `HT-016` `v0.6.0` · `HT-005` `v0.7.0` · `HT-006` `v0.8.0` · `HT-009` `v0.9.0` · `HT-010` `v0.10.0` · `HT-017` `v0.11.0` · `HT-008` `v0.12.0` · `HN-001` `v0.13.0` · `HT-011` `v0.14.0` · `HT-019` `v0.15.0` · `HT-020` `v0.16.0`
@@ -293,3 +293,5 @@ cada tela é aproveitável, e isso muda o critério de aceite de quase todas ela
 | 2026-09-07 | `HT-020` | Em revisão | Done | `v0.16.0` → `43f4625`; `verificar-fechamento` verde |
 | 2026-09-07 | `HT-020` | Done | Done | Correção `v0.16.1`: EN completado em contrato, tooling, tests e dados |
 | 2026-09-07 | `HN-002` | Backlog | Ready | Groomada com critérios verificáveis (RN-012/014/015; RF-004/005/007); dependências concluídas |
+| 2026-09-08 | `HN-002` | Ready | Em execução | `docs/tasks/HN-002/` criado; contexto consent implementado |
+| 2026-09-08 | `HN-002` | Em execução | Em revisão | Consentimento de primeira classe; 148+7+2 testes verdes; fronteiras 185; API real validada |

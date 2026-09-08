@@ -16,6 +16,8 @@ const ENDPOINTS_ESPERADOS = [
   '/access/accounts',
   '/access/sessions',
   '/access/sessions/refresh',
+  '/consents',
+  '/consents/{id}/sync',
   '/transactions',
   '/transactions/month-summary',
 ];
@@ -49,7 +51,7 @@ describe('HT-019 — a API e descoberta pela propria documentacao', () => {
     expect(spec.paths).toBeDefined();
   });
 
-  it('a spec lista os 6 endpoints existentes', async () => {
+  it('a spec lista todos os endpoints existentes', async () => {
     const response = await fetch(url + '/api-json');
     const spec = (await response.json()) as {
       paths: Record<string, Record<string, unknown>>;
@@ -58,9 +60,10 @@ describe('HT-019 — a API e descoberta pela propria documentacao', () => {
     const caminhos = Object.keys(spec.paths).sort();
     expect(caminhos).toEqual([...ENDPOINTS_ESPERADOS].sort());
 
-    // /access/sessions tem POST e DELETE; o restante, um metodo cada: 6 no total.
+    // /access/sessions tem POST e DELETE; /consents tem POST e GET; o restante,
+    // um metodo cada: 9 no total.
     const metodos = Object.values(spec.paths).flatMap((p) => Object.keys(p));
-    expect(metodos.sort()).toEqual(['delete', 'get', 'get', 'post', 'post', 'post']);
+    expect(metodos.sort()).toEqual(['delete', 'get', 'get', 'get', 'post', 'post', 'post', 'post', 'post']);
   });
 
   it('os endpoints de transactions exigem autenticacao Bearer na spec', async () => {

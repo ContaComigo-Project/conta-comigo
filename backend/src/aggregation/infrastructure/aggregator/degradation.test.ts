@@ -10,7 +10,7 @@ import { FixedClock } from '../../../transactions/infrastructure/clock/fixed-clo
 import { RepositorioDeTransactionsEmMemoria } from '../../../transactions/infrastructure/persistence/in-memory-repository';
 import { holderId } from '../../../transactions/domain/model/holder';
 import { JwtIssuer } from '../../../access/infrastructure/crypto/jwt-issuer';
-import { falha } from '../../domain/model/aggregation-result';
+import { falha, ok } from '../../domain/model/aggregation-result';
 import type { OpenFinanceAggregator } from '../../domain/port/driven/open-finance-aggregator';
 
 // RNF-005 — falha de integração externa degrada, não derruba.
@@ -22,6 +22,9 @@ const TITULAR = holderId('holder-a');
 
 /** Agregador completamente fora: toda chamada falha. */
 const aggregatorFora: OpenFinanceAggregator = {
+  async criarConexao() {
+    return ok({ connectionId: 'conexao-teste', token: 'token-teste' });
+  },
   async listarAccounts() {
     return falha('indisponivel', 'provedor fora do ar');
   },

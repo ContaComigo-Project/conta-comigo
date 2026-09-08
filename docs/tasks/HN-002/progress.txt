@@ -1,0 +1,16 @@
+# progress — HN-002
+# Diário append-only do ciclo Ralph. Uma linha por evento.
+# Formato: AAAA-MM-DD HH:MM | FASE | descrição objetiva | evidência
+# FASE: PERCEBER | ORIENTAR | DECIDIR | AGIR | REGISTRAR
+
+2026-09-07 23:55 | PERCEBER | li a história HN-002, RN-012/014/015, RF-004/005/007, a porta OpenFinanceAggregator, a cifra HT-010 e o padrão de auth (TokenIdentity/HolderGuard) | docs, backend
+2026-09-07 23:58 | ORIENTAR | escopo: contexto consent novo (domain/application/infrastructure), extensão da porta (criarConexao), migração, DTOs, endpoints; frontend real fica para HN-003 | -
+2026-09-08 00:00 | AGIR | kanban HN-002 Em execução; TASK.md e IMPLEMENTATION.md preenchidos | docs/tasks/HN-002/
+2026-09-08 00:10 | AGIR | domínio consent (modelo + estaAtivo/novoConsent), portas (repo, cipher, identity), casos de uso (connect/list/sync) + testes de unidade com fakes inline | backend/src/consent
+2026-09-08 00:15 | AGIR | porta OpenFinanceAggregator estendida com criarConexao (fake determinístico; pluggy recusa estruturada; resiliente com política) | aggregation
+2026-09-08 00:20 | AGIR | migração Prisma `consent` aplicada; client regenerado; repositório Prisma + cipher AES + guarda + controller + módulo | prisma, infra
+2026-09-08 00:25 | AGIR | DTOs no contract (ConnectInstitutionDTO/ConsentDTO/SyncResultDTO); AppModule registra ConsentModule; teste openapi atualizado (7 paths/9 métodos) | contract, openapi.test
+2026-09-08 00:30 | AGIR | fronteiras do depcruiser apontaram application→infrastructure nos testes; testes refeitos com fakes inline; suíte 148 verdes | test:unit
+2026-09-08 00:35 | AGIR | integração do consent (Prisma real) verde; suíte completa 148+7+2; fronteiras 185 módulos; build ok; auditoria 100% | pnpm
+2026-09-08 00:40 | AGIR | validação de ponta a ponta via API real: cadastro→login→POST /consents (ativo)→POST /consents/:id/sync (3 contas) | curl
+2026-09-08 00:42 | REGISTRAR | ENTREGA-HN-002 criada; kanban Em revisão | docs/entregas, KANBAN

@@ -1,6 +1,6 @@
 import type { AccountExterna, TransactionExterno } from '../../domain/model/external-account';
+import type { ConexaoCriada, OpenFinanceAggregator } from '../../domain/port/driven/open-finance-aggregator';
 import { eTransitorio, falha, type ResultDaAgregacao } from '../../domain/model/aggregation-result';
-import type { OpenFinanceAggregator } from '../../domain/port/driven/open-finance-aggregator';
 
 // Politica de resiliencia de RNF-006, como DECORADOR de qualquer aggregator.
 //
@@ -33,6 +33,10 @@ export class ResilientAggregator implements OpenFinanceAggregator {
 
   listarAccounts(idDaConexao: string): Promise<ResultDaAgregacao<readonly AccountExterna[]>> {
     return this.comPolitica(() => this.interno.listarAccounts(idDaConexao));
+  }
+
+  criarConexao(instituicaoId: string): Promise<ResultDaAgregacao<ConexaoCriada>> {
+    return this.comPolitica(() => this.interno.criarConexao(instituicaoId));
   }
 
   listarTransactions(

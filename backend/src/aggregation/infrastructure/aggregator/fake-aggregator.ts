@@ -1,6 +1,6 @@
 import type { AccountExterna, TransactionExterno } from '../../domain/model/external-account';
 import { falha, ok, type ResultDaAgregacao } from '../../domain/model/aggregation-result';
-import type { OpenFinanceAggregator } from '../../domain/port/driven/open-finance-aggregator';
+import type { ConexaoCriada, OpenFinanceAggregator } from '../../domain/port/driven/open-finance-aggregator';
 
 // Adaptador falso (ADR-001: "todo adaptador externo nasce com uma implementacao
 // falsa para teste"). Determinístico e sem rede: a mesma conexao devolve sempre
@@ -30,6 +30,12 @@ const LANCAMENTOS: readonly TransactionExterno[] = [
 ];
 
 export class FakeAggregator implements OpenFinanceAggregator {
+  async criarConexao(instituicaoId: string): Promise<ResultDaAgregacao<ConexaoCriada>> {
+    // Sintético e determinístico: a mesma instituicao devolve a mesma conexao,
+    // para que ambiente local e testes nao dependam do Sandbox.
+    return ok({ connectionId: CONEXAO_CONHECIDA, token: `token-sintetico-${instituicaoId}` });
+  }
+
   async listarAccounts(idDaConexao: string): Promise<ResultDaAgregacao<readonly AccountExterna[]>> {
     // Conexao inexistente nao e lista vazia: confundir as duas esconde error de
     // configuracao atras de uma tela que apenas parece sem movimento.

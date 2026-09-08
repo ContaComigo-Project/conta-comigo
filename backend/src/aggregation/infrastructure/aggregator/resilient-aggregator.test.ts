@@ -22,7 +22,10 @@ function aggregatorQue(
   let indice = 0;
   return {
     chamadas: 0,
-    async listarAccounts() {
+    async criarConexao() {
+    return ok({ connectionId: 'conexao-teste', token: 'token-teste' });
+  },
+  async listarAccounts() {
       this.chamadas += 1;
       const response = responses[Math.min(indice++, responses.length - 1)];
       // "nunca-responde" simula o provedor pendurado: promessa que nao resolve.

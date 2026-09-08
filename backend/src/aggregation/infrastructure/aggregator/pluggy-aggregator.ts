@@ -1,6 +1,6 @@
 import type { AccountExterna, TransactionExterno, TipoDeAccountExterna } from '../../domain/model/external-account';
 import { falha, ok, type MotivoDaFalha, type ResultDaAgregacao } from '../../domain/model/aggregation-result';
-import type { OpenFinanceAggregator } from '../../domain/port/driven/open-finance-aggregator';
+import type { OpenFinanceAggregator, ConexaoCriada } from '../../domain/port/driven/open-finance-aggregator';
 
 // Adaptador do Pluggy Sandbox. Único lugar do sistema que conhece a forma da
 // response do provedor: se ele renomear um campo, muda aqui e nada mais
@@ -49,6 +49,15 @@ export class PluggyAggregator implements OpenFinanceAggregator {
     this.base = config?.base ?? BASE_PADRAO;
     this.buscar = config?.buscar ?? fetch;
     this.limiteEmMs = config?.limiteEmMs ?? 10_000;
+  }
+
+  async criarConexao(instituicaoId: string): Promise<ResultDaAgregacao<ConexaoCriada>> {
+    // O fluxo completo de connect token do Pluggy exige o redirect do usuario no
+    // navegador (link de consentimento) — fora do escopo de um POST da HN-002.
+    // O ambiente local usa o FakeAggregator; o fluxo real entra quando o sandbox
+    // com credencial for exercitado de ponta a ponta. Recusa estruturada, nunca
+    // excecao (RNF-005).
+    return falha('nao-encontrado', 'fluxo de connect token nao implementado no adaptador pluggy; use o fake local');
   }
 
   async listarAccounts(idDaConexao: string): Promise<ResultDaAgregacao<readonly AccountExterna[]>> {

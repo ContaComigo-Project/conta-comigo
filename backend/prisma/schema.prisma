@@ -45,3 +45,22 @@ model Session {
   @@index([holderId])
   @@map("sessoes")
 }
+
+// Consent as a first-class record (HN-002). The explicit decision of a person
+// to authorize an institution. The aggregator credential is stored CIPHERED
+// (RNF-014); the domain never sees the plain value.
+model Consent {
+  id                String    @id
+  holderId          String    @map("titular_id")
+  institutionId     String    @map("institution_id")
+  connectionId      String    @map("connection_id")
+  scope             String
+  credentialCipher  String    @map("credential_cipher")
+  createdAt         DateTime  @default(now()) @map("criado_em") @db.Timestamptz(3)
+  expiresAt         DateTime  @map("expira_em") @db.Timestamptz(3)
+  revokedAt         DateTime? @map("revogado_em") @db.Timestamptz(3)
+  lastSyncAt        DateTime? @map("ultima_sincronizacao_em") @db.Timestamptz(3)
+
+  @@index([holderId])
+  @@map("consents")
+}
