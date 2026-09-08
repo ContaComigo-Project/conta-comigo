@@ -51,33 +51,33 @@ Perceber → Orientar → Decidir → Agir → **Registrar**.
 
 ## Como iniciar a próxima história
 
-Hoje a coluna `Ready` do kanban está **vazia** — `HT-016` (Ordem 5) foi a última
-concluída. O próximo da fila é **`HT-005` — Harness local reprodutível com
-docker compose** (Ordem 6, ainda em `Backlog`), e ele precisa ser groomado antes
-de ser puxado.
+Hoje a coluna `Ready` do kanban está **vazia** — `HT-011` (Ordem 14) foi a
+última concluída. O próximo da fila é **`HN-002` — Conectar instituição com
+consentimento e sincronizar** (Ordem 15, ainda em `Backlog`), e ele precisa ser
+groomado antes de ser puxado.
 
 ```bash
 # 1. Confirmar a próxima demanda
 cat docs/backlog/KANBAN-OFICIAL.md
 
 # 2. Groomar: escrever o arquivo da história com critérios verificáveis
-cp docs/backlog/historias-tecnicas/_TEMPLATE-HISTORIA-TECNICA.md docs/backlog/historias-tecnicas/HT-005-harness-local.md
+cp docs/backlog/historias/_TEMPLATE-HISTORIA-NEGOCIO.md docs/backlog/historias/HN-002-conectar-instituicao.md
 
-# 3. Mover HT-005 de "Backlog" para "Ready" no kanban
+# 3. Mover HN-002 de "Backlog" para "Ready" no kanban
 
 # 4. Criar a pasta de execução
-scripts/nova-historia.sh HT-005        # Windows: powershell -File scripts/nova-historia.ps1 HT-005
+scripts/nova-historia.sh HN-002        # Windows: powershell -File scripts/nova-historia.ps1 HN-002
 
 # 5. Preencher TASK.md e IMPLEMENTATION.md ANTES de qualquer trabalho
 
-# 6. Mover HT-005 para "Em execução" no kanban
+# 6. Mover HN-002 para "Em execução" no kanban
 ```
 
-`HT-005` destrava toda a fila: enquanto `scripts/harness.env` não existir,
-qualquer tarefa de `scripts/harness.sh` — inclusive `gates` — falha com
-"comando não configurado", e nenhuma história com código pode provar qualidade.
+`HN-002` é a primeira história de negócio com consentimento real: exercita a
+skill `open-finance-security-agent` por inteiro e usa a sessão de `HN-001`, a
+porta de agregação de `HT-011` e a cifra em repouso de `HT-010`.
 
-Da ordem 6 em diante, o item só ganha arquivo de história quando entra em
+A partir da ordem 6, o item só ganha arquivo de história quando entra em
 `Ready`. Detalhar hoje o critério de aceite da ordem 27 seria adivinhação.
 
 ## Negócio ou técnica?

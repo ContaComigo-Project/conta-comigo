@@ -200,9 +200,8 @@ frontend/
     └── (backend futuro) services/  # Axios + services por entidade
 ```
 
-> **Para um aprofundamento na arquitetura client-side (Roteamento, Layouts,
-> Tokens Tailwind, Semáforo Orçamentário e LGPD), consulte a documentação
-> detalhada: [Arquitetura do Frontend](../docs/FRONTEND_ARCHITECTURE.md)**
+> **Para o inventário da camada web (componentes, mocks e destino de cada
+> regra), consulte [Inventário do Frontend](../docs/inventario-frontend.md).**
 
 ---
 

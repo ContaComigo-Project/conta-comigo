@@ -46,7 +46,7 @@ Leu estes 4? Você sabe 95 % do que precisa para atuar aqui sem quebrar nada.
 | Planos de execução por história | [`docs/tasks/README.md`](docs/tasks/README.md) |
 | Scripts utilitários | [`scripts/README.md`](scripts/README.md) |
 | Frontend (React + Vite) | [`frontend/README.md`](frontend/README.md) |
-| Arquitetura frontend | [`docs/FRONTEND_ARCHITECTURE.md`](docs/FRONTEND_ARCHITECTURE.md) |
+| Inventário e arquitetura do frontend existente | [`docs/inventario-frontend.md`](docs/inventario-frontend.md) |
 
 ---
 
@@ -71,24 +71,23 @@ Leu estes 4? Você sabe 95 % do que precisa para atuar aqui sem quebrar nada.
 
 ## 4. Próxima demanda hoje
 
-Em `docs/backlog/KANBAN-OFICIAL.md`, a coluna `Ready` está **vazia**. Nada é
-puxável agora — puxar algo de `Backlog` direto quebra o fluxo de estados.
+Em `docs/backlog/KANBAN-OFICIAL.md`, a coluna `Ready` está **vazia** — `HN-002`
+(Ordem 15) ainda está em `Backlog` e precisa ser groomada antes de ser puxada.
 
-Último item concluído: `HT-016` (Ordem 5) — `v0.6.0` → `5ebeb8a`, corrigido em
-`v0.6.1` → `c3bfb55`.
+Últimas entregas: `HT-011` (Ordem 14) — `v0.14.0` → `94eec6f`; `HN-001` (Ordem 13)
+— `v0.13.0` → `295fca8`.
 
 Próximo da fila:
 
-> **`HT-005` — Harness local reprodutível com docker compose** (Ordem 6, estado
-> `Backlog`, depende de `HT-004` — já concluída).
+> **`HN-002` — Conectar instituição com consentimento e sincronizar** (Ordem 15,
+> estado `Backlog`, depende de `HN-001` e `HT-011` — todas concluídas).
 
-Ela ainda **não tem arquivo de história**: pela regra de grooming, o arquivo é
-criado quando o item entra em `Ready`. Então a próxima ação do time é groomar
-`HT-005` (criar `docs/backlog/historias-tecnicas/HT-005-harness-local.md` com
-critérios verificáveis) e movê-la para `Ready` — só depois ela é puxada.
-
-`HT-005` destrava a fila inteira: hoje `scripts/harness.env` não existe, então
-toda tarefa de gate falha com "comando não configurado".
+Todas as dependências estão prontas: `HN-001` deu a sessão, `HT-011` a porta de
+agregação com política de falha, `HT-010` a cifra em repouso e `HT-008` a
+barreira por titular. Pela regra de grooming, o arquivo de história é criado
+quando o item entra em `Ready`: a próxima ação é groomar `HN-002` (criar
+`docs/backlog/historias/HN-002-conectar-instituicao.md` com critérios
+verificáveis), movê-la para `Ready` — e só depois puxá-la.
 
 ---
 

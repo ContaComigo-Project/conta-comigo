@@ -42,5 +42,7 @@ Use [SDD-000-template.md](./SDD-000-template.md) como base.
 | [SDD-001](./SDD-001-contacomigo-poc.md) | ContaComigo (PoC) — problema, personas, escopo, fluxos e quebra | Aprovada |
 
 A `SDD-001` já foi quebrada em requisitos (`docs/requisitos/`), épicos e 28
-itens de fila no `KANBAN-OFICIAL.md`. Sete decisões seguem em aberto na seção 7
-da spec; quatro delas são resolvidas por `HT-004`.
+itens de fila no `KANBAN-OFICIAL.md`. Quatro decisões da seção 7 foram
+resolvidas por `HT-004` (`ADR-002` a `ADR-005`); três seguem em aberto:
+validação de personas, teto de custo de IA (`HT-012`) e prazo de exclusão
+(`HN-012`).
