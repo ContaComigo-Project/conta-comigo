@@ -168,7 +168,7 @@ o backlog passou a considerar o frontend existente.
 | 17 | `HN-003` | Painel consolidado de saldos, cartões e lançamentos | Negócio | Backlog | HN-002, HT-017 | `MetricsCards`, `SpendingChart`, `TransactionsListView`, `MonthPicker`, `QuickFilterBar` |
 | 18 | `HT-012` | Observabilidade mínima: log estruturado e erro rastreável | Técnica | Backlog | HT-009 | — |
 | 19 | `HT-019` | Documentação OpenAPI/Swagger da API | Técnica | **Done** | HT-009, HT-010, HN-001 | — |
-| 20 | `HT-020` | Padronizar código e estrutura do backend em inglês | Técnica | **Em revisão** | HT-009, HT-010, HT-011, HN-001 | — |
+| 20 | `HT-020` | Padronizar código e estrutura do backend em inglês | Técnica | **Done** | HT-009, HT-010, HT-011, HN-001 | — |
 
 ### Fase 4 — Camada de inteligência
 
@@ -206,10 +206,10 @@ o backlog passou a considerar o frontend existente.
 - _(vazio)_
 
 ### Em revisão
-- `HT-020` — Padronizar código e estrutura do backend em inglês
+- _(vazio)_
 
 ### Done
-- `HT-000` `v0.1.0` · `HT-001` `v0.2.0` · `HT-002` `v0.3.0` · `HT-003` `v0.4.0` · `HT-004` `v0.5.0` · `HT-016` `v0.6.0` · `HT-005` `v0.7.0` · `HT-006` `v0.8.0` · `HT-009` `v0.9.0` · `HT-010` `v0.10.0` · `HT-017` `v0.11.0` · `HT-008` `v0.12.0` · `HN-001` `v0.13.0` · `HT-011` `v0.14.0` · `HT-019` `v0.15.0`
+- `HT-000` `v0.1.0` · `HT-001` `v0.2.0` · `HT-002` `v0.3.0` · `HT-003` `v0.4.0` · `HT-004` `v0.5.0` · `HT-016` `v0.6.0` · `HT-005` `v0.7.0` · `HT-006` `v0.8.0` · `HT-009` `v0.9.0` · `HT-010` `v0.10.0` · `HT-017` `v0.11.0` · `HT-008` `v0.12.0` · `HN-001` `v0.13.0` · `HT-011` `v0.14.0` · `HT-019` `v0.15.0` · `HT-020` `v0.16.0`
 
 Todas verificadas por `scripts/verificar-fechamento.sh`: tag e commit no mesmo
 hash, mensagem semântica citando a chave, documento de entrega presente.
@@ -296,3 +296,4 @@ cada tela é aproveitável, e isso muda o critério de aceite de quase todas ela
 | 2026-09-07 | `HT-020` | Backlog | Ready | Groomada com mapa de renomeação; puxada antes da ordem natural por decisão do time |
 | 2026-09-07 | `HT-020` | Ready | Em execução | `docs/tasks/HT-020/` criado com TASK e IMPLEMENTATION |
 | 2026-09-07 | `HT-020` | Em execução | Em revisão | Renomeação completa; 136+4+2 testes verdes; fronteiras e build ok; ADR-001 atualizado |
+| 2026-09-07 | `HT-020` | Em revisão | Done | `v0.16.0` → `43f4625`; `verificar-fechamento` verde |

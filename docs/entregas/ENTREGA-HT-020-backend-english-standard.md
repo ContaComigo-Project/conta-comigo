@@ -12,8 +12,8 @@ max_lines: 300
 - **Data:** 2026-09-07
 - **Tipo:** Técnica (refactor)
 - **Versão:** `v0.16.0`
-- **Commit:** `[preenchido no fechamento]`
-- **Tag:** `v0.16.0` → `[mesmo hash]`
+- **Commit:** `43f4625`
+- **Tag:** `v0.16.0` → `43f4625`
 
 ## O que foi entregue
 

@@ -37,6 +37,7 @@ Arquivo: `ENTREGA-[CHAVE]-titulo-em-kebab-case.md`, a partir de
 | 2026-09-07 | [`HN-001`](./ENTREGA-HN-001-acesso.md) | Acesso: cadastro, login e encerramento de sessão | `v0.13.0` | `295fca8` | `v0.13.0` |
 | 2026-09-07 | [`HT-011`](./ENTREGA-HT-011-adaptador-pluggy.md) | Porta de agregação com adaptador Pluggy e política de resiliência | `v0.14.0` | `94eec6f` | `v0.14.0` |
 | 2026-09-07 | [`HT-019`](./ENTREGA-HT-019-swagger-openapi.md) | Documentação OpenAPI/Swagger da API | `v0.15.0` | `ddc9bbe` | `v0.15.0` |
+| 2026-09-07 | [`HT-020`](./ENTREGA-HT-020-backend-english-standard.md) | Padronizar código e estrutura do backend em inglês | `v0.16.0` | `43f4625` | `v0.16.0` |
 
 Toda linha acima foi verificada por `scripts/verificar-fechamento.sh`: a tag
 aponta para o mesmo hash do commit de fechamento, e a mensagem cita a chave.
