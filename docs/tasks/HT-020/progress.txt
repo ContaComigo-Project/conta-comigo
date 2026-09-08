@@ -12,3 +12,7 @@
 2026-09-07 23:13 | AGIR | frontend: sed em pages (imports dados/access), funções de acesso (signIn/signOut/createAccount), string de UI revertida; build web verde | tsc
 2026-09-07 23:14 | AGIR | suíte 136 verdes; integração 4 verdes (config .integration.test.ts); fronteiras 165 módulos sem violação; funcional 2 verdes; build ok | pnpm
 2026-09-07 23:15 | REGISTRAR | ADR-001 atualizado (driving/driven, contextos EN); auditoria 100%; ENTREGA-HT-020 criada; kanban Em revisão | docs
+2026-09-07 23:30 | PERCEBER | time aponta padronização incompleta: packages (banco/categoria/comum/resultado), tests, tooling e dados ainda em PT | -
+2026-09-07 23:32 | AGIR | correção v0.16.1: contrato (bank/category/common/result + tipos Reference/Cents/ErrorCode + campos), tooling (regras do depcruiser EN + fixtures EN), tests (smoke/allowlist/setup/README EN), dados (equivalence EN, strings revertidas) | git mv + sed
+2026-09-07 23:35 | AGIR | overrides do pnpm movidos para pnpm-workspace.yaml (elimina warning no stderr do gate) | pnpm-workspace.yaml
+2026-09-07 23:36 | AGIR | suíte 136 verdes; fronteiras 165 módulos; integração 4; funcional 2; build ok; auditoria 100% | pnpm

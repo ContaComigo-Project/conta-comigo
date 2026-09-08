@@ -34,11 +34,5 @@
     "reflect-metadata": "0.2.2",
     "typescript": "6.0.3",
     "vitest": "5.0.0"
-  },
-  "pnpm": {
-    "overrides": {
-      "deepmerge-ts": "8.0.0",
-      "mysql2": "3.23.1"
-    }
   }
 }

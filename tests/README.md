@@ -1,42 +1,42 @@
 ---
 name: testes-indice
-description: Índice das suítes de teste do ContaComigo — unitário, integração, funcional, fronteiras e segurança, com comando e escopo de cada uma.
+description: Index of the ContaComigo test suites — unit, integration, functional, boundaries and security, with command and scope of each.
 document_type: index
 applies_when:
-  - rodar ou entender a suíte de testes do workspace
-  - rastrear onde uma RN é provada
+  - running or understanding the workspace test suite
+  - tracking where an RN is proven
 max_lines: 300
 ---
 
-# Testes — Suítes do Workspace
+# Tests — Workspace Suites
 
-Uma suíte por objetivo. Nada aqui é "o teste do backend": o Vitest da raiz cobre
-backend, contrato, dados da web e governança na mesma execução (`ADR-003`).
+One suite per goal. Nothing here is "the backend test": the root Vitest covers
+backend, contract, web data and governance in a single run (ADR-003).
 
-## Suítes
+## Suites
 
-| Suíte | Comando | O que prova | Onde vive |
+| Suite | Command | What it proves | Where it lives |
 | --- | --- | --- | --- |
-| Unitário | `pnpm run test:unitario` | Regras de domínio e casos de borda; RN rastreada por cenário `RN-XXX` | `backend/src/**/*.test.ts`, `packages/contrato/src/*.test.ts`, `frontend/src/dados/*.test.ts`, `tests/fronteiras/*.test.ts`, `tests/seguranca/*.test.ts` |
-| Integração | `pnpm run test:integracao` | Persistência real contra o PostgreSQL do compose | `backend/src/**/infrastructure/persistence/*.integracao.test.ts` |
-| Funcional/BDD | `pnpm run test:funcional` | Um cenário por critério de aceite, em navegador real (Playwright) | `tests/funcional/*.spec.ts` |
-| Fronteiras | `pnpm run lint:fronteiras` | `ADR-001` (hexagonal) e `ADR-002` (Prisma confinado) sobre `backend` e `frontend/src` | via `.dependency-cruiser.cjs` + `tooling/fronteiras/` |
-| Segurança | `pnpm run security` + `tests/seguranca/` | Varredura de segredo (gitleaks) e guarda da allowlist | `.gitleaks.toml`, `tests/seguranca/allowlist.test.ts` |
+| Unit | `pnpm run test:unitario` | Domain rules and edge cases; RN tracked by `RN-XXX` scenario name | `backend/src/**/*.test.ts`, `packages/contrato/src/*.test.ts`, `frontend/src/dados/*.test.ts`, `tests/fronteiras/*.test.ts`, `tests/seguranca/*.test.ts` |
+| Integration | `pnpm run test:integracao` | Real persistence against the compose PostgreSQL | `backend/src/**/infrastructure/persistence/*.integration.test.ts` |
+| Functional/BDD | `pnpm run test:funcional` | One scenario per acceptance criterion, in a real browser (Playwright) | `tests/funcional/*.spec.ts` |
+| Boundaries | `pnpm run lint:fronteiras` | `ADR-001` (hexagonal) and `ADR-002` (Prisma confined) over `backend` and `frontend/src` | via `.dependency-cruiser.cjs` + `tooling/fronteiras/` |
+| Security | `pnpm run security` + `tests/seguranca/` | Secret scan (gitleaks) and allowlist guard | `.gitleaks.toml`, `tests/seguranca/allowlist.test.ts` |
 
-## Regras
+## Rules
 
-- **Fronteiras bloqueiam:** um `import` de `@nestjs/*` dentro de `domain/` faz o
-  `lint` falhar (`RNF-021`). O gate de fronteiras roda sobre a árvore real e
-  sobre fixtures (`tooling/fronteiras/`).
-- **RN sempre provada:** cada regra de negócio tem um teste que ficaria vermelho
-  se a regra fosse invertida (`RNF-018`); o gate de QA rastreia pelo nome do
-  cenário.
-- **Sem retry no funcional:** repetir até passar esconde flakiness
-  (`playwright.config.ts` tem `retries: 0`).
-- **Rodar:** sempre pelo harness, o mesmo comando local e no CI (`RNF-007`).
+- **Boundaries block:** an `@nestjs/*` import inside `domain/` makes `lint` fail
+  (`RNF-021`). The boundary gate runs over the real tree and over fixtures
+  (`tooling/fronteiras/`).
+- **Every RN is proven:** each business rule has a test that would go red if the
+  rule were inverted (`RNF-018`); the QA gate tracks it by scenario name.
+- **No retry in functional:** repeating until green hides flakiness
+  (`playwright.config.ts` has `retries: 0`).
+- **Run:** always through the harness, same command locally and in CI
+  (`RNF-007`).
 
-## Relação com a estratégia de testes
+## Relation to the test strategy
 
-Ordem obrigatória por história: cenário funcional/BDD **vermelho** → código
-mínimo → refatoração → unitários de borda. Decisão de ferramental:
+Mandatory order per story: functional/BDD scenario **red** → minimal code →
+refactoring → unit edge cases. Tooling decision:
 [`ADR-003`](../adr/ADR-003-testes-vitest-playwright.md).

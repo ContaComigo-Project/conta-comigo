@@ -110,8 +110,30 @@ código de produto) e o padrão do teste de integração virou `.integration.tes
 
 ## Verificação de fechamento
 
-- [ ] Testes e gates aplicáveis verdes
-- [ ] Commit semântico contém a chave `HT-020`
-- [ ] Commit não contém arquivos de outra história
-- [ ] Tag `v0.16.0` aponta para o mesmo hash do commit
-- [ ] `KANBAN-OFICIAL.md` atualizado
+- [x] Testes e gates aplicáveis verdes
+- [x] Commit semântico contém a chave `HT-020`
+- [x] Commit não contém arquivos de outra história
+- [x] Tag `v0.16.0` aponta para o mesmo hash do commit
+- [x] `KANBAN-OFICIAL.md` atualizado
+
+## Correção posterior (`v0.16.1` → `[preenchido no fechamento]`)
+
+Completada a padronização nos pontos que ficaram pendentes:
+
+- **`packages/contrato`:** arquivos `bank.ts`, `category.ts`, `common.ts`,
+  `result.ts`, `access.test.ts`, `contract.test.ts`; tipos `ConnectionStatus`,
+  `BudgetCategoryDTO`, `Cents`, `ISOInstant`, `Reference`, `ErrorCode`; campos
+  `category`/`name`/`year`/`month`/`totalInCents`.
+- **`tooling/fronteiras`:** `regras.cjs` em EN (`createRules`, `commonOptions`,
+  nomes de regras `domain-imports-domain-only` etc.) e `fixtures.cjs`; fixtures
+  do gate renomeadas para `budget`/`billing` com nomes EN; testes de fronteira
+  atualizados — o gate continua bloqueando.
+- **`tests`:** `smoke.spec.ts` (era `fumaca`), `allowlist.test.ts` e `setup.ts`
+  traduzidos, `README.md` em EN.
+- **`frontend/src/dados`:** `equivalence.test.ts`, símbolos EN, strings de UI
+  revertidas ao PT (UI é PT-BR por regra).
+- **`pnpm-workspace.yaml`:** overrides movidos do `package.json` (o pnpm >= 10
+  não lê mais a chave `pnpm`; o warning poluía o stderr do gate).
+
+Suíte verde: 136 unit + 4 integração + 2 funcional; fronteiras 165 módulos sem
+violação; auditoria 100%.

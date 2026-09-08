@@ -1,37 +1,37 @@
 ---
 name: tooling-fronteiras-indice
-description: Ferramenta de checagem de fronteiras — regras executáveis do ADR-001 e ADR-002 para o dependency-cruiser, reutilizadas entre a árvore de produção e as fixtures de teste.
+description: Boundary-checking tool — executable ADR-001 and ADR-002 rules for dependency-cruiser, reused between the production tree and the test fixtures.
 document_type: index
 applies_when:
-  - alterar as regras de importação do ADR-001/ADR-002
-  - entender como o gate de fronteiras é configurado
+  - changing the ADR-001/ADR-002 import rules
+  - understanding how the boundary gate is configured
 max_lines: 300
 ---
 
-# Tooling — Checagem de Fronteiras
+# Tooling — Boundary Check
 
-Configuração executável do dependency-cruiser que transforma as regras de
-importação de `ADR-001` (hexagonal) e `ADR-002` (Prisma confinado) em gate
-bloqueante (`RNF-021`).
+Executable dependency-cruiser configuration that turns the import rules of
+`ADR-001` (hexagonal) and `ADR-002` (Prisma confined) into a blocking gate
+(`RNF-021`).
 
-## Componentes
+## Components
 
-| Arquivo | Papel |
+| File | Role |
 | --- | --- |
-| `fronteiras/regras.cjs` | Fábrica `criarRegras(raiz)` com as 7 regras: domínio só importa domínio; domínio/application não conhecem transporte nem framework; application não conhece infra; Prisma só em `infrastructure/persistence/`; sem ciclos; sem import irresolvível |
-| `fronteiras/fixtures.cjs` | Config do cruiser para as fixtures de `tests/fronteiras/fixtures/` — usa a mesma fábrica, com a raiz inferida do alvo |
-| `.dependency-cruiser.cjs` (raiz) | Aplica a fábrica à árvore de produção: `depcruise backend frontend/src` |
+| `fronteiras/regras.cjs` | `createRules(root)` factory with the 7 rules: domain imports domain only; domain/application avoid transport and framework; application avoids infra; Prisma only in `infrastructure/persistence/`; no cycles; no unresolvable import |
+| `fronteiras/fixtures.cjs` | Cruiser config for the `tests/fronteiras/fixtures/` trees — uses the same factory, root inferred from the target |
+| `.dependency-cruiser.cjs` (root) | Applies the factory to the production tree: `depcruise backend frontend/src` |
 
-## Por que existe
+## Why it exists
 
-Uma única lista de regras roda sobre dois alvos diferentes:
+One rule list runs over two different targets:
 
-1. **Produção** (`backend/src` e `frontend/src`) — vira o `pnpm run lint:fronteiras`,
-   bloqueando no harness e no CI.
-2. **Fixtures** (`tests/fronteiras/fixtures/{limpo,violacao}`) — o teste
-   `tests/fronteiras/` prova que **cada regra reprova o que deveria** (árvore
-   `violacao` falha, árvore `limpo` passa).
+1. **Production** (`backend/src` and `frontend/src`) — becomes
+   `pnpm run lint:fronteiras`, blocking in the harness and in CI.
+2. **Fixtures** (`tests/fronteiras/fixtures/{limpo,violacao}`) — the test
+   `tests/fronteiras/` proves that **each rule rejects what it should** (the
+   `violacao` tree fails, the `limpo` tree passes).
 
-Se a regra mudar, muda num só lugar e a prova de comportamento continua cobrindo
-as duas árvores. Histórico de furos corrigidos está em
-`docs/tasks/HT-009/evidencia/` e `docs/tasks/HT-017/evidencia/`.
+If a rule changes, it changes in one place and the behavior proof keeps covering
+both trees. History of closed gate gaps is in `docs/tasks/HT-009/evidencia/` and
+`docs/tasks/HT-017/evidencia/`.

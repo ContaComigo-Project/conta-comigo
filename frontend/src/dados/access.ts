@@ -37,10 +37,10 @@ async function enviar(route: string, metodo: string, body: unknown) {
 }
 
 /** A mensagem exibida é a que a API devolve: ela é deliberadamente uniforme. */
-async function mensagemDeErro(response: Response, padrao: string) {
+async function errorMessage(response: Response, padrao: string) {
   try {
     const body = await response.json();
-    return typeof body?.message === 'string' ? body.message : padrao;
+    return typeof body?.mensagem === 'string' ? body.mensagem : padrao;
   } catch {
     return padrao;
   }
@@ -48,7 +48,7 @@ async function mensagemDeErro(response: Response, padrao: string) {
 
 export async function createAccount(dados: CreateAccountDTO) {
   const response = await enviar('/access/accounts', 'POST', dados);
-  if (!response.ok) throw new AccessFailure(await mensagemDeErro(response, 'Não foi possível criar a account.'));
+  if (!response.ok) throw new AccessFailure(await errorMessage(response, 'Não foi possível criar a conta.'));
 
   const account = AccountDTO.safeParse(await response.json());
   if (!account.success) throw new AccessFailure('Resposta inesperada do servidor.');
@@ -57,7 +57,7 @@ export async function createAccount(dados: CreateAccountDTO) {
 
 export async function signIn(credenciais: CredentialsDTO) {
   const response = await enviar('/access/sessions', 'POST', credenciais);
-  if (!response.ok) throw new AccessFailure(await mensagemDeErro(response, 'E-mail ou senha inválidos.'));
+  if (!response.ok) throw new AccessFailure(await errorMessage(response, 'E-mail ou senha inválidos.'));
 
   const nova = SessionDTO.safeParse(await response.json());
   if (!nova.success) throw new AccessFailure('Resposta inesperada do servidor.');

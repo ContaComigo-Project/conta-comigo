@@ -1,25 +1,25 @@
-// Regras de fronteira de ADR-001 (hexagonal) e ADR-002 (Prisma confinado),
-// como configuracao executavel do dependency-cruiser.
+// ADR-001 (hexagonal) and ADR-002 (Prisma confined) boundary rules, as
+// executable dependency-cruiser configuration.
 //
-// Exportada como fabrica para que a MESMA lista de regras rode sobre a arvore
-// de producao (backend/src) e sobre as fixtures de teste — e o teste em
-// tests/fronteiras/ prove que cada regra reprova o que deveria.
+// Exported as a factory so the SAME rule list runs against the production tree
+// (backend/src) and against the test fixtures — and the test in
+// tests/fronteiras/ proves that each rule rejects what it should.
 //
-// Tabela de origem: ADR-001, secao "Regras de dependencia":
-//   domain/          -> so TypeScript e outros domain/; nada de framework, ORM, I/O
-//   application/     -> pode domain/; nao pode infrastructure/ nem @nestjs/* (exceto tipo puro)
-//   infrastructure/  -> pode tudo; nao pode conter regra de negocio (nao verificavel aqui)
-//   <contexto>.module.ts -> pode tudo: unico ponto que conhece o concreto
-// Mais ADR-002, regra 2: @prisma/client so em infrastructure/persistence/.
+// Source table: ADR-001, "Dependency rules" section:
+//   domain/          -> only TypeScript and other domain/; no framework, ORM, I/O
+//   application/     -> may use domain/; not infrastructure/ nor @nestjs/* (except pure type)
+//   infrastructure/  -> may use anything; must not hold business rules (not checkable here)
+//   <contexto>.module.ts -> may use anything: the only place that knows the concrete
+// Plus ADR-002, rule 2: @prisma/client only in infrastructure/persistence/.
 
 'use strict';
 
 /**
- * @param {string} raiz  caminho, relativo a raiz do repo, da arvore de contextos
- *                       (ex.: "backend/src" ou "tests/fronteiras/fixtures/limpo")
+ * @param {string} root  path, relative to repo root, of the context tree
+ *                       (e.g. "backend/src" or "tests/fronteiras/fixtures/limpo")
  */
-function criarRegras(raiz) {
-  const r = raiz.replace(/\\/g, '/').replace(/\/$/, '');
+function createRules(root) {
+  const r = root.replace(/\\/g, '/').replace(/\/$/, '');
   const DOMAIN = `^${r}/[^/]+/domain/`;
   const APPLICATION = `^${r}/[^/]+/application/`;
   const INFRA = `^${r}/[^/]+/infrastructure/`;
@@ -28,26 +28,26 @@ function criarRegras(raiz) {
 
   return [
     {
-      name: 'dominio-so-importa-dominio',
-      comment: 'ADR-001: domain/ importa apenas outros arquivos de domain/. Nada de application/, infrastructure/ ou externo.',
+      name: 'domain-imports-domain-only',
+      comment: 'ADR-001: domain/ imports only other domain/ files. Nothing from application/, infrastructure/ or external.',
       severity: 'error',
       from: { path: DOMAIN, pathNot: MODULE },
-      // Sem excecao para `import type`: ADR-001 so tolera tipo puro em
-      // application/. HT-017 plantou `import type` do contrato em domain/ e o
-      // gate passou verde por causa da excecao que estava aqui.
+      // No exception for `import type`: ADR-001 only tolerates pure types in
+      // application/. HT-017 planted an `import type` of the contract in domain/
+      // and the gate went green because of the exception that lived here.
       to: { pathNot: [DOMAIN, 'node_modules/(typescript|tslib)/'] },
     },
     {
-      name: 'dominio-nao-conhece-transporte',
-      comment: 'HT-017: pacotes do workspace (packages/*, ex. @contacomigo/contrato) resolvem por symlink, nao por node_modules — a regra de npm nao os ve. Transporte nunca entra em domain/ nem em application/.',
+      name: 'domain-avoids-workspace-transport',
+      comment: 'HT-017: workspace packages (packages/*, e.g. @contacomigo/contrato) resolve via symlink, not node_modules — the npm rule does not see them. Transport never enters domain/ nor application/.',
       severity: 'error',
       from: { path: [DOMAIN, APPLICATION], pathNot: MODULE },
-      // Symlink do pnpm pode aparecer como packages/... ou node_modules/@contacomigo/...
+      // pnpm symlink may appear as packages/... or node_modules/@contacomigo/...
       to: { path: '(^|/)packages/|node_modules/@contacomigo/' },
     },
     {
-      name: 'dominio-sem-framework-nem-io',
-      comment: 'ADR-001 / ADR-003: um import de @nestjs/*, @prisma/client, axios ou qualquer pacote dentro de domain/ quebra o gate.',
+      name: 'domain-no-framework-or-io',
+      comment: 'ADR-001 / ADR-003: an import of @nestjs/*, @prisma/client, axios or any package inside domain/ breaks the gate.',
       severity: 'error',
       from: { path: DOMAIN },
       to: {
@@ -56,8 +56,8 @@ function criarRegras(raiz) {
       },
     },
     {
-      name: 'application-nao-conhece-infra',
-      comment: 'ADR-001: application/ pode domain/, nunca infrastructure/ nem framework (tipo puro de @nestjs/* e tolerado).',
+      name: 'application-avoids-infrastructure',
+      comment: 'ADR-001: application/ may use domain/, never infrastructure/ nor framework (pure type of @nestjs/* is tolerated).',
       severity: 'error',
       from: { path: APPLICATION, pathNot: MODULE },
       to: {
@@ -66,22 +66,22 @@ function criarRegras(raiz) {
       },
     },
     {
-      name: 'prisma-so-em-persistence',
-      comment: 'ADR-002, regra 2: @prisma/client e conhecido apenas por infrastructure/persistence/.',
+      name: 'prisma-only-in-persistence',
+      comment: 'ADR-002, rule 2: @prisma/client is known only by infrastructure/persistence/.',
       severity: 'error',
       from: { path: `^${r}/`, pathNot: PERSISTENCE },
       to: { path: 'node_modules/@prisma/client/' },
     },
     {
-      name: 'sem-ciclos',
-      comment: 'Dependencia circular entre modulos impede reversao limpa.',
+      name: 'no-cycles',
+      comment: 'Circular dependency between modules prevents clean reversal.',
       severity: 'error',
       from: {},
       to: { circular: true },
     },
     {
-      name: 'sem-import-irresolvivel',
-      comment: 'Import que nao resolve escaparia das outras regras por nao virar node_modules/...; precisa falhar por si.',
+      name: 'no-unresolvable-import',
+      comment: 'An import that does not resolve would escape the other rules by never becoming node_modules/...; it must fail on its own.',
       severity: 'error',
       from: {},
       to: { couldNotResolve: true },
@@ -89,14 +89,14 @@ function criarRegras(raiz) {
   ];
 }
 
-const opcoesComuns = {
-  // node_modules fica em doNotFollow, NUNCA em exclude: "exclude" apaga o pacote
-  // do grafo e com ele a aresta domain/ -> @nestjs/common que as regras
-  // precisam ver. HT-009 plantou um import real em domain/ e o gate passou
-  // verde por causa disso; a evidencia esta em docs/tasks/HT-009/evidencia/.
-  // O cliente Prisma gerado (persistence/gerado, gitignored) e tratado como
-  // node_modules: a aresta ate ele continua no grafo, mas nao entramos nele —
-  // tem ciclos internos que nao sao nossos.
+const commonOptions = {
+  // node_modules stays in doNotFollow, NEVER in "exclude": "exclude" removes the
+  // package from the graph and with it the domain/ -> @nestjs/common edge that the
+  // rules need to see. HT-009 planted a real import in domain/ and the gate went
+  // green because of that; the evidence is in docs/tasks/HT-009/evidencia/.
+  // The generated Prisma client (persistence/gerado, gitignored) is treated like
+  // node_modules: the edge to it stays in the graph, but we do not enter it — it
+  // has internal cycles that are not ours.
   doNotFollow: { path: ['node_modules', '/persistence/gerado/'] },
   exclude: { path: ['(^|/)(dist|coverage)/'] },
   tsPreCompilationDeps: true,
@@ -105,4 +105,4 @@ const opcoesComuns = {
   reporterOptions: { text: { highlightFocused: true } },
 };
 
-module.exports = { criarRegras, opcoesComuns };
+module.exports = { createRules, commonOptions };

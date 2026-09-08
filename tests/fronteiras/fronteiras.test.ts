@@ -57,32 +57,32 @@ describe('fronteiras de ADR-001 — arvore que viola', () => {
   });
 
   it('ADR-001 — @nestjs/common em domain/ e nomeado com regra e arquivo', () => {
-    const v = violacaoDe(resultado.violacoes, 'dominio-sem-framework-nem-io', 'domain/model/faixa-nestjs.ts');
+    const v = violacaoDe(resultado.violacoes, 'domain-no-framework-or-io', 'domain/model/band-nestjs.ts');
     expect(v, JSON.stringify(resultado.violacoes, null, 2)).toBeDefined();
     expect(v?.rule.severity).toBe('error');
     expect(v?.to).toContain('@nestjs/common');
   });
 
   it('ADR-002 — @prisma/client em domain/ e nomeado', () => {
-    const v = violacaoDe(resultado.violacoes, 'dominio-sem-framework-nem-io', 'domain/model/faixa-prisma.ts');
+    const v = violacaoDe(resultado.violacoes, 'domain-no-framework-or-io', 'domain/model/band-prisma.ts');
     expect(v).toBeDefined();
     expect(v?.to).toContain('@prisma/client');
   });
 
   it('ADR-001 — application/ importando infrastructure/ e nomeado', () => {
-    const v = violacaoDe(resultado.violacoes, 'application-nao-conhece-infra', 'application/caso-de-uso-ruim.ts');
+    const v = violacaoDe(resultado.violacoes, 'application-avoids-infrastructure', 'application/bad-use-case.ts');
     expect(v).toBeDefined();
-    expect(v?.to).toContain('infrastructure/persistence/repositorio.ts');
+    expect(v?.to).toContain('infrastructure/persistence/repository.ts');
   });
 
   it('HT-017 — `import type` do contrato (pacote do workspace) em domain/ e nomeado', () => {
-    const v = violacaoDe(resultado.violacoes, 'dominio-nao-conhece-transporte', 'domain/model/faixa-contrato.ts');
+    const v = violacaoDe(resultado.violacoes, 'domain-avoids-workspace-transport', 'domain/model/band-contract.ts');
     expect(v, JSON.stringify(resultado.violacoes.map((x) => [x.rule.name, x.from]), null, 2)).toBeDefined();
     expect(v?.to).toContain('packages/contrato');
   });
 
   it('ADR-002 — @prisma/client fora de infrastructure/persistence/ e nomeado', () => {
-    const v = violacaoDe(resultado.violacoes, 'prisma-so-em-persistence', 'infrastructure/http/usa-prisma.ts');
+    const v = violacaoDe(resultado.violacoes, 'prisma-only-in-persistence', 'infrastructure/http/uses-prisma.ts');
     expect(v).toBeDefined();
   });
 

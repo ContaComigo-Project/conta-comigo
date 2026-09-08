@@ -3,7 +3,7 @@ import { mockConnectedBanks } from '../mocks/connected-banks.mock';
 import { mockSpendingCategories } from '../mocks/spending-categories.mock';
 import { mockTransactions } from '../mocks/transactions.mock';
 import { BANCOS, CATEGORIAS, idDaCategoriaPeloNome, idDoBancoPeloNome } from './presentation';
-import type { OrigemDeDados } from './data-source';
+import type { DataSource } from './data-source';
 
 // Origem falsa: entrega o CONTRATO a partir da massa que hoje vive em
 // src/mocks. Usada por testes e pelo ambiente local ate a API real existir.
@@ -16,13 +16,13 @@ import type { OrigemDeDados } from './data-source';
 const FUSO_SP_EM_MINUTOS = -180; // Sao Paulo, sem horario de verao desde 2019
 const MESES = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
 
-function instanteEmSaoPaulo(ano: number, mesIndice: number, dia: number, hora: number, minuto: number): Date {
-  return new Date(Date.UTC(ano, mesIndice, dia, hora, minuto) - FUSO_SP_EM_MINUTOS * 60_000);
+function instanteEmSaoPaulo(year: number, monthIndex: number, dia: number, hora: number, minuto: number): Date {
+  return new Date(Date.UTC(year, monthIndex, dia, hora, minuto) - FUSO_SP_EM_MINUTOS * 60_000);
 }
 
 function dataCivilEmSaoPaulo(instante: Date) {
   const local = new Date(instante.getTime() + FUSO_SP_EM_MINUTOS * 60_000);
-  return { ano: local.getUTCFullYear(), mesIndice: local.getUTCMonth(), dia: local.getUTCDate() };
+  return { year: local.getUTCFullYear(), monthIndex: local.getUTCMonth(), dia: local.getUTCDate() };
 }
 
 /** "Hoje, 10:02" | "Ontem, 08:00" | "13 Jun, 18:45" -> instante ISO. */
@@ -31,16 +31,16 @@ function instanteDoRotulo(rotulo: string, agora: Date): string {
   const [hora, minuto] = parteHora.split(':').map(Number);
   const hoje = dataCivilEmSaoPaulo(agora);
 
-  if (parteDia === 'Hoje') return instanteEmSaoPaulo(hoje.ano, hoje.mesIndice, hoje.dia, hora, minuto).toISOString();
-  if (parteDia === 'Ontem') return instanteEmSaoPaulo(hoje.ano, hoje.mesIndice, hoje.dia - 1, hora, minuto).toISOString();
+  if (parteDia === 'Hoje') return instanteEmSaoPaulo(hoje.year, hoje.monthIndex, hoje.dia, hora, minuto).toISOString();
+  if (parteDia === 'Ontem') return instanteEmSaoPaulo(hoje.year, hoje.monthIndex, hoje.dia - 1, hora, minuto).toISOString();
 
-  const [dia, mes] = parteDia.split(' ');
-  return instanteEmSaoPaulo(hoje.ano, MESES.indexOf(mes), Number(dia), hora, minuto).toISOString();
+  const [dia, month] = parteDia.split(' ');
+  return instanteEmSaoPaulo(hoje.year, MESES.indexOf(month), Number(dia), hora, minuto).toISOString();
 }
 
 const centavos = (valor: number) => Math.round(valor * 100);
 
-export class OrigemFalsa implements OrigemDeDados {
+export class FakeSource implements DataSource {
   // Campo explicito: o tsconfig da web usa `erasableSyntaxOnly`, que proibe
   // parametro-propriedade no construtor.
   private readonly agora: Date;
@@ -57,8 +57,8 @@ export class OrigemFalsa implements OrigemDeDados {
         id: t.id,
         description: t.description,
         estabelecimento: t.merchant,
-        categoria: { id: idCategoria, nome: CATEGORIAS[idCategoria].nome },
-        instituicao: { id: idBanco, nome: BANCOS[idBanco]?.nome ?? t.bank },
+        category: { id: idCategoria, name: CATEGORIAS[idCategoria].name },
+        instituicao: { id: idBanco, name: BANCOS[idBanco]?.name ?? t.bank },
         amountInCents: centavos(t.amount),
         tipo: t.type === 'debit' ? 'debito' : 'credito',
         dueDate: instanteDoRotulo(t.formattedDate, this.agora),
@@ -78,8 +78,8 @@ export class OrigemFalsa implements OrigemDeDados {
         : this.agora.toISOString();
       return {
         id: idDoBancoPeloNome(b.name),
-        nome: b.name,
-        saldoEmCentavos: centavos(b.balance),
+        name: b.name,
+        saldoEmCents: centavos(b.balance),
         status: b.status === 'active' ? 'ativo' : b.status === 'syncing' ? 'sincronizando' : 'error',
         ultimaSincronizacao: ultima,
       };
@@ -91,7 +91,7 @@ export class OrigemFalsa implements OrigemDeDados {
     // Percentual NAO vai no transporte: e derivado dos totais, na web.
     const dados: SpendingCategoryDTO[] = mockSpendingCategories.map((c) => {
       const id = idDaCategoriaPeloNome(c.name);
-      return { categoria: { id, nome: c.name }, totalEmCentavos: centavos(c.value) };
+      return { category: { id, name: c.name }, totalEmCents: centavos(c.value) };
     });
     return ok(dados);
   }

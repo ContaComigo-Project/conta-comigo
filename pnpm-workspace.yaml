@@ -2,3 +2,8 @@ packages:
   - frontend
   - backend
   - packages/*
+
+# Dependency overrides (pnpm >= 10 reads them from here, not from package.json).
+overrides:
+  deepmerge-ts: 8.0.0
+  mysql2: 3.23.1

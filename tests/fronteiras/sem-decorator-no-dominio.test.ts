@@ -41,7 +41,7 @@ describe('ADR-001 — dominio sem decorator', () => {
   });
 
   it('controle: a fixture ilegal de HT-006 seria pega por esta mesma regra', () => {
-    const fixture = join(RAIZ, 'tests', 'fronteiras', 'fixtures', 'violacao', 'orcamento', 'domain', 'model', 'faixa-nestjs.ts');
+    const fixture = join(RAIZ, 'tests', 'fronteiras', 'fixtures', 'violacao', 'budget', 'domain', 'model', 'band-nestjs.ts');
     expect(DECORATOR.test(readFileSync(fixture, 'utf8'))).toBe(true);
   });
 });

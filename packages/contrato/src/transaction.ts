@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { Centavos, InstanteISO, ReferenceMonth, Referencia } from './comum';
+import { Cents, ISOInstant, ReferenceMonth, Reference } from './common';
 
 // Transaction como TRANSPORTE. Nada de apresentacao aqui: formato de moeda,
 // icone e cor sao da web (mapeadores). Valor em centavos (RN-006); data ISO.
@@ -13,16 +13,16 @@ export const TransactionDTO = z
     description: z.string().min(1),
     descriptionOriginal: z.string().optional(),
     estabelecimento: z.string().optional(),
-    categoria: Referencia.nullable(),
-    instituicao: Referencia,
-    amountInCents: Centavos,
+    category: Reference.nullable(),
+    instituicao: Reference,
+    amountInCents: Cents,
     tipo: TipoDeTransaction,
-    dueDate: InstanteISO,
+    dueDate: ISOInstant,
   })
   .strict();
 export type TransactionDTO = z.infer<typeof TransactionDTO>;
 
 export const ResumoDoMesDTO = z
-  .object({ mes: ReferenceMonth, quantidade: z.number().int().min(0), totalEmCentavos: Centavos })
+  .object({ month: ReferenceMonth, quantidade: z.number().int().min(0), totalEmCents: Cents })
   .strict();
 export type ResumoDoMesDTO = z.infer<typeof ResumoDoMesDTO>;

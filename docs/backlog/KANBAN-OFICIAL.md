@@ -297,3 +297,4 @@ cada tela é aproveitável, e isso muda o critério de aceite de quase todas ela
 | 2026-09-07 | `HT-020` | Ready | Em execução | `docs/tasks/HT-020/` criado com TASK e IMPLEMENTATION |
 | 2026-09-07 | `HT-020` | Em execução | Em revisão | Renomeação completa; 136+4+2 testes verdes; fronteiras e build ok; ADR-001 atualizado |
 | 2026-09-07 | `HT-020` | Em revisão | Done | `v0.16.0` → `43f4625`; `verificar-fechamento` verde |
+| 2026-09-07 | `HT-020` | Done | Done | Correção `v0.16.1`: EN completado em contrato, tooling, tests e dados |

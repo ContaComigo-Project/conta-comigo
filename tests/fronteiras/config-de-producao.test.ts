@@ -34,7 +34,7 @@ describe('config de producao do dependency-cruiser', () => {
   });
 
   it('exclui as fixtures ilegais do lint de producao', () => {
-    const fixture = 'tests/fronteiras/fixtures/violacao/orcamento/domain/model/faixa-nestjs.ts';
+    const fixture = 'tests/fronteiras/fixtures/violacao/budget/domain/model/band-nestjs.ts';
     expect(lista(config.options.exclude?.path).some((p) => new RegExp(p).test(fixture))).toBe(true);
   });
 

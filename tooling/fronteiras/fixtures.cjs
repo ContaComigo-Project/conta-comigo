@@ -1,10 +1,10 @@
-// Config do dependency-cruiser para as FIXTURES de tests/fronteiras/.
-// A raiz de contextos e inferida do alvo passado na linha de comando, para que
-// a mesma fabrica de regras sirva a arvore "violacao" e a arvore "limpo".
+// dependency-cruiser config for the tests/fronteiras/ FIXTURES.
+// The context root is inferred from the target passed on the command line, so
+// the same rule factory serves both the "violacao" and the "limpo" trees.
 'use strict';
-const { criarRegras, opcoesComuns } = require('./regras.cjs');
+const { createRules, commonOptions } = require('./regras.cjs');
 
 const alvo = process.argv.find((a) => a.includes('tests/fronteiras/fixtures/'));
 const raiz = alvo ? alvo.replace(/\\/g, '/').replace(/\/+$/, '') : 'tests/fronteiras/fixtures/limpo';
 
-module.exports = { forbidden: criarRegras(raiz), options: opcoesComuns };
+module.exports = { forbidden: createRules(raiz), options: commonOptions };
