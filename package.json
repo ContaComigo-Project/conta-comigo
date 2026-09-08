@@ -14,14 +14,14 @@
     "build": "pnpm --filter client-contacomigo build && pnpm --filter @contacomigo/backend typecheck",
     "lint": "pnpm --filter client-contacomigo lint && pnpm run lint:boundaries",
     "lint:boundaries": "depcruise --config .dependency-cruiser.cjs backend frontend/src",
-    "test:unitario": "vitest run",
-    "test:funcional": "playwright test",
-    "test": "pnpm run test:unitario && pnpm run test:integracao && pnpm run test:funcional",
+    "test:unit": "vitest run",
+    "test:functional": "playwright test",
+    "test": "pnpm run test:unit && pnpm run test:integration && pnpm run test:functional",
     "coverage": "vitest run --coverage",
     "security": "node scripts/seguranca.mjs",
     "start": "pnpm --filter client-contacomigo dev",
     "start:api": "pnpm --filter @contacomigo/backend dev",
-    "test:integracao": "vitest run --config vitest.integracao.config.ts"
+    "test:integration": "vitest run --config vitest.integration.config.ts"
   },
   "devDependencies": {
     "@contacomigo/contract": "workspace:*",

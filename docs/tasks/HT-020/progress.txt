@@ -24,3 +24,5 @@
 2026-09-07 23:48 | AGIR | suíte 136 verdes; integração 4; funcional 2; lint:boundaries verde; build ok; auditoria 100% | pnpm
 2026-09-07 23:50 | PERCEBER | time aponta: fixtures limpo/violacao e pasta seguranca ainda em PT | -
 2026-09-07 23:51 | AGIR | fixtures clean/violation e tests/security; refs atualizadas; suíte e boundaries verdes | git mv
+2026-09-07 23:52 | PERCEBER | time aponta: vitest.integracao.config.ts e scripts test:* em PT | -
+2026-09-07 23:53 | AGIR | correção v0.16.4: vitest.integration.config.ts; scripts test:unit/test:functional/test:integration; tests/functional; comentários do harness EN; suíte verde | git mv + sed

@@ -167,3 +167,16 @@ Pastas e nomes do gate de fronteiras em EN:
 
 Suíte verde: 136 unit + 4 integração + 2 funcional; `lint:boundaries` verde;
 auditoria 100%.
+
+## Correção posterior (`v0.16.4` → `[preenchido no fechamento]`)
+
+Nomes de scripts e pastas de teste em EN:
+
+- `vitest.integracao.config.ts` → **`vitest.integration.config.ts`**.
+- Scripts: `test:unitario`→`test:unit`, `test:funcional`→`test:functional`,
+  `test:integracao`→`test:integration` (em `package.json`, `harness.env` e
+  `tests/README.md`).
+- Pasta `tests/funcional` → `tests/functional` (`playwright.config.ts` atualizado).
+
+Suíte verde: 136 unit + 4 integração + 2 funcional; `lint:boundaries` verde;
+auditoria 100%.

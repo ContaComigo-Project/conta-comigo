@@ -41,6 +41,7 @@ Arquivo: `ENTREGA-[CHAVE]-titulo-em-kebab-case.md`, a partir de
 | 2026-09-07 | `HT-020` | Correção: completar EN em contrato, tooling, tests e dados | `v0.16.1` | `2caa4bd` | `v0.16.1` |
 | 2026-09-07 | `HT-020` | Correção: renomear pastas/pacote contrato→contract e dados→data | `v0.16.2` | `c3e2231` | `v0.16.2` |
 | 2026-09-07 | `HT-020` | Correção: tests/tooling fronteiras→boundaries + lint:boundaries | `v0.16.3` | `ef8fffd` | `v0.16.3` |
+| 2026-09-07 | `HT-020` | Correção: vitest.integration + scripts test:unit/functional/integration | `v0.16.4` | `[preenchido]` | `v0.16.4` |
 
 Toda linha acima foi verificada por `scripts/verificar-fechamento.sh`: a tag
 aponta para o mesmo hash do commit de fechamento, e a mensagem cita a chave.
