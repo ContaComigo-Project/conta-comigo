@@ -165,7 +165,7 @@ o backlog passou a considerar o frontend existente.
 | 16 | `HN-012` | Revogar consentimento e excluir conta e dados | Negócio | Backlog | HN-002 | **Sem tela** — construção do zero |
 | 17 | `HN-003` | Painel consolidado de saldos, cartões e lançamentos | Negócio | Backlog | HN-002, HT-017 | `MetricsCards`, `SpendingChart`, `TransactionsListView`, `MonthPicker`, `QuickFilterBar` |
 | 18 | `HT-012` | Observabilidade mínima: log estruturado e erro rastreável | Técnica | Backlog | HT-009 | — |
-| 19 | `HT-019` | Documentação OpenAPI/Swagger da API | Técnica | **Ready** | HT-009, HT-010, HN-001 | — |
+| 19 | `HT-019` | Documentação OpenAPI/Swagger da API | Técnica | **Em revisão** | HT-009, HT-010, HN-001 | — |
 
 ### Fase 4 — Camada de inteligência
 
@@ -197,13 +197,13 @@ o backlog passou a considerar o frontend existente.
 ## Quadro
 
 ### Ready
-- `HT-019` — Documentação OpenAPI/Swagger da API (puxada antes da ordem natural)
+- _(vazio — WIP 1)_
 
 ### Em execução
 - _(vazio)_
 
 ### Em revisão
-- _(vazio)_
+- `HT-019` — Documentação OpenAPI/Swagger da API
 
 ### Done
 - `HT-000` `v0.1.0` · `HT-001` `v0.2.0` · `HT-002` `v0.3.0` · `HT-003` `v0.4.0` · `HT-004` `v0.5.0` · `HT-016` `v0.6.0` · `HT-005` `v0.7.0` · `HT-006` `v0.8.0` · `HT-009` `v0.9.0` · `HT-010` `v0.10.0` · `HT-017` `v0.11.0` · `HT-008` `v0.12.0` · `HN-001` `v0.13.0` · `HT-011` `v0.14.0`
@@ -286,3 +286,5 @@ cada tela é aproveitável, e isso muda o critério de aceite de quase todas ela
 | 2026-09-07 | `HT-011` | Em revisão | Done | `v0.14.0` → `94eec6f`; `verificar-fechamento` verde |
 | 2026-09-07 | `HT-019` | — | Backlog | Inserida a pedido do time: documentação OpenAPI/Swagger da API; ordens 19–30 renumeradas para 20–31 |
 | 2026-09-07 | `HT-019` | Backlog | Ready | Groomada com critérios verificáveis; puxada antes da ordem natural por decisão do time |
+| 2026-09-07 | `HT-019` | Ready | Em execução | `docs/tasks/HT-019/` criado com TASK e IMPLEMENTATION |
+| 2026-09-07 | `HT-019` | Em execução | Em revisão | Swagger instalado e provado: spec com 6 endpoints e Bearer; 132 testes verdes; fronteiras intactas |

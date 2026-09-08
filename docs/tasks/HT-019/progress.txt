@@ -1,0 +1,16 @@
+# progress — HT-019
+# Diário append-only do ciclo Ralph. Uma linha por evento.
+# Formato: AAAA-MM-DD HH:MM | FASE | descrição objetiva | evidência
+# FASE: PERCEBER | ORIENTAR | DECIDIR | AGIR | REGISTRAR
+
+2026-09-07 22:00 | PERCEBER | li a história HT-019, os controllers de acesso/lancamentos, o contrato e o padrão de teste (Nest em porta efêmera) | docs, backend/src
+2026-09-07 22:02 | ORIENTAR | critérios de aceite comparados: 6 endpoints, schemas do contrato, Bearer, fronteiras intactas; zod 4 tem toJSONSchema() | node
+2026-09-07 22:04 | DECIDIR | @nestjs/swagger no backend; config em openapi.ts (global); schemas via toJSONSchema do zod; jsonDocumentUrl=api-json | -
+2026-09-07 22:06 | AGIR | bash scripts/nova-historia.sh HT-019; kanban para Em execução; TASK.md e IMPLEMENTATION.md preenchidos | docs/tasks/HT-019/
+2026-09-07 22:07 | AGIR | pnpm --filter @contacomigo/backend add @nestjs/swagger (12.0.1) | backend/package.json
+2026-09-07 22:08 | AGIR | teste de controle escrito e VERMELHO (módulo ./openapi inexistente) | backend/src/openapi.test.ts
+2026-09-07 22:10 | AGIR | openapi.ts, main.ts, decorators nos controllers; teste verde | vitest
+2026-09-07 22:12 | AGIR | typecheck acusou _JSONSchema não atribuível a SchemaObject; helper zodParaSchema com retorno any documentado (exports do @nestjs/swagger restringidos) | openapi.ts
+2026-09-07 22:13 | AGIR | suíte completa 132 verdes; fronteiras 165 módulos sem violação; build ok | pnpm run build
+2026-09-07 22:15 | AGIR | API real no ar: /api/docs 200; /api-json spec 3.0.0 com 5 paths (6 métodos) e bearer nos lancamentos | curl
+2026-09-07 22:16 | REGISTRAR | ENTREGA-HT-019 criada; kanban para Em revisão | docs/entregas/, KANBAN
