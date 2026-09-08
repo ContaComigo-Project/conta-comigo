@@ -42,6 +42,8 @@ Arquivo: `ENTREGA-[CHAVE]-titulo-em-kebab-case.md`, a partir de
 | 2026-09-07 | `HT-020` | Correção: renomear pastas/pacote contrato→contract e dados→data | `v0.16.2` | `c3e2231` | `v0.16.2` |
 | 2026-09-07 | `HT-020` | Correção: tests/tooling fronteiras→boundaries + lint:boundaries | `v0.16.3` | `ef8fffd` | `v0.16.3` |
 | 2026-09-07 | `HT-020` | Correção: vitest.integration + scripts test:unit/functional/integration | `v0.16.4` | `2496396675ef6ec8de8d56302bc6953ae88ba6b6` | `v0.16.4` |
+| 2026-09-08 | [`HN-002`](./ENTREGA-HN-002-conectar-instituicao.md) | Conectar instituição com consentimento e sincronizar | `v0.17.0` | `b3ae538` | `v0.17.0` |
+
 
 Toda linha acima foi verificada por `scripts/verificar-fechamento.sh`: a tag
 aponta para o mesmo hash do commit de fechamento, e a mensagem cita a chave.
