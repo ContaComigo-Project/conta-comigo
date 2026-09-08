@@ -32,7 +32,7 @@ export class TransactionsController {
   }
 
   @Get('month-summary')
-  @ApiOperation({ summary: 'Resumo do mês', description: 'Resumo consolidado dos lançamentos do mês de referência do holder (RN-003).' })
+  @ApiOperation({ summary: 'Resumo do mês', description: 'Resumo consolidado dos lançamentos do mês de referência do titular.' })
   @ApiResponse({ status: 200, description: 'Resumo do mês' })
   @ApiResponse({ status: 401, description: 'Sem token Bearer válido' })
   resumoDoMes() {
@@ -40,7 +40,7 @@ export class TransactionsController {
   }
 
   @Get()
-  @ApiOperation({ summary: 'Listar lançamentos', description: 'Lista os lançamentos do holder autenticado (RN-015).' })
+  @ApiOperation({ summary: 'Listar lançamentos', description: 'Lista os lançamentos do titular autenticado.' })
   @ApiResponse({ status: 200, description: 'Lançamentos do holder' })
   @ApiResponse({ status: 401, description: 'Sem token Bearer válido' })
   async transactions(): Promise<Result<TransactionDTO[]>> {

@@ -20,7 +20,7 @@ export class AccessController {
   ) {}
 
   @Post('accounts')
-  @ApiOperation({ summary: 'Cadastrar account', description: 'Cria a account a partir de e-mail e senha. A recusa é uniforme: não revela se o e-mail já existia (RF-001).' })
+  @ApiOperation({ summary: 'Cadastrar conta', description: 'Cria a conta a partir de e-mail e senha. A recusa é uniforme: não revela se o e-mail já existia.' })
   @ApiBody({ schema: zodParaSchema(CreateAccountDTO), description: 'E-mail e senha de cadastro' })
   @ApiResponse({ status: 201, description: 'Account criada (sem senha nem hash na response)' })
   @ApiResponse({ status: 400, description: 'Dados inválidos ou e-mail já cadastrado' })
@@ -86,7 +86,7 @@ export class AccessController {
 
   @Delete('sessions')
   @HttpCode(204)
-  @ApiOperation({ summary: 'Encerrar sessão', description: 'Invalida o refresh token (RF-003).' })
+  @ApiOperation({ summary: 'Encerrar sessão', description: 'Invalida o refresh token.' })
   @ApiBody({ schema: zodParaSchema(RefreshDTO), description: 'Refresh token a revogar' })
   @ApiResponse({ status: 204, description: 'Sessão encerrada' })
   @ApiResponse({ status: 400, description: 'Dados inválidos' })
