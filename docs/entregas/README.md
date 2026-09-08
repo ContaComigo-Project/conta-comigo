@@ -43,6 +43,7 @@ Arquivo: `ENTREGA-[CHAVE]-titulo-em-kebab-case.md`, a partir de
 | 2026-09-07 | `HT-020` | Correção: tests/tooling fronteiras→boundaries + lint:boundaries | `v0.16.3` | `ef8fffd` | `v0.16.3` |
 | 2026-09-07 | `HT-020` | Correção: vitest.integration + scripts test:unit/functional/integration | `v0.16.4` | `2496396675ef6ec8de8d56302bc6953ae88ba6b6` | `v0.16.4` |
 | 2026-09-08 | [`HN-002`](./ENTREGA-HN-002-conectar-instituicao.md) | Conectar instituição com consentimento e sincronizar | `v0.17.0` | `b3ae538` | `v0.17.0` |
+| 2026-09-08 | [`HN-012`](./ENTREGA-HN-012-revogar-consentimento-e-excluir-conta.md) | Revogar consentimento e excluir conta e dados | `v0.18.0` | `7c63b24` | `v0.18.0` |
 
 
 Toda linha acima foi verificada por `scripts/verificar-fechamento.sh`: a tag
