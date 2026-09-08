@@ -138,7 +138,7 @@ Completada a padronização nos pontos que ficaram pendentes:
 Suíte verde: 136 unit + 4 integração + 2 funcional; fronteiras 165 módulos sem
 violação; auditoria 100%.
 
-## Correção posterior (`v0.16.2` → `[preenchido no fechamento]`)
+## Correção posterior (`v0.16.2` → `c3e2231`)
 
 Pastas e pacote de fronteira renomeados para EN:
 
