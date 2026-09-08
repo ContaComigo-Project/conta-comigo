@@ -51,26 +51,33 @@ Perceber → Orientar → Decidir → Agir → **Registrar**.
 
 ## Como iniciar a próxima história
 
-Hoje a coluna `Ready` do kanban está **vazia** — `HT-011` (Ordem 14) foi a
-última concluída. O próximo da fila é **`HN-002` — Conectar instituição com
-consentimento e sincronizar** (Ordem 15, ainda em `Backlog`), e ele precisa ser
-groomado antes de ser puxado.
+Hoje o item `Ready` do kanban é **`HT-019` — Documentação OpenAPI/Swagger da
+API** (Ordem 19), puxada antes da ordem natural por decisão do time. Ela já está
+groomada; o próximo passo é puxá-la:
 
 ```bash
 # 1. Confirmar a próxima demanda
 cat docs/backlog/KANBAN-OFICIAL.md
 
-# 2. Groomar: escrever o arquivo da história com critérios verificáveis
+# 2. Criar a pasta de execução
+scripts/nova-historia.sh HT-019        # Windows: powershell -File scripts/nova-historia.ps1 HT-019
+
+# 3. Preencher TASK.md e IMPLEMENTATION.md ANTES de qualquer trabalho
+
+# 4. Mover HT-019 para "Em execução" no kanban
+```
+
+Depois dela, a fila volta a **`HN-002` — Conectar instituição com consentimento
+e sincronizar** (Ordem 15, em `Backlog`), que precisa ser groomada antes de ser
+puxada:
+
+```bash
+# 1. Groomar: escrever o arquivo da história com critérios verificáveis
 cp docs/backlog/historias/_TEMPLATE-HISTORIA-NEGOCIO.md docs/backlog/historias/HN-002-conectar-instituicao.md
 
-# 3. Mover HN-002 de "Backlog" para "Ready" no kanban
+# 2. Mover HN-002 de "Backlog" para "Ready" no kanban
 
-# 4. Criar a pasta de execução
-scripts/nova-historia.sh HN-002        # Windows: powershell -File scripts/nova-historia.ps1 HN-002
-
-# 5. Preencher TASK.md e IMPLEMENTATION.md ANTES de qualquer trabalho
-
-# 6. Mover HN-002 para "Em execução" no kanban
+# 3. Puxar (nova-historia.sh HN-002) e preencher TASK/IMPLEMENTATION
 ```
 
 `HN-002` é a primeira história de negócio com consentimento real: exercita a

@@ -47,13 +47,19 @@ uma tem a coluna "UI hoje" dizendo o que já está pronto na tela.
 
 ## Próxima demanda
 
-**`HN-002` — Conectar instituição com consentimento e sincronizar** (ordem 15).
+**`HT-019` — Documentação OpenAPI/Swagger da API** (ordem 19, `Ready`).
 
-Todas as dependências estão prontas: `HN-001` deu a sessão, `HT-011` a porta de
-agregação com política de falha, `HT-010` a cifra em repouso — ainda sem uso — e
-`HT-008` a barreira por titular. É a primeira história a exercitar a skill
-`open-finance-security-agent` por inteiro: consentimento como registro de
-primeira classe, com escopo, expiração e revogação (`RN-012` a `RN-014`), e o
+Puxada **antes da ordem natural** por decisão do time (2026-09-07): documentar a
+API existente ajuda as histórias de integração seguintes (`HN-002`, `HN-003`) e
+dá ao time um mapa testável dos endpoints. Depois dela, a fila volta a `HN-002`
+(ordem 15).
+
+Originalmente o próximo da fila era `HN-002` — Conectar instituição com
+consentimento e sincronizar. Todas as dependências estão prontas: `HN-001` deu a
+sessão, `HT-011` a porta de agregação com política de falha, `HT-010` a cifra em
+repouso e `HT-008` a barreira por titular. Ela é a primeira história a exercitar
+a skill `open-finance-security-agent` por inteiro: consentimento como registro
+de primeira classe, com escopo, expiração e revogação (`RN-012` a `RN-014`), e o
 token do agregador cifrado.
 
 É a primeira história de **negócio**: as três anteriores da fila (`HT-011`,
@@ -159,7 +165,7 @@ o backlog passou a considerar o frontend existente.
 | 16 | `HN-012` | Revogar consentimento e excluir conta e dados | Negócio | Backlog | HN-002 | **Sem tela** — construção do zero |
 | 17 | `HN-003` | Painel consolidado de saldos, cartões e lançamentos | Negócio | Backlog | HN-002, HT-017 | `MetricsCards`, `SpendingChart`, `TransactionsListView`, `MonthPicker`, `QuickFilterBar` |
 | 18 | `HT-012` | Observabilidade mínima: log estruturado e erro rastreável | Técnica | Backlog | HT-009 | — |
-| 19 | `HT-019` | Documentação OpenAPI/Swagger da API | Técnica | Backlog | HT-009, HT-010, HN-001 | — |
+| 19 | `HT-019` | Documentação OpenAPI/Swagger da API | Técnica | **Ready** | HT-009, HT-010, HN-001 | — |
 
 ### Fase 4 — Camada de inteligência
 
@@ -191,7 +197,7 @@ o backlog passou a considerar o frontend existente.
 ## Quadro
 
 ### Ready
-- _(vazio — WIP 1)_
+- `HT-019` — Documentação OpenAPI/Swagger da API (puxada antes da ordem natural)
 
 ### Em execução
 - _(vazio)_
@@ -279,3 +285,4 @@ cada tela é aproveitável, e isso muda o critério de aceite de quase todas ela
 | 2026-09-07 | `HN-001` | Em revisão | Done | `v0.13.0` → `295fca8`; `verificar-fechamento` verde |
 | 2026-09-07 | `HT-011` | Em revisão | Done | `v0.14.0` → `94eec6f`; `verificar-fechamento` verde |
 | 2026-09-07 | `HT-019` | — | Backlog | Inserida a pedido do time: documentação OpenAPI/Swagger da API; ordens 19–30 renumeradas para 20–31 |
+| 2026-09-07 | `HT-019` | Backlog | Ready | Groomada com critérios verificáveis; puxada antes da ordem natural por decisão do time |

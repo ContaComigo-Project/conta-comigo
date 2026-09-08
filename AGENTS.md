@@ -73,16 +73,16 @@ Leu estes 4? Você sabe 95 % do que precisa para atuar aqui sem quebrar nada.
 
 ## 4. Próxima demanda hoje
 
-Em `docs/backlog/KANBAN-OFICIAL.md`, a coluna `Ready` está **vazia** — `HN-002`
-(Ordem 15) ainda está em `Backlog` e precisa ser groomada antes de ser puxada.
+Em `docs/backlog/KANBAN-OFICIAL.md`, o item `Ready` é **`HT-019`** —
+Documentação OpenAPI/Swagger da API (ordem 19, puxada antes da ordem natural por
+decisão do time).
 
 Últimas entregas: `HT-011` (Ordem 14) — `v0.14.0` → `94eec6f`; `HN-001` (Ordem 13)
 — `v0.13.0` → `295fca8`.
 
-Próximo da fila:
+Depois de `HT-019`, a fila volta para `HN-002` (Ordem 15, `Backlog`):
 
-> **`HN-002` — Conectar instituição com consentimento e sincronizar** (Ordem 15,
-> estado `Backlog`, depende de `HN-001` e `HT-011` — todas concluídas).
+> **`HN-002` — Conectar instituição com consentimento e sincronizar.**
 
 Todas as dependências estão prontas: `HN-001` deu a sessão, `HT-011` a porta de
 agregação com política de falha, `HT-010` a cifra em repouso e `HT-008` a
