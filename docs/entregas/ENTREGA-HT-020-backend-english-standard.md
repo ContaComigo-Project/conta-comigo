@@ -116,7 +116,7 @@ código de produto) e o padrão do teste de integração virou `.integration.tes
 - [x] Tag `v0.16.0` aponta para o mesmo hash do commit
 - [x] `KANBAN-OFICIAL.md` atualizado
 
-## Correção posterior (`v0.16.1` → `[preenchido no fechamento]`)
+## Correção posterior (`v0.16.1` → `2caa4bd`)
 
 Completada a padronização nos pontos que ficaram pendentes:
 
