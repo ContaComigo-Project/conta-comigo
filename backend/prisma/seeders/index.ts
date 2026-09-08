@@ -11,7 +11,7 @@ import { cipherr } from '../../src/transactions/infrastructure/persistence/ciphe
 const URL_PADRAO = 'postgresql://contacomigo:contacomigo_dev_local@localhost:5433/contacomigo';
 const prisma = new PrismaClient({ adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL ?? URL_PADRAO }) });
 
-const DEMO_EMAIL = 'demo@contacomigo.app';
+const DEMO_EMAIL = 'demo@contacomigo.com';
 const DEMO_SENHA = 'demo123';
 const HOLDER = 'demo-holder';
 
@@ -83,7 +83,7 @@ async function seed() {
   }
   console.log(`seed: ${LANCAMENTOS.length} lançamentos criados`);
 
-  console.log('seed: concluído. Entre com demo@contacomigo.app / demo123.');
+  console.log('seed: concluído. Entre com demo@contacomigo.com / demo123.');
 }
 
 seed()

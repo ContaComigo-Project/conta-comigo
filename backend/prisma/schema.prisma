@@ -21,7 +21,7 @@ model Transaction {
 
   @@index([holderId])
   @@index([holderId, externalId])
-  @@map("lancamentos")
+  @@map("transactions")
 }
 
 // External account as persisted for the consolidated panel (HN-003). The type
@@ -36,7 +36,7 @@ model ExternalAccount {
   balanceInCents   Int    @map("saldo_em_centavos")
 
   @@index([holderId])
-  @@map("contas_externas")
+  @@map("external_accounts")
 }
 
 // Access context (HN-001). The account IS the holder: there is no separate user
@@ -48,7 +48,7 @@ model Account {
   passwordHash String   @map("hash_da_senha")
   createdAt    DateTime @default(now()) @map("criada_em") @db.Timestamptz(3)
 
-  @@map("contas")
+  @@map("accounts")
 }
 
 // Refresh token: the database stores its HASH. If it leaks, the refreshes are
@@ -61,7 +61,7 @@ model Session {
   revokedAt        DateTime? @map("revogado_em") @db.Timestamptz(3)
 
   @@index([holderId])
-  @@map("sessoes")
+  @@map("sessions")
 }
 
 // Consent as a first-class record (HN-002). The explicit decision of a person

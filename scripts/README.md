@@ -22,7 +22,7 @@ CI — se divergirem, o CI deixa de ser prova.
 | `nova-historia.sh` / `.ps1` | Cria `docs/tasks/[CHAVE]/` a partir do template |
 | `registrar-evidencia.sh` / `.ps1` | Executa uma tarefa do harness e grava a saída real como evidência da história |
 | `validar-staging.sh` / `.ps1` | Valida arquivos staged antes do commit (segredos, limites, resíduos de debug) |
-| `db:seed` (backend) | Popula o banco com dados demo: conta `demo@contacomigo.app` / `demo123`, consentimento ativo, contas e lançamentos sintéticos |
+| `db:seed` (backend) | Popula o banco com dados demo: conta `demo@contacomigo.com` / `demo123`, consentimento ativo, contas e lançamentos sintéticos |
 | `verificar-fechamento.sh` / `.ps1` | Valida commit semântico, chave da história, entrega e tag no mesmo hash |
 
 ## Uso
