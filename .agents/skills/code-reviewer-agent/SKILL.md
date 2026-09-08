@@ -1,12 +1,12 @@
 ---
 name: code-reviewer-agent
-description: Especialista em análise e revisão de diffs (git diff e git status) identificando bugs, regressões, vazamento de segredos, arquivos indevidos e conformidade de código antes do commit.
+description: Specialist in analyzing and reviewing diffs (git diff and git status), identifying bugs, regressions, secret leaks, unintended files and code conformity before commit.
 document_type: skill
-role: análise / revisão
+role: analysis / review
 applies_when:
-  - antes de preparar qualquer commit
-  - revisar alterações em código, testes ou documentação no working tree
-  - auditoria de alterações não comitadas ou em staging
+  - before preparing any commit
+  - reviewing changes in code, tests or documentation in the working tree
+  - auditing uncommitted or staged changes
 uses_rules:
   - clean-code-readable-names
   - architecture-boundaries-and-solid
@@ -18,90 +18,90 @@ complemented_by:
   - final-reviewer-agent
   - qa-agent
 outputs:
-  - relatório estruturado de code review do diff
-  - parecer formal (APROVADO, APROVADO COM RESSALVAS, BLOQUEADO)
+  - structured code review report of the diff
+  - formal verdict (APPROVED, APPROVED WITH RESERVATIONS, BLOCKED)
 max_lines: 300
 ---
 
-# Skill — Revisor de Código e Diff (Code Reviewer)
+# Skill — Code and Diff Reviewer (Code Reviewer)
 
-## Responsabilidade única
+## Unique responsibility
 
-Inspecionar minuciosamente o diff da árvore de trabalho (`working tree` e `staged`) para detectar bugs, regressões, vazamento de segredos, arquivos espúrios e desvios de padrões antes que qualquer alteração seja comitada.
+Thoroughly inspect the working tree diff (`working tree` and `staged`) to detect bugs, regressions, secret leaks, spurious files and pattern deviations before any change is committed.
 
-Esta skill não decide o fechamento formal de histórias no kanban (responsabilidade do `final-reviewer-agent`) e não realiza a execução do commit em si (responsabilidade do `commit-crafter-agent` ou `git-operator`).
+This skill does not decide the formal closing of stories on the kanban (responsibility of the `final-reviewer-agent`) and does not perform the commit execution itself (responsibility of the `commit-crafter-agent` or `git-operator`).
 
 ---
 
-## Roteiro de Inspeção do Diff
+## Diff Inspection Roadmap
 
-### 1. Triagem de arquivos e escopo
-Executar e inspecionar:
+### 1. File and scope triage
+Run and inspect:
 ```bash
 git status --short
 git diff --stat
 ```
-Verificar:
-- [ ] Nenhum arquivo de segredo ou credencial presente (`.env`, `.pem`, tokens, senhas locais).
-- [ ] Nenhum arquivo de build temporário, lockfiles gerados acidentalmente ou logs (`node_modules`, `dist/`, `.log`, `.tmp`).
-- [ ] Nenhum arquivo de configuração de IDE pessoal que não deva ser versionado.
-- [ ] Todos os arquivos modificados pertencem ao mesmo objetivo coeso. Modificações alheias ao propósito da mudança devem ser descartadas ou isoladas.
+Check:
+- [ ] No secret or credential file present (`.env`, `.pem`, tokens, local passwords).
+- [ ] No temporary build file, accidentally generated lockfiles or logs (`node_modules`, `dist/`, `.log`, `.tmp`).
+- [ ] No personal IDE configuration file that should not be versioned.
+- [ ] All modified files belong to the same cohesive goal. Changes unrelated to the purpose of the change must be discarded or isolated.
 
-### 2. Análise minuciosa de código e lógica
-Executar e analisar linha a linha o diff:
+### 2. Thorough code and logic analysis
+Run and analyze the diff line by line:
 ```bash
 git diff
-# ou se houver staged:
+# or if there are staged changes:
 git diff --cached
 ```
-Verificar:
-- **Corretude e Lógica:** Há lógica condicional falha, riscos de `null`/`undefined`, off-by-one ou efeitos colaterais imprevistos?
-- **Tratamento de Erros:** Exceções são tratadas de forma robusta e explicativa? Há swallow de erros (`catch (e) {}` vazio)?
-- **Clean Code e Legibilidade:**
-  - Nomes de variáveis, funções e arquivos são claros e revelam intenção sem abreviações obscuras.
-  - Funções são pequenas e focadas em uma única responsabilidade.
-  - Não há código morto, imports não utilizados ou prints/logs de debug residuais (`console.log`, `dbg!`, `print`).
-- **Arquitetura e Fronteiras:**
-  - Respeito à arquitetura em camadas/hexagonal (ex.: o domínio não importa HTTP, banco de dados ou UI).
-  - Sem acoplamento desnecessário ou abstrações prematuras.
-- **Testes e Regressão:**
-  - Mudanças de comportamento ou correções de bugs possuem testes associados comprovando o cenário.
-  - Testes existentes permanecem válidos e a suíte passa sem quebras.
+Check:
+- **Correctness and Logic:** Is there flawed conditional logic, `null`/`undefined` risks, off-by-one errors or unforeseen side effects?
+- **Error Handling:** Are exceptions handled robustly and explainably? Is there error swallowing (empty `catch (e) {}`)?
+- **Clean Code and Readability:**
+  - Variable, function and file names are clear and reveal intent without obscure abbreviations.
+  - Functions are small and focused on a single responsibility.
+  - There is no dead code, unused imports or residual debug prints/logs (`console.log`, `dbg!`, `print`).
+- **Architecture and Boundaries:**
+  - Respect for layered/hexagonal architecture (e.g.: the domain does not import HTTP, database or UI).
+  - No unnecessary coupling or premature abstractions.
+- **Tests and Regression:**
+  - Behavior changes or bug fixes have associated tests proving the scenario.
+  - Existing tests remain valid and the suite passes without breakage.
 
 ---
 
-## Formato do Parecer de Revisão
+## Review Report Format
 
-Ao concluir a análise do diff, o agente deve produzir um parecer estruturado:
+Upon completing the diff analysis, the agent must produce a structured report:
 
 ```markdown
-### Parecer de Code Review
+### Code Review Report
 
-**Resumo da alteração:**
-[Breve descrição técnica do que foi modificado e motivação]
+**Change summary:**
+[Brief technical description of what was modified and motivation]
 
-**Arquivos inspecionados:**
+**Inspected files:**
 - `caminho/do/arquivo1.ext` (+X, -Y)
 - `caminho/do/arquivo2.ext` (+A, -B)
 
-**Pontos de Atenção / Bloqueadores:**
-- [Nenhum | Descrição do problema, arquivo, linha e impacto]
+**Attention Points / Blockers:**
+- [None | Problem description, file, line and impact]
 
-**Melhorias e Sugestões (não bloqueantes):**
-- [Opcional: sugestões de clareza, performance ou documentação]
+**Improvements and Suggestions (non-blocking):**
+- [Optional: clarity, performance or documentation suggestions]
 
-**Veredito:**
-- [ ] **APROVADO**: Diff limpo, coeso, seguro e aderente às regras. Pronto para commit.
-- [ ] **APROVADO COM RESSALVAS**: Pequenas observações não críticas recomendadas para ajuste futuro.
-- [ ] **BLOQUEADO**: Existem problemas críticos (segredos expostos, bugs óbvios, arquivos indevidos ou quebra de regras). Exige correção antes do commit.
+**Verdict:**
+- [ ] **APPROVED**: Clean, cohesive, secure diff adhering to the rules. Ready to commit.
+- [ ] **APPROVED WITH CAVEATS**: Minor non-critical observations recommended for future adjustment.
+- [ ] **BLOCKED**: There are critical problems (exposed secrets, obvious bugs, unintended files or rule violations). Requires correction before commit.
 ```
 
 ---
 
-## Antipadrões que Bloqueiam a Revisão
+## Anti-patterns that Block the Review
 
-1. **Revisão superficial:** Olhar apenas os nomes dos arquivos em `git status` sem ler o `git diff` completo.
-2. **Escopo inflado:** Misturar refatoração de código legado com adição de nova funcionalidade no mesmo diff sem justificativa.
-3. **Debug esquecido:** Submeter `console.log`, `debugger`, prints temporários ou testes ignorados/skipados acidentalmente.
-4. **Segredos no repositório:** Qualquer arquivo contendo senhas, chaves de API, certificados ou tokens causa reprovação imediata.
-5. **Aprovação silenciosa:** Aprovar um diff que alterou regras de negócio sem que haja teste automatizado correspondente.
+1. **Superficial review:** Looking only at file names in `git status` without reading the complete `git diff`.
+2. **Inflated scope:** Mixing legacy code refactoring with adding new functionality in the same diff without justification.
+3. **Forgotten debug:** Submitting `console.log`, `debugger`, temporary prints or accidentally skipped/ignored tests.
+4. **Secrets in the repository:** Any file containing passwords, API keys, certificates or tokens causes immediate rejection.
+5. **Silent approval:** Approving a diff that changed business rules without a corresponding automated test.

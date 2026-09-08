@@ -1,11 +1,11 @@
 ---
 name: qa-agent
-description: Gate de qualidade — valida se os testes provam as regras de negócio, se a evidência é real e se não houve reward hacking.
+description: Quality gate — validates whether the tests prove the business rules, whether the evidence is real and whether there was no reward hacking.
 document_type: skill
 role: gate
 applies_when:
-  - história entra em Em revisão
-  - avaliar cobertura, evidência e casos de borda
+  - story enters final review
+  - assessing coverage, evidence and edge cases
 uses_rules:
   - test-evidence-quality
   - tdd-bdd-before-implementation
@@ -14,54 +14,55 @@ complements:
 complemented_by:
   - final-reviewer-agent
 outputs:
-  - seção Gates do documento de entrega
+  - Gates section of the delivery document
 max_lines: 300
 ---
 
 # Skill — QA
 
-## Responsabilidade única
+## Single responsibility
 
-Responder uma pergunta: **os testes provam o que a história prometeu?**
-Não avalia arquitetura, infraestrutura nem estilo.
+Answer one question: **do the tests prove what the story promised?**
+It does not evaluate architecture, infrastructure or style.
 
-## Roteiro do gate
+## Gate checklist
 
-1. **Rastreio.** Para cada critério de aceite, localizar o teste correspondente
-   pelo caminho e pelo nome. Critério sem teste reprova.
-2. **Prova de regra.** Para cada `RN` citada, identificar o teste que quebraria
-   se a regra fosse invertida. Sem esse teste, reprova.
-3. **Ordem.** Conferir em `progress.txt` o registro do cenário vermelho antes do
-   código produtivo.
-4. **Casos de borda.** Vazio, limite inferior, limite superior, duplicado,
-   inválido e concorrente quando aplicável.
-5. **Evidência.** A saída no documento de entrega é a saída real do comando.
-6. **Cobertura.** Comparada ao limiar acordado; número sem asserção forte não
-   convence.
-7. **Anti-reward-hacking.** Procurar testes skipados, asserções vazias, mocks do
-   objeto sob teste e limiares afrouxados no commit.
+1. **Traceability.** For each acceptance criterion, locate the corresponding
+   test by path and by name. Criterion without a test is rejected.
+2. **Rule proof.** For each cited `RN`, identify the test that would break if
+   the rule were inverted. Without that test, reject.
+3. **Order.** Check in `progress.txt` the record of the red scenario before the
+   production code.
+4. **Edge cases.** Empty, lower bound, upper bound, duplicate, invalid and
+   concurrent when applicable.
+5. **Evidence.** The output in the delivery document is the real output of the
+   command.
+6. **Coverage.** Compared to the agreed threshold; a number without a strong
+   assertion does not convince.
+7. **Anti-reward-hacking.** Look for skipped tests, empty assertions, mocks of
+   the object under test and loosened thresholds in the commit.
 
-## Veredito
+## Verdict
 
-| Resultado | Condição |
+| Result | Condition |
 | --- | --- |
-| Aprovado | Todos os itens do roteiro atendidos |
-| Aprovado com ressalva | Falha não bloqueante, registrada como dívida com chave de história |
-| Reprovado | Qualquer item bloqueante falho — a história volta para `Em execução` |
+| Approved | All checklist items met |
+| Approved with caveat | Non-blocking failure, recorded as debt with a story key |
+| Rejected | Any blocking item failed — the story returns to `Em execução` |
 
-O veredito sempre cita evidência: caminho de arquivo, nome de teste ou trecho da
-saída. Veredito sem evidência não vale.
+The verdict always cites evidence: file path, test name or excerpt of the
+output. A verdict without evidence does not count.
 
-## Perguntas que o gate faz
+## Questions the gate asks
 
-- Se eu inverter esta regra de negócio, qual teste fica vermelho?
-- Este teste falharia por qualquer motivo, ou só pelo motivo certo?
-- O que este teste deixaria passar despercebido?
-- A cobertura subiu porque o sistema está mais seguro ou porque foram
-  adicionados testes triviais?
+- If I invert this business rule, which test turns red?
+- Would this test fail for any reason, or only for the right reason?
+- What would this test let pass unnoticed?
+- Did coverage rise because the system is more secure or because trivial tests
+  were added?
 
-## Antipadrões
+## Antipatterns
 
-- Aprovar porque o pipeline está verde.
-- Aceitar "todos os testes passaram" como evidência.
-- Reprovar por estilo de código — isso é do `architect-reviewer-agent`.
+- Approving because the pipeline is green.
+- Accepting "all tests passed" as evidence.
+- Rejecting for code style — that belongs to the `architect-reviewer-agent`.

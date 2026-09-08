@@ -1,11 +1,11 @@
 ---
 name: git-operator
-description: Executa o fechamento em git — staging seletivo por história, commit semântico com a chave e tag semântica no mesmo hash.
+description: Executes the git closure — selective staging per story, semantic commit with the key and semantic tag on the same hash.
 document_type: skill
-role: execução
+role: execution
 applies_when:
-  - final-reviewer-agent aprovou a entrega
-  - criar commit de fechamento, tag ou push
+  - final-reviewer-agent approved the delivery
+  - creating a closing commit, tag or push
 uses_rules:
   - main-push-quality-and-versioning
   - commit-conventions
@@ -15,57 +15,57 @@ complements:
 complemented_by:
   - product-manager
 outputs:
-  - commit de entrega
-  - tag semântica
+  - delivery commit
+  - semantic tag
 max_lines: 300
 ---
 
-# Skill — Operador Git
+# Skill — Git Operator
 
-## Responsabilidade única
+## Single responsibility
 
-Registrar a entrega no histórico de forma que ela possa ser encontrada,
-explicada e revertida. Não decide se a entrega está pronta — isso é do
-`final-reviewer-agent`.
+Record the delivery in history so that it can be found, explained and reverted.
+It does not decide whether the delivery is ready — that is the
+`final-reviewer-agent`'s job.
 
-## Pré-condições
+## Preconditions
 
-Recusa executar sem: aprovação do gate final, documento em `docs/entregas/`,
-kanban atualizado e suíte de testes verde na árvore atual.
+Refuses to execute without: final gate approval, document in `docs/entregas/`,
+updated kanban and a green test suite on the current tree.
 
-## Procedimento
+## Procedure
 
-1. **Inspecionar** o que mudou antes de qualquer `add`:
+1. **Inspect** what changed before any `add`:
    ```
    git status --short
    git diff --stat
    ```
-2. **Staging seletivo.** Adicionar por caminho, arquivo a arquivo ou pasta a
-   pasta. `git add -A` é proibido no commit de entrega: ele é o mecanismo pelo
-   qual escopo de outra história vaza.
-3. **Conferir o staged** antes de commitar:
+2. **Selective staging.** Add by path, file by file or folder by folder.
+   `git add -A` is forbidden in the delivery commit: it is the mechanism by
+   which scope from another story leaks.
+3. **Check the staged** before committing:
    ```
    git diff --cached --stat
    ```
-   Arquivo que não pertence à história sai do staging.
-4. **Commit semântico:**
+   A file that does not belong to the story leaves the staging area.
+4. **Semantic commit:**
    ```
    type(scope): imperative description (KEY)
    ```
-   Corpo opcional com o porquê; rodapé com `Refs: docs/entregas/...`.
-5. **Tag no mesmo hash:**
+   Optional body with the why; footer with `Refs: docs/entregas/...`.
+5. **Tag on the same hash:**
    ```
    git tag -a vX.Y.Z -m "CHAVE — título da entrega"
    ```
-6. **Verificar** que commit e tag coincidem:
+6. **Verify** that commit and tag match:
    ```
    scripts/verificar-fechamento.sh vX.Y.Z
    ```
-7. **Push** apenas com tudo verde: `git push origin <branch> --follow-tags`.
+7. **Push** only with everything green: `git push origin <branch> --follow-tags`.
 
-## Convenções
+## Conventions
 
-| Tipo | Uso |
+| Type | Use |
 | --- | --- |
 | `feat` | New capability perceivable by a user or stakeholder |
 | `fix` | Wrong behavior correction |
@@ -78,10 +78,10 @@ kanban atualizado e suíte de testes verde na árvore atual.
 
 Commit language, message template, story key, and `Generated-by-AI:` footer rules are defined and enforced exclusively by the `commit-conventions` skill. Consult it before writing any message.
 
-## Antipadrões
+## Antipatterns
 
-- `git add -A` ou `git commit -am` no commit de entrega.
-- Amend em commit já publicado.
-- Tag criada depois de novos commits.
-- Push com `--force` em branch compartilhada.
-- Mensagem que descreve o arquivo alterado em vez da entrega.
+- `git add -A` or `git commit -am` in the delivery commit.
+- Amend on an already published commit.
+- Tag created after new commits.
+- Push with `--force` on a shared branch.
+- Message that describes the changed file instead of the delivery.

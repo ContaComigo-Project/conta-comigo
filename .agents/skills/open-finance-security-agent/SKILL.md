@@ -1,12 +1,12 @@
 ---
 name: open-finance-security-agent
-description: Gate especialista em segurança de Open Finance — consentimento, credencial do agregador, isolamento entre titulares, retenção e eliminação de dado financeiro.
+description: Expert gate in Open Finance security — consent, aggregator credential, isolation between account holders, retention and deletion of financial data.
 document_type: skill
-role: gate / especialista de domínio
+role: gate / domain specialist
 applies_when:
-  - história toca consentimento, conexão com instituição ou sincronização
-  - história persiste, exibe, exporta ou envia a IA dado vindo de instituição financeira
-  - história cria rota que devolve dado de uma pessoa
+  - story touches consent, institution connection or synchronization
+  - story persists, displays, exports or sends to AI data coming from a financial institution
+  - story creates a route that returns a person's data
 uses_rules:
   - test-evidence-quality
   - architecture-boundaries-and-solid
@@ -16,180 +16,184 @@ complemented_by:
   - final-reviewer-agent
   - qa-agent
 outputs:
-  - seção Gates do documento de entrega
-  - lista de testes negativos exigidos
+  - Gates section of the delivery document
+  - list of required negative tests
 max_lines: 300
 ---
 
-# Skill — Segurança de Open Finance
+# Skill — Open Finance Security
 
-## Responsabilidade única
+## Single responsibility
 
-O `security-specialist-agent` pergunta o que um atacante consegue fazer.
-Esta skill pergunta outra coisa: **o titular consentiu com isto, e o dado dele
-está indo só para onde ele autorizou?**
+The `security-specialist-agent` asks what an attacker can do.
+This skill asks something else: **did the account holder consent to this, and is
+their data going only where they authorized?**
 
-Dado de Open Finance tem três propriedades que mudam o julgamento: ele **não é
-nosso** (pertence ao titular, cedido por prazo e finalidade), ele **é
-reidentificável** (saldo e lançamento identificam uma pessoa mesmo sem nome), e
-o acesso a ele **expira**. Um sistema que trata esse dado como qualquer outro
-registro está errado mesmo quando está seguro.
+Open Finance data has three properties that change the judgment: it is **not
+ours** (it belongs to the account holder, granted for a term and a purpose), it
+is **re-identifiable** (balance and transactions identify a person even without
+a name), and access to it **expires**. A system that treats this data like any
+other record is wrong even when it is secure.
 
-Não substitui o gate de segurança geral — roda junto com ele.
+It does not replace the general security gate — it runs alongside it.
 
-## 1. O produto nunca vê credencial bancária
+## 1. The product never sees the bank credential
 
-O modelo de Open Finance é **redirecionamento**: quem autentica a pessoa é a
-instituição, não nós. O ContaComigo fala com o agregador (`ADR` do adaptador
-Pluggy), e o agregador com o banco.
+The Open Finance model is **redirection**: the institution authenticates the
+person, not us. ContaComigo talks to the aggregator (`ADR` of the Pluggy
+adapter), and the aggregator talks to the bank.
 
-Reprova na hora, sem discussão:
+Reject immediately, without discussion:
 
-- campo de senha, agência ou token do banco em qualquer tela, DTO ou tabela;
-- qualquer fluxo que peça à pessoa a credencial do banco "para conectar";
-- log, print ou mensagem de erro que carregue credencial de instituição.
+- password, agency or bank token field in any screen, DTO or table;
+- any flow that asks the person for the bank credential "to connect";
+- log, print or error message that carries an institution credential.
 
-O que **pode** existir do lado de cá é a credencial **do agregador** (item,
-token de conexão), que é nossa e obedece à seção 3.
+What **may** exist on this side is the **aggregator** credential (item,
+connection token), which is ours and follows section 3.
 
-## 2. Consentimento é dado de primeira classe
+## 2. Consent is a first-class data point
 
-Consentimento não é um booleano em `usuario`. É registro próprio, com:
+Consent is not a boolean in `usuario`. It is its own record, with:
 
-| Atributo | Por quê |
+| Attribute | Why |
 | --- | --- |
-| Titular e instituição | `RN-014`: no máximo um ativo por instituição por pessoa |
-| Escopo (o que foi autorizado) | Sincronizar conta não autoriza ler cartão |
-| Início e **expiração** | `RN-012`: consentimento expirado equivale a ausente |
-| Status e momento da revogação | `RN-013`: revogar tem efeito imediato no painel |
+| Account holder and institution | `RN-014`: at most one active per institution per person |
+| Scope (what was authorized) | Syncing an account does not authorize reading a card |
+| Start and **expiration** | `RN-012`: expired consent equals absent consent |
+| Status and revocation moment | `RN-013`: revoking has immediate effect on the dashboard |
 
-Checagens do gate:
+Gate checks:
 
-1. **Toda leitura de dado de instituição consulta o consentimento antes**, no
-   servidor. Consentimento ausente, expirado ou revogado ⇒ o dado não existe
-   para aquela requisição.
-2. **Expiração é verificada contra o relógio injetado** (porta `Relogio` de
-   `ADR-001`), nunca contra `new Date()` espalhado — senão não há como testar.
-3. **Reconectar substitui, não acumula** (`RN-014`). Dois consentimentos ativos
-   para a mesma instituição é bug de dado, não estado válido.
-4. **Revogar não é `UPDATE status`.** `RN-013` exige sumiço imediato do painel e
-   exclusão definitiva agendada; a história precisa dizer qual é o prazo e o que
-   acontece com sincronização em andamento.
+1. **Every read of institution data consults consent beforehand**, on the
+   server. Missing, expired or revoked consent ⇒ the data does not exist for
+   that request.
+2. **Expiration is checked against the injected clock** (`Relogio` port from
+   `ADR-001`), never against scattered `new Date()` — otherwise there is no way
+   to test.
+3. **Reconnecting replaces, does not accumulate** (`RN-014`). Two active
+   consents for the same institution is a data bug, not a valid state.
+4. **Revoking is not an `UPDATE status`.** `RN-013` requires immediate
+   disappearance from the dashboard and scheduled definitive deletion; the story
+   must state the deadline and what happens to an ongoing synchronization.
 
-Cenário mínimo esperado:
+Minimum expected scenario:
 
 ```gherkin
-Cenário: consentimento expirado não devolve dado
-  Dado um consentimento que expirou ontem
-  Quando o painel pede os lançamentos daquela instituição
-  Então a resposta não contém lançamento algum
-  E o motivo é a ausência de consentimento, não uma lista vazia
+Scenario: expired consent does not return data
+  Given a consent that expired yesterday
+  When the dashboard asks for the transactions of that institution
+  Then the response contains no transactions at all
+  And the reason is the absence of consent, not an empty list
 ```
 
-## 3. Credencial do agregador é segredo em repouso
+## 3. Aggregator credential is a secret at rest
 
-Token de conexão e identificador de item do agregador são credenciais de acesso
-a dado financeiro de terceiro. Tratamento obrigatório:
+Connection token and aggregator item identifier are access credentials to a
+third party's financial data. Mandatory treatment:
 
-- **Cifrados em repouso** na borda da persistência (`RNF-014`, `ADR-002` r.4).
-  A chave vem de variável de ambiente, nunca do repositório.
-- **Nunca em log**, nem truncados: prefixo de token ainda é material de ataque.
-- **Nunca no contrato web↔API.** A web não precisa deles para desenhar tela; se
-  um DTO carrega token, o gate reprova.
-- **Rotação possível** sem migração manual de dado.
+- **Encrypted at rest** at the persistence boundary (`RNF-014`, `ADR-002` r.4).
+  The key comes from an environment variable, never from the repository.
+- **Never in logs**, not even truncated: a token prefix is still attack
+  material.
+- **Never in the web↔API contract.** The web does not need them to render a
+  screen; if a DTO carries a token, the gate rejects.
+- **Rotation possible** without manual data migration.
 
-## 4. Isolamento entre titulares (`RN-015`)
+## 4. Isolation between account holders (`RN-015`)
 
-A regra mais fácil de violar sem perceber: `GET /lancamentos/:id` que busca por
-id e devolve o que achar. Se o id de outra pessoa retorna conteúdo, a barreira
-não existe.
+The rule easiest to violate without noticing: `GET /lancamentos/:id` that looks
+up by id and returns whatever it finds. If another person's id returns content,
+the barrier does not exist.
 
-Padrão exigido:
+Required pattern:
 
-- **O titular vem da sessão, nunca do parâmetro.** `?titularId=` no request é
-  vetor de ataque, não funcionalidade.
-- **O filtro por titular acontece na consulta**, não depois em memória — filtrar
-  depois já vazou pelo log e pela métrica.
-- **Recurso de outro titular responde como inexistente.** Distinguir "não é seu"
-  de "não existe" confirma ao atacante que o id é válido.
+- **The account holder comes from the session, never from the parameter.**
+  `?titularId=` in the request is an attack vector, not a feature.
+- **The account holder filter happens in the query**, not later in memory —
+  filtering afterwards has already leaked through the log and the metric.
+- **Another account holder's resource responds as nonexistent.** Distinguishing
+  "it is not yours" from "it does not exist" confirms to the attacker that the
+  id is valid.
 
-Teste negativo obrigatório **por rota** (`RNF-013`), sem exceção:
+Mandatory negative test **per route** (`RNF-013`), without exception:
 
-| Caso | Resposta esperada |
+| Case | Expected response |
 | --- | --- |
-| Sem credencial | Recusa de autenticação |
-| Credencial de outro titular | Mesma resposta de recurso inexistente |
-| Credencial válida, recurso próprio | Conteúdo |
+| No credential | Authentication refusal |
+| Credential of another account holder | Same response as nonexistent resource |
+| Valid credential, own resource | Content |
 
-Rota nova sem esses três casos: **reprovado**. Não há "adiciono o teste depois".
+A new route without these three cases: **rejected**. There is no "I will add the
+test later".
 
-## 5. Log e telemetria não carregam dado financeiro (`RNF-015`)
+## 5. Log and telemetry do not carry financial data (`RNF-015`)
 
-Vale para log de aplicação, log de erro, rastro de exceção, métrica, mensagem de
-fila e payload enviado a serviço externo de observabilidade.
+This applies to application log, error log, exception trace, metric, queue
+message and payload sent to an external observability service.
 
-Nunca aparecem em texto claro: valor de lançamento, saldo, descrição de
-lançamento, número de conta ou cartão, documento pessoal, e-mail, nome do
-titular, token de qualquer natureza.
+Never appear in plain text: transaction value, balance, transaction description,
+account or card number, personal document, e-mail, account holder name, token of
+any kind.
 
-O que **pode** aparecer: identificador opaco do recurso, identificador do
-titular, nome da operação, duração, resultado. Isso basta para investigar.
+What **may** appear: opaque resource identifier, account holder identifier,
+operation name, duration, result. That is enough to investigate.
 
-Sinal de violação recorrente: `console.log(objeto)` ou
-`logger.error(err, { request })` — o objeto inteiro vaza tudo que ele carrega.
-O gate procura por serialização de objeto de domínio em log.
+Recurring violation sign: `console.log(objeto)` or
+`logger.error(err, { request })` — the whole object leaks everything it carries.
+The gate looks for serialization of domain objects in logs.
 
-## 6. Minimização, retenção e eliminação
+## 6. Minimization, retention and deletion
 
-1. **Só sincronize o que uma história aprovada usa.** Trazer "todo o histórico
-   porque a API oferece" cria passivo sem finalidade.
-2. **Prazo declarado.** Todo dado financeiro persistido tem resposta para "por
-   quanto tempo fica e o que o apaga".
-3. **Eliminação real** (`RN-016`): excluir conta apaga ou anonimiza dado pessoal
-   **e** financeiro, incluindo cópias em cache, fila e índice de busca.
-   Anonimizar significa que o registro deixa de ser reidentificável — remover o
-   nome e manter valor, data e instituição não anonimiza nada.
-4. **Derivados contam.** Insight de IA, resumo e exportação gerados a partir do
-   dado também precisam sumir.
+1. **Only synchronize what an approved story uses.** Bringing "the whole
+   history because the API offers it" creates liability without purpose.
+2. **Declared term.** Every persisted financial data point has an answer to "how
+   long does it stay and what erases it".
+3. **Real deletion** (`RN-016`): deleting an account erases or anonymizes
+   personal **and** financial data, including copies in cache, queue and search
+   index. Anonymizing means the record stops being re-identifiable — removing
+   the name and keeping the value, date and institution anonymizes nothing.
+4. **Derivatives count.** AI insight, summary and export generated from the data
+   also need to disappear.
 
-## 7. Fronteira com a IA
+## 7. Boundary with the AI
 
-Reforça `RN-017` a `RN-019`, do lado do dado:
+Reinforces `RN-017` to `RN-019`, on the data side:
 
-- O provedor de IA recebe o **mínimo** necessário, e a história declara
-  exatamente quais campos saem.
-- Identificador direto do titular não vai para o modelo.
-- Resposta de IA nunca é a fonte de um número financeiro exibido (`RN-019`).
-- Dado de um titular jamais aparece na resposta gerada para outro (`RN-015`
-  vale também para a saída do modelo).
+- The AI provider receives the **minimum** necessary, and the story declares
+  exactly which fields go out.
+- The account holder's direct identifier does not go to the model.
+- AI response is never the source of a displayed financial number (`RN-019`).
+- One account holder's data never appears in a response generated for another
+  (`RN-015` also applies to the model's output).
 
-## Roteiro do gate
+## Gate checklist
 
-1. A história cria ou toca rota que devolve dado de pessoa? → seção 4, com os
-   três testes negativos.
-2. Toca consentimento? → seção 2, com o cenário de expiração.
-3. Persiste credencial de agregador? → seção 3.
-4. Escreve log novo? → seção 5.
-5. Sincroniza ou guarda dado novo? → seção 6, com prazo declarado.
-6. Manda algo ao provedor de IA? → seção 7, com a lista de campos.
+1. The story creates or touches a route that returns a person's data? → section
+   4, with the three negative tests.
+2. Touches consent? → section 2, with the expiration scenario.
+3. Persists an aggregator credential? → section 3.
+4. Writes a new log? → section 5.
+5. Synchronizes or stores new data? → section 6, with a declared term.
+6. Sends something to the AI provider? → section 7, with the list of fields.
 
-## Veredito
+## Verdict
 
-| Resultado | Condição |
+| Result | Condition |
 | --- | --- |
-| Aprovado | Itens aplicáveis do roteiro atendidos, com teste negativo em disco |
-| Aprovado com ressalva | Lacuna sem exposição de dado, registrada com dono e história |
-| Reprovado | Credencial bancária pedida ou armazenada; dado de um titular acessível a outro; leitura sem verificar consentimento; credencial de agregador em claro ou em log; dado financeiro em log |
+| Approved | Applicable checklist items met, with negative test on disk |
+| Approved with caveat | Gap without data exposure, recorded with owner and story |
+| Rejected | Bank credential requested or stored; one account holder's data accessible to another; read without checking consent; aggregator credential in clear text or in log; financial data in log |
 
-Reprovação por exposição de dado **não** aceita ressalva: volta para
+Rejection due to data exposure does **not** accept a caveat: it returns to
 `Em execução`.
 
-## Antipadrões
+## Antipatterns
 
-- Consentimento como campo booleano em usuário.
-- Verificar expiração só na tela.
-- `titularId` vindo do corpo ou da query da requisição.
-- Filtrar por titular em memória, depois de buscar tudo.
-- Responder 403 para recurso de outro titular (confirma que o id existe).
-- Logar o objeto de erro inteiro "só em desenvolvimento".
-- Guardar payload bruto do agregador "para depurar depois".
+- Consent as a boolean field on the user.
+- Checking expiration only on the screen.
+- `titularId` coming from the request body or query.
+- Filtering by account holder in memory, after fetching everything.
+- Responding 403 to another account holder's resource (confirms the id exists).
+- Logging the entire error object "only in development".
+- Storing the aggregator's raw payload "to debug later".

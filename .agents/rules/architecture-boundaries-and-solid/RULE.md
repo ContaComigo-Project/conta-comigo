@@ -1,11 +1,11 @@
 ---
 name: architecture-boundaries-and-solid
-description: Protege fronteiras de módulo, SOLID e ports/adapters, exigindo design pragmático e justificado em vez de abstração especulativa.
+description: Protects module boundaries, SOLID and ports/adapters, requiring pragmatic and justified design instead of speculative abstraction.
 document_type: rule
-severity: bloqueante
+severity: blocking
 applies_when:
-  - introduzir módulo, dependência externa ou contrato novo
-  - revisar impacto arquitetural no gate de arquitetura
+  - introducing a module, external dependency or new contract
+  - reviewing architectural impact at the architecture gate
 complements:
   - clean-code-readable-names
   - refactor-after-functional-green
@@ -14,62 +14,62 @@ complemented_by:
 max_lines: 300
 ---
 
-# Regra — Fronteiras Arquiteturais e SOLID
+# Rule — Architectural Boundaries and SOLID
 
-## Intenção
+## Intent
 
-Arquitetura aqui tem um objetivo prático: manter barato mudar de ideia. Toda
-regra abaixo existe para reduzir o custo da próxima história, não para satisfazer
-um diagrama.
+Architecture here has a practical goal: keep it cheap to change your mind. Every
+rule below exists to reduce the cost of the next story, not to satisfy
+a diagram.
 
-## Obrigações
+## Obligations
 
-1. **Dependências apontam para dentro.** O domínio não conhece framework, banco,
-   HTTP, fila nem provedor externo. O inverso é permitido.
-2. **Toda integração externa entra por porta explícita.** Cliente HTTP, SDK de
-   terceiro e driver de banco ficam atrás de uma interface do domínio, com
-   adaptador na borda.
-3. **Uma razão para mudar por unidade (SRP).** Se duas mudanças de motivos
-   diferentes tocam o mesmo arquivo com frequência, a unidade está errada.
-4. **Aberto para extensão, fechado para modificação (OCP)** onde há variação
-   real e recorrente — não onde alguém imagina que talvez haja.
-5. **Substituição sem surpresa (LSP).** Implementação alternativa não pode
-   quebrar a expectativa do contrato nem lançar "não suportado".
-6. **Interface enxuta (ISP).** Quem depende não deve ser forçado a conhecer
-   métodos que não usa.
-7. **Depender de abstração (DIP)** nos pontos de troca provável; depender do
-   concreto é aceitável onde a troca é improvável e o custo da indireção é real.
+1. **Dependencies point inward.** The domain does not know the framework, database,
+   HTTP, queue or external provider. The reverse is allowed.
+2. **Every external integration enters through an explicit port.** HTTP client,
+   third-party SDK and database driver stay behind a domain interface, with
+   adapter at the edge.
+3. **One reason to change per unit (SRP).** If two changes of different
+   reasons touch the same file frequently, the unit is wrong.
+4. **Open for extension, closed for modification (OCP)** where there is real
+   and recurring variation — not where someone imagines there might be.
+5. **Substitution without surprise (LSP).** An alternative implementation must not
+   break the contract's expectation nor throw "not supported".
+6. **Lean interface (ISP).** Dependents must not be forced to know
+   methods they do not use.
+7. **Depend on abstraction (DIP)** at likely swap points; depending on the
+   concrete is acceptable where swap is unlikely and the cost of indirection is real.
 
-## Pragmatismo obrigatório
+## Mandatory pragmatism
 
-| Situação | Decisão esperada |
+| Situation | Expected decision |
 | --- | --- |
-| Uma implementação, troca improvável | Sem interface. Abstração especulativa é custo sem receita |
-| Regra de negócio | Domínio, sempre — nunca no controlador nem no repositório |
-| Duplicação com 2 ocorrências | Espere. Duplicação é mais barata que abstração errada |
-| Duplicação com 3+ ocorrências e mesmo motivo de mudança | Extraia |
+| One implementation, unlikely swap | No interface. Speculative abstraction is cost without revenue |
+| Business rule | Domain, always — never in the controller nor the repository |
+| Duplication with 2 occurrences | Wait. Duplication is cheaper than wrong abstraction |
+| Duplication with 3+ occurrences and same reason to change | Extract |
 
-## Registro de decisão
+## Decision record
 
-Toda escolha estrutural relevante vira ADR com: contexto, alternativas,
-decisão e consequência. Decisão sem consequência declarada não é decisão, é
-preferência.
+Every relevant structural choice becomes an ADR with: context, alternatives,
+decision and consequence. A decision without a declared consequence is not a decision, it is
+preference.
 
-## Decisões já tomadas neste projeto
+## Decisions already made in this project
 
-As regras acima são genéricas. O que elas significam concretamente aqui está em
+The rules above are generic. What they mean concretely here lives in
 [`docs/adr/`](../../docs/adr/):
 
-| ADR | O que fixa |
+| ADR | What it fixes |
 | --- | --- |
-| `ADR-001` | Backend hexagonal: estrutura de pastas, quais camadas podem importar o quê, e a checagem que quebra o build na violação |
+| `ADR-001` | Hexagonal backend: folder structure, which layers can import what, and the check that breaks the build on violation |
 
-Conflito entre esta rule e um ADR resolve-se pelo ADR — ele é a decisão
-específica, e declara a consequência assumida.
+Conflict between this rule and an ADR is resolved by the ADR — it is the specific
+decision, and declares the assumed consequence.
 
-## Sinais de violação
+## Signs of violation
 
-- `import` de framework dentro do domínio.
-- Entidade de domínio com anotação de ORM ou serialização de transporte.
-- Caso de uso recebendo objeto de requisição HTTP.
-- Interface com uma única implementação criada "por padrão", sem troca prevista.
+- `import` of framework inside the domain.
+- Domain entity with ORM annotation or transport serialization.
+- Use case receiving an HTTP request object.
+- Interface with a single implementation created "by default", with no planned swap.

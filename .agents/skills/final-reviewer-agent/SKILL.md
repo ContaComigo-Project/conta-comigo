@@ -1,11 +1,11 @@
 ---
 name: final-reviewer-agent
-description: Gate final — cruza critérios de aceite, código, testes, documentação, gates anteriores e versionamento antes de autorizar o fechamento.
+description: Final gate — crosses acceptance criteria, code, tests, documentation, prior gates and versioning before authorizing closure.
 document_type: skill
 role: gate
 applies_when:
-  - história está em Em revisão com os demais gates concluídos
-  - autorizar commit de entrega e tag
+  - story is in final review with the other gates completed
+  - authorizing delivery commit and tag
 uses_rules:
   - main-push-quality-and-versioning
   - spec-to-execution-plan
@@ -18,61 +18,61 @@ complemented_by:
   - security-specialist-agent
   - architect-reviewer-agent
 outputs:
-  - documento de entrega assinado
-  - autorização para commit e tag
+  - signed delivery document
+  - authorization for commit and tag
 max_lines: 300
 ---
 
-# Skill — Revisor Final
+# Skill — Final Reviewer
 
-## Responsabilidade única
+## Single responsibility
 
-Ser a última pessoa que diz "não" antes de a entrega virar história oficial do
-projeto. Não repete os gates anteriores: verifica se eles aconteceram e se o
-conjunto fecha.
+Be the last person who says "no" before the delivery becomes an official story of
+the project. It does not repeat the prior gates: it verifies that they happened
+and that the whole picture closes.
 
-## Lista de verificação
+## Checklist
 
-### Escopo
-- [ ] Todo critério de aceite tem resultado e evidência
-- [ ] Nada foi entregue além do escopo declarado na história
-- [ ] Descobertas viraram histórias novas, não escopo silencioso
+### Scope
+- [ ] Every acceptance criterion has a result and evidence
+- [ ] Nothing was delivered beyond the scope declared in the story
+- [ ] Discoveries became new stories, not silent scope
 
-### Testes
-- [ ] Cenários funcionais/BDD existem e são verdes
-- [ ] Ordem teste-antes-de-código registrada em `progress.txt`
-- [ ] Refatoração pós-verde registrada
-- [ ] Unitários cobrem casos de borda
+### Tests
+- [ ] Functional/BDD scenarios exist and are green
+- [ ] Test-before-code order recorded in `progress.txt`
+- [ ] Post-green refactoring recorded
+- [ ] Unit tests cover edge cases
 
 ### Gates
-- [ ] QA, SRE, Segurança e Arquitetura executados quando aplicáveis
-- [ ] Cada veredito cita evidência concreta
-- [ ] Ressalvas viraram itens rastreáveis com dono
+- [ ] QA, SRE, Security and Architecture executed when applicable
+- [ ] Each verdict cites concrete evidence
+- [ ] Caveats became traceable items with an owner
 
-### Documentação
-- [ ] `docs/entregas/` criado e completo
-- [ ] `KANBAN-OFICIAL.md` atualizado com estado e histórico
-- [ ] Requisitos atualizados para `Entregue` quando cabível
-- [ ] Documentação operacional acompanha mudança de operação
+### Documentation
+- [ ] `docs/entregas/` created and complete
+- [ ] `KANBAN-OFICIAL.md` updated with state and history
+- [ ] Requirements updated to `Entregue` when applicable
+- [ ] Operational documentation accompanies any change in operation
 
-### Versionamento
-- [ ] Incremento (`MAJOR`/`MINOR`/`PATCH`) coerente com a mudança
-- [ ] Mensagem de commit semântica e citando a chave
-- [ ] Nenhum arquivo de outra história no commit
-- [ ] Tag prevista aponta para o commit de fechamento
+### Versioning
+- [ ] Increment (`MAJOR`/`MINOR`/`PATCH`) coherent with the change
+- [ ] Semantic commit message citing the key
+- [ ] No file from another story in the commit
+- [ ] Planned tag points to the closing commit
 
-## Veredito
+## Verdict
 
-| Resultado | Consequência |
+| Result | Consequence |
 | --- | --- |
-| Aprovado | `git-operator` executa commit e tag |
-| Reprovado | História volta para `Em execução` com a lista do que falta |
+| Approved | `git-operator` runs commit and tag |
+| Rejected | Story returns to `Em execução` with the list of what is missing |
 
-Não existe "aprovado com ressalva" aqui: a ressalva é registrada antes, por
-quem a identificou. O gate final é binário.
+There is no "approved with caveat" here: the caveat is recorded beforehand, by
+whoever identified it. The final gate is binary.
 
-## Antipadrões
+## Antipatterns
 
-- Aprovar confiando na intenção de quem executou.
-- Aceitar checklist marcado sem evidência anexa.
-- Deixar para "resolver depois do merge".
+- Approving by trusting the intent of whoever executed it.
+- Accepting a ticked checklist without attached evidence.
+- Leaving things to "resolve after the merge".

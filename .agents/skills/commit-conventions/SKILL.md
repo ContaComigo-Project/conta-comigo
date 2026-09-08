@@ -2,7 +2,7 @@
 name: commit-conventions
 description: Commit convention rules (Conventional Commits + AI footer with model when applicable), pre-format validation, and official message template accepted by the ContaComigo final gate.
 document_type: skill
-role: execução / gate
+role: execution / gate
 applies_when:
   - before any git commit (manual or AI-assisted)
   - reviewing commit messages during the final gate

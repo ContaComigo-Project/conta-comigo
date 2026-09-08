@@ -1,12 +1,12 @@
 ---
 name: commit-crafter-agent
-description: Especialista em preparação, staging seletivo e redação de commits semânticos atômicos estritamente em inglês (Conventional Commits + rodapé Generated-by-AI).
+description: Specialist in preparing, selective staging and writing atomic semantic commits strictly in English (Conventional Commits + Generated-by-AI footer).
 document_type: skill
-role: execução
+role: execution
 applies_when:
-  - após revisão de diff aprovada
-  - preparar commits atômicos de código, documentação, refatoração ou correção
-  - compor e validar mensagens de commit segundo commit-conventions
+  - after an approved diff review
+  - preparing atomic commits of code, documentation, refactoring or fixes
+  - composing and validating commit messages per commit-conventions
 uses_rules:
   - main-push-quality-and-versioning
   - clean-code-readable-names
@@ -17,58 +17,58 @@ complements:
 complemented_by:
   - final-reviewer-agent
 outputs:
-  - staging seletivo no git
-  - mensagem de commit padronizada em inglês
-  - commit git executado localmente
+  - selective staging in git
+  - standardized commit message in English
+  - git commit executed locally
 max_lines: 300
 ---
 
-# Skill — Preparador e Executor de Commits (Commit Crafter)
+# Skill — Commit Preparer and Executor (Commit Crafter)
 
-## Responsabilidade única
+## Unique responsibility
 
-Orquestrar o staging seletivo de arquivos e a criação de commits semânticos atômicos com mensagens estritamente em inglês, em total conformidade com o padrão Conventional Commits e rastreabilidade auditável de autoria/IA.
+Orchestrate the selective staging of files and the creation of atomic semantic commits with strictly English messages, in full compliance with the Conventional Commits standard and auditable authorship/AI traceability.
 
-Esta skill não decide o fechamento oficial de histórias no kanban nem emite tags de release sem aprovação final (responsabilidade do `final-reviewer-agent` e `git-operator`).
+This skill does not decide the official closing of stories on the kanban nor issue release tags without final approval (responsibility of the `final-reviewer-agent` and `git-operator`).
 
 ---
 
-## Regras Inegociáveis de Commit
+## Non-Negotiable Commit Rules
 
-1. **Mensagem estritamente em INGLÊS:** Tipo, escopo, descrição imperativa, corpo e chaves de rodapé devem ser 100% em inglês. Apenas chaves de história (`HT-XXX`/`HN-XXX`), caminhos de arquivo já em português e nomes de autores permanecem inalterados.
-2. **Staging seletivo obrigatório:** `git add -A` e `git commit -am` são **terminantemente proibidos**. Cada arquivo ou pasta deve ser adicionado individual e conscientemente.
-3. **Rodapé `Generated-by-AI` obrigatório:** Sempre que houver intervenção ou assistência de IA (geração, refatoração, revisão ou validação), incluir obrigatoriamente:
+1. **Strictly ENGLISH message:** Type, scope, imperative description, body and footer keys must be 100% in English. Only story keys (`HT-XXX`/`HN-XXX`), file paths already in Portuguese and author names remain unchanged.
+2. **Selective staging mandatory:** `git add -A` and `git commit -am` are **strictly forbidden**. Each file or folder must be added individually and consciously.
+3. **`Generated-by-AI` footer mandatory:** Whenever there is AI intervention or assistance (generation, refactoring, review or validation), include mandatorily:
    ```gitcommit
-   Generated-by-AI: <nome-exato-do-modelo>
+   Generated-by-AI: <exact-model-name>
    ```
-4. **Amend proibido em commit publicado:** Nunca usar `git commit --amend` em commits que já foram enviados (`push`) ao branch remoto.
-5. **Confirmação antes de comitar:** A mensagem de commit e o staging devem ser validados e apresentados com clareza antes da execução do commit.
+4. **Amend forbidden on published commits:** Never use `git commit --amend` on commits that have already been pushed to the remote branch.
+5. **Confirmation before committing:** The commit message and the staging must be validated and presented clearly before executing the commit.
 
 ---
 
-## Procedimento de Execução
+## Execution Procedure
 
-### Passo 1: Inspecionar o status do repositório
-Antes de qualquer comando de staging:
+### Step 1: Inspect the repository status
+Before any staging command:
 ```bash
 git status --short
 ```
-Identificar os arquivos modificados e agrupar apenas as mudanças que representem uma unidade lógica e atômica.
+Identify the modified files and group only the changes that represent a logical and atomic unit.
 
-### Passo 2: Executar staging seletivo
-Adicionar explicitamente os arquivos alvo daquela mudança específica:
+### Step 2: Run selective staging
+Explicitly add the target files of that specific change:
 ```bash
-git add caminho/do/arquivo1
-git add caminho/do/arquivo2
+git add path/to/file1
+git add path/to/file2
 ```
-Confirmar imediatamente o que está preparado (`staged`):
+Immediately confirm what is staged:
 ```bash
 git diff --cached --stat
 ```
-Se algum arquivo alheio foi incluído por engano, remover do staging com `git restore --staged <arquivo>`.
+If any unrelated file was included by mistake, remove it from staging with `git restore --staged <file>`.
 
-### Passo 3: Compor a mensagem de commit
-Estruturar a mensagem seguindo o padrão aceito pelo repositório:
+### Step 3: Compose the commit message
+Structure the message following the pattern accepted by the repository:
 
 ```gitcommit
 <type>(<scope>): <imperative description in english> (<KEY>)
@@ -80,9 +80,9 @@ Refs: <path/to/doc/or/issue>
 Generated-by-AI: <Exact-Model-Name>
 ```
 
-**Tipos válidos:** `feat`, `fix`, `docs`, `refactor`, `test`, `chore`, `style`, `perf`, `ci`.
+**Valid types:** `feat`, `fix`, `docs`, `refactor`, `test`, `chore`, `style`, `perf`, `ci`.
 
-**Exemplos aceitos:**
+**Accepted examples:**
 ```gitcommit
 docs(agents): add code review and commit crafter skills
 
@@ -103,23 +103,23 @@ Refs: docs/tasks/HT-007/TASK.md
 Generated-by-AI: Gemini-3.8-Flash
 ```
 
-### Passo 4: Executar o commit
-Submeter a mensagem ao git via linha de comando ou arquivo temporário:
+### Step 4: Execute the commit
+Submit the message to git via command line or temporary file:
 ```bash
 git commit -m "<subject>" -m "<body>" -m "<footers>"
 ```
 
-### Passo 5: Verificar o resultado
-Confirmar que o commit foi registrado no histórico local:
+### Step 5: Verify the result
+Confirm the commit was recorded in the local history:
 ```bash
 git log -n 1 --stat
 ```
 
 ---
 
-## Antipadrões que Bloqueiam a Execução
+## Anti-patterns that Block Execution
 
-1. **Staging indiscriminado:** Executar `git add .` ou `git add -A`.
-2. **Mensagens em português:** Qualquer palavra em português no assunto, corpo ou cabeçalho do commit (exceto caminhos de arquivo pré-existentes e chaves `HT-XXX`/`HN-XXX`).
-3. **Commit gigante / omnibus:** Misturar alterações de documentação, features e correções não relacionadas em um único commit.
-4. **Omissão de autoria de IA:** Omitir `Generated-by-AI` quando um modelo LLM sugeriu ou gerou o código ou o commit.
+1. **Indiscriminate staging:** Running `git add .` or `git add -A`.
+2. **Portuguese messages:** Any Portuguese word in the commit subject, body or header (except pre-existing file paths and `HT-XXX`/`HN-XXX` keys).
+3. **Giant / omnibus commit:** Mixing unrelated documentation changes, features and fixes in a single commit.
+4. **Omission of AI authorship:** Omitting `Generated-by-AI` when an LLM model suggested or generated the code or the commit.

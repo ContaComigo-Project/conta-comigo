@@ -1,34 +1,34 @@
 ---
 name: skills-indice
-description: Índice das skills do workflow agêntico, com papel, momento de acionamento e relação de complemento.
+description: Index of the agentic workflow skills, with role, trigger moment and complement relationship.
 document_type: index
 applies_when:
-  - escolher qual skill aciona a próxima ação
-  - criar uma skill nova para um domínio específico
+  - choosing which skill triggers the next action
+  - creating a new skill for a specific domain
 max_lines: 300
 ---
 
 # Skills
 
-Skill é um papel com procedimento próprio. Ela executa; a rule limita.
-Uma skill pode complementar outra, nunca substituir o veredito de um gate alheio.
+A skill is a role with its own procedure. It executes; the rule limits.
+A skill can complement another, never replace the verdict of someone else's gate.
 
-| Skill | Papel | Aciona quando |
+| Skill | Role | Triggers when |
 | --- | --- | --- |
-| [product-manager](./product-manager/SKILL.md) | Produto | Definir escopo, requisitos, histórias, kanban e entrega |
-| [executor-agent](./executor-agent/SKILL.md) | Execução | Implementar a história puxada |
-| [qa-agent](./qa-agent/SKILL.md) | Gate | Validar testes, cobertura e evidência |
-| [sre-agent](./sre-agent/SKILL.md) | Gate | Validar ambiente, harness, CI/CD, observabilidade |
-| [security-specialist-agent](./security-specialist-agent/SKILL.md) | Gate | Validar autenticação, autorização, dados e segredos |
-| [architect-reviewer-agent](./architect-reviewer-agent/SKILL.md) | Gate | Validar fronteiras, SOLID e manutenibilidade |
-| [open-finance-security-agent](./open-finance-security-agent/SKILL.md) | Gate / especialista | Validar consentimento, credencial de agregador, isolamento entre titulares e retenção de dado financeiro |
-| [code-reviewer-agent](./code-reviewer-agent/SKILL.md) | Revisão / análise | Inspecionar diffs, bugs, segredos e padrões antes do commit |
-| [final-reviewer-agent](./final-reviewer-agent/SKILL.md) | Gate | Cruzar tudo e autorizar o fechamento |
-| [commit-crafter-agent](./commit-crafter-agent/SKILL.md) | Execução | Preparar staging seletivo e redigir commit semântico em inglês |
-| [git-operator](./git-operator/SKILL.md) | Execução | Commit semântico e tag no mesmo hash |
-| [commit-conventions](./commit-conventions/SKILL.md) | Execução / gate | Valida formato e metadados do commit, incluindo rodapé Gerado-por-IA com modelo |
+| [product-manager](./product-manager/SKILL.md) | Product | Define scope, requirements, stories, kanban and delivery |
+| [executor-agent](./executor-agent/SKILL.md) | Execution | Implement the pulled story |
+| [qa-agent](./qa-agent/SKILL.md) | Gate | Validate tests, coverage and evidence |
+| [sre-agent](./sre-agent/SKILL.md) | Gate | Validate environment, harness, CI/CD, observability |
+| [security-specialist-agent](./security-specialist-agent/SKILL.md) | Gate | Validate authentication, authorization, data and secrets |
+| [architect-reviewer-agent](./architect-reviewer-agent/SKILL.md) | Gate | Validate boundaries, SOLID and maintainability |
+| [open-finance-security-agent](./open-finance-security-agent/SKILL.md) | Gate / specialist | Validate consent, aggregator credential, isolation between account holders and retention of financial data |
+| [code-reviewer-agent](./code-reviewer-agent/SKILL.md) | Review / analysis | Inspect diffs, bugs, secrets and patterns before the commit |
+| [final-reviewer-agent](./final-reviewer-agent/SKILL.md) | Gate | Cross everything and authorize the closure |
+| [commit-crafter-agent](./commit-crafter-agent/SKILL.md) | Execution | Prepare selective staging and draft a semantic commit in English |
+| [git-operator](./git-operator/SKILL.md) | Execution | Semantic commit and tag on the same hash |
+| [commit-conventions](./commit-conventions/SKILL.md) | Execution / gate | Validates commit format and metadata, including the Generated-by-AI footer with model |
 
-## Ordem típica em uma história
+## Typical order in a story
 
 ```
 product-manager  ->  executor-agent  ->  qa-agent
@@ -40,35 +40,35 @@ product-manager  ->  executor-agent  ->  qa-agent
                                                      |
                                               git-operator
                                                      |
-                                          product-manager (fecha kanban)
+                                          product-manager (closes kanban)
 ```
 
-Gates intermediários são acionados conforme a marcação na história; o gate final
-é sempre obrigatório.
+Intermediate gates are triggered according to the marking in the story; the final
+gate is always mandatory.
 
-## Especialistas adicionais
+## Additional specialists
 
-Crie skills específicas quando o domínio exigir julgamento que as atuais não
-cobrem — por exemplo `data-specialist-agent`, `ux-writer-agent`,
-`performance-agent`, `compliance-agent`. Toda skill nova precisa de:
-## Estrutura obrigatória de uma skill
+Create specific skills when the domain requires judgment that the current ones do
+not cover — for example `data-specialist-agent`, `ux-writer-agent`,
+`performance-agent`, `compliance-agent`. Every new skill needs:
+## Mandatory structure of a skill
 
-Cada skill é **uma pasta própria** (não um arquivo `.md` solto):
-
-```
-.agents/skills/<nome-skill-kebab-case>/
-└── SKILL.md                  ← arquivo principal, SEMPRE com este nome
-                                 (frontmatter obrigatório, ≤300 linhas)
-```
-
-Quando (e somente quando) surgir conteúdo complementar — snippets de
-código, checklists, templates, referências ou exemplos reais — crie a
-subpasta `assets/` no mesmo nível, com a organização que fizer sentido:
+Each skill is **its own folder** (not a loose `.md` file):
 
 ```
-.agents/skills/<nome-skill-kebab-case>/
+.agents/skills/<skill-name-kebab-case>/
+└── SKILL.md                  ← main file, ALWAYS with this name
+                                 (mandatory frontmatter, ≤300 lines)
+```
+
+When (and only when) complementary content arises — code snippets, checklists,
+templates, references or real examples — create the `assets/` subfolder at the
+same level, with whatever organization makes sense:
+
+```
+.agents/skills/<skill-name-kebab-case>/
 ├── SKILL.md
-└── assets/                   ← OPCIONAL. Cria só se tiver conteúdo real.
+└── assets/                   ← OPTIONAL. Create only if it has real content.
     ├── checklists/…
     ├── snippets/…
     ├── examples/…
@@ -76,13 +76,13 @@ subpasta `assets/` no mesmo nível, com a organização que fizer sentido:
     └── refs/…
 ```
 
-Arquivos dentro de `assets/` NÃO contam no limite de 300 linhas
-(regra `12b` do setup-inicial).
+Files inside `assets/` do NOT count toward the 300-line limit
+(rule `12b` of initial-setup).
 
-### Requisitos mínimos de uma skill
+### Minimum requirements of a skill
 
-1. Frontmatter com `name`, `description`, `document_type`, `role`,
-2. Responsabilidade única declarada em uma frase.
-3. Máximo de 300 linhas (apenas no `SKILL.md`; arquivos em `assets/` são livres).
-4. Roteiro verificável, critério de veredito e antipadrões.
-5. Fronteira explícita: o que ela **não** decide.
+1. Frontmatter with `name`, `description`, `document_type`, `role`,
+2. Single responsibility declared in one sentence.
+3. Maximum of 300 lines (only in the `SKILL.md`; files in `assets/` are free).
+4. Verifiable checklist, verdict criteria and antipatterns.
+5. Explicit boundary: what it does **not** decide.

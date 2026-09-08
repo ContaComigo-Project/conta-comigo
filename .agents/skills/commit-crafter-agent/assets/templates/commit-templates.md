@@ -1,18 +1,18 @@
-# Templates e Exemplos de Commits Convencionais
+# Conventional Commit Templates and Examples
 
-Este arquivo complementa a skill `commit-crafter-agent`, fornecendo modelos rápidos para estruturação de commits semânticos em conformidade com as regras do ContaComigo.
-
----
-
-## Regras Fundamentais Relembradas
-
-1. **Mensagem 100% em INGLÊS** (tipo, escopo, assunto imperativo, corpo e chaves do rodapé).
-2. **Chave de história obrigatória em entregas** (`(HT-XXX)` ou `(HN-XXX)`).
-3. **Rodapé de IA obrigatório** quando houver qualquer intervenção de IA: `Generated-by-AI: <modelo-exato>`.
+This file complements the `commit-crafter-agent` skill, providing quick templates for structuring semantic commits in compliance with ContaComigo rules.
 
 ---
 
-## 1. Feature de Negócio (HN)
+## Fundamental Rules Recalled
+
+1. **Message 100% in ENGLISH** (type, scope, imperative subject, body and footer keys).
+2. **Story key mandatory in deliveries** (`(HT-XXX)` or `(HN-XXX)`).
+3. **AI footer mandatory** whenever there is any AI intervention: `Generated-by-AI: <exact-model>`.
+
+---
+
+## 1. Business Feature (HN)
 
 ```gitcommit
 feat(billing): add split bill calculation by consumption (HN-001)
@@ -27,7 +27,7 @@ Generated-by-AI: Gemini 3.8 Flash
 
 ---
 
-## 2. Feature Técnica ou Infraestrutura (HT)
+## 2. Technical or Infrastructure Feature (HT)
 
 ```gitcommit
 feat(auth): configure jwt token issuance and validation (HT-006)
@@ -42,7 +42,7 @@ Generated-by-AI: Gemini 3.8 Flash
 
 ---
 
-## 3. Correção de Bug (fix)
+## 3. Bug Fix (fix)
 
 ```gitcommit
 fix(dashboard): correct total balance currency rounding error (HN-003)
@@ -56,9 +56,9 @@ Generated-by-AI: Gemini 3.8 Flash
 
 ---
 
-## 4. Governança, Documentação ou Manutenção (docs / chore)
+## 4. Governance, Documentation or Maintenance (docs / chore)
 
-*Apenas para tarefas de governança ou manutenção técnica que não configuram história de produto no Kanban:*
+*Only for governance or technical maintenance tasks that do not constitute a product story on the Kanban:*
 
 ```gitcommit
 docs(governance): add automated pre-commit hook and repository audit
@@ -72,7 +72,7 @@ Generated-by-AI: Gemini 3.8 Flash
 
 ---
 
-## 5. Refatoração sem alteração de comportamento (refactor)
+## 5. Refactoring without behavior change (refactor)
 
 ```gitcommit
 refactor(core): extract transaction validation to domain policy (HT-005)

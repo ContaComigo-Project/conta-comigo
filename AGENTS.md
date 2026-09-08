@@ -1,119 +1,124 @@
 ---
 name: agents-root-entrypoint
-description: Ponto de entrada de agentes LLM (Trae, Claude Code, Cursor, Copilot) para o repositório ContaComigo. Ponteiros para a fonte da verdade, regras inegociáveis e próxima demanda. Este arquivo NÃO duplica conteúdo.
+description: Entry point for LLM assistants (Trae, Claude Code, Cursor, Copilot) into the ContaComigo repository. Pointers to the source of truth, non-negotiable rules and the next demand. This file does NOT duplicate content.
 document_type: agents_manifest
 applies_when:
-  - um agente abre o repositório pela primeira vez
-  - um agente precisa saber onde estão as regras oficiais
+  - an agent opens the repository for the first time
+  - an agent needs to know where the official rules live
 max_lines: 200
 ---
 
-# AGENTS.md — Ponto de Entrada para Agentes LLM
+# AGENTS.md — Entry Point for LLM Assistants
 
-> **Fonte da verdade MORA em `.agents/*`, versionada no git.**
-> Aqui temos APENAS ponteiros na ordem correta e o resumo executivo do que NÃO PODE ser quebrado.
-> Qualquer conflito entre este arquivo e `.agents/` resolve-se por `.agents/`.
+> **The source of truth LIVES in `.agents/*`, versioned in git.**
+> Here there are ONLY pointers in the right order and the executive summary of
+> what MUST NOT be broken. Any conflict between this file and `.agents/` is
+> resolved by `.agents/`.
 
 ---
 
-## 1. Leitura obrigatória — 4 arquivos, nesta ordem, ANTES de qualquer ação
+## 1. Mandatory reading — 4 files, in this order, BEFORE any action
 
-| # | Arquivo | O que você aprende lá |
+| # | File | What you learn there |
 |---|---|---|
-| 1 | [`.agents/prompts/setup-inicial/PROMPT.md`](.agents/prompts/setup-inicial/PROMPT.md) | Regras 01..12b mestras — kanban, WIP, Ralph Loop, gates, língua, estrutura de artefatos |
-| 2 | [`docs/WORKFLOW-AGENTICO.md`](docs/WORKFLOW-AGENTICO.md) | Ciclo operacional dos 10 passos de uma história, como iniciar, fechar e gates aplicáveis |
-| 3 | [`docs/backlog/KANBAN-OFICIAL.md`](docs/backlog/KANBAN-OFICIAL.md) | **Fonte única da próxima demanda.** Coluna `Ordem` soberana. `WIP = 1`. |
-| 4 | [`.agents/skills/commit-conventions/SKILL.md`](.agents/skills/commit-conventions/SKILL.md) | Commits em INGLÊS + `Generated-by-AI: <modelo exato>` quando houver assistência de IA. |
+| 1 | [`.agents/prompts/initial-setup/PROMPT.md`](.agents/prompts/initial-setup/PROMPT.md) | Master rules 01..12b — kanban, WIP, Ralph Loop, gates, language, artifact structure |
+| 2 | [`docs/WORKFLOW-AGENTICO.md`](docs/WORKFLOW-AGENTICO.md) | The 10-step operational cycle of a story: how to start, close and which gates apply |
+| 3 | [`docs/backlog/KANBAN-OFICIAL.md`](docs/backlog/KANBAN-OFICIAL.md) | **Single source of the next demand.** `Ordem` column is sovereign. `WIP = 1`. |
+| 4 | [`.agents/skills/commit-conventions/SKILL.md`](.agents/skills/commit-conventions/SKILL.md) | Commits in ENGLISH + `Generated-by-AI: <exact model>` footer when AI-assisted. |
 
-Leu estes 4? Você sabe 95 % do que precisa para atuar aqui sem quebrar nada.
+Read these 4? You know 95 % of what it takes to work here without breaking anything.
 
 ---
 
-## 2. Índice oficial dos artefatos e documentação
+## 2. Official index of artifacts and documentation
 
-| Artefato | Caminho (fonte da verdade) |
+| Artifact | Path (source of truth) |
 |---|---|
-| Skills / portas de gate / papéis | [`.agents/skills/README.md`](.agents/skills/README.md) |
-| Rules / invariantes bloqueantes | [`.agents/rules/README.md`](.agents/rules/README.md) |
-| Prompts mestres | [`.agents/prompts/README.md`](.agents/prompts/README.md) |
-| Ciclo Ralph (Perceber → Registrar) | [`.agents/prompts/ralph-loop/PROMPT.md`](.agents/prompts/ralph-loop/PROMPT.md) |
-| Épico de negócio (produto, personas) | [`docs/backlog/EPICO-NEGOCIO.md`](docs/backlog/EPICO-NEGOCIO.md) |
-| Épico técnico (arq, segurança, RNF) | [`docs/backlog/EPICO-TECNICO.md`](docs/backlog/EPICO-TECNICO.md) |
-| Requisitos estáveis RF / RN / RNF | [`docs/requisitos/README.md`](docs/requisitos/README.md) |
-| ADRs — por que este projeto é assim | [`docs/adr/README.md`](docs/adr/README.md) |
+| Skills / gate ports / roles | [`.agents/skills/README.md`](.agents/skills/README.md) |
+| Rules / blocking invariants | [`.agents/rules/README.md`](.agents/rules/README.md) |
+| Master prompts | [`.agents/prompts/README.md`](.agents/prompts/README.md) |
+| Ralph Loop (Perceive → Record) | [`.agents/prompts/ralph-loop/PROMPT.md`](.agents/prompts/ralph-loop/PROMPT.md) |
+| Business epic (product, personas) | [`docs/backlog/EPICO-NEGOCIO.md`](docs/backlog/EPICO-NEGOCIO.md) |
+| Technical epic (architecture, security, NFRs) | [`docs/backlog/EPICO-TECNICO.md`](docs/backlog/EPICO-TECNICO.md) |
+| Stable requirements RF / RN / RNF | [`docs/requisitos/README.md`](docs/requisitos/README.md) |
+| ADRs — why this project is this way | [`docs/adr/README.md`](docs/adr/README.md) |
 | Spec-Driven Development (SDD-001) | [`docs/spec-driven-development/README.md`](docs/spec-driven-development/README.md) |
-| Linha do tempo entregas (tag + hash) | [`docs/entregas/README.md`](docs/entregas/README.md) |
-| Planos de execução por história | [`docs/tasks/README.md`](docs/tasks/README.md) |
-| Scripts utilitários | [`scripts/README.md`](scripts/README.md) |
-| Suítes de teste do workspace | [`tests/README.md`](tests/README.md) |
-| Ferramenta de checagem de fronteiras | [`tooling/README.md`](tooling/README.md) |
+| Delivery timeline (tag + hash) | [`docs/entregas/README.md`](docs/entregas/README.md) |
+| Per-story execution plans | [`docs/tasks/README.md`](docs/tasks/README.md) |
+| Utility scripts | [`scripts/README.md`](scripts/README.md) |
+| Workspace test suites | [`tests/README.md`](tests/README.md) |
+| Boundary-checking tooling | [`tooling/README.md`](tooling/README.md) |
 | Frontend (React + Vite) | [`frontend/README.md`](frontend/README.md) |
-| Inventário e arquitetura do frontend existente | [`docs/inventario-frontend.md`](docs/inventario-frontend.md) |
+| Inventory and architecture of the existing frontend | [`docs/inventario-frontend.md`](docs/inventario-frontend.md) |
 
 ---
 
-## 3. Regras inegociáveis — NÃO AS QUEBRE
+## 3. Non-negotiable rules — DO NOT BREAK THEM
 
-1.  **WIP = 1.** Puxe SEMPRE o item `Ready` com **menor `Ordem`**. A chave HT/HN não é ordem.
-2.  **Commitar em INGLÊS.** Tipo, escopo, descrição, corpo e rodapés. Apenas chaves HT/HN, nomes de pessoas e paths já existentes em pt permanecem.
-3.  **Rodapé `Generated-by-AI: <modelo exato>` obrigatório** se um modelo sugerir, escrever, refinar, revisar ou validar **qualquer pedaço** do commit ou do diff. 1 modelo por linha. Linha ausente = garantia formal de 100 % humano.
-4.  **Staging seletivo, sempre.** `git add -A` e `git commit -am` são **proibidos** no commit de entrega.
-5.  **Amend proibido em commit publicado.** `HEAD` que já chegou ao `origin/*` nunca recebe `--amend`.
-6.  **Push, tag e release SÓ com autorização humana explícita nesta conversa.** Nenhum deles automático.
-7.  **Estrutura de artefato agêntico é 1 pasta = 1 artefato:**
+1.  **WIP = 1.** Always pull the `Ready` item with the **lowest `Ordem`**. The HT/HN key is not the order.
+2.  **Commit in ENGLISH.** Type, scope, description, body and footers. Only HT/HN keys, people names and already-existing pt paths remain.
+3.  **`Generated-by-AI: <exact model>` footer is mandatory** if a model suggests, writes, refines, reviews or validates **any piece** of the commit or the diff. 1 model per line. Absent line = formal guarantee of 100 % human authorship.
+4.  **Selective staging, always.** `git add -A` and `git commit -am` are **forbidden** in the delivery commit.
+5.  **Amend forbidden on published commits.** `HEAD` that already reached `origin/*` never receives `--amend`.
+6.  **Push, tag and release ONLY with explicit human authorization in this conversation.** None of them automatic.
+7.  **Agentic artifact structure is 1 folder = 1 artifact:**
     ```
-    Skills  →  .agents/skills/<nome>/SKILL.md
-    Rules   →  .agents/rules/<nome>/RULE.md
-    Prompts →  .agents/prompts/<nome>/PROMPT.md
+    Skills  →  .agents/skills/<name>/SKILL.md
+    Rules   →  .agents/rules/<name>/RULE.md
+    Prompts →  .agents/prompts/<name>/PROMPT.md
     ```
-    `assets/` dentro de cada pasta é OPCIONAL e só existe se tiver conteúdo real.
-8.  **Nenhum `Refs:`, `Depende de:` ou link de entrega aponta para caminhos LOCAIS de IDE particular.** Esses diretórios são propriedade da instalação de cada pessoa e nunca são versionados. Tudo que deve ser compartilhado com a equipe mora OBRIGATORIAMENTE em `.agents/*` ou `docs/*`.
+    `assets/` inside each folder is OPTIONAL and only exists with real content.
+8.  **No `Refs:`, `Depends on:` or delivery link points to LOCAL paths of a particular IDE.** Those directories are private to each person's install and never versioned. Everything shared with the team lives MANDATORILY in `.agents/*` or `docs/*`.
 
 ---
 
-## 4. Próxima demanda hoje
+## 4. Next demand today
 
-Em `docs/backlog/KANBAN-OFICIAL.md`, o item `Ready` é **`HT-019`** —
-Documentação OpenAPI/Swagger da API (ordem 19, puxada antes da ordem natural por
-decisão do time).
+In `docs/backlog/KANBAN-OFICIAL.md`, the `Ready` column is **empty** — `HT-019`
+(Ordem 19) was delivered as `v0.15.0` → `ddc9bbe`. Nothing can be pulled right
+now without breaking the state flow.
 
-Últimas entregas: `HT-011` (Ordem 14) — `v0.14.0` → `94eec6f`; `HN-001` (Ordem 13)
-— `v0.13.0` → `295fca8`.
+Next in the queue:
 
-Depois de `HT-019`, a fila volta para `HN-002` (Ordem 15, `Backlog`):
+> **`HN-002` — Connect an institution with consent and synchronize** (Ordem 15,
+> state `Backlog`).
 
-> **`HN-002` — Conectar instituição com consentimento e sincronizar.**
+All dependencies are ready: `HN-001` provided the session, `HT-011` the
+aggregation port with failure policy, `HT-010` encryption at rest and `HT-008`
+the per-holder barrier. By the grooming rule, the story file is created when the
+item enters `Ready`: the next action is to groom `HN-002` (create
+`docs/backlog/historias/HN-002-conectar-instituicao.md` with verifiable
+criteria), move it to `Ready` — and only then pull it.
 
-Todas as dependências estão prontas: `HN-001` deu a sessão, `HT-011` a porta de
-agregação com política de falha, `HT-010` a cifra em repouso e `HT-008` a
-barreira por titular. Pela regra de grooming, o arquivo de história é criado
-quando o item entra em `Ready`: a próxima ação é groomar `HN-002` (criar
-`docs/backlog/historias/HN-002-conectar-instituicao.md` com critérios
-verificáveis), movê-la para `Ready` — e só depois puxá-la.
+### CI note (`HT-007`, Ordem 8, postponed)
+
+`HT-007` returns to `Ready` when the team decides to push `develop` and
+configure branch protection on GitHub. Until then, `RNF-021` is satisfied only
+locally (documented in the kanban).
 
 ---
 
-## 5. Idiomas do repositório
+## 5. Repository languages
 
-| Assunto | Idioma |
+| Subject | Language |
 |---|---|
-| Specs, docs de design, ADRs, tests, código, commits, CI, infra, pipelines | INGLÊS |
-| README apresentação ao público, UI strings do React, RESUMO-MOCITEC.md, cards, banners, tela de chatbot | **PT-BR** |
-| Comunicação com o usuário final (você neste chat) | **PT-BR** |
+| Specs, design docs, ADRs, `.agents/*`, tests, code, commits, CI, infra, pipelines | ENGLISH |
+| Public-facing README, React UI strings, RESUMO-MOCITEC.md, cards, banners, chatbot screen | **PT-BR** |
+| End-user communication (you in this chat) | **PT-BR** |
 
 ---
 
-## 6. Receita rápida de como agir aqui
+## 6. Quick recipe for working here
 
-| Situação | O que fazer |
+| Situation | What to do |
 |---|---|
-| Começar uma história | `scripts/nova-historia.sh HT-XXX`; atualiza Kanban para *Em execução* **antes** de codar. |
-| Fechar uma história | Ordem: QA / SRE / Security / Arquitetura gates → **final-reviewer** → **git-operator** (commit + tag, só com OK humano). |
-| Nova skill / rule / prompt | 1 pasta por artefato + nome fixo. Se precisar de anexos, cria `assets/` na mesma hora. |
-| Dúvida sobre formato de commit | Lê `commit-conventions/SKILL.md` inteiro. |
-| Dúvida sobre o porquê de uma decisão | Busca o ADR. Sem ADR = cria ADR durante a história que consome a decisão. |
+| Start a story | `scripts/nova-historia.sh HT-XXX`; move the kanban to *Em execução* **before** coding. |
+| Close a story | Order: QA / SRE / Security / Architecture gates → **final-reviewer** → **git-operator** (commit + tag, only with human OK). |
+| New skill / rule / prompt | 1 folder per artifact + fixed name. If attachments are needed, create `assets/` right away. |
+| Doubt about commit format | Read `commit-conventions/SKILL.md` in full. |
+| Doubt about why a decision | Look for the ADR. No ADR = create an ADR during the story that consumes the decision. |
 
 ---
 
-*Conflito entre instruções? Aplicar sempre neste ordem:*
-`.agents/prompts/setup-inicial/PROMPT.md` → `RULEs` bloqueantes → `KANBAN-OFICIAL.md` → este `AGENTS.md`.
+*Conflict between instructions? Always apply in this order:*
+`.agents/prompts/initial-setup/PROMPT.md` → blocking `RULEs` → `KANBAN-OFICIAL.md` → this `AGENTS.md`.

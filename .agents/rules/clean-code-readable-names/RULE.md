@@ -1,11 +1,11 @@
 ---
 name: clean-code-readable-names
-description: Impõe nomes claros em linguagem de domínio e proíbe rótulos técnicos, abreviações opacas e sufixos genéricos.
+description: Enforces clear names in domain language and forbids technical labels, opaque abbreviations and generic suffixes.
 document_type: rule
-severity: recomendada-forte
+severity: strongly-recommended
 applies_when:
-  - escrever ou revisar código produtivo, testes e documentação
-  - refatorar após o verde funcional
+  - writing or reviewing production code, tests and documentation
+  - refactoring after functional green
 complements:
   - refactor-after-functional-green
 complemented_by:
@@ -13,38 +13,38 @@ complemented_by:
 max_lines: 300
 ---
 
-# Regra — Nomes Legíveis em Linguagem de Domínio
+# Rule — Readable Names in Domain Language
 
-## Intenção
+## Intent
 
-O nome é a única documentação que nunca fica desatualizada em relação ao código
-que ela nomeia. Quem lê o código deveria reconhecer o negócio nele, sem tradução.
+The name is the only documentation that never becomes outdated relative to the code
+it names. Whoever reads the code should recognize the business in it, without translation.
 
-## Obrigações
+## Obligations
 
-1. **Linguagem do domínio.** O nome que o time usa na conversa é o nome que
-   aparece no código. Se o time diz "fatura", o código não diz `bill`, `doc` nem
+1. **Domain language.** The name the team uses in conversation is the name that
+   appears in the code. If the team says "fatura", the code does not say `bill`, `doc` nor
    `registro`.
-2. **Sem rótulo técnico vazio.** Evitar `Manager`, `Helper`, `Util`, `Handler`,
-   `Data`, `Info`, `Service` genérico. Se o nome só faz sentido com o sufixo,
-   a responsabilidade ainda não foi entendida.
-3. **Sem abreviação opaca.** `qtdTrsAtv` não economiza nada relevante.
-   Abreviação só quando é o termo do domínio (`CPF`, `IBAN`, `SLA`).
-4. **Booleano afirma.** `estaAtivo`, `podeSacar` — não `flag`, `status2`, `notX`.
-5. **Função é verbo, coisa é substantivo.** O nome diz o que a função faz, não
-   como ela faz.
-6. **Nome de teste descreve a regra**, não o método testado:
-   `recusa_saque_acima_do_saldo` em vez de `testSaque2`.
-7. **Comentário explica o porquê.** Comentário que explica o "o quê" é sinal de
-   nome ruim; corrija o nome e apague o comentário.
+2. **No empty technical label.** Avoid generic `Manager`, `Helper`, `Util`, `Handler`,
+   `Data`, `Info`, `Service`. If the name only makes sense with the suffix,
+   the responsibility has not yet been understood.
+3. **No opaque abbreviation.** `qtdTrsAtv` saves nothing relevant.
+   Abbreviation only when it is the domain term (`CPF`, `IBAN`, `SLA`).
+4. **Boolean asserts.** `estaAtivo`, `podeSacar` — not `flag`, `status2`, `notX`.
+5. **Function is a verb, thing is a noun.** The name says what the function does, not
+   how it does it.
+6. **Test name describes the rule**, not the tested method:
+   `recusa_saque_acima_do_saldo` instead of `testSaque2`.
+7. **Comment explains the why.** A comment that explains the "what" is a sign of a
+   bad name; fix the name and delete the comment.
 
-## Consistência
+## Consistency
 
-Um conceito, um nome, em todo o projeto: código, testes, documentos, mensagens
-de commit e histórias. Sinônimo espalhado (`cliente`, `usuário`, `pessoa` para a
-mesma entidade) é dívida de comunicação.
+One concept, one name, across the whole project: code, tests, documents, commit
+messages and stories. Scattered synonym (`cliente`, `usuário`, `pessoa` for the
+same entity) is communication debt.
 
-## Idioma
+## Language
 
-O projeto escolhe **um** idioma para o domínio e mantém. Termo técnico
-consagrado da linguagem ou do framework permanece no original.
+The project chooses **one** language for the domain and keeps it. Established
+technical term of the language or framework remains in the original.

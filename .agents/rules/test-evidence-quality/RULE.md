@@ -1,11 +1,11 @@
 ---
 name: test-evidence-quality
-description: Garante que os testes provem regra de negócio real e que a evidência registrada seja verificável, não decorativa.
+description: Ensures tests prove a real business rule and that the recorded evidence is verifiable, not decorative.
 document_type: rule
-severity: bloqueante
+severity: blocking
 applies_when:
-  - revisar uma suíte de testes no gate de QA
-  - registrar evidência em documento de entrega
+  - reviewing a test suite at the QA gate
+  - recording evidence in a delivery document
 complements:
   - tdd-bdd-before-implementation
 complemented_by:
@@ -13,41 +13,41 @@ complemented_by:
 max_lines: 300
 ---
 
-# Regra — Qualidade da Evidência de Teste
+# Rule — Quality of Test Evidence
 
-## Intenção
+## Intent
 
-Cobertura alta com asserção fraca é pior que cobertura baixa honesta: produz
-confiança sem base. Teste existe para provar regra, não para pintar o pipeline
-de verde.
+High coverage with weak assertion is worse than honest low coverage: it produces
+confidence without a basis. A test exists to prove a rule, not to paint the pipeline
+green.
 
-## Obrigações
+## Obligations
 
-1. **Toda RN citada pela história tem pelo menos um teste que falharia se a
-   regra fosse quebrada.** Este é o critério central.
-2. **Asserção específica.** Verificar o valor esperado, não apenas "não lançou
-   exceção" ou "respondeu 200".
-3. **Casos de borda presentes:** vazio, limite inferior, limite superior,
-   duplicado, inválido e concorrente quando aplicável.
-4. **Evidência é saída real.** O documento de entrega contém a saída do comando,
-   copiada, não reescrita à mão nem resumida como "tudo passou".
-5. **Teste que não pode falhar é dívida.** Se nenhuma mutação plausível do
-   código o quebra, ele não prova nada.
+1. **Every RN cited by the story has at least one test that would fail if the
+   rule were broken.** This is the central criterion.
+2. **Specific assertion.** Verify the expected value, not merely "did not throw
+   an exception" or "responded 200".
+3. **Edge cases present:** empty, lower bound, upper bound,
+   duplicate, invalid and concurrent when applicable.
+4. **Evidence is real output.** The delivery document contains the command output,
+   copied, not rewritten by hand nor summarized as "everything passed".
+5. **A test that cannot fail is debt.** If no plausible mutation of the
+   code breaks it, it proves nothing.
 
 ## Anti-reward-hacking
 
-Proibido, mesmo que deixe o gate verde:
+Forbidden, even if it turns the gate green:
 
-| Prática | Por que é proibida |
+| Practice | Why it is forbidden |
 | --- | --- |
-| Ajustar a asserção ao valor que o código produziu | Inverte a direção da prova |
-| Marcar teste como skip para destravar entrega | Esconde regressão |
-| Mockar o próprio objeto sob teste | Testa o mock, não o sistema |
-| Testar somente o caminho feliz | Deixa a regra sem defesa |
-| Inflar cobertura com testes de acessores | Aumenta o número sem aumentar segurança |
-| Afrouxar o limiar de cobertura para passar | Move a régua em vez do trabalho |
+| Adjusting the assertion to the value the code produced | Inverts the direction of the proof |
+| Marking a test as skip to unblock a delivery | Hides regression |
+| Mocking the very object under test | Tests the mock, not the system |
+| Testing only the happy path | Leaves the rule defenseless |
+| Inflating coverage with accessor tests | Increases the number without increasing safety |
+| Loosening the coverage threshold to pass | Moves the bar instead of the work |
 
-## Verificação no gate
+## Verification at the gate
 
-Escolher uma RN e perguntar: *qual teste quebra se eu inverter esta regra?*
-Sem resposta com caminho de arquivo e nome de teste, o gate reprova.
+Choose an RN and ask: *which test breaks if I invert this rule?*
+Without an answer with a file path and test name, the gate fails.

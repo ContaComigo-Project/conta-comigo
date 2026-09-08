@@ -1,11 +1,11 @@
 ---
 name: sre-agent
-description: Gate de operação — valida ambiente reprodutível, harness, CI/CD, observabilidade, reversão e custo operacional da entrega.
+description: Operations gate — validates reproducible environment, harness, CI/CD, observability, rollback and operational cost of the delivery.
 document_type: skill
 role: gate
 applies_when:
-  - história toca ambiente, build, pipeline, publicação ou operação
-  - validar reprodutibilidade em máquina limpa
+  - story touches environment, build, pipeline, publication or operations
+  - validating reproducibility on a clean machine
 uses_rules:
   - main-push-quality-and-versioning
   - spec-to-execution-plan
@@ -14,34 +14,34 @@ complements:
 complemented_by:
   - final-reviewer-agent
 outputs:
-  - seção Gates do documento de entrega
-  - scripts/ e documentação operacional
+  - Gates section of the delivery document
+  - scripts/ and operational documentation
 max_lines: 300
 ---
 
 # Skill — SRE
 
-## Responsabilidade única
+## Single responsibility
 
-Garantir que a entrega **roda, é observável e pode ser desfeita** — na máquina
-de qualquer pessoa do time e no CI, com o mesmo comando.
+Ensure the delivery **runs, is observable and can be undone** — on any team
+member's machine and on CI, with the same command.
 
-## Roteiro do gate
+## Gate checklist
 
-1. **Reprodutibilidade.** O harness roda em ambiente limpo sem passo manual não
-   documentado. Ideal: mesmo comando local e em CI.
-2. **Isolamento.** Dependências de ambiente (banco, fila, serviço externo) sobem
-   por Docker ou equivalente declarado, com versões fixadas.
-3. **Configuração.** Nenhum segredo em repositório; variáveis documentadas com
-   valor de exemplo e valor obrigatório separados.
-4. **Pipeline.** Os gates rodam em CI e realmente **bloqueiam**. Gate que só
-   avisa não é gate.
-5. **Observabilidade.** A entrega responde: aconteceu? demorou quanto? falhou
-   por quê? Log estruturado, métrica e caminho de erro.
-6. **Reversão.** Existe caminho de volta testado e escrito na história.
-7. **Custo.** Novo recurso pago ou processo contínuo tem custo estimado.
+1. **Reproducibility.** The harness runs on a clean environment without an
+   undocumented manual step. Ideal: same command locally and on CI.
+2. **Isolation.** Environment dependencies (database, queue, external service)
+   come up via Docker or an equivalent declared approach, with pinned versions.
+3. **Configuration.** No secret in the repository; variables documented with
+   example value and required value separated.
+4. **Pipeline.** The gates run on CI and actually **block**. A gate that only
+   warns is not a gate.
+5. **Observability.** The delivery answers: did it happen? how long did it take?
+   why did it fail? Structured log, metric and error path.
+6. **Rollback.** There is a tested way back, written in the story.
+7. **Cost.** A new paid resource or continuous process has an estimated cost.
 
-## Verificação prática
+## Practical verification
 
 ```
 scripts/harness.sh setup
@@ -49,20 +49,20 @@ scripts/harness.sh test
 scripts/harness.sh gates
 ```
 
-Falhou em máquina limpa, reprova — mesmo funcionando na máquina de quem escreveu.
+Failed on a clean machine, reject — even if it works on the author's machine.
 
-## Veredito
+## Verdict
 
-| Resultado | Condição |
+| Result | Condition |
 | --- | --- |
-| Aprovado | Roteiro atendido com saída registrada |
-| Aprovado com ressalva | Lacuna operacional registrada como história técnica nova |
-| Reprovado | Não reproduz, não observa ou não reverte |
+| Approved | Checklist met with recorded output |
+| Approved with caveat | Operational gap recorded as a new technical story |
+| Rejected | Does not reproduce, does not observe or does not revert |
 
-## Antipadrões
+## Antipatterns
 
-- "Funciona na minha máquina" como evidência.
-- Passo manual não documentado no caminho de setup.
-- Dependência sem versão fixada.
-- Gate de CI configurado como `continue-on-error`.
-- Log que só serve para quem escreveu o código.
+- "It works on my machine" as evidence.
+- Undocumented manual step in the setup path.
+- Dependency without a pinned version.
+- CI gate configured as `continue-on-error`.
+- Log that only serves whoever wrote the code.

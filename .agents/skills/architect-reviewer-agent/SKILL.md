@@ -1,11 +1,11 @@
 ---
 name: architect-reviewer-agent
-description: Gate de arquitetura — valida fronteiras, SOLID, padrões, acoplamento e manutenibilidade, cobrando design proporcional ao problema.
+description: Architecture gate — validates boundaries, SOLID, patterns, coupling and maintainability, requiring design proportional to the problem.
 document_type: skill
 role: gate
 applies_when:
-  - história introduz módulo, contrato, dependência ou padrão novo
-  - revisar acoplamento e custo de manutenção da entrega
+  - story introduces a module, contract, dependency or new pattern
+  - reviewing coupling and maintenance cost of the delivery
 uses_rules:
   - architecture-boundaries-and-solid
   - clean-code-readable-names
@@ -15,51 +15,52 @@ complements:
 complemented_by:
   - final-reviewer-agent
 outputs:
-  - seção Gates do documento de entrega
+  - Gates section of the delivery document
   - ADRs
 max_lines: 300
 ---
 
-# Skill — Revisor de Arquitetura
+# Skill — Architecture Reviewer
 
-## Responsabilidade única
+## Unique responsibility
 
-Avaliar o **custo da próxima mudança**. Não avalia se funciona (QA) nem se sobe
-(SRE): avalia se continuará barato de mudar.
+Assess the **cost of the next change**. It does not evaluate whether it works (QA)
+nor whether it ships (SRE): it evaluates whether it will remain cheap to change.
 
-## Roteiro do gate
+## Gate roadmap
 
-1. **Fronteiras.** Domínio sem framework, sem ORM, sem HTTP. Dependências
-   apontando para dentro.
-2. **Ports/adapters.** Integração externa atrás de interface do domínio.
-3. **SOLID onde paga.** SRP em unidades que mudam por motivos diferentes; DIP nos
-   pontos de troca provável.
-4. **Proporcionalidade.** Abstração criada tem caso de uso real hoje. Interface
-   com implementação única e sem troca prevista é reprovada como custo morto.
-5. **Acoplamento.** Mudança de uma regra obriga alteração em quantos arquivos?
-   Se muitos, a fronteira está errada.
-6. **Coerência.** O padrão adotado é o mesmo já usado no projeto, ou a diferença
-   está justificada em ADR.
-7. **Registro.** Decisão estrutural tem ADR com contexto, alternativas, decisão e
-   consequência.
+1. **Boundaries.** Domain without framework, without ORM, without HTTP.
+   Dependencies pointing inward.
+2. **Ports/adapters.** External integration behind a domain interface.
+3. **SOLID where it pays off.** SRP in units that change for different reasons; DIP
+   at likely replacement points.
+4. **Proportionality.** An abstraction created has a real use case today. An
+   interface with a single implementation and no planned replacement is rejected as
+   dead cost.
+5. **Coupling.** Changing one rule forces changes in how many files?
+   If many, the boundary is wrong.
+6. **Consistency.** The adopted pattern is the same already used in the project, or
+   the difference is justified in an ADR.
+7. **Record.** A structural decision has an ADR with context, alternatives, decision
+   and consequence.
 
-## Perguntas do gate
+## Gate questions
 
-- Onde esta regra de negócio mora, e por quê ali?
-- O que acontece se trocarmos o provedor externo desta funcionalidade?
-- Qual parte deste código eu apagaria sem que ninguém sentisse falta?
-- Esta abstração resolve um problema que já existe ou um que alguém imagina?
+- Where does this business rule live, and why there?
+- What happens if we swap the external provider of this feature?
+- Which part of this code would I delete without anyone missing it?
+- Does this abstraction solve a problem that already exists or one that someone imagines?
 
-## Veredito
+## Verdict
 
-| Resultado | Condição |
+| Result | Condition |
 | --- | --- |
-| Aprovado | Fronteiras preservadas e design proporcional |
-| Aprovado com ressalva | Dívida estrutural registrada com história de correção |
-| Reprovado | Vazamento de fronteira, regra de negócio fora do domínio ou abstração especulativa |
+| Approved | Boundaries preserved and proportional design |
+| Approved with caveats | Structural debt recorded with a fix story |
+| Rejected | Boundary leak, business rule outside the domain, or speculative abstraction |
 
-## Antipadrões
+## Anti-patterns
 
-- Aprovar complexidade porque "é o padrão do mercado".
-- Reprovar simplicidade porque "não escala" sem número que sustente.
-- Discutir preferência pessoal de estilo em vez de custo de mudança.
+- Approving complexity because "it's the market standard".
+- Rejecting simplicity because "it doesn't scale" without a supporting number.
+- Discussing personal style preference instead of change cost.

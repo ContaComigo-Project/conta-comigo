@@ -1,11 +1,11 @@
 ---
 name: refactor-after-functional-green
-description: Exige uma etapa explícita de refatoração depois que os testes funcionais ficam verdes e antes do fechamento da história.
+description: Requires an explicit refactoring stage after the functional tests turn green and before closing the story.
 document_type: rule
-severity: bloqueante
+severity: blocking
 applies_when:
-  - concluir a implementação mínima de uma história
-  - preparar a entrega para revisão final
+  - completing the minimal implementation of a story
+  - preparing the delivery for final review
 complements:
   - clean-code-readable-names
   - architecture-boundaries-and-solid
@@ -14,37 +14,37 @@ complemented_by:
 max_lines: 300
 ---
 
-# Regra — Refatorar Depois do Verde Funcional
+# Rule — Refactor After the Functional Green
 
-## Intenção
+## Intent
 
-O código que faz o teste passar é a primeira versão que funciona, não a versão
-que fica. A refatoração é a etapa em que o custo da próxima história é decidido.
+The code that makes the test pass is the first working version, not the version
+that stays. Refactoring is the stage where the cost of the next story is decided.
 
-## Obrigações
+## Obligations
 
-1. Refatoração acontece **depois** dos funcionais verdes e **antes** dos
-   unitários de ampliação de cobertura.
-2. Refatoração **não altera comportamento**: os mesmos testes funcionais
-   continuam verdes, sem edição nos testes.
-3. Se um teste precisou mudar, não foi refatoração — foi mudança de
-   comportamento, e volta para o ciclo de `tdd-bdd-before-implementation`.
-4. O que foi refatorado é registrado no documento de entrega. "Nada foi
-   refatorado" só é aceito com justificativa explícita.
+1. Refactoring happens **after** the functional greens and **before** the
+   unit tests that expand coverage.
+2. Refactoring **does not change behavior**: the same functional tests
+   remain green, without editing the tests.
+3. If a test needed to change, it was not refactoring — it was a behavior
+   change, and it goes back to the `tdd-bdd-before-implementation` cycle.
+4. What was refactored is recorded in the delivery document. "Nothing was
+   refactored" is only accepted with an explicit justification.
 
-## Alvos típicos
+## Typical targets
 
-| Alvo | Sinal |
+| Target | Sign |
 | --- | --- |
-| Duplicação | A mesma decisão em dois lugares |
-| Função longa | Faz mais de uma coisa em níveis de abstração diferentes |
-| Nome provisório | `data`, `handle`, `process`, `temp`, `aux` |
-| Condicional aninhada | Três níveis ou mais |
-| Vazamento de fronteira | Domínio conhecendo detalhe de infraestrutura |
-| Comentário explicando o "o quê" | O código deveria dizer isso sozinho |
+| Duplication | The same decision in two places |
+| Long function | Does more than one thing at different abstraction levels |
+| Provisional name | `data`, `handle`, `process`, `temp`, `aux` |
+| Nested conditional | Three levels or more |
+| Boundary leak | Domain knowing infrastructure detail |
+| Comment explaining the "what" | The code should say it by itself |
 
-## Limite
+## Limit
 
-A refatoração é da área tocada pela história. Reescrever módulo vizinho "já que
-estou aqui" viola o isolamento de commit exigido por
-`main-push-quality-and-versioning` e vira história própria.
+The refactoring is limited to the area touched by the story. Rewriting a neighboring module "since
+I'm here" violates the commit isolation required by
+`main-push-quality-and-versioning` and becomes its own story.

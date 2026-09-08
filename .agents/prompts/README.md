@@ -1,57 +1,56 @@
 ---
 name: prompts-indice
-description: Índice dos prompts reutilizáveis do workflow agêntico.
+description: Index of reusable prompts of the agentic workflow.
 document_type: index
 applies_when:
-  - localizar o prompt de uma etapa do processo
+  - locating the prompt of a process stage
 max_lines: 300
 ---
 
 # Prompts
 
-| Prompt | Uso |
+| Prompt | Use |
 | --- | --- |
-| [ralph-loop](./ralph-loop/PROMPT.md) | Ciclo Perceber → Orientar → Decidir → Agir → Registrar por história |
-| [setup-inicial](./setup-inicial/PROMPT.md) | Prompt de fundação do workflow agentico (bootstrap de projeto novo) |
+| [ralph-loop](./ralph-loop/PROMPT.md) | Perceive → Orient → Decide → Act → Record cycle per story |
+| [initial-setup](./initial-setup/PROMPT.md) | Foundation prompt of the agentic workflow (bootstrap of a new project) |
 
-## Fonte da verdade
+## Source of truth
 
-- `.agents/prompts/*` é a **fonte da verdade** oficial e versionada no git. Todo
-  assistente, membro da equipe e processo deve ler e editar APENAS aqui.
-- Cópias de conveniência para inicialização de IDEs específicas são de
-  responsabilidade LOCAL da instalação de cada pessoa; nunca são versionadas
-  e nunca servem de referência compartilhada. Em qualquer conflito, vence
-  `.agents/*`.
+- `.agents/prompts/*` is the **official source of truth**, versioned in git. Every
+  assistant, team member and process must read and edit ONLY here.
+- Convenience copies for bootstrapping specific IDEs are the LOCAL responsibility
+  of each person's installation; they are never versioned and never serve as a
+  shared reference. In any conflict, `.agents/*` wins.
 
-## Estrutura obrigatória de um prompt
+## Mandatory structure of a prompt
 
-Cada prompt é **uma pasta própria** (não um arquivo `.md` solto):
-
-```
-.agents/prompts/<nome-prompt-kebab-case>/
-└── PROMPT.md                  ← arquivo principal, SEMPRE com este nome
-                                   (frontmatter obrigatório, ≤300 linhas)
-```
-
-Quando (e somente quando) surgir conteúdo complementar — exemplos de uso,
-templates anexos ou referências documentais — crie a subpasta `assets/`
-no mesmo nível:
+Each prompt is **its own folder** (not a loose `.md` file):
 
 ```
-.agents/prompts/<nome-prompt-kebab-case>/
+.agents/prompts/<prompt-name-kebab-case>/
+└── PROMPT.md                  ← main file, ALWAYS with this name
+                                   (mandatory frontmatter, ≤300 lines)
+```
+
+When (and only when) complementary content emerges — usage examples, attached
+templates or documentary references — create the `assets/` subfolder at the
+same level:
+
+```
+.agents/prompts/<prompt-name-kebab-case>/
 ├── PROMPT.md
-└── assets/                    ← OPCIONAL. Cria só se tiver conteúdo real.
+└── assets/                    ← OPTIONAL. Create it only if it has real content.
     ├── templates/…
     ├── examples/…
     └── refs/…
 ```
 
-Arquivos em `assets/` NÃO contam no limite de 300 linhas (regra `12b`
-do setup-inicial).
+Files in `assets/` do NOT count against the 300-line limit (rule `12b`
+of initial-setup).
 
-## Convenção
+## Convention
 
-- Frontmatter obrigatório, responsabilidade única, máximo de 300 linhas no arquivo
-  principal `PROMPT.md`.
-- Prompt descreve **procedimento**; rule descreve **restrição**; skill descreve
-  **papel**. Quando um prompt começa a impor restrição, extraia uma rule.
+- Mandatory frontmatter, single responsibility, maximum of 300 lines in the main
+  `PROMPT.md` file.
+- A prompt describes a **procedure**; a rule describes a **constraint**; a skill
+  describes a **role**. When a prompt starts imposing a constraint, extract a rule.

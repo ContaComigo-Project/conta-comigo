@@ -1,11 +1,11 @@
 ---
 name: tdd-bdd-before-implementation
-description: Exige cenário funcional/BDD escrito e vermelho antes de qualquer código produtivo quando houver comportamento testável.
+description: Requires a functional/BDD scenario written and red before any production code when there is testable behavior.
 document_type: rule
-severity: bloqueante
+severity: blocking
 applies_when:
-  - iniciar a implementação de uma história com comportamento observável
-  - revisar se a ordem de trabalho respeitou teste antes de código
+  - starting the implementation of a story with observable behavior
+  - reviewing whether the work order respected test before code
 complements:
   - test-evidence-quality
 complemented_by:
@@ -14,52 +14,52 @@ complemented_by:
 max_lines: 300
 ---
 
-# Regra — Teste Funcional/BDD Antes da Implementação
+# Rule — Functional/BDD Test Before Implementation
 
-## Intenção
+## Intent
 
-Teste escrito antes é especificação executável. Escrito depois, ele tende a
-descrever o que o código faz — inclusive o que ele faz de errado.
+A test written first is executable specification. Written afterwards, it tends to
+describe what the code does — including what it does wrong.
 
-## Obrigações
+## Obligations
 
-1. Todo critério de aceite com comportamento observável vira um cenário
-   funcional/BDD **antes** do código produtivo.
-2. O cenário precisa ser visto **falhando pelo motivo certo** antes de existir
-   implementação. Falha por erro de sintaxe ou import não conta.
-3. A evidência do vermelho é registrada em `docs/tasks/[CHAVE]/progress.txt`.
-4. Só então entra o código produtivo mínimo para passar.
-5. O cenário usa linguagem de domínio: `Dado/Quando/Então` falando do negócio,
-   não de tabelas, endpoints ou classes internas.
+1. Every acceptance criterion with observable behavior becomes a functional/BDD
+   scenario **before** the production code.
+2. The scenario must be seen **failing for the right reason** before any
+   implementation exists. Failure due to a syntax or import error does not count.
+3. The evidence of the red is recorded in `docs/tasks/[KEY]/progress.txt`.
+4. Only then does the minimal production code to pass enter.
+5. The scenario uses domain language: `Dado/Quando/Então` speaking about the business,
+   not about tables, endpoints or internal classes.
 
-## Quando não se aplica
+## When it does not apply
 
-A regra exige comportamento testável. Estão dispensadas:
+The rule requires testable behavior. Exempted:
 
-- alterações puramente textuais de documentação;
-- ajustes de formatação sem mudança de comportamento;
-- exploração descartável (spike), desde que o código do spike não seja
-  promovido a produção sem refazer o ciclo.
+- purely textual documentation changes;
+- formatting adjustments without behavior change;
+- disposable exploration (spike), provided the spike code is not
+  promoted to production without redoing the cycle.
 
-Dispensa é declarada na história, não presumida.
+Exemption is declared in the story, not assumed.
 
-## Código que já existia sem teste
+## Code that already existed without a test
 
-O repositório nasceu com uma camada web sem nenhum teste. A regra não se aplica
-retroativamente — mas define o que acontece quando esse código é tocado:
+The repository was born with a web layer with no tests. The rule does not apply
+retroactively — but it defines what happens when that code is touched:
 
-| Situação | O que a regra exige |
+| Situation | What the rule requires |
 | --- | --- |
-| Código legado que **vai ser reescrito** | Nenhum teste sobre o legado. Escreva o cenário do comportamento desejado, veja-o vermelho e implemente do zero. Testar código que será apagado é trabalho jogado fora |
-| Código legado que **vai ser preservado e integrado** | Antes de alterá-lo, escreva o cenário que descreve o comportamento que ele deve ter depois da mudança |
-| Código legado que **só é lido** | Nada a fazer |
+| Legacy code that **will be rewritten** | No tests over the legacy. Write the scenario of the desired behavior, see it red and implement from scratch. Testing code that will be deleted is wasted work |
+| Legacy code that **will be preserved and integrated** | Before changing it, write the scenario that describes the behavior it must have after the change |
+| Legacy code that **is only read** | Nothing to do |
 
-Comportamento hoje implementado em camada de mock não é especificação aprovada:
-é observação. Ele só vira requisito depois de promovido a `RF` ou `RN` no
-catálogo — caso contrário, o time acaba preservando por acidente uma decisão que
-ninguém tomou.
+Behavior currently implemented in a mock layer is not approved specification:
+it is observation. It only becomes a requirement after being promoted to `RF` or `RN` in the
+catalog — otherwise, the team ends up accidentally preserving a decision that
+no one made.
 
-## Formato esperado
+## Expected format
 
 ```gherkin
 Cenário: cliente não pode sacar acima do saldo disponível
@@ -69,10 +69,10 @@ Cenário: cliente não pode sacar acima do saldo disponível
   E o saldo permanece 100
 ```
 
-## Sinais de violação
+## Signs of violation
 
-| Sintoma | Diagnóstico |
+| Symptom | Diagnosis |
 | --- | --- |
-| Todos os testes nasceram verdes | Foram escritos depois do código |
-| Cenário cita nome de classe ou rota | Testa implementação, não comportamento |
-| `progress.txt` sem registro do vermelho | A ordem não foi respeitada ou não foi provada |
+| All tests were born green | They were written after the code |
+| Scenario cites a class name or route | Tests implementation, not behavior |
+| `progress.txt` without the red record | The order was not respected or was not proven |

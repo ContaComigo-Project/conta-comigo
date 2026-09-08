@@ -1,11 +1,11 @@
 ---
 name: executor-agent
-description: Implementa a história puxada do kanban seguindo teste antes de código, refatoração após o verde e o plano registrado em docs/tasks.
+description: Implements the story pulled from the kanban following test before code, refactoring after green, and the plan recorded in docs/tasks.
 document_type: skill
-role: execução
+role: execution
 applies_when:
-  - implementar uma história em Em execução
-  - corrigir devolução vinda de um gate
+  - implementing a story in progress
+  - fixing a return from a gate
 uses_rules:
   - spec-to-execution-plan
   - tdd-bdd-before-implementation
@@ -21,61 +21,61 @@ outputs:
   - docs/tasks/[CHAVE]/TASK.md
   - docs/tasks/[CHAVE]/IMPLEMENTATION.md
   - docs/tasks/[CHAVE]/progress.txt
-  - código produtivo e testes
+  - production code and tests
 max_lines: 300
 ---
 
 # Skill — Executor
 
-## Responsabilidade única
+## Unique responsibility
 
-Transformar uma história `Ready` em código com testes, respeitando a ordem do
-ciclo. Não escolhe o que fazer; escolhe como fazer o que já foi decidido.
+Turn a `Ready` story into tested code, respecting the order of the
+cycle. It does not choose what to do; it chooses how to do what was already decided.
 
-## Pré-condições
+## Pre-conditions
 
-Recusa iniciar se faltar qualquer uma:
+Refuses to start if any of the following is missing:
 
-- história está no topo da fila e em `Ready`;
-- critérios de aceite são verificáveis;
-- `docs/tasks/[CHAVE]/` existe com as três peças preenchidas;
-- nenhuma outra história está em `Em execução`.
+- the story is at the top of the queue and in `Ready`;
+- acceptance criteria are verifiable;
+- `docs/tasks/[KEY]/` exists with the three pieces filled in;
+- no other story is `In progress`.
 
-## Ciclo de trabalho
+## Work cycle
 
-| Passo | Ação | Prova |
+| Step | Action | Evidence |
 | --- | --- | --- |
-| 1 | Escrever cenário funcional/BDD por critério de aceite | Falha pelo motivo certo |
-| 2 | Implementar o mínimo | Funcionais verdes |
-| 3 | Refatorar sem tocar nos testes | Funcionais continuam verdes |
-| 4 | Escrever unitários e casos de borda | Verdes, cobertura ampliada |
-| 5 | Rodar o harness completo | Saída registrada |
+| 1 | Write functional/BDD scenario per acceptance criterion | Fails for the right reason |
+| 2 | Implement the minimum | Functional tests green |
+| 3 | Refactor without touching tests | Functional tests stay green |
+| 4 | Write unit tests and edge cases | Green, coverage expanded |
+| 5 | Run the full harness | Output recorded |
 
-Cada passo gera uma linha em `progress.txt` com fase, descrição e evidência.
+Each step generates a line in `progress.txt` with phase, description and evidence.
 
-## Regras de escrita de código
+## Code writing rules
 
-- Implementação mínima primeiro; generalização só quando um segundo caso real
-  aparecer.
-- Regra de negócio vive no domínio, nunca no controlador ou no repositório.
-- Dependência externa entra por porta, com adaptador na borda.
-- Nome em linguagem de domínio, sem rótulo técnico vazio.
-- Sem `TODO` solto: ou resolve, ou vira história com chave citada no comentário.
+- Minimal implementation first; generalization only when a second real case
+  appears.
+- Business rule lives in the domain, never in the controller or the repository.
+- External dependency enters through a port, with an adapter at the boundary.
+- Name in domain language, without empty technical labels.
+- No loose `TODO`: either resolve it, or it becomes a story with the key cited in the comment.
 
-## Quando parar e devolver
+## When to stop and return
 
-Devolve a história para `Ready` com motivo registrado quando:
+Returns the story to `Ready` with a recorded reason when:
 
-- o critério de aceite se mostra ambíguo ou não verificável;
-- a implementação exige decisão arquitetural fora do plano;
-- surge dependência não resolvida;
-- o escopo real é maior que uma entrega.
+- the acceptance criterion proves ambiguous or not verifiable;
+- the implementation requires an architectural decision outside the plan;
+- an unresolved dependency arises;
+- the real scope is larger than one delivery.
 
-Devolver cedo é barato. Improvisar escopo é caro.
+Returning early is cheap. Improvising scope is expensive.
 
-## Antipadrões
+## Anti-patterns
 
-- Escrever código antes do cenário vermelho.
-- Editar teste para fazê-lo passar sem revisar a regra.
-- Refatorar módulo fora do escopo da história.
-- Acumular várias histórias no mesmo commit.
+- Writing code before the red scenario.
+- Editing a test to make it pass without reviewing the rule.
+- Refactoring a module outside the story scope.
+- Accumulating multiple stories in the same commit.

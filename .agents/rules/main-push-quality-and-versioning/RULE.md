@@ -1,11 +1,11 @@
 ---
 name: main-push-quality-and-versioning
-description: Bloqueia push na main sem testes e gates verdes, commit semântico com a chave da história e tag semântica no mesmo hash.
+description: Blocks push to main without green tests and gates, semantic commit with the story key and semantic tag on the same hash.
 document_type: rule
-severity: bloqueante
+severity: blocking
 applies_when:
-  - fechar uma história
-  - criar commit de entrega, tag ou push para main
+  - closing a story
+  - creating a delivery commit, tag or push to main
 complements:
   - test-evidence-quality
   - spec-to-execution-plan
@@ -14,53 +14,53 @@ complemented_by:
 max_lines: 300
 ---
 
-# Regra — Qualidade e Versionamento no Push para Main
+# Rule — Quality and Versioning on Push to Main
 
-## Intenção
+## Intent
 
-`main` é a linha do tempo confiável do projeto. Cada ponto dela precisa ser
-explicável: qual história entregou, com qual evidência, em qual versão.
+`main` is the reliable timeline of the project. Every point of it must be
+explainable: which story delivered, with which evidence, in which version.
 
-## Obrigações
+## Obligations
 
-1. **Testes verdes.** Nenhum push para `main` com teste falhando, ignorado sem
-   justificativa registrada, ou suíte não executada.
-2. **Gates aplicáveis executados.** Os gates marcados na história (QA, SRE,
-   Segurança, Arquitetura, Revisão final) rodaram e estão registrados na entrega.
-3. **Commit semântico com a chave.** Formato:
-   `tipo(escopo): descrição no imperativo (CHAVE)`
-   Tipos: `feat`, `fix`, `refactor`, `test`, `docs`, `chore`, `perf`, `build`, `ci`.
-   Exemplo: `feat(orcamento): registrar limite mensal por categoria (HN-004)`
-4. **Commit isolado.** O commit de entrega contém apenas arquivos daquela
-   história. Arquivo de outra história = novo commit, outra entrega.
-5. **Tag semântica no mesmo hash.** `vMAJOR.MINOR.PATCH` apontando exatamente
-   para o commit de fechamento.
-6. **Documento de entrega existe** em `docs/entregas/` antes da tag.
-7. **Kanban atualizado** com a história em `Done` e o histórico preenchido.
+1. **Green tests.** No push to `main` with a failing test, one skipped without
+   a recorded justification, or a suite not executed.
+2. **Applicable gates executed.** The gates marked on the story (QA, SRE,
+   Security, Architecture, Final review) ran and are recorded in the delivery.
+3. **Semantic commit with the key.** Format:
+   `type(scope): description in the imperative (KEY)`
+   Types: `feat`, `fix`, `refactor`, `test`, `docs`, `chore`, `perf`, `build`, `ci`.
+   Example: `feat(orcamento): registrar limite mensal por categoria (HN-004)`
+4. **Isolated commit.** The delivery commit contains only files from that
+   story. File from another story = new commit, another delivery.
+5. **Semantic tag on the same hash.** `vMAJOR.MINOR.PATCH` pointing exactly
+   to the closing commit.
+6. **Delivery document exists** in `docs/entregas/` before the tag.
+7. **Kanban updated** with the story in `Done` and the history filled in.
 
-## Escolha da versão
+## Version choice
 
-| Mudança | Incremento |
+| Change | Increment |
 | --- | --- |
-| Quebra contrato percebido por consumidor | `MAJOR` |
-| Capacidade nova compatível | `MINOR` |
-| Correção ou ajuste interno sem mudar contrato | `PATCH` |
+| Breaks a contract perceived by the consumer | `MAJOR` |
+| New compatible capability | `MINOR` |
+| Fix or internal adjustment without changing the contract | `PATCH` |
 
-## Verificação
+## Verification
 
 ```
 scripts/verificar-fechamento.sh vX.Y.Z
 ```
 
-O script falha se a tag não existir, se ela apontar para hash diferente do
-commit de fechamento, ou se a mensagem do commit não citar uma chave
-`HN-`/`HT-`.
+The script fails if the tag does not exist, if it points to a hash different from the
+closing commit, or if the commit message does not cite a
+`HN-`/`HT-` key.
 
-## Violações comuns
+## Common violations
 
-| Sintoma | Por que é violação |
+| Symptom | Why it is a violation |
 | --- | --- |
-| Tag criada depois de mais um commit | A tag deixa de identificar a entrega |
-| `chore: ajustes` | Não diz o que entregou nem qual história |
-| Commit com correção "aproveitando a viagem" | Mistura escopos e impede reversão limpa |
-| Teste desabilitado para destravar o push | Troca qualidade por velocidade sem decisão registrada |
+| Tag created after one more commit | The tag stops identifying the delivery |
+| `chore: ajustes` | Does not say what it delivered nor which story |
+| Commit with a fix "tagging along for the ride" | Mixes scopes and prevents clean rollback |
+| Test disabled to unblock the push | Trades quality for speed without a recorded decision |

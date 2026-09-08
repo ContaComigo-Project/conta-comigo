@@ -1,81 +1,82 @@
 ---
 name: ralph-loop
-description: Prompt operacional do ciclo Perceber, Orientar, Decidir, Agir e Registrar aplicado a uma história do kanban oficial.
+description: Operational prompt for the Perceive, Orient, Decide, Act and Record cycle applied to a story of the official kanban.
 document_type: prompt
 applies_when:
-  - iniciar ou retomar a execução de uma história
-  - decidir qual skill aciona a próxima ação
+  - starting or resuming the execution of a story
+  - deciding which skill triggers the next action
 max_lines: 300
 ---
 
 # Ralph Loop
 
-Ciclo de execução de uma história. Uma volta por ação relevante; nunca pule
-`Registrar`, é ela que torna a próxima volta possível.
+Execution cycle of a story. One pass per relevant action; never skip
+`Record` — it is what makes the next pass possible.
 
 ```
-PERCEBER -> ORIENTAR -> DECIDIR -> AGIR -> REGISTRAR
-    ^                                          |
-    +------------------------------------------+
+PERCEIVE -> ORIENT -> DECIDE -> ACT -> RECORD
+    ^                                        |
+    +----------------------------------------+
 ```
 
-## 1. Perceber
+## 1. Perceive
 
-Ler, nesta ordem, sem presumir memória:
+Read, in this order, without assuming memory:
 
-- `docs/backlog/KANBAN-OFICIAL.md` — qual é a próxima demanda
-- o arquivo da história (`HN-XXX` ou `HT-XXX`)
-- `docs/tasks/[CHAVE]/progress.txt` — o que já foi feito
-- entregas relacionadas em `docs/entregas/`
-- rules citadas pela etapa atual
+- `docs/backlog/KANBAN-OFICIAL.md` — what the next demand is
+- the story file (`HN-XXX` or `HT-XXX`)
+- `docs/tasks/[KEY]/progress.txt` — what has already been done
+- related deliveries in `docs/entregas/`
+- rules cited by the current stage
 
-Saída: uma frase sobre o estado real, não o estado esperado.
+Output: one sentence about the real state, not the expected state.
 
-## 2. Orientar
+## 2. Orient
 
-Comparar:
+Compare:
 
-| Dimensão | Pergunta |
+| Dimension | Question |
 | --- | --- |
-| Critérios de aceite | O que ainda não está provado? |
-| Rules | Qual restrição se aplica à próxima ação? |
-| Riscos | O que pode dar errado e qual o custo? |
-| Dependências | Falta algo fora do meu alcance? |
+| Acceptance criteria | What is still not proven? |
+| Rules | Which constraint applies to the next action? |
+| Risks | What can go wrong and at what cost? |
+| Dependencies | Is something outside my reach missing? |
 
-## 3. Decidir
+## 3. Decide
 
-Escolher **uma** próxima ação e a skill responsável:
+Choose **one** next action and the responsible skill:
 
-| Situação | Skill |
+| Situation | Skill |
 | --- | --- |
-| Escopo ambíguo ou história mal formada | `product-manager` |
-| Falta cenário funcional ou implementação | `executor-agent` |
-| Implementação verde, falta provar qualidade | `qa-agent` |
-| Toca ambiente, pipeline ou operação | `sre-agent` |
-| Toca autenticação, dado sensível ou segredo | `security-specialist-agent` |
-| Introduz módulo, contrato ou padrão | `architect-reviewer-agent` |
-| Gates concluídos | `final-reviewer-agent` |
-| Fechamento aprovado | `git-operator` |
+| Ambiguous scope or ill-formed story | `product-manager` |
+| Missing functional scenario or implementation | `executor-agent` |
+| Implementation green, quality still to be proven | `qa-agent` |
+| Touches environment, pipeline or operation | `sre-agent` |
+| Touches authentication, sensitive data or secret | `security-specialist-agent` |
+| Introduces module, contract or pattern | `architect-reviewer-agent` |
+| Gates completed | `final-reviewer-agent` |
+| Closing approved | `git-operator` |
 
-Uma ação por volta. Duas frentes simultâneas violam `spec-to-execution-plan`.
+One action per pass. Two simultaneous fronts violate `spec-to-execution-plan`.
 
-## 4. Agir
+## 4. Act
 
-Executar a ação com a menor unidade possível de mudança. Se durante a ação
-surgir trabalho novo, ele não é feito agora: vira história no `Backlog`.
+Execute the action with the smallest possible unit of change. If new work
+emerges during the action, it is not done now: it becomes a story in the
+`Backlog`.
 
-## 5. Registrar
+## 5. Record
 
-Sempre, e no mesmo momento:
+Always, and at the same moment:
 
-- linha em `docs/tasks/[CHAVE]/progress.txt` com fase, ação e evidência;
-- atualização do `IMPLEMENTATION.md` se o plano mudou;
-- atualização do `KANBAN-OFICIAL.md` se o estado mudou;
-- documento em `docs/entregas/` no fechamento;
-- commit semântico e tag no mesmo hash no fechamento.
+- a line in `docs/tasks/[KEY]/progress.txt` with phase, action and evidence;
+- an update of the `IMPLEMENTATION.md` if the plan changed;
+- an update of the `KANBAN-OFICIAL.md` if the state changed;
+- a document in `docs/entregas/` at closing;
+- a semantic commit and a tag on the same hash at closing.
 
-## Critério de saída do loop
+## Loop exit criteria
 
-O loop termina quando a história está em `Done` com evidência, ou quando foi
-devolvida a `Ready` com o motivo registrado. Não termina por cansaço nem por
-"parece pronto".
+The loop ends when the story is in `Done` with evidence, or when it has been
+returned to `Ready` with the reason recorded. It does not end out of tiredness
+nor because it "looks ready".

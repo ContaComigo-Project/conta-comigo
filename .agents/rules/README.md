@@ -1,29 +1,29 @@
 ---
 name: rules-indice
-description: Índice das rules do workflow agêntico, com severidade e relação de complemento entre elas.
+description: Index of the agentic workflow rules, with severity and complement relationships among them.
 document_type: index
 applies_when:
-  - descobrir qual rule se aplica a uma etapa do trabalho
-  - criar uma rule nova
+  - discovering which rule applies to a stage of the work
+  - creating a new rule
 max_lines: 300
 ---
 
 # Rules
 
-Rule é uma restrição inegociável do processo. Ela diz o que **não** pode
-acontecer e como provar que não aconteceu. Skill executa; rule limita.
+A Rule is a non-negotiable constraint of the process. It states what must **not**
+happen and how to prove it did not happen. Skill executes; rule limits.
 
-| Rule | Severidade | Aplica-se a |
+| Rule | Severity | Applies to |
 | --- | --- | --- |
-| [spec-to-execution-plan](./spec-to-execution-plan/RULE.md) | Bloqueante | Escolha da próxima demanda e entrada em execução |
-| [tdd-bdd-before-implementation](./tdd-bdd-before-implementation/RULE.md) | Bloqueante | Ordem entre teste e código |
-| [test-evidence-quality](./test-evidence-quality/RULE.md) | Bloqueante | Qualidade da prova e evidência |
-| [refactor-after-functional-green](./refactor-after-functional-green/RULE.md) | Bloqueante | Etapa de limpeza pós-verde |
-| [clean-code-readable-names](./clean-code-readable-names/RULE.md) | Recomendada forte | Nomes e legibilidade |
-| [architecture-boundaries-and-solid](./architecture-boundaries-and-solid/RULE.md) | Bloqueante | Fronteiras, SOLID, ports/adapters |
-| [main-push-quality-and-versioning](./main-push-quality-and-versioning/RULE.md) | Bloqueante | Fechamento, commit, tag e push |
+| [spec-to-execution-plan](./spec-to-execution-plan/RULE.md) | Blocking | Choosing the next demand and entering execution |
+| [tdd-bdd-before-implementation](./tdd-bdd-before-implementation/RULE.md) | Blocking | Order between test and code |
+| [test-evidence-quality](./test-evidence-quality/RULE.md) | Blocking | Quality of proof and evidence |
+| [refactor-after-functional-green](./refactor-after-functional-green/RULE.md) | Blocking | Post-green cleanup stage |
+| [clean-code-readable-names](./clean-code-readable-names/RULE.md) | Strongly recommended | Names and readability |
+| [architecture-boundaries-and-solid](./architecture-boundaries-and-solid/RULE.md) | Blocking | Boundaries, SOLID, ports/adapters |
+| [main-push-quality-and-versioning](./main-push-quality-and-versioning/RULE.md) | Blocking | Closing, commit, tag and push |
 
-## Mapa de complemento
+## Complement map
 
 ```
 spec-to-execution-plan
@@ -35,41 +35,41 @@ spec-to-execution-plan
                  └─ main-push-quality-and-versioning
 ```
 
-Uma rule pode complementar outra rule e complementar skills; ela nunca as
-contradiz. Conflito entre rules é resolvido pela mais restritiva e registrado
-como decisão na entrega.
+A rule may complement another rule and complement skills; it never
+contradicts them. Conflict between rules is resolved by the most restrictive one and recorded
+as a decision in the delivery.
 
-## Estrutura obrigatória de uma rule
+## Mandatory structure of a rule
 
-Cada rule é **uma pasta própria** (não um arquivo `.md` solto):
-
-```
-.agents/rules/<nome-rule-kebab-case>/
-└── RULE.md                    ← arquivo principal, SEMPRE com este nome
-                                   (frontmatter obrigatório, ≤300 linhas)
-```
-
-Quando (e somente quando) surgir conteúdo complementar — snippets de
-exemplo de violação, checklists de conformidade ou referências normativas —
-crie a subpasta `assets/` no mesmo nível:
+Each rule is **its own folder** (not a loose `.md` file):
 
 ```
-.agents/rules/<nome-rule-kebab-case>/
+.agents/rules/<rule-name-kebab-case>/
+└── RULE.md                    ← main file, ALWAYS with this name
+                                   (mandatory frontmatter, ≤300 lines)
+```
+
+When (and only when) complementary content arises — violation example
+snippets, compliance checklists or normative references —
+create the `assets/` subfolder at the same level:
+
+```
+.agents/rules/<rule-name-kebab-case>/
 ├── RULE.md
-└── assets/                    ← OPCIONAL. Cria só se tiver conteúdo real.
+└── assets/                    ← OPTIONAL. Create only if it has real content.
     ├── checklists/…
     ├── examples/…
     └── refs/…
 ```
 
-Arquivos em `assets/` NÃO contam no limite de 300 linhas (regra `12b`
-do setup-inicial).
+Files in `assets/` do NOT count toward the 300-line limit (rule `12b`
+of initial-setup).
 
-## Como criar uma rule
+## How to create a rule
 
-1. Frontmatter obrigatório: `name`, `description`, `document_type`, `severity`,
+1. Mandatory frontmatter: `name`, `description`, `document_type`, `severity`,
    `applies_when`, `complements`, `complemented_by`, `max_lines`.
-2. Responsabilidade única: uma rule, uma restrição.
-3. Máximo de 300 linhas (apenas no `RULE.md`; arquivos em `assets/` são livres).
-4. Precisa conter: intenção, obrigações, como verificar e sinais de violação.
-5. Rule que não pode ser verificada não é rule — é conselho, e vai para uma skill.
+2. Single responsibility: one rule, one constraint.
+3. Maximum of 300 lines (only in `RULE.md`; files in `assets/` are free).
+4. Must contain: intent, obligations, how to verify and signs of violation.
+5. A rule that cannot be verified is not a rule — it is advice, and goes to a skill.
