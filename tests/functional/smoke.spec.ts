@@ -14,4 +14,9 @@ test.describe('smoke — the existing web responds', () => {
     await page.goto('/login');
     await expect(page.getByRole('button', { name: /entrar/i })).toBeVisible();
   });
+
+  test('the dashboard redirects to login when there is no session (route guard)', async ({ page }) => {
+    await page.goto('/dashboard');
+    await expect(page).toHaveURL(/\/login/);
+  });
 });
