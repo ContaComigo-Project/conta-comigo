@@ -13,11 +13,11 @@ datasource db {
 
 model Transaction {
   id            String   @id
-  holderId      String   @map("titular_id")
-  description   String   @map("descricao")
-  amountInCents Int      @map("valor_em_centavos")
-  dueDate       DateTime @map("data_de_competencia") @db.Timestamptz(3)
-  externalId    String?  @map("identificador_externo")
+  holderId      String   @map("holder_id")
+  description   String   @map("description")
+  amountInCents Int      @map("amount_in_cents")
+  dueDate       DateTime @map("due_date") @db.Timestamptz(3)
+  externalId    String?  @map("external_id")
 
   @@index([holderId])
   @@index([holderId, externalId])
@@ -29,11 +29,11 @@ model Transaction {
 // enters the panel as a bill, never summed into the balance (RN-009).
 model ExternalAccount {
   id               String @id
-  holderId         String @map("titular_id")
-  externalId       String @map("identificador_externo")
+  holderId         String @map("holder_id")
+  externalId       String @map("external_id")
   institutionId    String @map("institution_id")
-  type             String @map("tipo")
-  balanceInCents   Int    @map("saldo_em_centavos")
+  type             String @map("type")
+  balanceInCents   Int    @map("balance_in_cents")
 
   @@index([holderId])
   @@map("external_accounts")
@@ -45,8 +45,8 @@ model Account {
   id           String   @id
   email        String   @unique
   name         String   @default("")
-  passwordHash String   @map("hash_da_senha")
-  createdAt    DateTime @default(now()) @map("criada_em") @db.Timestamptz(3)
+  passwordHash String   @map("password_hash")
+  createdAt    DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
 
   @@map("accounts")
 }
@@ -55,10 +55,10 @@ model Account {
 // unusable (ADR-004, real revocation).
 model Session {
   id               String    @id
-  holderId         String    @map("titular_id")
-  refreshTokenHash String    @unique @map("hash_do_refresh")
-  expiresAt        DateTime  @map("expira_em") @db.Timestamptz(3)
-  revokedAt        DateTime? @map("revogado_em") @db.Timestamptz(3)
+  holderId         String    @map("holder_id")
+  refreshTokenHash String    @unique @map("refresh_token_hash")
+  expiresAt        DateTime  @map("expires_at") @db.Timestamptz(3)
+  revokedAt        DateTime? @map("revoked_at") @db.Timestamptz(3)
 
   @@index([holderId])
   @@map("sessions")
@@ -69,16 +69,16 @@ model Session {
 // (RNF-014); the domain never sees the plain value.
 model Consent {
   id                String    @id
-  holderId          String    @map("titular_id")
+  holderId          String    @map("holder_id")
   institutionId     String    @map("institution_id")
   connectionId      String    @map("connection_id")
   scope             String
   credentialCipher  String    @map("credential_cipher")
-  createdAt         DateTime  @default(now()) @map("criado_em") @db.Timestamptz(3)
-  expiresAt         DateTime  @map("expira_em") @db.Timestamptz(3)
-  revokedAt         DateTime? @map("revogado_em") @db.Timestamptz(3)
-  deletionScheduledAt DateTime? @map("exclusao_agendada_em") @db.Timestamptz(3)
-  lastSyncAt        DateTime? @map("ultima_sincronizacao_em") @db.Timestamptz(3)
+  createdAt         DateTime  @default(now()) @map("created_at") @db.Timestamptz(3)
+  expiresAt         DateTime  @map("expires_at") @db.Timestamptz(3)
+  revokedAt         DateTime? @map("revoked_at") @db.Timestamptz(3)
+  deletionScheduledAt DateTime? @map("deletion_scheduled_at") @db.Timestamptz(3)
+  lastSyncAt        DateTime? @map("last_sync_at") @db.Timestamptz(3)
 
   @@index([holderId])
   @@map("consents")
