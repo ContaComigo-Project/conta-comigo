@@ -59,6 +59,7 @@ model Consent {
   createdAt         DateTime  @default(now()) @map("criado_em") @db.Timestamptz(3)
   expiresAt         DateTime  @map("expira_em") @db.Timestamptz(3)
   revokedAt         DateTime? @map("revogado_em") @db.Timestamptz(3)
+  deletionScheduledAt DateTime? @map("exclusao_agendada_em") @db.Timestamptz(3)
   lastSyncAt        DateTime? @map("ultima_sincronizacao_em") @db.Timestamptz(3)
 
   @@index([holderId])

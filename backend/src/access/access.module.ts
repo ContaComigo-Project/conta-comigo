@@ -61,6 +61,6 @@ import type { Clock } from '../transactions/domain/port/driven/clock';
       useFactory: (sessions: SessionRepository, clock: Clock) => new EncerrarSessionUseCase(sessions, clock),
     },
   ],
-  exports: [TOKENS_ACCESS.TokenIssuer],
+  exports: [TOKENS_ACCESS.TokenIssuer, TOKENS_ACCESS.RepositorioDeAccounts, TOKENS_ACCESS.SessionRepository],
 })
 export class AccessModule {}

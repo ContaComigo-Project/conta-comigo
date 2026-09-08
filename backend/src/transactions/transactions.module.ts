@@ -34,5 +34,6 @@ import { SystemClock } from './infrastructure/clock/system-clock';
         new GetMonthSummaryUseCase(repositorio, clock),
     },
   ],
+  exports: [TOKENS.RepositorioDeTransactions],
 })
 export class TransactionsModule {}

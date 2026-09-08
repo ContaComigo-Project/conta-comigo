@@ -36,4 +36,21 @@ export class ConsentRepositoryMemory implements ConsentRepository {
     const c = this.dados.get(consentId);
     if (c) this.dados.set(consentId, { ...c, revokedAt: agora });
   }
+
+  async purgeDue(agora: Date): Promise<number> {
+    let apagados = 0;
+    for (const [id, c] of this.dados) {
+      if (c.deletionScheduledAt !== null && c.deletionScheduledAt.getTime() <= agora.getTime()) {
+        this.dados.delete(id);
+        apagados += 1;
+      }
+    }
+    return apagados;
+  }
+
+  async deleteByHolder(holderId: string): Promise<void> {
+    for (const [id, c] of this.dados) {
+      if (c.holderId === holderId) this.dados.delete(id);
+    }
+  }
 }

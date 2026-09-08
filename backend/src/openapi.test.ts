@@ -17,6 +17,8 @@ const ENDPOINTS_ESPERADOS = [
   '/access/sessions',
   '/access/sessions/refresh',
   '/consents',
+  '/consents/account',
+  '/consents/{id}',
   '/consents/{id}/sync',
   '/transactions',
   '/transactions/month-summary',
@@ -60,10 +62,13 @@ describe('HT-019 — a API e descoberta pela propria documentacao', () => {
     const caminhos = Object.keys(spec.paths).sort();
     expect(caminhos).toEqual([...ENDPOINTS_ESPERADOS].sort());
 
-    // /access/sessions tem POST e DELETE; /consents tem POST e GET; o restante,
-    // um metodo cada: 9 no total.
+    // /access/sessions tem POST e DELETE; /consents tem POST e GET;
+    // /consents/{id} e /consents/account têm DELETE; o restante, um método
+    // cada: 11 no total.
     const metodos = Object.values(spec.paths).flatMap((p) => Object.keys(p));
-    expect(metodos.sort()).toEqual(['delete', 'get', 'get', 'get', 'post', 'post', 'post', 'post', 'post']);
+    expect(metodos.sort()).toEqual([
+      'delete', 'delete', 'delete', 'get', 'get', 'get', 'post', 'post', 'post', 'post', 'post',
+    ]);
   });
 
   it('os endpoints de transactions exigem autenticacao Bearer na spec', async () => {

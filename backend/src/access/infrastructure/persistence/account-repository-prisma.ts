@@ -28,6 +28,10 @@ export class RepositorioDeAccountsPrisma implements RepositorioDeAccounts {
     await this.prisma.account.upsert({ where: { id: account.id }, create: linha, update: linha });
   }
 
+  async deleteById(id: string): Promise<void> {
+    await this.prisma.account.deleteMany({ where: { id } });
+  }
+
   async encerrar(): Promise<void> {
     await this.prisma.$disconnect();
   }

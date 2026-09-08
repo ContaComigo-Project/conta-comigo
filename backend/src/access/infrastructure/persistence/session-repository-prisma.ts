@@ -25,6 +25,10 @@ export class SessionRepositoryPrisma implements SessionRepository {
     await this.prisma.session.update({ where: { id }, data: { revokedAt: quando } });
   }
 
+  async deleteByHolder(holderId: string): Promise<void> {
+    await this.prisma.session.deleteMany({ where: { holderId } });
+  }
+
   async encerrar(): Promise<void> {
     await this.prisma.$disconnect();
   }

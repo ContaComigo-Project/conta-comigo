@@ -23,6 +23,8 @@ class RepoFake implements ConsentRepository {
   }
   async updateLastSyncAt(id: string, agora: Date) { const c = this.dados.get(id); if (c) this.dados.set(id, { ...c, lastSyncAt: agora }); }
   async revoke(id: string, agora: Date) { const c = this.dados.get(id); if (c) this.dados.set(id, { ...c, revokedAt: agora }); }
+  async purgeDue(): Promise<number> { return 0; }
+  async deleteByHolder(holderId: string): Promise<void> { for (const [k, v] of this.dados) if (v.holderId === holderId) this.dados.delete(k); }
 }
 
 class AggregadorFake implements OpenFinanceAggregator {

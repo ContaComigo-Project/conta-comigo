@@ -17,4 +17,8 @@ export class RepositorioDeAccountsEmMemoria implements RepositorioDeAccounts {
   async salvar(account: Account): Promise<void> {
     this.porId_.set(account.id, account);
   }
+
+  async deleteById(id: string): Promise<void> {
+    this.porId_.delete(id);
+  }
 }

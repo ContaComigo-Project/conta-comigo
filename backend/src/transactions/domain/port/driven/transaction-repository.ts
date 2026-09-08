@@ -8,4 +8,7 @@ import type { HolderId } from '../../model/holder';
 // filtrar depois — e filtrar depois ja vazou pelo log e pela metrica.
 export interface RepositorioDeTransactions {
   listarDoHolder(holderId: HolderId): Promise<readonly Transaction[]>;
+
+  /** Deletes every transaction of a holder (RN-016, account deletion). */
+  deleteByHolder(holderId: HolderId): Promise<void>;
 }

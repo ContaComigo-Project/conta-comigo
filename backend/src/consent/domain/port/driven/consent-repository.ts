@@ -18,6 +18,12 @@ export interface ConsentRepository {
 
   /** Marks the previous consent revoked on reconnection (RN-014). */
   revoke(consentId: string, agora: Date): Promise<void>;
+
+  /** Definitively deletes consents whose scheduled deletion is due (RN-013). */
+  purgeDue(agora: Date): Promise<number>;
+
+  /** Deletes every consent of a holder (RN-016, account deletion). */
+  deleteByHolder(holderId: string): Promise<void>;
 }
 
 export const TOKENS_CONSENT = {
@@ -27,4 +33,6 @@ export const TOKENS_CONSENT = {
   ConnectInstitution: Symbol.for('consent/ConnectInstitution'),
   ListConnections: Symbol.for('consent/ListConnections'),
   SyncInstitution: Symbol.for('consent/SyncInstitution'),
+  RevokeConsent: Symbol.for('consent/RevokeConsent'),
+  DeleteAccount: Symbol.for('consent/DeleteAccount'),
 } as const;

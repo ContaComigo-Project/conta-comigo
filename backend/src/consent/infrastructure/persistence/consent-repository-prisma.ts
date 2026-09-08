@@ -18,6 +18,7 @@ function paraEntidade(linha: LinhaDeConsent): Consent {
     createdAt: linha.createdAt,
     expiresAt: linha.expiresAt,
     revokedAt: linha.revokedAt,
+    deletionScheduledAt: linha.deletionScheduledAt,
     lastSyncAt: linha.lastSyncAt,
   };
 }
@@ -40,6 +41,7 @@ export class ConsentRepositoryPrisma implements ConsentRepository {
       createdAt: consent.createdAt,
       expiresAt: consent.expiresAt,
       revokedAt: consent.revokedAt,
+      deletionScheduledAt: consent.deletionScheduledAt,
       lastSyncAt: consent.lastSyncAt,
     };
     await this.prisma.consent.upsert({ where: { id: consent.id }, create: linha, update: linha });
@@ -71,5 +73,16 @@ export class ConsentRepositoryPrisma implements ConsentRepository {
 
   async revoke(consentId: string, agora: Date): Promise<void> {
     await this.prisma.consent.update({ where: { id: consentId }, data: { revokedAt: agora } });
+  }
+
+  async purgeDue(agora: Date): Promise<number> {
+    const resultado = await this.prisma.consent.deleteMany({
+      where: { deletionScheduledAt: { not: null, lte: agora } },
+    });
+    return resultado.count;
+  }
+
+  async deleteByHolder(holderId: string): Promise<void> {
+    await this.prisma.consent.deleteMany({ where: { holderId } });
   }
 }

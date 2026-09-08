@@ -4,7 +4,9 @@ import {
   Body,
   ConflictException,
   Controller,
+  Delete,
   Get,
+  HttpCode,
   Inject,
   NotFoundException,
   Param,
@@ -19,6 +21,8 @@ import type { HolderId } from '../../../transactions/domain/model/holder';
 import { TOKENS_CONSENT } from '../../domain/port/driven/consent-repository';
 import type { Identity } from '../../domain/port/driven/identity';
 import type { ConnectInstitution, ListConnections, SyncInstitution } from '../../domain/port/driving/consent';
+import type { RevokeConsentUseCase } from '../../application/revoke-consent';
+import type { DeleteAccountUseCase } from '../../application/delete-account';
 import { zodParaSchema } from '../../../openapi';
 import { HolderGuard } from './holder-guard';
 import { paraConsentDTO } from './consent.dto';
@@ -34,6 +38,8 @@ export class ConsentController {
     @Inject(TOKENS_CONSENT.ConnectInstitution) private readonly conectar: ConnectInstitution,
     @Inject(TOKENS_CONSENT.ListConnections) private readonly listar: ListConnections,
     @Inject(TOKENS_CONSENT.SyncInstitution) private readonly sincronizar: SyncInstitution,
+    @Inject(TOKENS_CONSENT.RevokeConsent) private readonly revogar: RevokeConsentUseCase,
+    @Inject(TOKENS_CONSENT.DeleteAccount) private readonly excluirConta: DeleteAccountUseCase,
     @Inject(TOKENS_CONSENT.Identity) private readonly identidade: Identity,
   ) {}
 
@@ -99,5 +105,25 @@ export class ConsentController {
       case 'agregador-recusou':
         throw new BadGatewayException('O agregador recusou a sincronizacao.');
     }
+  }
+
+  @Delete('account')
+  @HttpCode(204)
+  @ApiOperation({ summary: 'Excluir conta e dados', description: 'Apaga a conta, sessões, consentimentos e transações do titular (RN-016).' })
+  @ApiResponse({ status: 204, description: 'Conta excluída' })
+  @ApiResponse({ status: 404, description: 'Conta não encontrada' })
+  async excluirMinhaConta(): Promise<void> {
+    const resultado = await this.excluirConta.executar(this.titular());
+    if (resultado.tipo === 'nao-encontrada') throw new NotFoundException();
+  }
+
+  @Delete(':id')
+  @HttpCode(204)
+  @ApiOperation({ summary: 'Revogar consentimento', description: 'Tira a instituição do painel imediatamente e agenda a exclusão definitiva em até 24h (RN-013).' })
+  @ApiResponse({ status: 204, description: 'Consentimento revogado' })
+  @ApiResponse({ status: 404, description: 'Consentimento não encontrado para o titular' })
+  async revogarConsentimento(@Param('id') id: string): Promise<void> {
+    const resultado = await this.revogar.executar({ holderId: this.titular(), consentId: id, agora: new Date() });
+    if (resultado.tipo === 'nao-encontrado') throw new NotFoundException();
   }
 }

@@ -34,6 +34,10 @@ export class RepositorioDeTransactionsPrisma implements RepositorioDeTransaction
     return linhas.map(paraEntidade);
   }
 
+  async deleteByHolder(holderId: HolderId): Promise<void> {
+    await this.prisma.transaction.deleteMany({ where: { holderId } });
+  }
+
   /** So para teste de integracao: limpa a tabela entre cenarios. */
   async limparTudo(): Promise<void> {
     await this.prisma.transaction.deleteMany();

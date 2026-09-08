@@ -13,4 +13,6 @@ export interface SessionRepository {
   criar(session: Session): Promise<void>;
   porHashDoRefresh(hash: string): Promise<Session | null>;
   revogar(id: string, quando: Date): Promise<void>;
+  /** Deletes every session of a holder (RN-016, account deletion). */
+  deleteByHolder(holderId: string): Promise<void>;
 }

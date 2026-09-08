@@ -17,6 +17,8 @@ export interface Consent {
   readonly createdAt: Date;
   readonly expiresAt: Date;
   readonly revokedAt: Date | null;
+  /** When the definitive data deletion is scheduled (RN-013: up to 24h). */
+  readonly deletionScheduledAt: Date | null;
   /** Aggregator credential, CIPHERED. The domain never sees the plain value. */
   readonly credentialCipher: string;
   readonly lastSyncAt: Date | null;
@@ -50,6 +52,16 @@ export function novoConsent(params: {
     createdAt: params.agora,
     expiresAt: expiraEm,
     revokedAt: null,
+    deletionScheduledAt: null,
     lastSyncAt: null,
   };
+}
+
+/** RN-013: exclusion scheduled up to 24h after revocation. */
+export const PRAZO_DE_EXCLUSAO_HORAS = 24;
+
+/** Marks the consent revoked and schedules the definitive deletion (RN-013). */
+export function revogarComAgendamento(consent: Consent, agora: Date): Consent {
+  const exclusao = new Date(agora.getTime() + PRAZO_DE_EXCLUSAO_HORAS * 60 * 60_000);
+  return { ...consent, revokedAt: agora, deletionScheduledAt: exclusao };
 }

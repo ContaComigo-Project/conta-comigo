@@ -1,5 +1,5 @@
 import { afterAll, beforeEach, describe, expect, it } from 'vitest';
-import { novoConsent, estaAtivo } from '../../domain/model/consent';
+import { novoConsent, estaAtivo, revogarComAgendamento } from '../../domain/model/consent';
 import { ConsentRepositoryPrisma } from './consent-repository-prisma';
 
 const AGORA = new Date('2026-09-07T12:00:00Z');
@@ -59,5 +59,43 @@ describe('ConsentRepositoryPrisma — round trip on the real PostgreSQL', () => 
     await repositorio.revoke('consent-r', AGORA);
 
     expect(await repositorio.findActiveByInstitution('holder-a', 'inst-1', AGORA)).toBeNull();
+  });
+
+  it('purgeDue apaga definitivamente os consents com exclusão vencida (RN-013)', async () => {
+    const vencido = revogarComAgendamento(
+      novoConsent({
+        id: 'consent-due', holderId: 'holder-a', institutionId: 'inst-1',
+        connectionId: 'c1', scope: 'accounts', credentialCipher: 'c', agora: AGORA,
+      }),
+      AGORA,
+    );
+    await repositorio.save(vencido);
+
+    // 25h depois, a exclusão agendada já venceu.
+    const depois = new Date(AGORA.getTime() + 25 * 60 * 60_000);
+    const apagados = await repositorio.purgeDue(depois);
+
+    expect(apagados).toBe(1);
+    expect(await repositorio.findById('holder-a', 'consent-due')).toBeNull();
+  });
+
+  it('deleteByHolder apaga todos os consentimentos de um titular (RN-016)', async () => {
+    await repositorio.save(
+      novoConsent({
+        id: 'consent-a', holderId: 'holder-a', institutionId: 'inst-1',
+        connectionId: 'c1', scope: 'accounts', credentialCipher: 'c', agora: AGORA,
+      }),
+    );
+    await repositorio.save(
+      novoConsent({
+        id: 'consent-b', holderId: 'holder-b', institutionId: 'inst-1',
+        connectionId: 'c1', scope: 'accounts', credentialCipher: 'c', agora: AGORA,
+      }),
+    );
+
+    await repositorio.deleteByHolder('holder-a');
+
+    expect(await repositorio.findById('holder-a', 'consent-a')).toBeNull();
+    expect(await repositorio.findById('holder-b', 'consent-b')).not.toBeNull();
   });
 });

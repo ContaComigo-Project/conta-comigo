@@ -151,7 +151,7 @@ Catálogos completos em [`docs/requisitos/`](../requisitos/).
 | ~~Framework de teste funcional e E2E~~ | **Resolvida:** Vitest + Playwright + dependency-cruiser — `ADR-003` | `HT-004` | Feito |
 | ~~Autenticação real~~ | **Resolvida:** JWT próprio — `ADR-004` | `HT-004` | Feito |
 | Teto de custo por usuário/dia na IA | Definir número | `HT-012` | Antes de `HN-009` |
-| Prazo de exclusão após revogação | Imediato / até 24h / até 15 dias | Time + orientador | Antes de `HN-012` |
+| Prazo de exclusão após revogação | ~~Imediato / até 24h / até 15 dias~~ | **Resolvida:** exclusão definitiva em até **24h** (`RN-013`) — `HN-012` | Time + orientador | Feito |
 | ~~Hospedagem~~ | **Adiada por decisão:** dev local primeiro; provedores em `HT-015` — `ADR-005` | `HT-004`/`HT-015` | Antes da publicação |
 
 ## 8. Riscos e premissas

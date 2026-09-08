@@ -15,4 +15,10 @@ export class SessionRepositoryMemory implements SessionRepository {
     const session = this.porId.get(id);
     if (session) this.porId.set(id, { ...session, revokedAt: quando });
   }
+
+  async deleteByHolder(holderId: string): Promise<void> {
+    for (const [id, s] of this.porId) {
+      if (s.holderId === holderId) this.porId.delete(id);
+    }
+  }
 }

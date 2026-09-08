@@ -18,6 +18,7 @@ function transaction(id: string, amountInCents: number, competenciaUtc: string):
 const clockEm = (instanteUtc: string): Clock => ({ agora: () => new Date(instanteUtc) });
 const repositorioCom = (itens: readonly Transaction[]): RepositorioDeTransactions => ({
   listarDoHolder: async () => itens,
+  deleteByHolder: async () => {},
 });
 
 // Caso de uso testado sem banco, sem HTTP e sem framework.
