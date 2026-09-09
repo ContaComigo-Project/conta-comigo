@@ -17,6 +17,8 @@ const ENDPOINTS_ESPERADOS = [
   '/access/accounts/me',
   '/access/sessions',
   '/access/sessions/refresh',
+  '/budgets/{month}',
+  '/budgets/{month}/{category}',
   '/consents',
   '/consents/account',
   '/consents/{id}',
@@ -67,10 +69,12 @@ describe('HT-019 — a API e descoberta pela propria documentacao', () => {
 
     // /access/sessions tem POST e DELETE; /consents tem POST e GET;
     // /consents/{id} e /consents/account têm DELETE; /transactions/{id}/category
-    // tem PATCH (HN-005); o restante, um método cada.
+    // tem PATCH (HN-005); /budgets/{month}/{category} tem PUT e DELETE (HN-006);
+    // o restante, um método cada.
     const metodos = Object.values(spec.paths).flatMap((p) => Object.keys(p));
     expect(metodos.sort()).toEqual([
-      'delete', 'delete', 'delete', 'get', 'get', 'get', 'get', 'get', 'patch', 'post', 'post', 'post', 'post', 'post',
+      'delete', 'delete', 'delete', 'delete', 'get', 'get', 'get', 'get', 'get', 'get',
+      'patch', 'post', 'post', 'post', 'post', 'post', 'put',
     ]);
   });
 

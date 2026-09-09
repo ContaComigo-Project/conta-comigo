@@ -59,6 +59,7 @@ Arquivo: `ENTREGA-[CHAVE]-titulo-em-kebab-case.md`, a partir de
 | 2026-09-08 | [`HT-014`](./ENTREGA-HT-014-guarda-de-saida-da-ia.md) | Guarda de saída da IA: validação, coerência e fronteira | `v0.22.0` | `8421d28` | `v0.22.0` |
 | 2026-09-08 | [`HN-004`](./ENTREGA-HN-004-descricao-legivel.md) | Descrição legível do lançamento (limpeza semântica) | `v0.23.0` | `7652252` | `v0.23.0` |
 | 2026-09-08 | [`HN-005`](./ENTREGA-HN-005-categorizacao.md) | Categorização automática e correção manual | `v0.24.0` | `54a8514` | `v0.24.0` |
+| 2026-09-09 | [`HN-006`](./ENTREGA-HN-006-limite-mensal.md) | Definir e editar limite mensal por categoria | `v0.25.0` | `<fechamento>` | `v0.25.0` |
 
 
 Toda linha acima foi verificada por `scripts/verificar-fechamento.sh`: a tag

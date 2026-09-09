@@ -1,0 +1,99 @@
+import {
+  BadRequestException,
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  Inject,
+  NotFoundException,
+  Param,
+  Put,
+  UnauthorizedException,
+  UseGuards,
+} from '@nestjs/common';
+import { ApiBearerAuth, ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { DefinirLimiteDTO, ok, type MonthlyLimitDTO, type Result } from '@contacomigo/contract';
+import { zodParaSchema } from '../../../openapi';
+import type { Identity } from '../../../transactions/domain/port/driven/identity';
+import type { ListMonthlyLimits } from '../../application/list-monthly-limits';
+import type { RemoveMonthlyLimit } from '../../application/remove-monthly-limit';
+import type { SetMonthlyLimit } from '../../application/set-monthly-limit';
+import { TOKENS_BUDGET } from '../../domain/port/driven/tokens';
+import { GuardaDeHolderDoBudget, TOKEN_IDENTITY_BUDGET } from './holder-guard';
+
+// Adapter de entrada do orcamento (HN-006). O titular vem do access token,
+// nunca de parametro da requisicao (RN-015): nao existe rota que aceite os
+// limites de outra pessoa.
+@ApiTags('budget')
+@ApiBearerAuth()
+@Controller('budgets')
+@UseGuards(GuardaDeHolderDoBudget)
+export class BudgetController {
+  constructor(
+    @Inject(TOKENS_BUDGET.SetMonthlyLimit) private readonly definir: SetMonthlyLimit,
+    @Inject(TOKENS_BUDGET.RemoveMonthlyLimit) private readonly remover: RemoveMonthlyLimit,
+    @Inject(TOKENS_BUDGET.ListMonthlyLimits) private readonly listar: ListMonthlyLimits,
+    @Inject(TOKEN_IDENTITY_BUDGET) private readonly identity: Identity,
+  ) {}
+
+  private titular(): string {
+    const titular = this.identity.holderAtual();
+    if (titular === null) throw new UnauthorizedException();
+    return titular;
+  }
+
+  @Get(':month')
+  @ApiOperation({ summary: 'Limites do mês', description: 'Lista os limites por categoria do titular no mês de referência.' })
+  @ApiResponse({ status: 200, description: 'Limites do mês' })
+  @ApiResponse({ status: 400, description: 'Mês de referência inválido' })
+  @ApiResponse({ status: 401, description: 'Sem token Bearer válido' })
+  async limitesDoMes(@Param('month') month: string): Promise<Result<MonthlyLimitDTO[]>> {
+    const resultado = await this.listar.executar({ holderId: this.titular(), month });
+    if (resultado.tipo === 'invalido') throw new BadRequestException(resultado.motivo);
+
+    return ok(
+      resultado.limites.map((l) => ({ month: l.month, category: l.category, limiteEmCents: l.limitInCents })),
+    );
+  }
+
+  @Put(':month/:category')
+  @ApiOperation({ summary: 'Definir limite', description: 'Define ou substitui o limite mensal da categoria. Valor em centavos.' })
+  @ApiBody({ schema: zodParaSchema(DefinirLimiteDTO), description: 'Limite em centavos' })
+  @ApiResponse({ status: 200, description: 'Limite definido' })
+  @ApiResponse({ status: 400, description: 'Mês, categoria ou valor inválido' })
+  @ApiResponse({ status: 401, description: 'Sem token Bearer válido' })
+  async definirLimite(
+    @Param('month') month: string,
+    @Param('category') category: string,
+    @Body() corpo: unknown,
+  ): Promise<Result<MonthlyLimitDTO>> {
+    const entrada = DefinirLimiteDTO.safeParse(corpo);
+    if (!entrada.success) throw new BadRequestException('limite ausente ou invalido');
+
+    const resultado = await this.definir.executar({
+      holderId: this.titular(),
+      month,
+      category,
+      limitInCents: entrada.data.limiteEmCents,
+    });
+    if (resultado.tipo === 'invalido') throw new BadRequestException(resultado.motivo);
+
+    return ok({ month, category, limiteEmCents: entrada.data.limiteEmCents });
+  }
+
+  @Delete(':month/:category')
+  @HttpCode(204)
+  @ApiOperation({
+    summary: 'Remover limite',
+    description: 'Remove o limite da categoria no mês: a categoria volta ao estado sem limite (RN-002), que não é o mesmo que limite zero.',
+  })
+  @ApiResponse({ status: 204, description: 'Limite removido' })
+  @ApiResponse({ status: 400, description: 'Mês ou categoria inválido' })
+  @ApiResponse({ status: 404, description: 'Não havia limite definido' })
+  async removerLimite(@Param('month') month: string, @Param('category') category: string): Promise<void> {
+    const resultado = await this.remover.executar({ holderId: this.titular(), month, category });
+    if (resultado.tipo === 'invalido') throw new BadRequestException(resultado.motivo);
+    if (resultado.tipo === 'nao-encontrado') throw new NotFoundException();
+  }
+}

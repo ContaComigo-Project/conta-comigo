@@ -1,0 +1,12 @@
+# progress — HN-006
+# Diário append-only do ciclo Ralph. Uma linha por evento.
+# Formato: AAAA-MM-DD HH:MM | FASE | descrição objetiva | evidência
+# FASE: PERCEBER | ORIENTAR | DECIDIR | AGIR | REGISTRAR
+
+AAAA-MM-DD HH:MM | PERCEBER | li KANBAN-OFICIAL.md, história e entregas relacionadas | -
+AAAA-MM-DD HH:MM | ORIENTAR | critérios de aceite x rules x riscos comparados | -
+AAAA-MM-DD HH:MM | DECIDIR | próxima ação escolhida: ... | -
+AAAA-MM-DD HH:MM | AGIR | ... | comando/saída
+AAAA-MM-DD HH:MM | REGISTRAR | ... | arquivo atualizado
+2026-09-09 00:30 | AGIR | limite mensal por categoria persistido — harness gates exit 0 (VERDE) | docs/tasks/HN-006/evidencia/20260909-002823-gates-verde.txt
+2026-09-09 00:32 | AGIR | limite mensal por categoria persistido — harness gates exit 0 (VERDE) | docs/tasks/HN-006/evidencia/20260909-003042-gates-verde.txt

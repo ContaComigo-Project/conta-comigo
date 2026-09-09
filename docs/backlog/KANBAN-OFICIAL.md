@@ -47,24 +47,23 @@ uma tem a coluna "UI hoje" dizendo o que já está pronto na tela.
 
 ## Próxima demanda
 
-**`HN-006` — Definir e editar limite mensal por categoria** (ordem 25,
+**`HN-007` — Orçamento semáforo e aviso ao cruzar faixa** (ordem 26,
 `Backlog`).
 
-Com `HN-005`, a categoria existe no domínio e no banco; o limite é o que falta
-para o orçamento deixar de ser simulado. A `CategoryCard` já edita limite
-inline, **sem persistir** — a história é justamente fechar essa lacuna e mover a
-regra que hoje vive em `budget.mock.ts` para o domínio.
+As três peças já existem: a categoria (`HN-005`), o limite (`HN-006`) e a regra
+de faixa (`faixaDoSemaforo`, escrita em `HT-017` e ainda sem nenhum consumidor).
+A história é juntá-las — gasto do mês por categoria contra o limite — e mover a
+regra que hoje vive em `budget.mock.ts` para o domínio, que é a promessa central
+do inventário de `HT-016`.
 
 Precisa ser groomada antes de ser puxada.
 
-### Dívida aberta por `HN-004` e `HN-005`
+### Dívida aberta por `HN-004`, `HN-005` e `HN-006`
 
-As duas entregaram API, contrato e componente, mas **nenhuma tela lista dados
-reais de lançamento**: a página de despesas ainda lê `frontend/src/mocks/`. O
-seletor de categoria existe e o `ApiSource` expõe a correção, mas ninguém passa
-o handler. Ligar essa tela é escopo de `HT-018` — e, enquanto isso não
-acontecer, o critério "a tela permite corrigir" fica parcial, registrado na
-entrega de `HN-005`.
+As três entregaram API, contrato e componente, mas **nenhuma tela lista dados
+reais**: a página de despesas ainda lê `frontend/src/mocks/`. O seletor de
+categoria e a edição de limite existem na interface, sem persistir. Ligar essa
+tela é escopo de `HT-018`.
 
 `HT-007` (ordem 8) continua adiada por depender de ação no GitHub.
 
@@ -168,7 +167,7 @@ o backlog passou a considerar o frontend existente.
 
 | Ordem | Chave | Título | Tipo | Estado | Depende de | UI hoje |
 | --- | --- | --- | --- | --- | --- | --- |
-| 25 | `HN-006` | Definir e editar limite mensal por categoria | Negócio | Backlog | HN-005 | `CategoryCard` já edita limite inline, sem persistir |
+| 25 | `HN-006` | Definir e editar limite mensal por categoria | Negócio | **Done** | HN-005 | `v0.25.0` (tela pendente — ver `HT-018`) |
 | 26 | `HN-007` | Orçamento semáforo e aviso ao cruzar faixa | Negócio | Backlog | HN-006 | Barras e faixas prontas; **a regra sai de `budget.mock.ts` para o domínio** |
 | 27 | `HN-008` | Histórico de 6 meses e problemas recorrentes | Negócio | Backlog | HN-007 | `HistoricalOverview` completo, sobre dados simulados |
 
@@ -185,7 +184,7 @@ o backlog passou a considerar o frontend existente.
 ## Quadro
 
 ### Ready
-- _(vazio — `HN-006` precisa de grooming)_
+- _(vazio — `HN-007` precisa de grooming)_
 
 ### Em execução
 - _(vazio)_
@@ -194,7 +193,7 @@ o backlog passou a considerar o frontend existente.
 - _(vazio)_
 
 ### Done
-- `HT-000` `v0.1.0` · `HT-001` `v0.2.0` · `HT-002` `v0.3.0` · `HT-003` `v0.4.0` · `HT-004` `v0.5.0` · `HT-016` `v0.6.0` · `HT-005` `v0.7.0` · `HT-006` `v0.8.0` · `HT-009` `v0.9.0` · `HT-010` `v0.10.0` · `HT-017` `v0.11.0` · `HT-008` `v0.12.0` · `HN-001` `v0.13.0` · `HT-011` `v0.14.0` · `HT-019` `v0.15.0` · `HT-020` `v0.16.0` · `HN-002` `v0.17.0` · `HN-012` `v0.18.0` · `HN-003` `v0.19.0` · `HT-012` `v0.20.0` · `HT-013` `v0.21.0` · `HT-014` `v0.22.0` · `HN-004` `v0.23.0` · `HN-005` `v0.24.0`
+- `HT-000` `v0.1.0` · `HT-001` `v0.2.0` · `HT-002` `v0.3.0` · `HT-003` `v0.4.0` · `HT-004` `v0.5.0` · `HT-016` `v0.6.0` · `HT-005` `v0.7.0` · `HT-006` `v0.8.0` · `HT-009` `v0.9.0` · `HT-010` `v0.10.0` · `HT-017` `v0.11.0` · `HT-008` `v0.12.0` · `HN-001` `v0.13.0` · `HT-011` `v0.14.0` · `HT-019` `v0.15.0` · `HT-020` `v0.16.0` · `HN-002` `v0.17.0` · `HN-012` `v0.18.0` · `HN-003` `v0.19.0` · `HT-012` `v0.20.0` · `HT-013` `v0.21.0` · `HT-014` `v0.22.0` · `HN-004` `v0.23.0` · `HN-005` `v0.24.0` · `HN-006` `v0.25.0`
 
 Todas verificadas por `scripts/verificar-fechamento.sh`: tag e commit no mesmo
 hash, mensagem semântica citando a chave, documento de entrega presente.
@@ -311,3 +310,7 @@ cada tela é aproveitável, e isso muda o critério de aceite de quase todas ela
 | 2026-09-08 | `HN-005` | Backlog | Ready | Groomada com critérios verificáveis (RF-011, RF-012, RN-011); dependência `HN-004` concluída |
 | 2026-09-08 | `HN-005` | Ready | Em execução | `docs/tasks/HN-005/` criado com TASK e IMPLEMENTATION |
 | 2026-09-08 | `HN-005` | Em execução | Em revisão | Categoria por regra e IA em lote; `RN-011` provado no PostgreSQL; 272+16+3 testes verdes |
+| 2026-09-08 | `HN-005` | Em revisão | Done | `v0.24.0` → `54a8514`; `verificar-fechamento` verde |
+| 2026-09-08 | `HN-006` | Backlog | Ready | Groomada com critérios verificáveis (RF-013, RN-002, RN-006, RN-015) |
+| 2026-09-08 | `HN-006` | Ready | Em execução | `docs/tasks/HN-006/` criado com TASK e IMPLEMENTATION |
+| 2026-09-09 | `HN-006` | Em execução | Em revisão | Contexto `budget` completo; limite por titular/mês/categoria; 293+22+3 testes verdes |

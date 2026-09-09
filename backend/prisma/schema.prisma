@@ -111,3 +111,17 @@ model AiAdviceCache {
 
   @@map("ai_advice_cache")
 }
+
+// Limite mensal por categoria (HN-006, RF-013). A chave e (titular, mes,
+// categoria): o mes faz parte dela para que um limite de dezembro nao passe a
+// valer para janeiro sozinho. Ausencia de linha significa "sem limite"
+// (RN-002) — diferente de limite zero.
+model MonthlyBudget {
+  holderId     String @map("holder_id")
+  month        String @map("month")
+  category     String @map("category")
+  limitInCents Int    @map("limit_in_cents")
+
+  @@id([holderId, month, category])
+  @@map("monthly_budgets")
+}
