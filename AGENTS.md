@@ -74,29 +74,26 @@ Read these 4? You know 95 % of what it takes to work here without breaking anyth
 
 ## 4. Next demand today
 
-In `docs/backlog/KANBAN-OFICIAL.md`, the `Ready` column is **empty** — `HT-019`
-(Ordem 19) was delivered as `v0.15.0` → `ddc9bbe`. Nothing can be pulled right
-now without breaking the state flow.
+In `docs/backlog/KANBAN-OFICIAL.md`, the `Ready` column is **empty**: `HT-012`
+(Ordem 18, minimum observability) was delivered as `v0.20.0`. Nothing can be
+pulled right now without breaking the state flow — the next item has to be
+groomed first.
 
-Next in the queue:
+Two candidates, and the choice belongs to the team:
 
-> **`HN-002` — Connect an institution with consent and synchronize** (Ordem 15,
-> state `Backlog`).
+> **`HT-013` — Gemini/LangChain adapter with a cost ceiling and cache**
+> (Ordem 21, `Backlog`). Opens Phase 4; depends only on `HT-009`, done.
 
-All dependencies are ready: `HN-001` provided the session, `HT-011` the
-aggregation port with failure policy, `HT-010` encryption at rest and `HT-008`
-the per-holder barrier. By the grooming rule, the story file is created when the
-item enters `Ready`: the next action is to groom `HN-002` (create
-`docs/backlog/historias/HN-002-conectar-instituicao.md` with verifiable
-criteria), move it to `Ready` — and only then pull it.
+> **`HT-007` — CI pipeline with blocking gates** (Ordem 8, postponed). Comes
+> back the moment the team decides to push `develop`.
+
+By the grooming rule, the story file is created when the item enters `Ready`.
 
 ### CI note (`HT-007`, Ordem 8, postponed)
 
 `HT-007` returns to `Ready` when the team decides to push `develop` and
 configure branch protection on GitHub. Until then, `RNF-021` is satisfied only
 locally (documented in the kanban).
-
----
 
 ## 5. Repository languages
 

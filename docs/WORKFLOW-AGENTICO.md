@@ -51,38 +51,30 @@ Perceber → Orientar → Decidir → Agir → **Registrar**.
 
 ## Como iniciar a próxima história
 
-Hoje o item `Ready` do kanban é **`HT-019` — Documentação OpenAPI/Swagger da
-API** (Ordem 19), puxada antes da ordem natural por decisão do time. Ela já está
-groomada; o próximo passo é puxá-la:
+O kanban **não tem item em `Ready`**: `HT-012` (ordem 18) fechou em `v0.20.0` e
+o próximo da fila ainda não foi groomado. O passo seguinte é escolher entre dois
+caminhos e groomar o escolhido:
+
+- **`HT-007` — Pipeline de CI com gates bloqueantes** (ordem 8, adiada). Volta a
+  fazer sentido no momento em que o time decidir publicar `develop`: metade dela
+  acontece no GitHub (proteção de branch, PR de prova).
+- **`HT-013` — Adaptador Gemini/LangChain com teto de custo e cache** (ordem 21),
+  que abre a Fase 4. Depende só de `HT-009`, concluída.
 
 ```bash
 # 1. Confirmar a próxima demanda
 cat docs/backlog/KANBAN-OFICIAL.md
 
-# 2. Criar a pasta de execução
-scripts/nova-historia.sh HT-019        # Windows: powershell -File scripts/nova-historia.ps1 HT-019
+# 2. Groomar: escrever o arquivo da história com critérios verificáveis
+cp docs/backlog/historias-tecnicas/_TEMPLATE-HISTORIA-TECNICA.md    docs/backlog/historias-tecnicas/HT-013-adaptador-gemini.md
 
-# 3. Preencher TASK.md e IMPLEMENTATION.md ANTES de qualquer trabalho
+# 3. Mover a história de "Backlog" para "Ready" no kanban
 
-# 4. Mover HT-019 para "Em execução" no kanban
+# 4. Criar a pasta de execução e preencher TASK.md e IMPLEMENTATION.md
+scripts/nova-historia.sh HT-013        # Windows: powershell -File scripts/nova-historia.ps1 HT-013
+
+# 5. Mover a história para "Em execução" no kanban
 ```
-
-Depois dela, a fila volta a **`HN-002` — Conectar instituição com consentimento
-e sincronizar** (Ordem 15, em `Backlog`), que precisa ser groomada antes de ser
-puxada:
-
-```bash
-# 1. Groomar: escrever o arquivo da história com critérios verificáveis
-cp docs/backlog/historias/_TEMPLATE-HISTORIA-NEGOCIO.md docs/backlog/historias/HN-002-conectar-instituicao.md
-
-# 2. Mover HN-002 de "Backlog" para "Ready" no kanban
-
-# 3. Puxar (nova-historia.sh HN-002) e preencher TASK/IMPLEMENTATION
-```
-
-`HN-002` é a primeira história de negócio com consentimento real: exercita a
-skill `open-finance-security-agent` por inteiro e usa a sessão de `HN-001`, a
-porta de agregação de `HT-011` e a cifra em repouso de `HT-010`.
 
 A partir da ordem 6, o item só ganha arquivo de história quando entra em
 `Ready`. Detalhar hoje o critério de aceite da ordem 27 seria adivinhação.
