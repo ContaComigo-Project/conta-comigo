@@ -83,3 +83,24 @@ model Consent {
   @@index([holderId])
   @@map("consents")
 }
+// Uso diário de IA por titular (HT-013, RNF-009). O teto do free tier é por
+// pessoa e por dia; a linha existe para o par (titular, dia) e só cresce.
+model AiDailyUsage {
+  holderId String @map("holder_id")
+  day      String @map("day")
+  calls    Int    @default(0) @map("calls")
+
+  @@id([holderId, day])
+  @@map("ai_daily_usage")
+}
+
+// Cache de conselho (HT-013, RNF-010). A chave já embute titular, tipo,
+// pergunta e a impressão dos dados: dado novo produz chave nova, e a resposta
+// velha simplesmente deixa de ser encontrada.
+model AiAdviceCache {
+  key       String   @id @map("key")
+  text      String   @map("text")
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+
+  @@map("ai_advice_cache")
+}

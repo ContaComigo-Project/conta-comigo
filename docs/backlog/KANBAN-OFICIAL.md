@@ -47,14 +47,19 @@ uma tem a coluna "UI hoje" dizendo o que já está pronto na tela.
 
 ## Próxima demanda
 
-**Nenhuma.** A fila não tem item em `Ready`: `HT-012` fechou a ordem 18 e o
-próximo da fila, `HT-013`, ainda não foi groomado.
+**`HT-014` — Guarda de saída da IA: validação, coerência e fronteira**
+(ordem 22, `Ready`).
 
-O menor item não concluído é **`HT-007` — Pipeline de CI com gates bloqueantes**
-(ordem 8), adiada por depender de ação no GitHub (ver nota abaixo). Depois dela,
-a **Fase 4** abre com `HT-013` (adaptador Gemini/LangChain com teto de custo e
-cache), que depende só de `HT-009` e precisa de arquivo de história antes de ser
-puxado.
+`HT-013` entregou a porta e as políticas de custo; falta a metade que trata a
+resposta do modelo como **entrada não confiável** (`RNF-017`). Sem ela, nenhuma
+história de negócio da Fase 4 pode exibir texto de IA: `RN-019` proíbe número
+vindo do modelo, `RN-017` proíbe recomendação de produto financeiro e `RN-018`
+exige o aviso de não aconselhamento.
+
+A guarda tem lugar óbvio no desenho: mais um decorador da porta `AiAdvisor`,
+entre o cache e a tela.
+
+`HT-007` (ordem 8) continua adiada por depender de ação no GitHub.
 
 ### Nota de reordenação (2026-09-07)
 
@@ -147,7 +152,7 @@ o backlog passou a considerar o frontend existente.
 
 | Ordem | Chave | Título | Tipo | Estado | Depende de | UI hoje |
 | --- | --- | --- | --- | --- | --- | --- |
-| 21 | `HT-013` | Adaptador Gemini/LangChain com teto de custo e cache | Técnica | Backlog | HT-009 | — |
+| 21 | `HT-013` | Adaptador Gemini com teto de custo e cache | Técnica | **Done** | HT-009 | `v0.21.0` |
 | 22 | `HT-014` | Guarda de saída da IA: validação, coerência e fronteira | Técnica | Backlog | HT-013 | — |
 | 23 | `HN-004` | Descrição legível do lançamento (limpeza semântica) | Negócio | Backlog | HN-003, HT-014 | Lista existe; **sem tratamento de descrição** |
 | 24 | `HN-005` | Categorização automática e correção manual | Negócio | Backlog | HN-004 | Categorias exibidas; **sem correção manual** |
@@ -173,7 +178,7 @@ o backlog passou a considerar o frontend existente.
 ## Quadro
 
 ### Ready
-- _(vazio — `HT-012` fechada; a próxima demanda precisa de grooming)_
+- `HT-014` — Guarda de saída da IA: validação, coerência e fronteira (ordem 22)
 
 ### Em execução
 - _(vazio)_
@@ -182,7 +187,7 @@ o backlog passou a considerar o frontend existente.
 - _(vazio)_
 
 ### Done
-- `HT-000` `v0.1.0` · `HT-001` `v0.2.0` · `HT-002` `v0.3.0` · `HT-003` `v0.4.0` · `HT-004` `v0.5.0` · `HT-016` `v0.6.0` · `HT-005` `v0.7.0` · `HT-006` `v0.8.0` · `HT-009` `v0.9.0` · `HT-010` `v0.10.0` · `HT-017` `v0.11.0` · `HT-008` `v0.12.0` · `HN-001` `v0.13.0` · `HT-011` `v0.14.0` · `HT-019` `v0.15.0` · `HT-020` `v0.16.0` · `HN-002` `v0.17.0` · `HN-012` `v0.18.0` · `HN-003` `v0.19.0` · `HT-012` `v0.20.0`
+- `HT-000` `v0.1.0` · `HT-001` `v0.2.0` · `HT-002` `v0.3.0` · `HT-003` `v0.4.0` · `HT-004` `v0.5.0` · `HT-016` `v0.6.0` · `HT-005` `v0.7.0` · `HT-006` `v0.8.0` · `HT-009` `v0.9.0` · `HT-010` `v0.10.0` · `HT-017` `v0.11.0` · `HT-008` `v0.12.0` · `HN-001` `v0.13.0` · `HT-011` `v0.14.0` · `HT-019` `v0.15.0` · `HT-020` `v0.16.0` · `HN-002` `v0.17.0` · `HN-012` `v0.18.0` · `HN-003` `v0.19.0` · `HT-012` `v0.20.0` · `HT-013` `v0.21.0`
 
 Todas verificadas por `scripts/verificar-fechamento.sh`: tag e commit no mesmo
 hash, mensagem semântica citando a chave, documento de entrega presente.
@@ -283,3 +288,7 @@ cada tela é aproveitável, e isso muda o critério de aceite de quase todas ela
 | 2026-09-08 | `HT-012` | Ready | Em execução | `docs/tasks/HT-012/` criado com TASK e IMPLEMENTATION; vermelho inicial registrado |
 | 2026-09-08 | `HT-008` `HN-003` | Done | Done | Correções `v0.19.7` a `v0.19.9`: `.env` na allowlist do gate, `multer` 2.3.0, `eslint` do `ConnectedBanksWidget` |
 | 2026-09-08 | `HT-012` | Em execução | Em revisão | Contexto `observability` completo; 177+9+3 testes verdes; `gates` verde de ponta a ponta; 4 evidências |
+| 2026-09-08 | `HT-012` | Em revisão | Done | `v0.20.0` → `17e9628`; `verificar-fechamento` verde |
+| 2026-09-08 | `HT-013` | Backlog | Ready | Groomada com critérios verificáveis (RNF-009, RNF-010, RNF-005/006, RNF-020); dependência `HT-009` concluída |
+| 2026-09-08 | `HT-013` | Ready | Em execução | `docs/tasks/HT-013/` criado com TASK e IMPLEMENTATION; vermelho inicial registrado |
+| 2026-09-08 | `HT-013` | Em execução | Em revisão | Porta de IA com teto, cache e resiliência; `ADR-006` recusa LangChain/SDK; 207+13+3 testes verdes |
