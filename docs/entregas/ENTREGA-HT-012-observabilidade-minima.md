@@ -12,8 +12,8 @@ max_lines: 300
 - **Data:** 2026-09-08
 - **Tipo:** Técnica
 - **Versão:** `v0.20.0`
-- **Commit:** `<hash do commit de fechamento>`
-- **Tag:** `v0.20.0` → `<hash do commit de fechamento>`
+- **Commit:** `17e9628`
+- **Tag:** `v0.20.0` → `17e9628`
 
 ## O que foi entregue
 
@@ -59,40 +59,49 @@ max_lines: 300
 
 ## Evidência de verificação
 
-Saída real da API em execução (`docs/tasks/HT-012/evidencia/20260908-log-estruturado-da-api-real.txt`):
+Saída real da API em execução, capturada em
+`docs/tasks/HT-012/evidencia/20260908-log-estruturado-da-api-real.txt` enquanto
+`curl` fazia três chamadas: uma sem token, uma com `x-request-id` vindo de fora
+e um login com e-mail e senha no corpo.
 
 ```
-$ curl -s -D - -o /dev/null http://localhost:3111/transactions
-HTTP/1.1 401 Unauthorized
-x-request-id: b01c1237-416f-47fd-9080-faa5e729db18
-
-$ curl -s -H "x-request-id: correlacao-manual" http://localhost:3111/transactions/month-summary
-{"estado":"erro","requestId":"correlacao-manual","message":"Unauthorized","statusCode":401}
-
-# stdout da API
-{"level":"info","message":"api ouvindo","requestId":"boot","timestamp":"2026-09-09T00:18:35.087Z", ...}
+{"level":"info","message":"api ouvindo","requestId":"boot","timestamp":"2026-09-09T00:18:35.087Z","url":"http://localhost:3111","docs":"http://localhost:3111/api/docs"}
 {"level":"warn","message":"Unauthorized","requestId":"b01c1237-416f-47fd-9080-faa5e729db18","timestamp":"2026-09-09T00:18:42.981Z","operation":"GET /transactions","status":401,"method":"GET","route":"/transactions","kind":"UnauthorizedException"}
+{"level":"warn","message":"Unauthorized","requestId":"correlacao-manual","timestamp":"2026-09-09T00:18:43.024Z","operation":"GET /transactions/month-summary","status":401,"method":"GET","route":"/transactions/month-summary","kind":"UnauthorizedException"}
 {"level":"info","message":"requisicao concluida","requestId":"53fe96a2-cd72-43f8-908b-111fd85f0f71","timestamp":"2026-09-09T00:18:51.968Z","method":"POST","route":"/access/sessions","status":200,"durationMs":344}
+{"level":"info","message":"requisicao concluida","requestId":"d60c232b-cc32-4dd2-83c7-4ee13a62dac1","timestamp":"2026-09-09T00:18:59.677Z","method":"POST","route":"/access/sessions","status":200,"durationMs":108}
+{"level":"info","message":"requisicao concluida","requestId":"05c3a6d0-0ac2-467d-a80e-3b5cf8684b1a","timestamp":"2026-09-09T00:18:59.790Z","method":"GET","route":"/transactions","status":200,"durationMs":47}
 ```
 
-A terceira linha é um **login bem-sucedido**: nem o e-mail nem a senha
-enviados no corpo aparecem no log (`RNF-015`).
+A resposta ao cliente devolveu `x-request-id: b01c1237-416f-47fd-9080-faa5e729db18`
+na primeira chamada e o corpo
+`{"estado":"erro","requestId":"correlacao-manual", ...}` na segunda — o mesmo
+identificador que aparece nas duas linhas `warn` acima (`RNF-008`).
+
+A última linha é um **login bem-sucedido**: nem o e-mail nem a senha enviados no
+corpo aparecem no log (`RNF-015`).
 
 ## Evidência de testes
 
+Saída de `scripts/harness.sh gates`, em
+`docs/tasks/HT-012/evidencia/20260908-212723-gates-verde.txt`:
+
 ```
-$ scripts/harness.sh gates
- Test Files  32 passed (32)          # unitário
+ Test Files  32 passed (32)
       Tests  177 passed (177)
- Test Files  2 passed (2)            # integração (PostgreSQL do compose)
+ Test Files  2 passed (2)
       Tests  9 passed (9)
-  3 passed (4.0s)                    # funcional (Playwright)
- Statements   : 98.66% ( 74/75 )     # cobertura de domain/
- Branches     : 91.89% ( 34/37 )
+  3 passed (4.0s)
+Statements   : 98.66% ( 74/75 )
+Branches     : 91.89% ( 34/37 )
   [OK]    nenhum segredo detectado
   [OK]    nenhuma vulnerabilidade conhecida
 harness: gates concluídos
 ```
+
+Na ordem: unitário (32 arquivos, 177 testes), integração contra o PostgreSQL do
+compose (2 arquivos, 9 testes), funcional em Chromium (3 cenários), cobertura de
+`domain/` e as duas varreduras de segurança.
 
 | Camada | Comando | Resultado | Cobertura |
 | --- | --- | --- | --- |
@@ -151,8 +160,8 @@ corrigidos antes do fechamento e entregues em versões próprias:
 
 ## Verificação de fechamento
 
-- [ ] Testes e gates aplicáveis verdes
-- [ ] Commit semântico contém a chave `HT-012`
-- [ ] Commit não contém arquivos de outra história
-- [ ] Tag `v0.20.0` aponta para o mesmo hash do commit
-- [ ] `KANBAN-OFICIAL.md` atualizado
+- [x] Testes e gates aplicáveis verdes
+- [x] Commit semântico contém a chave `HT-012`
+- [x] Commit não contém arquivos de outra história
+- [x] Tag `v0.20.0` aponta para o mesmo hash do commit
+- [x] `KANBAN-OFICIAL.md` atualizado
