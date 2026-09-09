@@ -12,8 +12,8 @@ max_lines: 300
 - **Data:** 2026-09-09
 - **Tipo:** Técnica
 - **Versão:** `v0.33.0`
-- **Commit:** `[preenchido no fechamento]`
-- **Tag:** `v0.33.0` → `[mesmo hash]`
+- **Commit:** `b6825ea4fe1f47f3c93e83ae14260c123bff6ab8`
+- **Tag:** `v0.33.0` → `b6825ea4fe1f47f3c93e83ae14260c123bff6ab8`
 
 ## O que foi entregue
 
