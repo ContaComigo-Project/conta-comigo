@@ -31,14 +31,18 @@ function formatarUltimaSync(iso: string | null): string {
   return `última sync ${data.toLocaleDateString('pt-BR')} ${data.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}`;
 }
 
+// Uma instância só: o componente não guarda estado de rede, e recriá-la a cada
+// render faria o efeito depender de um objeto novo toda vez.
+const api = new ApiSource();
+
 export default function ConnectedBanksWidget() {
-  const api = new ApiSource();
   const [bancos, setBancos] = useState<BancoConectado[]>([]);
   const [erro, setErro] = useState<string | null>(null);
   const [sincronizando, setSincronizando] = useState(false);
 
-  const carregar = async () => {
+  const carregar = async (aindaNaTela: () => boolean = () => true) => {
     const r = await api.listarBancosConectados();
+    if (!aindaNaTela()) return;
     if (r.estado === 'ok') {
       setBancos(r.dados.map((b) => ({
         id: b.id,
@@ -52,9 +56,18 @@ export default function ConnectedBanksWidget() {
     }
   };
 
+  // A carga inicial é assíncrona de propósito: o efeito não muda estado no
+  // próprio corpo (regra react-hooks), e o resultado é descartado se o
+  // componente sair da tela antes da resposta chegar.
   useEffect(() => {
-    carregar();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    let ativo = true;
+    const carregarInicial = async () => {
+      await carregar(() => ativo);
+    };
+    void carregarInicial();
+    return () => {
+      ativo = false;
+    };
   }, []);
 
   const conectar = async () => {
