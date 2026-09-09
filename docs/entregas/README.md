@@ -68,3 +68,4 @@ aponta para o mesmo hash do commit de fechamento, e a mensagem cita a chave.
 Exceção única: em `HT-000` o commit da estrutura (`5e38950`) é diferente do
 commit de fechamento, porque a estrutura foi versionada antes de a rule de
 commit existir. O motivo está registrado na entrega.
+| 2026-09-09 | [`HN-007`](./ENTREGA-HN-007-orcamento-semaforo.md) | Orçamento semáforo e aviso ao cruzar faixa | `v0.27.0` | `ed5bbf1` | `v0.27.0` |
