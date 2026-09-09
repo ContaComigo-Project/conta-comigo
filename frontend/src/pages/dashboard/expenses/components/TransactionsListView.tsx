@@ -51,7 +51,13 @@ export function TransactionsListView({ label, transactions, cats }: Transactions
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2">
-                  <p className="text-[0.82rem] font-semibold text-slate-800 truncate">
+                  {/* HN-004: a lista mostra a versão legível; o texto cru do
+                      agregador continua acessível ao passar o mouse, porque
+                      RN-010 exige que o original permaneça consultável. */}
+                  <p
+                    className="text-[0.82rem] font-semibold text-slate-800 truncate"
+                    title={tx.descriptionOriginal ?? tx.description}
+                  >
                     {tx.description}
                   </p>
                   {meta && (

@@ -47,17 +47,19 @@ uma tem a coluna "UI hoje" dizendo o que já está pronto na tela.
 
 ## Próxima demanda
 
-**`HN-004` — Descrição legível do lançamento (limpeza semântica)** (ordem 23,
-`Ready`).
+**`HN-005` — Categorização automática e correção manual** (ordem 24, `Backlog`).
 
-Primeira história de negócio da Fase 4 e a primeira a consumir a porta de IA:
-`HT-013` deu o teto, o cache e a degradação; `HT-014` deu a guarda de saída. A
-lista de lançamentos já existe na tela, exibindo a descrição crua do agregador
-(`PAG*MERCADO CENTRAL`); falta traduzi-la para algo legível, guardando a
-original.
+Segue direto de `HN-004` e repete o desenho que ela validou: regra
+determinística primeiro, IA em lote só para o que sobrar. A diferença é
+`RN-011` — a correção manual prevalece e **não pode ser sobrescrita por
+sincronização posterior**, o que exige marcar a origem da categoria (automática
+ou humana) na persistência.
 
-Ela precisa ser groomada antes de ser puxada — arquivo em
-`docs/backlog/historias/HN-004-descricao-legivel.md` com critérios verificáveis.
+A tela já exibe categoria (`CategoryCard`, `QuickFilterBar`), mas ainda sobre
+dado simulado, e não há correção manual em lugar nenhum.
+
+Precisa ser groomada antes de ser puxada — arquivo em
+`docs/backlog/historias/HN-005-categorizacao.md` com critérios verificáveis.
 
 `HT-007` (ordem 8) continua adiada por depender de ação no GitHub.
 
@@ -154,7 +156,7 @@ o backlog passou a considerar o frontend existente.
 | --- | --- | --- | --- | --- | --- | --- |
 | 21 | `HT-013` | Adaptador Gemini com teto de custo e cache | Técnica | **Done** | HT-009 | `v0.21.0` |
 | 22 | `HT-014` | Guarda de saída da IA: validação, coerência e fronteira | Técnica | **Done** | HT-013 | `v0.22.0` |
-| 23 | `HN-004` | Descrição legível do lançamento (limpeza semântica) | Negócio | Backlog | HN-003, HT-014 | Lista existe; **sem tratamento de descrição** |
+| 23 | `HN-004` | Descrição legível do lançamento (limpeza semântica) | Negócio | **Done** | HN-003, HT-014 | `v0.23.0` |
 | 24 | `HN-005` | Categorização automática e correção manual | Negócio | Backlog | HN-004 | Categorias exibidas; **sem correção manual** |
 
 ### Fase 5 — Orçamento e histórico
@@ -178,7 +180,7 @@ o backlog passou a considerar o frontend existente.
 ## Quadro
 
 ### Ready
-- `HN-004` — Descrição legível do lançamento (limpeza semântica) (ordem 23)
+- _(vazio — `HN-005` precisa de grooming)_
 
 ### Em execução
 - _(vazio)_
@@ -187,7 +189,7 @@ o backlog passou a considerar o frontend existente.
 - _(vazio)_
 
 ### Done
-- `HT-000` `v0.1.0` · `HT-001` `v0.2.0` · `HT-002` `v0.3.0` · `HT-003` `v0.4.0` · `HT-004` `v0.5.0` · `HT-016` `v0.6.0` · `HT-005` `v0.7.0` · `HT-006` `v0.8.0` · `HT-009` `v0.9.0` · `HT-010` `v0.10.0` · `HT-017` `v0.11.0` · `HT-008` `v0.12.0` · `HN-001` `v0.13.0` · `HT-011` `v0.14.0` · `HT-019` `v0.15.0` · `HT-020` `v0.16.0` · `HN-002` `v0.17.0` · `HN-012` `v0.18.0` · `HN-003` `v0.19.0` · `HT-012` `v0.20.0` · `HT-013` `v0.21.0` · `HT-014` `v0.22.0`
+- `HT-000` `v0.1.0` · `HT-001` `v0.2.0` · `HT-002` `v0.3.0` · `HT-003` `v0.4.0` · `HT-004` `v0.5.0` · `HT-016` `v0.6.0` · `HT-005` `v0.7.0` · `HT-006` `v0.8.0` · `HT-009` `v0.9.0` · `HT-010` `v0.10.0` · `HT-017` `v0.11.0` · `HT-008` `v0.12.0` · `HN-001` `v0.13.0` · `HT-011` `v0.14.0` · `HT-019` `v0.15.0` · `HT-020` `v0.16.0` · `HN-002` `v0.17.0` · `HN-012` `v0.18.0` · `HN-003` `v0.19.0` · `HT-012` `v0.20.0` · `HT-013` `v0.21.0` · `HT-014` `v0.22.0` · `HN-004` `v0.23.0`
 
 Todas verificadas por `scripts/verificar-fechamento.sh`: tag e commit no mesmo
 hash, mensagem semântica citando a chave, documento de entrega presente.
@@ -296,3 +298,7 @@ cada tela é aproveitável, e isso muda o critério de aceite de quase todas ela
 | 2026-09-08 | `HT-014` | Backlog | Ready | Groomada com critérios verificáveis (RNF-017, RN-017, RN-019); dependência `HT-013` concluída |
 | 2026-09-08 | `HT-014` | Ready | Em execução | `docs/tasks/HT-014/` criado com TASK e IMPLEMENTATION |
 | 2026-09-08 | `HT-014` | Em execução | Em revisão | Guarda de saída com três exames; provedor adulterado bloqueado; 224+13+3 testes verdes |
+| 2026-09-08 | `HT-014` | Em revisão | Done | `v0.22.0` → `8421d28`; `verificar-fechamento` verde |
+| 2026-09-08 | `HN-004` | Backlog | Ready | Groomada com critérios verificáveis (RF-010, RN-010); dependências `HN-003`/`HT-014` concluídas |
+| 2026-09-08 | `HN-004` | Ready | Em execução | `docs/tasks/HN-004/` criado com TASK e IMPLEMENTATION |
+| 2026-09-08 | `HN-004` | Em execução | Em revisão | Regras determinísticas + IA em lote; original preservado; 246+13+3 testes verdes |

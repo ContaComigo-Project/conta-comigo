@@ -3,6 +3,11 @@ import { AccessModule } from '../access/access.module';
 import { AggregationModule } from '../aggregation/aggregation.module';
 import { TOKENS_AGGREGATION } from '../aggregation/domain/port/driven/tokens';
 import { TransactionsModule } from '../transactions/transactions.module';
+import { IntelligenceModule } from '../intelligence/intelligence.module';
+import { TOKENS_INTELLIGENCE } from '../intelligence/domain/port/driven/tokens';
+import type { AiAdvisor } from '../intelligence/domain/port/driven/ai-advisor';
+import { MakeDescriptionsReadable } from '../transactions/application/make-descriptions-readable';
+import { AdvisorDescriptionTranslator } from '../transactions/infrastructure/ai/advisor-description-translator';
 import { TOKENS } from '../transactions/domain/port/driven/tokens';
 import { ConnectInstitutionUseCase } from './application/connect-institution';
 import { ListConnectionsUseCase } from './application/list-connections';
@@ -24,7 +29,7 @@ import type { ExternalAccountRepository } from '../transactions/domain/port/driv
 // Wiring (ADR-001): port -> adapter by token. The consent context consumes the
 // aggregation port (imported module) and the access token issuer.
 @Module({
-  imports: [AccessModule, AggregationModule, TransactionsModule],
+  imports: [AccessModule, AggregationModule, TransactionsModule, IntelligenceModule],
   controllers: [ConsentController],
   providers: [
     { provide: TOKENS_CONSENT.ConsentRepository, useFactory: () => new ConsentRepositoryPrisma() },
@@ -48,13 +53,24 @@ import type { ExternalAccountRepository } from '../transactions/domain/port/driv
         TOKENS_AGGREGATION.OpenFinanceAggregator,
         TOKENS.ExternalAccountRepository,
         TOKENS.RepositorioDeTransactions,
+        TOKENS_INTELLIGENCE.AiAdvisor,
       ],
       useFactory: (
         repo: InstanceType<typeof ConsentRepositoryPrisma>,
         aggregator: OpenFinanceAggregator,
         contas: ExternalAccountRepository,
         lancamentos: RepositorioDeTransactions,
-      ) => new SyncInstitutionUseCase(repo, aggregator, contas, lancamentos),
+        advisor: AiAdvisor,
+      ) =>
+        // HN-004: a limpeza semantica entra na sincronizacao. O tradutor e um
+        // adaptador sobre a porta de IA — o caso de uso nao sabe que ha modelo.
+        new SyncInstitutionUseCase(
+          repo,
+          aggregator,
+          contas,
+          lancamentos,
+          new MakeDescriptionsReadable(new AdvisorDescriptionTranslator(advisor)),
+        ),
     },
     {
       provide: TOKENS_CONSENT.RevokeConsent,

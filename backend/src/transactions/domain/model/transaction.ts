@@ -6,7 +6,13 @@ export interface Transaction {
   readonly id: string;
   /** Dono do dado (RN-015). Sem ele nao ha barreira entre holderes. */
   readonly holderId: HolderId;
+  /** Como veio do agregador. NUNCA e sobrescrita (RN-010). */
   readonly description: string;
+  /**
+   * Versao legivel derivada (HN-004, RF-010). `null` enquanto a limpeza nao
+   * rodou; igual a `description` quando nada foi reconhecido.
+   */
+  readonly readableDescription: string | null;
   /** Valor em centavos: inteiro evita error de ponto flutuante em soma. */
   readonly amountInCents: number;
   /** Data de competencia — a que define o mes de referencia (RN-003). */

@@ -3,6 +3,8 @@ import type { OpenFinanceAggregator } from '../../aggregation/domain/port/driven
 import type { ExternalAccountRepository } from '../../transactions/domain/port/driven/external-account-repository';
 import type { RepositorioDeTransactions } from '../../transactions/domain/port/driven/transaction-repository';
 import type { HolderId } from '../../transactions/domain/model/holder';
+import type { Transaction } from '../../transactions/domain/model/transaction';
+import { MakeDescriptionsReadable } from '../../transactions/application/make-descriptions-readable';
 import { estaAtivo } from '../domain/model/consent';
 import type { ConsentRepository } from '../domain/port/driven/consent-repository';
 import type { ResultadoDaSincronizacao, SyncInstitution, SyncInstitutionInput } from '../domain/port/driving/consent';
@@ -21,6 +23,9 @@ export class SyncInstitutionUseCase implements SyncInstitution {
     private readonly aggregator: OpenFinanceAggregator,
     private readonly contas: ExternalAccountRepository,
     private readonly lancamentos: RepositorioDeTransactions,
+    // HN-004: a limpeza acontece no momento da sincronizacao, nao a cada
+    // leitura da tela — o custo se paga uma vez por lancamento novo.
+    private readonly legibilizar?: MakeDescriptionsReadable,
   ) {}
 
   async executar(input: SyncInstitutionInput): Promise<ResultadoDaSincronizacao> {
@@ -61,16 +66,22 @@ export class SyncInstitutionUseCase implements SyncInstitution {
       })),
       holder,
     );
-    await this.lancamentos.salvarSincronizados(
-      lancamentos.dados.map((l) => ({
-        id: randomUUID(),
-        holderId: holder,
-        description: l.descriptionOriginal,
-        amountInCents: l.amountInCents,
-        dueDate: l.dueDate,
-        externalId: l.idExterno,
-      })),
-    );
+    const novos: Transaction[] = lancamentos.dados.map((l) => ({
+      id: randomUUID(),
+      holderId: holder,
+      // O texto do agregador entra como veio e nao e sobrescrito (RN-010).
+      description: l.descriptionOriginal,
+      readableDescription: null,
+      amountInCents: l.amountInCents,
+      dueDate: l.dueDate,
+      externalId: l.idExterno,
+    }));
+
+    // Sem o caso de uso de legibilidade, os lancamentos entram com a descricao
+    // crua: a sincronizacao nunca depende da limpeza para acontecer (RNF-005).
+    const paraSalvar = this.legibilizar ? await this.legibilizar.executar(novos) : novos;
+
+    await this.lancamentos.salvarSincronizados(paraSalvar);
 
     await this.repo.updateLastSyncAt(consent.id, input.agora);
     return {

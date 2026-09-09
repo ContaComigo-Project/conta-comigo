@@ -30,8 +30,8 @@ describe('GET /transactions/month-summary', () => {
       .overrideProvider(TOKENS.RepositorioDeTransactions)
       .useValue(
         new RepositorioDeTransactionsEmMemoria([
-          { id: '1', holderId: TITULAR, description: 'mercado', amountInCents: 120_00, dueDate: new Date('2026-01-10T12:00:00Z') , externalId: null },
-          { id: '2', holderId: TITULAR, description: 'farmacia', amountInCents: 30_00, dueDate: new Date('2026-02-05T12:00:00Z') , externalId: null },
+          { id: '1', holderId: TITULAR, description: 'mercado', readableDescription: null, amountInCents: 120_00, dueDate: new Date('2026-01-10T12:00:00Z') , externalId: null },
+          { id: '2', holderId: TITULAR, description: 'PAG*FARMACIA', readableDescription: 'Farmacia', amountInCents: 30_00, dueDate: new Date('2026-02-05T12:00:00Z') , externalId: null },
         ]),
       )
       .compile();
@@ -62,6 +62,19 @@ describe('GET /transactions/month-summary', () => {
       tipo: 'credito',
       dueDate: '2026-01-10T12:00:00.000Z',
     });
+  });
+
+  it('RN-010 — a descricao legivel vai no lugar da crua, e a original viaja junto', async () => {
+    const response = await fetch(baseUrl + '/transactions', { headers: autorizado() });
+    const body = (await response.json()) as { dados: { description: string; descriptionOriginal?: string }[] };
+
+    // Sem limpeza: nao ha original a repetir, e o campo nem aparece.
+    expect(body.dados[0]).toMatchObject({ description: 'mercado' });
+    expect(body.dados[0].descriptionOriginal).toBeUndefined();
+
+    // Com limpeza (HN-004): a tela recebe a legivel e o texto do agregador
+    // continua consultavel.
+    expect(body.dados[1]).toMatchObject({ description: 'Farmacia', descriptionOriginal: 'PAG*FARMACIA' });
   });
 
   it('responde 200 com o resumo do mes de referencia do clock', async () => {

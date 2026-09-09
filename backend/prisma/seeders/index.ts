@@ -7,6 +7,7 @@ import { randomUUID } from 'node:crypto';
 import { PrismaPg } from '@prisma/adapter-pg';
 import { PrismaClient } from '../../src/transactions/infrastructure/persistence/gerado/client';
 import { cipherr } from '../../src/transactions/infrastructure/persistence/cipher';
+import { limparDescricao } from '../../src/transactions/domain/model/readable-description';
 
 const URL_PADRAO = 'postgresql://contacomigo:contacomigo_dev_local@localhost:5433/contacomigo';
 const prisma = new PrismaClient({ adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL ?? URL_PADRAO }) });
@@ -73,12 +74,15 @@ async function seed() {
   }
   console.log(`seed: ${CONTAS.length} contas externas criadas`);
 
-  // Transactions with external id (RN-008: no duplicates on re-sync).
+  // Transactions with external id (RN-008: no duplicates on re-sync). The
+  // readable description comes from the same deterministic rules the sync uses
+  // (HN-004): the demo shows the real behaviour, not a hand-written label.
   for (const l of LANCAMENTOS) {
+    const readableDescription = limparDescricao(l.description);
     await prisma.transaction.upsert({
       where: { id: l.id },
-      create: { ...l, holderId: HOLDER, externalId: l.externalId },
-      update: { amountInCents: l.amountInCents },
+      create: { ...l, readableDescription, holderId: HOLDER, externalId: l.externalId },
+      update: { amountInCents: l.amountInCents, readableDescription },
     });
   }
   console.log(`seed: ${LANCAMENTOS.length} lançamentos criados`);

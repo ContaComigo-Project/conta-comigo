@@ -2,7 +2,10 @@ export type TransactionType = 'debit' | 'credit';
 
 export interface Transaction {
   id: string;
+  /** Versão legível (HN-004). O texto do agregador fica em `descriptionOriginal`. */
   description: string;
+  /** Texto cru do agregador, quando difere da legível (RN-010). */
+  descriptionOriginal?: string;
   merchant?: string;
   category: string;
   categoryIcon: string;

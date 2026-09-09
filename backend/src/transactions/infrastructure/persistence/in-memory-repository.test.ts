@@ -8,7 +8,7 @@ const HOLDER = holderId('holder-a');
 const lancamento = (externalId: string | null, amountInCents: number): Transaction => ({
   id: `${externalId ?? 'null'}-${amountInCents}`,
   holderId: HOLDER,
-  description: 'x',
+  description: 'x', readableDescription: null,
   amountInCents,
   dueDate: new Date('2026-02-01T12:00:00Z'),
   externalId,

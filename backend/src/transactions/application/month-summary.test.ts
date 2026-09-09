@@ -8,7 +8,7 @@ import type { RepositorioDeTransactions } from '../domain/port/driven/transactio
 const TITULAR = holderId('holder-a');
 
 function transaction(id: string, amountInCents: number, competenciaUtc: string): Transaction {
-  return { id, holderId: TITULAR, description: 'transaction ' + id, amountInCents, dueDate: new Date(competenciaUtc) , externalId: null };
+  return { id, holderId: TITULAR, description: 'transaction ' + id, readableDescription: null, amountInCents, dueDate: new Date(competenciaUtc) , externalId: null };
 }
 
 // Fakes construidos aqui, a partir das PORTAS. O teste de application/ nao

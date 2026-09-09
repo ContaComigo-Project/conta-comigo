@@ -54,6 +54,7 @@ export function paraTransactions(dados: TransactionDTO[], agora: Date): Transact
     return {
       id: l.id,
       description: l.description,
+      descriptionOriginal: l.descriptionOriginal,
       merchant: l.estabelecimento,
       category: l.category?.name ?? 'Outros',
       categoryIcon: category.iconeNaLista,
