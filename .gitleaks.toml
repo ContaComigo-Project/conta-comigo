@@ -34,4 +34,13 @@ paths = [
 
   # Lockfile: hashes de integridade nao sao credenciais.
   '''^pnpm-lock\.yaml$''',
+
+  # O .env local E o lugar declarado dos segredos (ver .env.example): ele nunca
+  # entra no git (.gitignore + gate de staging), mas `gitleaks dir` le o
+  # filesystem e nao respeita o .gitignore. Sem esta linha, toda maquina com o
+  # ambiente realmente configurado reprova o gate — e um gate que sempre falha
+  # deixa de ser gate. A cobertura que importa continua: o .env.example tem
+  # regra propria contra valor preenchido, e a varredura do historico acusa se
+  # um .env algum dia for commitado.
+  '''(^|/)\.env$''',
 ]

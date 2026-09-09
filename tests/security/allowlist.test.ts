@@ -68,6 +68,7 @@ describe('RNF-012 — the secret allowlist cannot blind the scan', () => {
         '^docker-compose\\.yml$',
         '^docs/tasks/[^/]+/evidencia/',
         '^pnpm-lock\\.yaml$',
+        '(^|/)\\.env$',
       ].sort(),
     );
   });
