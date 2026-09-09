@@ -1,0 +1,13 @@
+# progress — HT-018
+# Diário append-only do ciclo Ralph. Uma linha por evento.
+# Formato: AAAA-MM-DD HH:MM | FASE | descrição objetiva | evidência
+# FASE: PERCEBER | ORIENTAR | DECIDIR | AGIR | REGISTRAR
+
+2026-09-09 05:00 | PERCEBER | mapeei o frontend: fronteira DataSource (HT-017) já existe; chat/insights/export/orçamento ainda em mock; sem resolver a faixa 70/90 no frontend | explore + leitura
+2026-09-09 05:10 | ORIENTAR | escopo: fechar as superfícies de IA + export + overview no backend real; SpendingChart/páginas de despesas ficam como dívida (parte 2) | -
+2026-09-09 05:15 | AGIR | grooming HT-018 + kanban Em execução + TASK/IMPLEMENTATION | docs
+2026-09-09 05:30 | AGIR | ApiSource expandido (semaphore, history, diagnosis, chat, simulation, export CSV/PDF, limites) | frontend/src/data/api-source.ts
+2026-09-09 05:45 | AGIR | AIChatWidget real (POST /intelligence/chat + aviso RN-018), AIInsightPanel real (diagnosis + degradação), ExportDropdown real (blob download), BudgetAtAGlance real (semaphore), RecentActivity real (transactions) | overview + expenses
+2026-09-09 06:00 | AGIR | removidos chat.mock.ts e ai-insights.mock.ts; barrel atualizado; build frontend ok | mocks
+2026-09-09 06:05 | AGIR | suíte 314+22+3 verdes; build raiz + frontend; auditoria 100% | pnpm
+2026-09-09 06:10 | REGISTRAR | ENTREGA-HT-018 criada; kanban Em revisão | docs/entregas, KANBAN

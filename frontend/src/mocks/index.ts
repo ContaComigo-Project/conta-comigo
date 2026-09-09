@@ -13,9 +13,7 @@
 
 export * from './user.mock';
 export * from './metrics.mock';
-export * from './ai-insights.mock';
 export * from './spending-categories.mock';
 export * from './transactions.mock';
 export * from './connected-banks.mock';
 export * from './budget.mock';
-export * from './chat.mock';
