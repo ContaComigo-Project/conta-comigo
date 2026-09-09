@@ -7,3 +7,6 @@ packages:
 overrides:
   deepmerge-ts: 8.0.0
   mysql2: 3.23.1
+  # Transitivo do @nestjs/platform-express: 2.2.0 tem 4 CVEs (GHSA-535w-7cp7-47q4
+  # e outros). O Nest ainda pede ^2.0.0; o override sobe sem esperar o release.
+  multer: 2.3.0
