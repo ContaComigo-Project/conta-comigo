@@ -90,3 +90,14 @@ export const BudgetHistoryDTO = z
   })
   .strict();
 export type BudgetHistoryDTO = z.infer<typeof BudgetHistoryDTO>;
+
+// Financial diagnosis from the consolidated data (HN-009). The text is IA
+// output already guarded (RN-019); the state covers degradation (RN-021).
+export const DiagnosisDTO = z
+  .object({
+    estado: z.enum(['ok', 'dados-insuficientes', 'ia-indisponivel', 'teto-atingido', 'ia-bloqueou']),
+    texto: z.string().optional(),
+    motivo: z.string().optional(),
+  })
+  .strict();
+export type DiagnosisDTO = z.infer<typeof DiagnosisDTO>;

@@ -23,6 +23,7 @@ const ENDPOINTS_ESPERADOS = [
   '/consents/account',
   '/consents/{id}',
   '/consents/{id}/sync',
+  '/budgets/diagnosis',
   '/budgets/history',
   '/budgets/semaphore',
   '/dashboard/summary',
@@ -75,7 +76,7 @@ describe('HT-019 — a API e descoberta pela propria documentacao', () => {
     // o restante, um método cada.
     const metodos = Object.values(spec.paths).flatMap((p) => Object.keys(p));
     expect(metodos.sort()).toEqual([
-      'delete', 'delete', 'delete', 'delete', 'get', 'get', 'get', 'get', 'get', 'get', 'get', 'get',
+      'delete', 'delete', 'delete', 'delete', 'get', 'get', 'get', 'get', 'get', 'get', 'get', 'get', 'get',
       'patch', 'post', 'post', 'post', 'post', 'post', 'put',
     ]);
   });

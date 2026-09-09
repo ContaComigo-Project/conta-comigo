@@ -14,13 +14,14 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { BudgetHistoryDTO, BudgetSemaphoreDTO, DefinirLimiteDTO, ok, type MonthlyLimitDTO, type Result } from '@contacomigo/contract';
+import { BudgetHistoryDTO, BudgetSemaphoreDTO, DefinirLimiteDTO, DiagnosisDTO, ok, type MonthlyLimitDTO, type Result } from '@contacomigo/contract';
 import { zodParaSchema } from '../../../openapi';
 import type { Identity } from '../../../transactions/domain/port/driven/identity';
 import type { ListMonthlyLimits } from '../../application/list-monthly-limits';
 import type { RemoveMonthlyLimit } from '../../application/remove-monthly-limit';
 import type { SetMonthlyLimit } from '../../application/set-monthly-limit';
 import type { GetBudgetHistory } from '../../domain/port/driving/get-budget-history';
+import type { GetDiagnosis } from '../../domain/port/driving/get-diagnosis';
 import type { GetBudgetSemaphore } from '../../domain/port/driving/get-budget-semaphore';
 import { TOKENS_BUDGET } from '../../domain/port/driven/tokens';
 import { GuardaDeHolderDoBudget, TOKEN_IDENTITY_BUDGET } from './holder-guard';
@@ -40,6 +41,7 @@ export class BudgetController {
     @Inject(TOKENS_BUDGET.ListMonthlyLimits) private readonly listar: ListMonthlyLimits,
     @Inject(TOKENS_BUDGET.GetBudgetSemaphore) private readonly calcularSemaforo: GetBudgetSemaphore,
     @Inject(TOKENS_BUDGET.GetBudgetHistory) private readonly historico: GetBudgetHistory,
+    @Inject(TOKENS_BUDGET.GetDiagnosis) private readonly diagnostico: GetDiagnosis,
     @Inject(TOKEN_IDENTITY_BUDGET) private readonly identity: Identity,
   ) {}
 
@@ -59,6 +61,25 @@ export class BudgetController {
       return { month: r.month, categorias: [...r.categorias], alertas: [...r.alertas] };
     } catch {
       throw new BadRequestException('Mês inválido (esperado AAAA-MM).');
+    }
+  }
+
+  @Get('diagnosis')
+  @ApiOperation({ summary: 'Diagnóstico de saúde financeira', description: 'Diagnóstico a partir dos dados consolidados (RN-019); degrada em resultado estruturado quando a IA não responde (RN-021).' })
+  @ApiResponse({ status: 200, description: 'Diagnóstico (ou estado de degradação)' })
+  async diagnosticoFinanceiro(): Promise<DiagnosisDTO> {
+    const r = await this.diagnostico.executar(this.titular());
+    switch (r.tipo) {
+      case 'ok':
+        return { estado: 'ok', texto: r.texto };
+      case 'dados-insuficientes':
+        return { estado: 'dados-insuficientes' };
+      case 'ia-indisponivel':
+        return { estado: 'ia-indisponivel', motivo: r.motivo };
+      case 'teto-atingido':
+        return { estado: 'teto-atingido' };
+      case 'ia-bloqueou':
+        return { estado: 'ia-bloqueou', motivo: r.motivo };
     }
   }
 

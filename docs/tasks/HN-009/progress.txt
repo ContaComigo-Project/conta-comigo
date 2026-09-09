@@ -1,0 +1,12 @@
+# progress — HN-009
+# Diário append-only do ciclo Ralph. Uma linha por evento.
+# Formato: AAAA-MM-DD HH:MM | FASE | descrição objetiva | evidência
+# FASE: PERCEBER | ORIENTAR | DECIDIR | AGIR | REGISTRAR
+
+2026-09-09 02:30 | PERCEBER | li RF-018/019, RN-017/019/020/021 e o que HT-013/014 entregaram (AiAdvisor com teto/cache/guarda) | docs, backend/intelligence
+2026-09-09 02:35 | ORIENTAR | escopo: caso de uso de diagnóstico que monta só os números, chama o AiAdvisor (diagnostico-do-mes) e degrada em resultado estruturado | -
+2026-09-09 02:40 | AGIR | grooming HN-009 + kanban Em execução + TASK/IMPLEMENTATION | docs
+2026-09-09 02:50 | AGIR | GetDiagnosis (RN-020 dado mínimo, RN-019 só números, RN-021 degradação) + endpoint GET /budgets/diagnosis + DTO | backend/budget
+2026-09-09 03:00 | AGIR | BudgetModule importa IntelligenceModule (AiAdvisor); suíte 304+22+3 verdes; build ok; auditoria 100% | pnpm
+2026-09-09 03:05 | AGIR | validação na API real: /budgets/diagnosis retorna dados-insuficientes (meses fechados sem dados) | curl
+2026-09-09 03:10 | REGISTRAR | ENTREGA-HN-009 criada; kanban Em revisão | docs/entregas, KANBAN

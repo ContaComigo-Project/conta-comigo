@@ -1,5 +1,9 @@
 import { Module } from '@nestjs/common';
 import { AccessModule } from '../access/access.module';
+import { IntelligenceModule } from '../intelligence/intelligence.module';
+import { TOKENS_INTELLIGENCE } from '../intelligence/domain/port/driven/tokens';
+import type { AiAdvisor } from '../intelligence/domain/port/driven/ai-advisor';
+import { GetDiagnosisUseCase } from './application/get-diagnosis';
 import { TransactionsModule } from '../transactions/transactions.module';
 import { TOKENS } from '../transactions/domain/port/driven/tokens';
 import type { RepositorioDeTransactions } from '../transactions/domain/port/driven/transaction-repository';
@@ -22,7 +26,7 @@ import { TokenIdentity } from '../transactions/infrastructure/http/token-identit
 // novo: o token e o mesmo, e duplicar a leitura dele criaria dois lugares para
 // divergir na proxima mudanca de autenticacao.
 @Module({
-  imports: [AccessModule, TransactionsModule],
+  imports: [AccessModule, TransactionsModule, IntelligenceModule],
   controllers: [BudgetController],
   providers: [
     {
@@ -36,6 +40,21 @@ import { TokenIdentity } from '../transactions/infrastructure/http/token-identit
       inject: [TOKENS_BUDGET.BudgetRepository, TOKENS.RepositorioDeTransactions, TOKENS.Clock],
       useFactory: (repo: BudgetRepository, transactions: RepositorioDeTransactions, clock: Clock) =>
         new GetBudgetHistoryUseCase(repo, transactions, clock),
+    },
+    {
+      provide: TOKENS_BUDGET.GetDiagnosis,
+      inject: [
+        TOKENS_BUDGET.BudgetRepository,
+        TOKENS.RepositorioDeTransactions,
+        TOKENS.Clock,
+        TOKENS_INTELLIGENCE.AiAdvisor,
+      ],
+      useFactory: (
+        repo: BudgetRepository,
+        transactions: RepositorioDeTransactions,
+        clock: Clock,
+        advisor: AiAdvisor,
+      ) => new GetDiagnosisUseCase(repo, transactions, clock, advisor),
     },
 
     { provide: TOKEN_IDENTITY_BUDGET, useClass: TokenIdentity },
