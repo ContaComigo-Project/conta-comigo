@@ -72,3 +72,4 @@ commit existir. O motivo está registrado na entrega.
 | 2026-09-09 | [`HN-008`](./ENTREGA-HN-008-historico-6-meses.md) | Histórico de 6 meses e problemas recorrentes | `v0.28.0` | `f2e066e` | `v0.28.0` |
 | 2026-09-09 | [`HN-009`](./ENTREGA-HN-009-diagnostico-saude-financeira.md) | Diagnóstico de saúde financeira | `v0.29.0` | `00ae874` | `v0.29.0` |
 | 2026-09-09 | [`HN-010`](./ENTREGA-HN-010-chat-educativo.md) | Chat educativo com aviso permanente | `v0.30.0` | `ffdf8ce` | `v0.30.0` |
+| 2026-09-09 | [`HT-018`](./ENTREGA-HT-018-fronteira-frontend.md) | Fechamento da fronteira do frontend (parte 1) | `v0.32.0` | `daa579e` | `v0.32.0` |
