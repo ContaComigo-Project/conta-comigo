@@ -1,4 +1,5 @@
 import type { LimiteMensal } from '../../domain/model/monthly-limit';
+import type { BudgetAlert } from '../../domain/model/budget-alert';
 import type { BudgetRepository } from '../../domain/port/driven/budget-repository';
 
 // Adaptador falso (ADR-001). A chave e a mesma do banco: (titular, mes,
@@ -20,5 +21,15 @@ export class BudgetRepositoryEmMemoria implements BudgetRepository {
 
   async listarDoMes(holderId: string, month: string): Promise<readonly LimiteMensal[]> {
     return [...this.limites.values()].filter((l) => l.holderId === holderId && l.month === month);
+  }
+
+  private readonly alertas: BudgetAlert[] = [];
+
+  async listarAlertasDoMes(holderId: string, month: string): Promise<readonly BudgetAlert[]> {
+    return this.alertas.filter((a) => a.holderId === holderId && a.month === month);
+  }
+
+  async registrarAlerta(alerta: BudgetAlert): Promise<void> {
+    this.alertas.push(alerta);
   }
 }

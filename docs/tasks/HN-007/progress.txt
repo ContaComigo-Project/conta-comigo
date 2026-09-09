@@ -1,0 +1,13 @@
+# progress — HN-007
+# Diário append-only do ciclo Ralph. Uma linha por evento.
+# Formato: AAAA-MM-DD HH:MM | FASE | descrição objetiva | evidência
+# FASE: PERCEBER | ORIENTAR | DECIDIR | AGIR | REGISTRAR
+
+2026-09-09 00:30 | PERCEBER | li RF-014/015, RN-001/002/005 e o que HN-006 entregou (LimiteMensal + faixaDoSemaforo) | docs, backend/budget
+2026-09-09 00:35 | ORIENTAR | escopo: semáforo por categoria (RN-001/002) + aviso único por faixa por mês (RN-005, persistido) | -
+2026-09-09 00:40 | AGIR | grooming HN-007 + kanban Em execução + TASK/IMPLEMENTATION | docs
+2026-09-09 00:50 | AGIR | BudgetAlert + métodos no repositório + migração budget_alerts; caso de uso GetBudgetSemaphore (RN-005 todas as faixas cruzadas) | backend/budget
+2026-09-09 01:00 | AGIR | endpoint GET /budgets/semaphore + DTO; rota estática antes de :month (bug de roteamento corrigido) | controller
+2026-09-09 01:10 | AGIR | DRIFT nas migrações da HN-004/005/006 (nunca aplicadas); migrate reset autorizado; banco reaplicado + seed | prisma
+2026-09-09 01:20 | AGIR | suíte 297+22+3 verdes; fronteiras verdes; build ok; auditoria 100%; semáforo validado na API real | pnpm, curl
+2026-09-09 01:25 | REGISTRAR | ENTREGA-HN-007 criada; kanban Em revisão | docs/entregas, KANBAN

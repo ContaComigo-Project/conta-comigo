@@ -27,3 +27,30 @@ export type MonthlyLimitDTO = z.infer<typeof MonthlyLimitDTO>;
 
 export const DefinirLimiteDTO = z.object({ limiteEmCents: Cents }).strict();
 export type DefinirLimiteDTO = z.infer<typeof DefinirLimiteDTO>;
+
+// Budget semaphore per category for a month (HN-007): band per RN-001/RN-002
+// and the band-crossing alerts (RN-005).
+export const BudgetSemaphoreDTO = z
+  .object({
+    month: z.string(),
+    categorias: z
+      .array(
+        z
+          .object({
+            category: z.string(),
+            limitInCents: z.number().int().nullable(),
+            spentInCents: z.number().int(),
+            percentage: z.number(),
+            band: z.enum(['verde', 'amarela', 'vermelha', 'sem-limite']),
+          })
+          .strict(),
+      ),
+    alertas: z
+      .array(
+        z
+          .object({ category: z.string(), band: z.enum(['amarela', 'vermelha']), month: z.string() })
+          .strict(),
+      ),
+  })
+  .strict();
+export type BudgetSemaphoreDTO = z.infer<typeof BudgetSemaphoreDTO>;

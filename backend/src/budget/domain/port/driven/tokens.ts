@@ -4,4 +4,5 @@ export const TOKENS_BUDGET = {
   SetMonthlyLimit: Symbol.for('budget/SetMonthlyLimit'),
   RemoveMonthlyLimit: Symbol.for('budget/RemoveMonthlyLimit'),
   ListMonthlyLimits: Symbol.for('budget/ListMonthlyLimits'),
+  GetBudgetSemaphore: Symbol.for('budget/GetBudgetSemaphore'),
 } as const;

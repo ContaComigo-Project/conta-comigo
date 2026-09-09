@@ -1,5 +1,6 @@
 import { PrismaPg } from '@prisma/adapter-pg';
 import type { LimiteMensal } from '../../domain/model/monthly-limit';
+import type { BudgetAlert, FaixaDeAlerta } from '../../domain/model/budget-alert';
 import type { BudgetRepository } from '../../domain/port/driven/budget-repository';
 import { PrismaClient } from '../../../transactions/infrastructure/persistence/gerado/client';
 
@@ -56,5 +57,30 @@ export class BudgetRepositoryPrisma implements BudgetRepository {
 
   async encerrar(): Promise<void> {
     await this.prisma.$disconnect();
+  }
+
+  async listarAlertasDoMes(holderId: string, month: string): Promise<readonly BudgetAlert[]> {
+    const linhas = await this.prisma.budgetAlert.findMany({ where: { holderId, month } });
+    return linhas.map((l) => ({
+      id: l.id,
+      holderId: l.holderId,
+      categoryId: l.categoryId,
+      month: l.month,
+      band: l.band as FaixaDeAlerta,
+      createdAt: l.createdAt,
+    }));
+  }
+
+  async registrarAlerta(alerta: BudgetAlert): Promise<void> {
+    await this.prisma.budgetAlert.create({
+      data: {
+        id: alerta.id,
+        holderId: alerta.holderId,
+        categoryId: alerta.categoryId,
+        month: alerta.month,
+        band: alerta.band,
+        createdAt: alerta.createdAt,
+      },
+    });
   }
 }

@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import type { LimiteMensal } from '../domain/model/monthly-limit';
+import type { BudgetAlert } from '../domain/model/budget-alert';
 import type { BudgetRepository } from '../domain/port/driven/budget-repository';
 import { ListMonthlyLimits } from './list-monthly-limits';
 import { RemoveMonthlyLimit } from './remove-monthly-limit';
@@ -29,6 +30,12 @@ class RepositorioFalso implements BudgetRepository {
   async listarDoMes(holderId: string, month: string): Promise<readonly LimiteMensal[]> {
     return [...this.limites.values()].filter((l) => l.holderId === holderId && l.month === month);
   }
+
+  async listarAlertasDoMes(): Promise<readonly BudgetAlert[]> {
+    return [];
+  }
+
+  async registrarAlerta(): Promise<void> {}
 }
 
 function casos() {

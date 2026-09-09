@@ -1,5 +1,9 @@
 import { Module } from '@nestjs/common';
 import { AccessModule } from '../access/access.module';
+import { TransactionsModule } from '../transactions/transactions.module';
+import { TOKENS } from '../transactions/domain/port/driven/tokens';
+import type { RepositorioDeTransactions } from '../transactions/domain/port/driven/transaction-repository';
+import { GetBudgetSemaphoreUseCase } from './application/get-budget-semaphore';
 import { ListMonthlyLimits } from './application/list-monthly-limits';
 import { RemoveMonthlyLimit } from './application/remove-monthly-limit';
 import { SetMonthlyLimit } from './application/set-monthly-limit';
@@ -16,9 +20,16 @@ import { TokenIdentity } from '../transactions/infrastructure/http/token-identit
 // novo: o token e o mesmo, e duplicar a leitura dele criaria dois lugares para
 // divergir na proxima mudanca de autenticacao.
 @Module({
-  imports: [AccessModule],
+  imports: [AccessModule, TransactionsModule],
   controllers: [BudgetController],
   providers: [
+    {
+      provide: TOKENS_BUDGET.GetBudgetSemaphore,
+      inject: [TOKENS_BUDGET.BudgetRepository, TOKENS.RepositorioDeTransactions],
+      useFactory: (repo: BudgetRepository, transactions: RepositorioDeTransactions) =>
+        new GetBudgetSemaphoreUseCase(repo, transactions),
+    },
+
     { provide: TOKEN_IDENTITY_BUDGET, useClass: TokenIdentity },
     GuardaDeHolderDoBudget,
     { provide: TOKENS_BUDGET.BudgetRepository, useFactory: () => new BudgetRepositoryPrisma() },

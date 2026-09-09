@@ -168,7 +168,7 @@ o backlog passou a considerar o frontend existente.
 | Ordem | Chave | Título | Tipo | Estado | Depende de | UI hoje |
 | --- | --- | --- | --- | --- | --- | --- |
 | 25 | `HN-006` | Definir e editar limite mensal por categoria | Negócio | **Done** | HN-005 | `v0.25.0` (tela pendente — ver `HT-018`) |
-| 26 | `HN-007` | Orçamento semáforo e aviso ao cruzar faixa | Negócio | Backlog | HN-006 | Barras e faixas prontas; **a regra sai de `budget.mock.ts` para o domínio** |
+| 26 | `HN-007` | Orçamento semáforo e aviso ao cruzar faixa | Negócio | **Em revisão** | HN-006 | Barras e faixas prontas; **a regra sai de `budget.mock.ts` para o domínio** |
 | 27 | `HN-008` | Histórico de 6 meses e problemas recorrentes | Negócio | Backlog | HN-007 | `HistoricalOverview` completo, sobre dados simulados |
 
 ### Fase 6 — Consultoria educativa, limpeza e publicação
@@ -184,13 +184,13 @@ o backlog passou a considerar o frontend existente.
 ## Quadro
 
 ### Ready
-- _(vazio — `HN-007` precisa de grooming)_
+- _(vazio — `HN-007` em execução, WIP 1)_
 
 ### Em execução
-- `HT-007` — Pipeline de CI com gates bloqueantes_
+- _(vazio)_
 
 ### Em revisão
-- _(vazio)_
+- `HN-007` — Orçamento semáforo e aviso ao cruzar faixa
 
 ### Done
 - `HT-000` `v0.1.0` · `HT-001` `v0.2.0` · `HT-002` `v0.3.0` · `HT-003` `v0.4.0` · `HT-004` `v0.5.0` · `HT-016` `v0.6.0` · `HT-005` `v0.7.0` · `HT-006` `v0.8.0` · `HT-009` `v0.9.0` · `HT-010` `v0.10.0` · `HT-017` `v0.11.0` · `HT-008` `v0.12.0` · `HN-001` `v0.13.0` · `HT-011` `v0.14.0` · `HT-019` `v0.15.0` · `HT-020` `v0.16.0` · `HN-002` `v0.17.0` · `HN-012` `v0.18.0` · `HN-003` `v0.19.0` · `HT-012` `v0.20.0` · `HT-013` `v0.21.0` · `HT-014` `v0.22.0` · `HN-004` `v0.23.0` · `HN-005` `v0.24.0` · `HN-006` `v0.25.0`

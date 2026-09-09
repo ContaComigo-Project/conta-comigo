@@ -9,22 +9,25 @@ import {
   NotFoundException,
   Param,
   Put,
+  Query,
   UnauthorizedException,
   UseGuards,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { DefinirLimiteDTO, ok, type MonthlyLimitDTO, type Result } from '@contacomigo/contract';
+import { BudgetSemaphoreDTO, DefinirLimiteDTO, ok, type MonthlyLimitDTO, type Result } from '@contacomigo/contract';
 import { zodParaSchema } from '../../../openapi';
 import type { Identity } from '../../../transactions/domain/port/driven/identity';
 import type { ListMonthlyLimits } from '../../application/list-monthly-limits';
 import type { RemoveMonthlyLimit } from '../../application/remove-monthly-limit';
 import type { SetMonthlyLimit } from '../../application/set-monthly-limit';
+import type { GetBudgetSemaphore } from '../../domain/port/driving/get-budget-semaphore';
 import { TOKENS_BUDGET } from '../../domain/port/driven/tokens';
 import { GuardaDeHolderDoBudget, TOKEN_IDENTITY_BUDGET } from './holder-guard';
 
-// Adapter de entrada do orcamento (HN-006). O titular vem do access token,
+// Adapter de entrada do orcamento (HN-006/007). O titular vem do access token,
 // nunca de parametro da requisicao (RN-015): nao existe rota que aceite os
-// limites de outra pessoa.
+// limites de outra pessoa. A rota estatica `semaphore` vem ANTES de `:month`
+// para o roteador nao capturar a palavra como mes.
 @ApiTags('budget')
 @ApiBearerAuth()
 @Controller('budgets')
@@ -34,6 +37,7 @@ export class BudgetController {
     @Inject(TOKENS_BUDGET.SetMonthlyLimit) private readonly definir: SetMonthlyLimit,
     @Inject(TOKENS_BUDGET.RemoveMonthlyLimit) private readonly remover: RemoveMonthlyLimit,
     @Inject(TOKENS_BUDGET.ListMonthlyLimits) private readonly listar: ListMonthlyLimits,
+    @Inject(TOKENS_BUDGET.GetBudgetSemaphore) private readonly calcularSemaforo: GetBudgetSemaphore,
     @Inject(TOKEN_IDENTITY_BUDGET) private readonly identity: Identity,
   ) {}
 
@@ -41,6 +45,19 @@ export class BudgetController {
     const titular = this.identity.holderAtual();
     if (titular === null) throw new UnauthorizedException();
     return titular;
+  }
+
+  @Get('semaphore')
+  @ApiOperation({ summary: 'Semáforo do orçamento', description: 'Faixa por categoria no mês (RN-001) e avisos de cruzamento emitidos (RN-005).' })
+  @ApiResponse({ status: 200, description: 'Semáforo do mês' })
+  @ApiResponse({ status: 400, description: 'Mês inválido' })
+  async semaforo(@Query('month') month: string): Promise<BudgetSemaphoreDTO> {
+    try {
+      const r = await this.calcularSemaforo.executar(this.titular(), month);
+      return { month: r.month, categorias: [...r.categorias], alertas: [...r.alertas] };
+    } catch {
+      throw new BadRequestException('Mês inválido (esperado AAAA-MM).');
+    }
   }
 
   @Get(':month')
