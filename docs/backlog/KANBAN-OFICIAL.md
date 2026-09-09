@@ -184,16 +184,16 @@ o backlog passou a considerar o frontend existente.
 ## Quadro
 
 ### Ready
-- _(vazio — `HN-007` em execução, WIP 1)_
+- _(vazio — WIP 1)_
 
 ### Em execução
-- _(vazio)__
+- _(vazio)_
 
 ### Em revisão
-- `HN-011` — Simulação de compra e exportação PDF/CSV
+- _(vazio)_
 
 ### Done
-- `HT-000` `v0.1.0` · `HT-001` `v0.2.0` · `HT-002` `v0.3.0` · `HT-003` `v0.4.0` · `HT-004` `v0.5.0` · `HT-016` `v0.6.0` · `HT-005` `v0.7.0` · `HT-006` `v0.8.0` · `HT-009` `v0.9.0` · `HT-010` `v0.10.0` · `HT-017` `v0.11.0` · `HT-008` `v0.12.0` · `HN-001` `v0.13.0` · `HT-011` `v0.14.0` · `HT-019` `v0.15.0` · `HT-020` `v0.16.0` · `HN-002` `v0.17.0` · `HN-012` `v0.18.0` · `HN-003` `v0.19.0` · `HT-012` `v0.20.0` · `HT-013` `v0.21.0` · `HT-014` `v0.22.0` · `HN-004` `v0.23.0` · `HN-005` `v0.24.0` · `HN-006` `v0.25.0`
+- `HT-000` `v0.1.0` · `HT-001` `v0.2.0` · `HT-002` `v0.3.0` · `HT-003` `v0.4.0` · `HT-004` `v0.5.0` · `HT-016` `v0.6.0` · `HT-005` `v0.7.0` · `HT-006` `v0.8.0` · `HT-009` `v0.9.0` · `HT-010` `v0.10.0` · `HT-017` `v0.11.0` · `HT-008` `v0.12.0` · `HN-001` `v0.13.0` · `HT-011` `v0.14.0` · `HT-019` `v0.15.0` · `HT-020` `v0.16.0` · `HN-002` `v0.17.0` · `HN-012` `v0.18.0` · `HN-003` `v0.19.0` · `HT-012` `v0.20.0` · `HT-013` `v0.21.0` · `HT-014` `v0.22.0` · `HN-004` `v0.23.0` · `HN-005` `v0.24.0` · `HN-006` `v0.25.0` · `HN-007` `v0.27.0` · `HN-008` `v0.28.0` · `HN-009` `v0.29.0` · `HN-010` `v0.30.0` · `HN-011` `v0.31.0` · `HT-018` `v0.32.0`
 
 Todas verificadas por `scripts/verificar-fechamento.sh`: tag e commit no mesmo
 hash, mensagem semântica citando a chave, documento de entrega presente.
