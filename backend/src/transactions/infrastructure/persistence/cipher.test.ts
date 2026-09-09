@@ -32,8 +32,17 @@ describe('RNF-014 — cipher em repouso (AES-256-GCM)', () => {
   });
 
   it('sem ENCRYPTION_KEY recusa operar com error nomeado — nunca grava texto claro', () => {
-    expect(() => cipherr('qualquer coisa', undefined)).toThrow(ChaveDeCipherAusente);
-    expect(() => decipherr('qualquer coisa', undefined)).toThrow(ChaveDeCipherAusente);
+    // Determinístico em qualquer ambiente (inclusive CI com a env definida):
+    // remove a chave, prova a recusa, restaura o valor original.
+    const chaveOriginal = process.env.ENCRYPTION_KEY;
+    delete process.env.ENCRYPTION_KEY;
+    try {
+      expect(() => cipherr('qualquer coisa', undefined)).toThrow(ChaveDeCipherAusente);
+      expect(() => decipherr('qualquer coisa', undefined)).toThrow(ChaveDeCipherAusente);
+    } finally {
+      if (chaveOriginal) process.env.ENCRYPTION_KEY = chaveOriginal;
+      else delete process.env.ENCRYPTION_KEY;
+    }
   });
 
   it('chave com tamanho errado e rejeitada', () => {

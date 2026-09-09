@@ -13,9 +13,10 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 25
     env:
-      # Segredos de teste para a suíte; a API recusa operar com padrão (HN-001).
+      # Segredo de teste para a suíte; a API recusa operar com padrão (HN-001).
+      # ENCRYPTION_KEY NÃO é definida: o teste da cipher prova a recusa sem chave
+      # (determinístico no cipher.test.ts), e o seed (que a exige) não roda no CI.
       JWT_SECRET: ci-secret-somente-para-teste
-      ENCRYPTION_KEY: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
     steps:
       - uses: actions/checkout@v4
 
