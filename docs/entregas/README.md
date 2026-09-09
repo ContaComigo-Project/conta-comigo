@@ -50,6 +50,7 @@ Arquivo: `ENTREGA-[CHAVE]-titulo-em-kebab-case.md`, a partir de
 | 2026-09-08 | `HN-001` | Correção: perfil vindo do banco e logout na sidebar | `v0.19.3` | `8d7662c` | `v0.19.3` |
 | 2026-09-08 | `HT-020` | Correção: tabelas físicas renomeadas para inglês | `v0.19.4` | `246c6da` | `v0.19.4` |
 | 2026-09-08 | `HT-020` | Correção: colunas físicas renomeadas para inglês | `v0.19.5` | `a5ad752` | `v0.19.5` |
+| 2026-09-08 | `HT-020` | Correção: renomeação de colunas guardada e com nome correto (`criado_em`) | `v0.19.6` | `7458dca` | `v0.19.6` |
 
 
 Toda linha acima foi verificada por `scripts/verificar-fechamento.sh`: a tag

@@ -283,4 +283,5 @@ cada tela é aproveitável, e isso muda o critério de aceite de quase todas ela
 | 2026-09-08 | `HN-012` | Backlog | Done | `v0.18.0` → `7c63b24`; revogação e exclusão com dados |
 | 2026-09-08 | `HN-003` | Ready | Done | `v0.19.0` → `d1b04ac`; painel consolidado sobre dado sincronizado |
 | 2026-09-08 | `HN-003` `HN-001` `HT-020` | Done | Done | Correções `v0.19.1` a `v0.19.5`: API real no painel, CORS e rotas protegidas, perfil e logout, tabelas e colunas em inglês |
+| 2026-09-08 | `HT-020` | Done | Done | Correção `v0.19.6` → `7458dca`: migration de colunas guardada; `criada_em` não existia e travava todo banco |
 | 2026-09-08 | `HT-012` | Backlog | Ready | Groomada com critérios verificáveis (RNF-008, RNF-015); dependência `HT-009` concluída |
