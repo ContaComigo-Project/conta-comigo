@@ -3,7 +3,7 @@ import { ArrowRight } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { ApiSource } from '../../../data/api-source';
 import { paraTransactions } from '../../../data/mappers';
-import type { Transaction } from '../../../mocks/transactions.mock';
+import type { Transaction } from '../../../data/transaction';
 
 function BankBadge({ name, color }: { name: string; color: string }) {
   return (

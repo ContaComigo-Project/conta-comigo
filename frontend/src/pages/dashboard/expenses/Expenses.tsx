@@ -1,5 +1,4 @@
-import { Calendar, Info, Sparkles } from 'lucide-react';
-import { BUDGET_STATUS_META, type BudgetStatus, type MonthSlug } from '../../../mocks';
+import { Calendar, Info } from 'lucide-react';
 import { formatBRL } from '../../../utils/formatters';
 import { useExpensesState } from './hooks/use-expenses-state';
 import { SegmentedViewToggle } from './components/SegmentedViewToggle';
@@ -9,23 +8,45 @@ import { QuickFilterBar } from './components/QuickFilterBar';
 import { CategoryCard } from './components/CategoryCard';
 import { TransactionsListView } from './components/TransactionsListView';
 import { HistoricalOverview } from './components/HistoricalOverview';
+import { BAND_META, FILTER_BANDS } from './band';
+import { ApiSource } from '../../../data/api-source';
 
 export default function Expenses() {
   const {
+    loading, errored, months, problems,
     selectedMonth, setSelectedMonth,
     viewMode, setViewMode,
-    editingIds, drafts,
+    editingIds, drafts, saveError,
     animate, filter, setFilter,
-    showSuggestions, setShowSuggestions,
     transactionsSectionRef,
     selectedMonthInfo,
     summaries,
     currentCats, currentTxs, currentSummary,
     filtered, transactionsByCategory,
     enterEdit, cancelEdit, applyDraft,
-    nudgeDraft, setDraftValue, applySuggested,
+    nudgeDraft, setDraftValue, removeLimit,
     goPrev, goNext, isAtStart, isAtEnd,
   } = useExpensesState();
+
+  const corrigirCategoria = async (transactionId: string, category: string) => {
+    const r = await new ApiSource().corrigirCategoria(transactionId, category);
+    if (r.estado === 'ok') {
+      // State reloads on the next mount/selection; the list re-renders below.
+    }
+  };
+
+  if (errored && currentCats.length === 0) {
+    return (
+      <div className="flex flex-col gap-6 pb-24 md:pb-8">
+        <header>
+          <h1 className="text-xl font-bold text-slate-800 leading-tight">Despesas & Orçamento</h1>
+          <p className="text-sm text-slate-500 mt-1">
+            Não foi possível carregar os dados agora. Tente novamente em instantes.
+          </p>
+        </header>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col gap-6 pb-24 md:pb-8">
@@ -55,9 +76,18 @@ export default function Expenses() {
         </div>
       </header>
 
-      {viewMode === 'single' ? (
+      {saveError && (
+        <p className="rounded-xl bg-red-50 border border-red-100 px-3 py-2 text-[0.75rem] text-red-700">
+          {saveError}
+        </p>
+      )}
+
+      {loading ? (
+        <p className="text-[0.8rem] text-slate-400 animate-pulse">Carregando orçamento...</p>
+      ) : viewMode === 'single' ? (
         <>
           <MonthPicker
+            months={months}
             selectedMonth={selectedMonth}
             setSelectedMonth={setSelectedMonth}
             summaries={summaries}
@@ -94,11 +124,11 @@ export default function Expenses() {
                   </span>
                   <span
                     className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[0.65rem] font-bold bg-white/20 ${
-                      currentSummary.status === 'vermelho'
+                      currentSummary.status === 'red'
                         ? 'bg-red-300/30'
-                        : currentSummary.status === 'amarelo'
-                        ? 'bg-amber-300/30'
-                        : ''
+                        : currentSummary.status === 'amber'
+                          ? 'bg-amber-300/30'
+                          : ''
                     }`}
                   >
                     {currentSummary.percentage.toFixed(0)}% utilizado
@@ -107,18 +137,18 @@ export default function Expenses() {
                 <div className="mt-4 h-2.5 rounded-full bg-white/15 overflow-hidden">
                   <div
                     className={`h-full rounded-full transition-all duration-1000 bg-linear-to-r from-white/80 to-white ${
-                      currentSummary.status === 'vermelho'
+                      currentSummary.status === 'red'
                         ? 'from-red-300 to-red-100'
-                        : currentSummary.status === 'amarelo'
-                        ? 'from-amber-200 to-amber-100'
-                        : ''
+                        : currentSummary.status === 'amber'
+                          ? 'from-amber-200 to-amber-100'
+                          : ''
                     }`}
                     style={{ width: animate ? `${Math.min(100, currentSummary.percentage)}%` : '0%' }}
                   />
                 </div>
                 <div className="mt-4 grid grid-cols-3 gap-2">
-                  {(['verde', 'amarelo', 'vermelho'] as BudgetStatus[]).map((st) => {
-                    const m = BUDGET_STATUS_META[st];
+                  {FILTER_BANDS.map((st) => {
+                    const m = BAND_META[st];
                     const count = currentSummary.counts[st];
                     return (
                       <div key={st} className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg bg-white/10">
@@ -136,28 +166,16 @@ export default function Expenses() {
 
             <article className="rounded-2xl p-5 bg-white border border-slate-100 shadow-sm">
               <div className="flex items-center gap-2 text-[0.7rem] font-semibold uppercase tracking-widest text-slate-400 mb-3">
-                <Sparkles size={12} strokeWidth={2} color="#36b37e" />
-                Limite semântico (IA)
+                <Info size={12} strokeWidth={2} color="#36b37e" />
+                Limites ativos
               </div>
-              <div className="flex items-baseline gap-1">
-                <span className="text-xs font-semibold text-slate-400">R$</span>
-                <span className="text-2xl font-bold tabular-nums text-slate-800">
-                  {formatBRL(currentCats.reduce((sum, c) => sum + c.suggestedLimit, 0))}
-                </span>
+              <div className="text-2xl font-bold tabular-nums text-slate-800">
+                {currentCats.filter((c) => c.limitInCents !== null).length}
+                <span className="text-sm text-slate-400 font-semibold"> de {currentCats.length}</span>
               </div>
               <p className="text-[0.75rem] text-slate-500 mt-1.5 leading-relaxed">
-                Regra 50/30/20 adaptada ao seu perfil e histórico de 6 meses via Open Finance.
+                Categorias com limite definido no mês. Categorias sem limite não entram no consolidado.
               </p>
-              <div className="mt-3 flex items-center gap-2">
-                <Info size={12} className="text-slate-400 shrink-0" strokeWidth={2.2} />
-                <span className="text-[0.7rem] text-slate-500">
-                  Diferença de{' '}
-                  <strong className="text-slate-700 tabular-nums">
-                    R$ {formatBRL(currentSummary.totalLimit - currentCats.reduce((sum, c) => sum + c.suggestedLimit, 0))}
-                  </strong>{' '}
-                  vs. limites atuais.
-                </span>
-              </div>
             </article>
 
             <QuickFilterBar
@@ -165,8 +183,6 @@ export default function Expenses() {
               counts={currentSummary.counts}
               filter={filter}
               setFilter={setFilter}
-              showSuggestions={showSuggestions}
-              setShowSuggestions={setShowSuggestions}
             />
           </section>
 
@@ -180,15 +196,15 @@ export default function Expenses() {
               </div>
               <div className="flex items-center gap-3 text-[0.65rem] text-slate-500">
                 <div className="flex items-center gap-1.5">
-                  <span className={`w-1.5 h-1.5 rounded-full ${BUDGET_STATUS_META.verde.dotClass}`} />
+                  <span className={`w-1.5 h-1.5 rounded-full ${BAND_META.green.dotClass}`} />
                   0–70%
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <span className={`w-1.5 h-1.5 rounded-full ${BUDGET_STATUS_META.amarelo.dotClass}`} />
+                  <span className={`w-1.5 h-1.5 rounded-full ${BAND_META.amber.dotClass}`} />
                   70–90%
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <span className={`w-1.5 h-1.5 rounded-full ${BUDGET_STATUS_META.vermelho.dotClass}`} />
+                  <span className={`w-1.5 h-1.5 rounded-full ${BAND_META.red.dotClass}`} />
                   {' > '}90%
                 </div>
               </div>
@@ -197,21 +213,22 @@ export default function Expenses() {
             <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-5 pb-3">
               {filtered.map((c) => (
                 <CategoryCard
-                  key={c.id}
+                  key={c.category}
                   category={c}
-                  isEditing={editingIds.has(c.id)}
-                  draftLimit={drafts[c.id] ?? c.limit}
+                  isEditing={editingIds.has(c.category)}
+                  draftLimit={drafts[c.category] ?? (c.limitInCents ?? 0) / 100}
                   animate={animate}
-                  relatedTxs={transactionsByCategory.get(c.id) ?? []}
-                  showSuggestions={showSuggestions}
+                  relatedTxs={transactionsByCategory.get(c.category) ?? []}
                   onToggleEdit={() =>
-                    editingIds.has(c.id) ? cancelEdit(c.id) : enterEdit(c.id, c.limit)
+                    editingIds.has(c.category)
+                      ? cancelEdit(c.category)
+                      : enterEdit(c.category, (c.limitInCents ?? 0) / 100)
                   }
-                  onApply={() => applyDraft(c.id)}
-                  onCancel={() => cancelEdit(c.id)}
-                  onNudge={(delta) => nudgeDraft(c.id, c.limit, delta)}
-                  onSetDraft={(raw) => setDraftValue(c.id, c.limit, raw)}
-                  onApplySuggested={() => applySuggested(c.id, c.suggestedLimit)}
+                  onApply={() => void applyDraft(c.category)}
+                  onCancel={() => cancelEdit(c.category)}
+                  onNudge={(delta) => nudgeDraft(c.category, (c.limitInCents ?? 0) / 100, delta)}
+                  onSetDraft={(raw) => setDraftValue(c.category, (c.limitInCents ?? 0) / 100, raw)}
+                  onRemoveLimit={() => void removeLimit(c.category)}
                 />
               ))}
             </div>
@@ -223,14 +240,16 @@ export default function Expenses() {
               label={selectedMonthInfo.label}
               transactions={currentTxs}
               cats={currentCats}
+              onCorrigirCategoria={(id, cat) => void corrigirCategoria(id, cat)}
             />
           </div>
         </>
       ) : (
         <HistoricalOverview
           summaries={summaries}
-          onSelectMonth={(slug: MonthSlug) => {
-            setSelectedMonth(slug);
+          problems={problems}
+          onSelectMonth={(month: string) => {
+            setSelectedMonth(month);
             setViewMode('single');
           }}
           animate={animate}

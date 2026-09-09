@@ -1,9 +1,11 @@
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { BUDGET_STATUS_META, MONTHS, type MonthSlug, type MonthSummary } from '../../../../mocks';
+import type { MonthSummary } from '../hooks/use-expenses-state';
+import { BAND_META } from '../band';
 
 interface MonthPickerProps {
-  selectedMonth: MonthSlug;
-  setSelectedMonth: (m: MonthSlug) => void;
+  months: string[];
+  selectedMonth: string;
+  setSelectedMonth: (m: string) => void;
   summaries: MonthSummary[];
   goPrev: () => void;
   goNext: () => void;
@@ -12,6 +14,7 @@ interface MonthPickerProps {
 }
 
 export function MonthPicker({
+  months,
   selectedMonth,
   setSelectedMonth,
   summaries,
@@ -34,37 +37,43 @@ export function MonthPicker({
         </button>
 
         <div className="flex items-center gap-1.5 flex-wrap justify-center">
-          {MONTHS.map((m) => {
-            const s = summaries.find((sum) => sum.slug === m.slug)!;
-            const meta = BUDGET_STATUS_META[s.status];
-            const isSelected = m.slug === selectedMonth;
+          {months.map((month) => {
+            const s = summaries.find((sum) => sum.month === month);
+            const meta = s ? BAND_META[s.status] : BAND_META['no-limit'];
+            const isSelected = month === selectedMonth;
+            const [ano, mes] = month.split('-');
+            const label = `${ano} ${mes}`;
             return (
               <button
-                key={m.slug}
+                key={month}
                 type="button"
-                onClick={() => setSelectedMonth(m.slug)}
+                onClick={() => setSelectedMonth(month)}
                 className={`group flex flex-col items-center gap-1.5 px-3 py-2 rounded-xl border transition-all cursor-pointer ${
                   isSelected
-                    ? `bg-linear-to-br from-cc-dark-green to-cc-green text-white border-transparent shadow-md shadow-cc-green/20`
-                    : `bg-white border-slate-100 text-slate-600 hover:border-slate-200 hover:shadow-sm`
+                    ? 'bg-linear-to-br from-cc-dark-green to-cc-green text-white border-transparent shadow-md shadow-cc-green/20'
+                    : 'bg-white border-slate-100 text-slate-600 hover:border-slate-200 hover:shadow-sm'
                 }`}
               >
                 <div className="flex items-center gap-1.5">
                   <span className={`text-[0.7rem] font-bold ${isSelected ? 'text-white/90' : 'text-slate-400'}`}>
-                    {m.year}
+                    {ano}
                   </span>
-                  {m.current && (
-                    <span className={`text-[0.55rem] font-bold uppercase tracking-wider px-1.5 py-px rounded-full ${
-                      isSelected ? 'bg-white/25 text-white' : 'bg-emerald-100 text-emerald-700 border border-emerald-200'
-                    }`}>
+                  {s?.current && (
+                    <span
+                      className={`text-[0.55rem] font-bold uppercase tracking-wider px-1.5 py-px rounded-full ${
+                        isSelected ? 'bg-white/25 text-white' : 'bg-emerald-100 text-emerald-700 border border-emerald-200'
+                      }`}
+                    >
                       atual
                     </span>
                   )}
                 </div>
-                <span className="text-sm font-bold leading-none">{m.label}</span>
+                <span className="text-sm font-bold leading-none">{label}</span>
                 <div className={`flex items-center gap-1.5 ${isSelected ? 'text-white/90' : 'text-slate-500'}`}>
                   <span className={`w-1.5 h-1.5 rounded-full ${isSelected ? 'bg-white/70' : meta.dotClass}`} />
-                  <span className="text-[0.65rem] font-semibold tabular-nums">{s.percentage.toFixed(0)}%</span>
+                  <span className="text-[0.65rem] font-semibold tabular-nums">
+                    {s ? `${s.percentage.toFixed(0)}%` : '—'}
+                  </span>
                 </div>
               </button>
             );

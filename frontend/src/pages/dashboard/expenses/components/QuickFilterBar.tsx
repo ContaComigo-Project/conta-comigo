@@ -1,24 +1,14 @@
-import { ChevronDown, ChevronUp } from 'lucide-react';
-import { BUDGET_STATUS_META, type BudgetStatus, type MonthSummary } from '../../../../mocks';
+import { BAND_META, FILTER_BANDS, type Band } from '../band';
 import type { QuickFilter } from '../hooks/use-expenses-state';
 
 interface QuickFilterBarProps {
   totalCats: number;
-  counts: MonthSummary['counts'];
+  counts: Record<Band, number>;
   filter: QuickFilter;
   setFilter: (f: QuickFilter) => void;
-  showSuggestions: boolean;
-  setShowSuggestions: (v: boolean) => void;
 }
 
-export function QuickFilterBar({
-  totalCats,
-  counts,
-  filter,
-  setFilter,
-  showSuggestions,
-  setShowSuggestions,
-}: QuickFilterBarProps) {
+export function QuickFilterBar({ totalCats, counts, filter, setFilter }: QuickFilterBarProps) {
   return (
     <article className="rounded-2xl p-5 bg-white border border-slate-100 shadow-sm">
       <p className="text-[0.7rem] font-semibold uppercase tracking-widest text-slate-400 mb-3">
@@ -36,8 +26,8 @@ export function QuickFilterBar({
         >
           Todas ({totalCats})
         </button>
-        {(['verde', 'amarelo', 'vermelho'] as BudgetStatus[]).map((f) => {
-          const m = BUDGET_STATUS_META[f];
+        {FILTER_BANDS.map((f) => {
+          const m = BAND_META[f];
           const active = filter === f;
           const count = counts[f];
           return (
@@ -54,20 +44,6 @@ export function QuickFilterBar({
             </button>
           );
         })}
-      </div>
-      <div className="mt-4 flex items-center gap-2">
-        <button
-          type="button"
-          onClick={() => setShowSuggestions(!showSuggestions)}
-          className="inline-flex items-center gap-1 text-[0.7rem] font-semibold text-slate-600 cursor-pointer"
-        >
-          {showSuggestions ? (
-            <ChevronUp size={12} strokeWidth={2.2} />
-          ) : (
-            <ChevronDown size={12} strokeWidth={2.2} />
-          )}
-          Mostrar sugestões da IA
-        </button>
       </div>
     </article>
   );

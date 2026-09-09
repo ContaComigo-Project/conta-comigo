@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
 import { getProfile } from './access';
-import { mockUser } from '../mocks/user.mock';
 
-// Perfil do titular vindo do banco (GET /access/accounts/me). Sem sessão ou
-// falha, degrada para o usuário mock (nome de exibição local) — a tela nunca
-// quebra por causa do perfil.
+// Profile of the holder coming from the database (GET /access/accounts/me).
+// Without a session or on failure it degrades to a local display name — the
+// screen never breaks because of the profile. No mock data is used here.
 export interface PerfilExibido {
   nome: string;
   firstName: string;
@@ -14,11 +13,11 @@ export interface PerfilExibido {
 }
 
 const FALLBACK: PerfilExibido = {
-  nome: mockUser.name,
-  firstName: mockUser.firstName,
-  email: mockUser.email,
-  iniciais: mockUser.avatarInitials,
-  cor: mockUser.avatarColor,
+  nome: 'Usuário Demo',
+  firstName: 'Demo',
+  email: 'demo@contacomigo.com',
+  iniciais: 'DM',
+  cor: '#0a6d42',
 };
 
 function iniciaisDe(nome: string, email: string): string {

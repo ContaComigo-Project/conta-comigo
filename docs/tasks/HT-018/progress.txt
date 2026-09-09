@@ -10,4 +10,10 @@
 2026-09-09 05:45 | AGIR | AIChatWidget real (POST /intelligence/chat + aviso RN-018), AIInsightPanel real (diagnosis + degradação), ExportDropdown real (blob download), BudgetAtAGlance real (semaphore), RecentActivity real (transactions) | overview + expenses
 2026-09-09 06:00 | AGIR | removidos chat.mock.ts e ai-insights.mock.ts; barrel atualizado; build frontend ok | mocks
 2026-09-09 06:05 | AGIR | suíte 314+22+3 verdes; build raiz + frontend; auditoria 100% | pnpm
-2026-09-09 06:10 | REGISTRAR | ENTREGA-HT-018 criada; kanban Em revisão | docs/entregas, KANBAN
+2026-09-09 06:10 | REGISTRAR | ENTREGA-HT-018 criada; kanban Em revisão | docs/entregas, KANBAN2026-09-09 06:20 | PERCEBER | parte 2: páginas de despesas e overview ainda liam mocks; oráculo em pt-BR nos nomes criados | mapeamento
+2026-09-09 06:25 | ORIENTAR | reescrever despesas no backend real; código EN (HT-020); nenhuma página importa de mocks | -
+2026-09-09 06:40 | AGIR | use-expenses-state reescrito (history+semaphore+transactions; PUT/DELETE limites); band.ts EN; CategoryCard/MonthPicker/QuickFilterBar/TransactionsListView/HistoricalOverview/Expenses reescritos | expenses
+2026-09-09 06:50 | AGIR | SpendingChart derivado de transactions reais; WelcomeHeader sem mock; use-profile fallback local; tipo Transaction movido para data/ | overview + data
+2026-09-09 07:00 | AGIR | removidos user/metrics/budget.mock e BudgetProgressChart; barrel com 3 mocks de dado (fake/teste) | mocks
+2026-09-09 07:05 | AGIR | suíte 314+22+3 verdes; build raiz+frontend; auditoria 100%; PUT/DELETE limite validados na API | pnpm, curl
+2026-09-09 07:10 | REGISTRAR | ENTREGA-HT-018 parte 2 criada; kanban atualizado | docs/entregas, KANBAN

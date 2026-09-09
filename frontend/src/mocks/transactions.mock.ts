@@ -1,24 +1,6 @@
-export type TransactionType = 'debit' | 'credit';
+import type { Transaction, TransactionType } from '../data/transaction';
 
-export interface Transaction {
-  id: string;
-  /** Versão legível (HN-004). O texto do agregador fica em `descriptionOriginal`. */
-  description: string;
-  /** Texto cru do agregador, quando difere da legível (RN-010). */
-  descriptionOriginal?: string;
-  merchant?: string;
-  category: string;
-  /** Id do catálogo do domínio (HN-005); `null` = não classificado. */
-  categoryId?: string | null;
-  categoryIcon: string;
-  bank: string;
-  bankColor: string;
-  amount: number;
-  type: TransactionType;
-  formattedAmount: string;
-  date: Date;
-  formattedDate: string;
-}
+export type { Transaction, TransactionType };
 
 export const mockTransactions: Transaction[] = [
   {

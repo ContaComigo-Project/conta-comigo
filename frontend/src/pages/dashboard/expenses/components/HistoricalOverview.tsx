@@ -1,20 +1,22 @@
 import { ArrowUpRight, TrendingUp, TrendingDown, XCircle } from 'lucide-react';
-import {
-  BUDGET_STATUS_META,
-  MONTHS,
-  type BudgetStatus,
-  type MonthSlug,
-  type MonthSummary,
-} from '../../../../mocks';
+import type { MonthSummary } from '../hooks/use-expenses-state';
 import { formatBRL } from '../../../../utils/formatters';
+import { BAND_META, FILTER_BANDS } from '../band';
+
+export interface RecurrentProblem {
+  category: string;
+  vezesEmVermelho: number;
+  excessoTotalEmCentavos: number;
+}
 
 interface HistoricalOverviewProps {
   summaries: MonthSummary[];
-  onSelectMonth: (slug: MonthSlug) => void;
+  problems: RecurrentProblem[];
+  onSelectMonth: (month: string) => void;
   animate: boolean;
 }
 
-export function HistoricalOverview({ summaries, onSelectMonth, animate }: HistoricalOverviewProps) {
+export function HistoricalOverview({ summaries, problems, onSelectMonth, animate }: HistoricalOverviewProps) {
   const maxSpent = Math.max(...summaries.map((s) => s.totalSpent));
 
   const avgSpent = +(summaries.reduce((s, m) => s + m.totalSpent, 0) / summaries.length).toFixed(2);
@@ -22,10 +24,14 @@ export function HistoricalOverview({ summaries, onSelectMonth, animate }: Histor
   const avgPct = (avgSpent / avgLimit) * 100;
 
   const trendPct = (() => {
+    if (summaries.length < 2) return 0;
     const first = summaries[0].totalSpent;
     const last = summaries[summaries.length - 1].totalSpent;
+    if (first === 0) return 0;
     return +(((last - first) / first) * 100).toFixed(1);
   })();
+
+  const totalCategoryMonths = summaries.reduce((acc, s) => acc + (s.counts.green + s.counts.amber + s.counts.red), 0);
 
   return (
     <div className="flex flex-col gap-6">
@@ -34,7 +40,7 @@ export function HistoricalOverview({ summaries, onSelectMonth, animate }: Histor
           <div className="absolute -top-10 -right-10 w-40 h-40 rounded-full bg-white/10" />
           <div className="relative">
             <p className="text-[0.7rem] font-semibold uppercase tracking-widest text-white/70 mb-1.5">
-              Gasto médio 6 meses
+              Gasto médio dos meses
             </p>
             <div className="flex items-baseline gap-1">
               <span className="text-base font-semibold text-white/80">R$</span>
@@ -52,7 +58,7 @@ export function HistoricalOverview({ summaries, onSelectMonth, animate }: Histor
                   <TrendingDown size={10} strokeWidth={2.5} />
                 )}
                 {trendPct >= 0 ? '+' : ''}
-                {trendPct}% vs. Jan
+                {trendPct}% na série
               </span>
               <span className="text-[0.65rem] text-white/70">
                 média {avgPct.toFixed(0)}% dos limites
@@ -66,10 +72,10 @@ export function HistoricalOverview({ summaries, onSelectMonth, animate }: Histor
             Status semáforo (total de categorias-mês)
           </p>
           <div className="space-y-2.5">
-            {(['verde', 'amarelo', 'vermelho'] as BudgetStatus[]).map((s) => {
-              const m = BUDGET_STATUS_META[s];
+            {FILTER_BANDS.map((s) => {
+              const m = BAND_META[s];
               const total = summaries.reduce((acc, sum) => acc + sum.counts[s], 0);
-              const pct = (total / (summaries.length * 6)) * 100;
+              const pct = totalCategoryMonths > 0 ? (total / totalCategoryMonths) * 100 : 0;
               return (
                 <div key={s}>
                   <div className="flex items-center justify-between text-[0.7rem] mb-1">
@@ -98,44 +104,34 @@ export function HistoricalOverview({ summaries, onSelectMonth, animate }: Histor
             Top problemas recorrentes
           </p>
           <div className="space-y-2">
-            {summaries
-              .flatMap((s) =>
-                s.counts.vermelho > 0
-                  ? [{ label: s.label, slug: s.slug, cat: s.topCategory.name, pct: s.topCategory.percentage }]
-                  : []
-              )
-              .sort((a, b) => b.pct - a.pct)
-              .slice(0, 3)
-              .map((issue, idx) => {
-                return (
-                  <button
-                    key={issue.slug + idx}
-                    type="button"
-                    onClick={() => onSelectMonth(issue.slug as MonthSlug)}
-                    className="w-full flex items-center justify-between gap-2 p-2.5 rounded-xl bg-red-50/60 border border-red-100 hover:bg-red-50 hover:shadow-sm transition-all group cursor-pointer"
-                  >
-                    <div className="flex items-center gap-2 min-w-0">
-                      <div className="w-7 h-7 rounded-lg bg-red-100 flex items-center justify-center text-red-700 shrink-0">
-                        <XCircle size={13} strokeWidth={2.4} />
-                      </div>
-                      <div className="text-left min-w-0">
-                        <p className="text-[0.75rem] font-bold text-slate-800 truncate">
-                          {issue.label} · {issue.cat}
-                        </p>
-                        <p className="text-[0.65rem] text-slate-500">
-                          {issue.pct.toFixed(0)}% do limite da categoria
-                        </p>
-                      </div>
-                    </div>
-                    <ArrowUpRight
-                      size={13}
-                      strokeWidth={2.2}
-                      className="text-slate-400 group-hover:text-cc-dark-green transition-colors shrink-0"
-                    />
-                  </button>
-                );
-              })}
-            {summaries.every((s) => s.counts.vermelho === 0) && (
+            {problems.map((issue, idx) => (
+              <button
+                key={`${issue.category}-${idx}`}
+                type="button"
+                onClick={() => onSelectMonth(summaries.find((s) => s.status === 'red')?.month ?? summaries[0]?.month)}
+                className="w-full flex items-center justify-between gap-2 p-2.5 rounded-xl bg-red-50/60 border border-red-100 hover:bg-red-50 hover:shadow-sm transition-all group cursor-pointer"
+              >
+                <div className="flex items-center gap-2 min-w-0">
+                  <div className="w-7 h-7 rounded-lg bg-red-100 flex items-center justify-center text-red-700 shrink-0">
+                    <XCircle size={13} strokeWidth={2.4} />
+                  </div>
+                  <div className="text-left min-w-0">
+                    <p className="text-[0.75rem] font-bold text-slate-800 truncate">
+                      {issue.category}
+                    </p>
+                    <p className="text-[0.65rem] text-slate-500">
+                      {issue.vezesEmVermelho}x estourou · R$ {formatBRL(issue.excessoTotalEmCentavos)} no total
+                    </p>
+                  </div>
+                </div>
+                <ArrowUpRight
+                  size={13}
+                  strokeWidth={2.2}
+                  className="text-slate-400 group-hover:text-cc-dark-green transition-colors shrink-0"
+                />
+              </button>
+            ))}
+            {problems.length === 0 && (
               <div className="p-3 rounded-xl bg-emerald-50 border border-emerald-100 text-[0.75rem] text-emerald-700 font-medium">
                 Nenhum mês estourou orçamento. Parabéns!
               </div>
@@ -166,14 +162,14 @@ export function HistoricalOverview({ summaries, onSelectMonth, animate }: Histor
 
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4 items-end pb-2">
           {summaries.map((s) => {
-            const meta = BUDGET_STATUS_META[s.status];
-            const pctHeight = (s.totalSpent / maxSpent) * 100;
-            const limitHeight = (s.totalLimit / maxSpent) * 100;
+            const meta = BAND_META[s.status];
+            const pctHeight = maxSpent > 0 ? (s.totalSpent / maxSpent) * 100 : 0;
+            const limitHeight = maxSpent > 0 ? (s.totalLimit / maxSpent) * 100 : 0;
             return (
               <button
-                key={s.slug}
+                key={s.month}
                 type="button"
-                onClick={() => onSelectMonth(s.slug)}
+                onClick={() => onSelectMonth(s.month)}
                 className="group flex flex-col items-center gap-3 focus:outline-none cursor-pointer"
               >
                 <div className="relative w-full h-48 flex items-end justify-center">
@@ -202,7 +198,7 @@ export function HistoricalOverview({ summaries, onSelectMonth, animate }: Histor
                     <span className="text-[0.72rem] font-bold text-slate-800 tabular-nums">
                       {s.percentage.toFixed(0)}%
                     </span>
-                    {MONTHS.find((m) => m.slug === s.slug)?.current && (
+                    {s.current && (
                       <span className="text-[0.55rem] font-bold uppercase tracking-wider px-1.5 py-px rounded-full bg-emerald-100 text-emerald-700 border border-emerald-200">
                         atual
                       </span>
@@ -213,13 +209,11 @@ export function HistoricalOverview({ summaries, onSelectMonth, animate }: Histor
                     R$ {formatBRL(s.totalSpent)}
                   </span>
                   <div className="flex items-center gap-1 mt-0.5">
-                    <span className="text-[0.55rem] font-semibold text-slate-400">
-                      {s.counts.vermelho > 0 && (
-                        <span className="inline-flex items-center gap-0.5 text-red-600">
-                          <XCircle size={8} strokeWidth={2.5} /> {s.counts.vermelho}
-                        </span>
-                      )}
-                    </span>
+                    {s.counts.red > 0 && (
+                      <span className="inline-flex items-center gap-0.5 text-red-600 text-[0.55rem] font-semibold">
+                        <XCircle size={8} strokeWidth={2.5} /> {s.counts.red}
+                      </span>
+                    )}
                   </div>
                 </div>
               </button>
@@ -233,19 +227,19 @@ export function HistoricalOverview({ summaries, onSelectMonth, animate }: Histor
           .slice()
           .reverse()
           .map((s) => {
-            const meta = BUDGET_STATUS_META[s.status];
+            const meta = BAND_META[s.status];
             return (
               <button
-                key={s.slug}
+                key={s.month}
                 type="button"
-                onClick={() => onSelectMonth(s.slug)}
+                onClick={() => onSelectMonth(s.month)}
                 className="text-left rounded-2xl border border-slate-100 bg-white p-4 hover:border-slate-200 hover:shadow-[0_6px_20px_rgba(15,23,42,0.05)] transition-all group cursor-pointer"
               >
                 <div className="flex items-start justify-between mb-3">
                   <div>
                     <div className="flex items-center gap-2 mb-0.5">
                       <h3 className="text-sm font-bold text-slate-800">{s.fullLabel}</h3>
-                      {MONTHS.find((m) => m.slug === s.slug)?.current && (
+                      {s.current && (
                         <span className="text-[0.55rem] font-bold uppercase tracking-wider px-1.5 py-px rounded-full bg-emerald-100 text-emerald-700 border border-emerald-200">
                           atual
                         </span>
@@ -269,8 +263,8 @@ export function HistoricalOverview({ summaries, onSelectMonth, animate }: Histor
                 </div>
 
                 <div className="grid grid-cols-3 gap-1.5 mb-3">
-                  {(['verde', 'amarelo', 'vermelho'] as BudgetStatus[]).map((st) => {
-                    const m = BUDGET_STATUS_META[st];
+                  {FILTER_BANDS.map((st) => {
+                    const m = BAND_META[st];
                     return (
                       <div
                         key={st}
@@ -286,29 +280,12 @@ export function HistoricalOverview({ summaries, onSelectMonth, animate }: Histor
                 </div>
 
                 <div className="flex items-center justify-between pt-2 border-t border-slate-100">
-                  <div className="flex items-center gap-1.5 min-w-0">
-                    <div
-                      className="w-6 h-6 rounded-md flex items-center justify-center shrink-0"
-                      style={{ backgroundColor: `${s.topCategory.color}15` }}
-                    >
-                      <i
-                        className={`fas ${s.topCategory.icon} text-[0.65rem]`}
-                        style={{ color: s.topCategory.color }}
-                      />
-                    </div>
-                    <div className="min-w-0">
-                      <p className="text-[0.68rem] text-slate-500 leading-tight">Categoria crítica</p>
-                      <p className="text-[0.75rem] font-bold text-slate-800 truncate leading-tight">
-                        {s.topCategory.name}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="text-right shrink-0">
-                    <p className={`text-[0.75rem] font-bold tabular-nums ${meta.textClass}`}>
-                      {s.topCategory.percentage.toFixed(0)}%
-                    </p>
-                    <p className="text-[0.6rem] text-slate-400">do limite</p>
-                  </div>
+                  <p className="text-[0.7rem] text-slate-500 leading-tight">
+                    {s.counts.red > 0 ? `${s.counts.red} categoria(s) estouraram o limite` : 'Nenhuma categoria estourou'}
+                  </p>
+                  <p className={`text-[0.75rem] font-bold tabular-nums ${meta.textClass}`}>
+                    {s.percentage.toFixed(0)}% dos limites
+                  </p>
                 </div>
               </button>
             );

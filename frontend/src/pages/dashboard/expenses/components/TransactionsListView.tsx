@@ -1,18 +1,20 @@
 import { useState } from 'react';
-import { ChevronLeft, ChevronRight, Sparkles } from 'lucide-react';
-import { BUDGET_STATUS_META, type BudgetCategory, type Transaction } from '../../../../mocks';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import type { CategoryOfMonth } from '../hooks/use-expenses-state';
+import type { Transaction } from '../../../../data/transaction';
 import { formatBRL } from '../../../../utils/formatters';
+import { BAND_META } from '../band';
 
 interface TransactionsListViewProps {
   label: string;
   transactions: Transaction[];
-  cats: BudgetCategory[];
-  /** HN-005 (RF-012): corrigir a categoria. Ausente quando a tela é só leitura. */
+  cats: CategoryOfMonth[];
+  /** HN-005 (RF-012): fix the category. Absent when the screen is read-only. */
   onCorrigirCategoria?: (transactionId: string, category: string) => void;
 }
 
-// Catálogo do domínio (HN-005). O rótulo é apresentação; o id é o que viaja.
-const CATEGORIAS_CORRIGIVEIS: readonly { id: string; label: string }[] = [
+// Domain catalog (HN-005). The label is presentation; the id travels.
+const CORRECTABLE_CATEGORIES: readonly { id: string; label: string }[] = [
   { id: 'alimentacao', label: 'Alimentação' },
   { id: 'transporte', label: 'Transporte' },
   { id: 'moradia', label: 'Moradia' },
@@ -43,31 +45,24 @@ export function TransactionsListView({ label, transactions, cats, onCorrigirCate
             {formatBRL(Math.abs(transactions.reduce((s, t) => s + t.amount, 0)))}
           </p>
         </div>
-        <div className="flex items-center gap-1.5 px-2.5 py-1.5 bg-slate-50 rounded-lg border border-slate-100">
-          <Sparkles size={13} strokeWidth={2} color="#36b37e" />
-          <span className="text-[0.68rem] font-semibold text-slate-500">IA Semântica</span>
-        </div>
       </div>
       <div className="divide-y divide-slate-100">
         {paged.map((tx) => {
-          const cat = cats.find((c) => c.name === tx.category);
-          const meta = cat ? BUDGET_STATUS_META[cat.status] : null;
+          const cat = cats.find((c) => (tx.categoryId ? c.category === tx.categoryId : c.name === tx.category));
+          const meta = cat ? BAND_META[cat.band] : null;
           return (
             <div key={tx.id} className="flex items-center gap-3 py-3">
               <div
                 className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
                 style={{ backgroundColor: cat ? `${cat.color}15` : '#f1f5f9' }}
               >
-                <i
-                  className={`fas ${tx.categoryIcon}`}
-                  style={{ color: cat?.color ?? '#64748b' }}
-                />
+                <i className={`fas ${tx.categoryIcon}`} style={{ color: cat?.color ?? '#64748b' }} />
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2">
-                  {/* HN-004: a lista mostra a versão legível; o texto cru do
-                      agregador continua acessível ao passar o mouse, porque
-                      RN-010 exige que o original permaneça consultável. */}
+                  {/* HN-004: the list shows the readable version; the raw text
+                      from the aggregator stays reachable on hover, because
+                      RN-010 requires the original to remain consultable. */}
                   <p
                     className="text-[0.82rem] font-semibold text-slate-800 truncate"
                     title={tx.descriptionOriginal ?? tx.description}
@@ -85,8 +80,8 @@ export function TransactionsListView({ label, transactions, cats, onCorrigirCate
                 </div>
                 <div className="flex items-center gap-2 text-[0.7rem] text-slate-500">
                   {onCorrigirCategoria ? (
-                    // RF-012: a correção é uma escolha explícita da pessoa, e a
-                    // partir dela a categoria passa a ser manual (RN-011).
+                    // RF-012: the fix is an explicit choice, and from then on
+                    // the category becomes manual (RN-011).
                     <select
                       aria-label={`Categoria de ${tx.description}`}
                       className="text-[0.7rem] text-slate-600 bg-transparent border border-slate-200 rounded px-1 py-px"
@@ -96,7 +91,7 @@ export function TransactionsListView({ label, transactions, cats, onCorrigirCate
                       <option value="" disabled>
                         Não classificado
                       </option>
-                      {CATEGORIAS_CORRIGIVEIS.map((c) => (
+                      {CORRECTABLE_CATEGORIES.map((c) => (
                         <option key={c.id} value={c.id}>
                           {c.label}
                         </option>
@@ -159,11 +154,7 @@ export function TransactionsListView({ label, transactions, cats, onCorrigirCate
                 if (!nearFirst && !nearLast && !nearCurrent) {
                   if (idx === 2 || idx === totalPages - 3) {
                     return (
-                      <span
-                        key={`dots-${idx}`}
-                        className="text-slate-400 text-xs px-1"
-                        aria-hidden
-                      >
+                      <span key={`dots-${idx}`} className="text-slate-400 text-xs px-1" aria-hidden>
                         …
                       </span>
                     );

@@ -1,20 +1,21 @@
-import { Check, Pencil, Sparkles, TrendingDown, TrendingUp, X } from 'lucide-react';
-import { BUDGET_STATUS_META, resolveStatus, type BudgetCategory, type Transaction } from '../../../../mocks';
+import { Check, Pencil, Trash2, TrendingDown, TrendingUp, X } from 'lucide-react';
+import type { CategoryOfMonth } from '../hooks/use-expenses-state';
+import type { Transaction } from '../../../../data/transaction';
 import { formatBRL } from '../../../../utils/formatters';
+import { BAND_META } from '../band';
 
 interface CategoryCardProps {
-  category: BudgetCategory;
+  category: CategoryOfMonth;
   isEditing: boolean;
   draftLimit: number;
   animate: boolean;
   relatedTxs: Transaction[];
-  showSuggestions: boolean;
   onToggleEdit: () => void;
   onApply: () => void;
   onCancel: () => void;
   onNudge: (delta: number) => void;
   onSetDraft: (raw: string) => void;
-  onApplySuggested: () => void;
+  onRemoveLimit: () => void;
 }
 
 export function CategoryCard({
@@ -23,23 +24,19 @@ export function CategoryCard({
   draftLimit,
   animate,
   relatedTxs,
-  showSuggestions,
   onToggleEdit,
   onApply,
   onCancel,
   onNudge,
   onSetDraft,
-  onApplySuggested,
+  onRemoveLimit,
 }: CategoryCardProps) {
-  const draftPct = Math.min(
-    200,
-    +((c.spent / Math.max(1, draftLimit)) * 100).toFixed(1)
-  );
+  const limit = c.limitInCents ?? 0;
+  const draftPct = Math.min(200, ((c.spentInCents / Math.max(1, Math.round(draftLimit * 100))) * 100));
   const displayPct = isEditing ? draftPct : c.percentage;
-  const displayStatus = isEditing ? resolveStatus(displayPct) : c.status;
   const barHeight = Math.min(100, displayPct);
   const overflowPct = displayPct > 100 ? Math.min(40, displayPct - 100) : 0;
-  const meta = BUDGET_STATUS_META[displayStatus];
+  const meta = BAND_META[c.band];
 
   return (
     <article
@@ -69,22 +66,35 @@ export function CategoryCard({
             </div>
           </div>
         </div>
-        <button
-          type="button"
-          onClick={onToggleEdit}
-          className={`w-7 h-7 rounded-lg flex items-center justify-center transition-colors cursor-pointer ${
-            isEditing
-              ? 'bg-slate-100 text-slate-600 hover:bg-slate-200'
-              : 'bg-slate-50 text-slate-400 hover:bg-slate-100 hover:text-slate-700'
-          }`}
-          aria-label={isEditing ? 'Cancelar edição' : 'Editar limite'}
-        >
-          {isEditing ? (
-            <X size={13} strokeWidth={2.3} />
-          ) : (
-            <Pencil size={13} strokeWidth={2.1} />
+        <div className="flex items-center gap-1">
+          {c.limitInCents !== null && !isEditing && (
+            <button
+              type="button"
+              onClick={onRemoveLimit}
+              aria-label="Remover limite"
+              title="Remover limite"
+              className="w-7 h-7 rounded-lg flex items-center justify-center bg-slate-50 text-slate-400 hover:bg-red-50 hover:text-red-600 transition-colors cursor-pointer"
+            >
+              <Trash2 size={13} strokeWidth={2.1} />
+            </button>
           )}
-        </button>
+          <button
+            type="button"
+            onClick={onToggleEdit}
+            className={`w-7 h-7 rounded-lg flex items-center justify-center transition-colors cursor-pointer ${
+              isEditing
+                ? 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                : 'bg-slate-50 text-slate-400 hover:bg-slate-100 hover:text-slate-700'
+            }`}
+            aria-label={isEditing ? 'Cancelar edição' : 'Editar limite'}
+          >
+            {isEditing ? (
+              <X size={13} strokeWidth={2.3} />
+            ) : (
+              <Pencil size={13} strokeWidth={2.1} />
+            )}
+          </button>
+        </div>
       </div>
 
       <div className="relative h-36 mb-3 flex items-end justify-center">
@@ -114,7 +124,7 @@ export function CategoryCard({
         <div className="flex items-baseline justify-center gap-1">
           <span className="text-[0.7rem] font-semibold text-slate-400">R$</span>
           <span className="text-base font-bold text-slate-800 tabular-nums">
-            {formatBRL(c.spent)}
+            {formatBRL(c.spentInCents)}
           </span>
         </div>
 
@@ -147,7 +157,7 @@ export function CategoryCard({
           <div className="text-[0.7rem] text-slate-500 mt-0.5">
             limite{' '}
             <span className="font-bold text-slate-700 tabular-nums">
-              R$ {formatBRL(c.limit)}
+              {c.limitInCents === null ? 'sem limite' : `R$ ${formatBRL(limit)}`}
             </span>
           </div>
         )}
@@ -156,35 +166,23 @@ export function CategoryCard({
           <span className={`text-[0.72rem] font-bold tabular-nums ${meta.textClass}`}>
             {displayPct.toFixed(0)}%
           </span>
-          <span
-            className={`inline-flex items-center gap-0.5 text-[0.68rem] font-semibold ${
-              c.trend >= 0 ? 'text-red-600' : 'text-emerald-600'
-            }`}
-          >
-            {c.trend >= 0 ? (
-              <TrendingUp size={10} strokeWidth={2.4} />
-            ) : (
-              <TrendingDown size={10} strokeWidth={2.4} />
-            )}
-            {c.trend >= 0 ? '+' : ''}
-            {c.trend}%
-          </span>
+          {c.trend !== null && (
+            <span
+              className={`inline-flex items-center gap-0.5 text-[0.68rem] font-semibold ${
+                c.trend >= 0 ? 'text-red-600' : 'text-emerald-600'
+              }`}
+            >
+              {c.trend >= 0 ? (
+                <TrendingUp size={10} strokeWidth={2.4} />
+              ) : (
+                <TrendingDown size={10} strokeWidth={2.4} />
+              )}
+              {c.trend >= 0 ? '+' : ''}
+              {c.trend}%
+            </span>
+          )}
         </div>
       </div>
-
-      {showSuggestions && c.suggestedLimit !== c.limit && !isEditing && (
-        <button
-          type="button"
-          onClick={onApplySuggested}
-          className="w-full mb-2 flex items-center justify-between gap-2 px-2 py-1.5 rounded-lg bg-cc-green/5 border border-cc-green/15 hover:bg-cc-green/10 text-[0.68rem] font-semibold text-cc-dark-green transition-colors cursor-pointer"
-        >
-          <span className="flex items-center gap-1">
-            <Sparkles size={11} strokeWidth={2.2} />
-            IA sugere R$ {formatBRL(c.suggestedLimit)}
-          </span>
-          <span className="text-[0.62rem] opacity-75">aplicar</span>
-        </button>
-      )}
 
       {isEditing && (
         <div className="flex gap-1.5 mt-1">

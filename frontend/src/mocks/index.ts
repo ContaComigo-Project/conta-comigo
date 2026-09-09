@@ -11,9 +11,6 @@
  * continuarão funcionando sem alteração.
  */
 
-export * from './user.mock';
-export * from './metrics.mock';
 export * from './spending-categories.mock';
 export * from './transactions.mock';
 export * from './connected-banks.mock';
-export * from './budget.mock';

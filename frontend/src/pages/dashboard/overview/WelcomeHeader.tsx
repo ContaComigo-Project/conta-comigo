@@ -1,6 +1,5 @@
 import { Bell } from 'lucide-react';
 import { useProfile } from '../../../data/use-profile';
-import { mockUser } from '../../../mocks';
 
 function formatDate(): string {
   const date = new Intl.DateTimeFormat('pt-BR', {
@@ -10,33 +9,6 @@ function formatDate(): string {
     year: 'numeric',
   }).format(new Date());
   return date.charAt(0).toUpperCase() + date.slice(1);
-}
-
-function SyncBadge({ status }: { status: typeof mockUser.openFinanceStatus }) {
-  const config = {
-    synced: {
-      dot: 'bg-emerald-400 shadow-[0_0_0_3px_rgba(52,211,153,0.25)] animate-pulse',
-      text: 'Open Finance sincronizado',
-      containerClass: 'bg-emerald-50 border-emerald-100 text-emerald-700',
-    },
-    syncing: {
-      dot: 'bg-amber-400 shadow-[0_0_0_3px_rgba(251,191,36,0.25)] animate-pulse',
-      text: 'Sincronizando...',
-      containerClass: 'bg-amber-50 border-amber-100 text-amber-700',
-    },
-    error: {
-      dot: 'bg-red-400 shadow-[0_0_0_3px_rgba(248,113,113,0.25)]',
-      text: 'Falha na sincronização',
-      containerClass: 'bg-red-50 border-red-100 text-red-600',
-    },
-  }[status];
-
-  return (
-    <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full border text-xs font-medium ${config.containerClass}`}>
-      <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${config.dot}`} />
-      {config.text}
-    </div>
-  );
 }
 
 export default function WelcomeHeader() {
@@ -52,8 +24,6 @@ export default function WelcomeHeader() {
       </div>
 
       <div className="flex items-center gap-3 shrink-0">
-        <SyncBadge status={mockUser.openFinanceStatus} />
-
         <button
           id="dashboard-notifications-btn"
           aria-label="Notificações"
