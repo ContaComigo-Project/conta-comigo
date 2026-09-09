@@ -12,8 +12,8 @@ max_lines: 300
 - **Data:** 2026-09-08
 - **Tipo:** Técnica
 - **Versão:** `v0.22.0`
-- **Commit:** `<hash do commit de fechamento>`
-- **Tag:** `v0.22.0` → `<hash do commit de fechamento>`
+- **Commit:** `8421d28`
+- **Tag:** `v0.22.0` → `8421d28`
 
 ## O que foi entregue
 
@@ -133,8 +133,8 @@ infraestrutura), mas a dependência não teria por que existir.
 
 ## Verificação de fechamento
 
-- [ ] Testes e gates aplicáveis verdes
-- [ ] Commit semântico contém a chave `HT-014`
-- [ ] Commit não contém arquivos de outra história
-- [ ] Tag `v0.22.0` aponta para o mesmo hash do commit
-- [ ] `KANBAN-OFICIAL.md` atualizado
+- [x] Testes e gates aplicáveis verdes
+- [x] Commit semântico contém a chave `HT-014`
+- [x] Commit não contém arquivos de outra história
+- [x] Tag `v0.22.0` aponta para o mesmo hash do commit
+- [x] `KANBAN-OFICIAL.md` atualizado
