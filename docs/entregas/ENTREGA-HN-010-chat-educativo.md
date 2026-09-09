@@ -12,8 +12,8 @@ max_lines: 300
 - **Data:** 2026-09-09
 - **Tipo:** Negócio
 - **Versão:** `v0.30.0`
-- **Commit:** `[preenchido no fechamento]`
-- **Tag:** `v0.30.0` → `[mesmo hash]`
+- **Commit:** `ffdf8ce7b1c23c266f2adc9a706e961b8dd2f367`
+- **Tag:** `v0.30.0` → `ffdf8ce7b1c23c266f2adc9a706e961b8dd2f367`
 
 ## O que foi entregue
 
