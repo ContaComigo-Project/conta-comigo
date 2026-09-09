@@ -101,3 +101,18 @@ export const DiagnosisDTO = z
   })
   .strict();
 export type DiagnosisDTO = z.infer<typeof DiagnosisDTO>;
+
+// Educational chat (HN-010). The answer uses the person's own data (RF-020)
+// and always carries the non-advice notice (RN-018).
+export const PerguntaChatDTO = z.object({ pergunta: z.string().trim().min(1).max(500) }).strict();
+export type PerguntaChatDTO = z.infer<typeof PerguntaChatDTO>;
+
+export const ChatRespostaDTO = z
+  .object({
+    estado: z.enum(['ok', 'ia-indisponivel', 'teto-atingido', 'ia-bloqueou']),
+    resposta: z.string().optional(),
+    aviso: z.string().optional(),
+    motivo: z.string().optional(),
+  })
+  .strict();
+export type ChatRespostaDTO = z.infer<typeof ChatRespostaDTO>;

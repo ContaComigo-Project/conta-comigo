@@ -176,7 +176,7 @@ o backlog passou a considerar o frontend existente.
 | Ordem | Chave | Título | Tipo | Estado | Depende de | UI hoje |
 | --- | --- | --- | --- | --- | --- | --- |
 | 28 | `HN-009` | Diagnóstico de saúde financeira e insights | Negócio | **Done** | HN-007, HT-014 | `AIInsightPanel` existe, com insights fixos |
-| 29 | `HN-010` | Chatbot educativo com aviso permanente | Negócio | Backlog | HN-009 | `AIChatWidget` existe, com respostas roteirizadas |
+| 29 | `HN-010` | Chatbot educativo com aviso permanente | Negócio | **Em revisão** | HN-009 | `AIChatWidget` existe, com respostas roteirizadas |
 | 30 | `HN-011` | Simulação de compra e exportação PDF/CSV | Negócio | Backlog | HN-008 | `ExportDropdown` existe; **não gera arquivo** |
 | 31 | `HT-018` | Remover a lógica de negócio e os mocks do frontend | Técnica | Backlog | HN-010, HN-011 | Fecha a fronteira aberta em `HT-017` |
 | 32 | `HT-015` | Publicação da PoC e verificação de custo zero | Técnica | Backlog | HT-018 | — |

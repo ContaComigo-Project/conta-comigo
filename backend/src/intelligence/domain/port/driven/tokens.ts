@@ -5,4 +5,6 @@ export const TOKENS_INTELLIGENCE = {
   UsageCounter: Symbol.for('intelligence/UsageCounter'),
   Clock: Symbol.for('intelligence/Clock'),
   GuardLog: Symbol.for('intelligence/GuardLog'),
+  PerguntarNoChat: Symbol.for('intelligence/PerguntarNoChat'),
+  Identity: Symbol.for('intelligence/Identity'),
 } as const;

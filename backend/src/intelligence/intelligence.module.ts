@@ -1,5 +1,14 @@
 import { Module } from '@nestjs/common';
+import { TransactionsModule } from '../transactions/transactions.module';
+import { AccessModule } from '../access/access.module';
+import { RepositorioDeTransactions } from '../transactions/domain/port/driven/transaction-repository';
+import { Clock } from '../transactions/domain/port/driven/clock';
+import { TokenIdentity } from '../transactions/infrastructure/http/token-identity';
+import { PerguntarNoChatUseCase } from './application/chat';
+import { ChatController } from './infrastructure/http/chat.controller';
+import { TOKEN_IDENTITY_INTELLIGENCE } from './infrastructure/http/chat-guard';
 import { tetoConfigurado } from './domain/model/daily-quota';
+import { TOKENS } from '../transactions/domain/port/driven/tokens';
 import { TOKENS_INTELLIGENCE } from './domain/port/driven/tokens';
 import { CachedAdvisor } from './infrastructure/ai/cached-advisor';
 import { CappedAdvisor } from './infrastructure/ai/capped-advisor';
@@ -7,6 +16,7 @@ import { FakeAdvisor } from './infrastructure/ai/fake-advisor';
 import { GeminiAdvisor } from './infrastructure/ai/gemini-advisor';
 import { GuardedAdvisor } from './infrastructure/ai/guarded-advisor';
 import { GuardLogEstruturado } from './infrastructure/ai/guard-log-estruturado';
+import type { AiAdvisor } from './domain/port/driven/ai-advisor';
 import { ResilientAdvisor } from './infrastructure/ai/resilient-advisor';
 import { JsonLogSink } from '../observability/infrastructure/logging/json-log-sink';
 import { AdviceCachePrisma } from './infrastructure/persistence/advice-cache-prisma';
@@ -45,9 +55,18 @@ function montarAdvisor() {
 }
 
 @Module({
+  imports: [TransactionsModule, AccessModule],
+  controllers: [ChatController],
   providers: [
     { provide: TOKENS_INTELLIGENCE.AiAdvisor, useFactory: montarAdvisor },
     { provide: TOKENS_INTELLIGENCE.Clock, useClass: SystemClock },
+    { provide: TOKEN_IDENTITY_INTELLIGENCE, useClass: TokenIdentity },
+    {
+      provide: TOKENS_INTELLIGENCE.PerguntarNoChat,
+      inject: [TOKENS.RepositorioDeTransactions, TOKENS_INTELLIGENCE.Clock, TOKENS_INTELLIGENCE.AiAdvisor],
+      useFactory: (transactions: RepositorioDeTransactions, clock: Clock, advisor: AiAdvisor) =>
+        new PerguntarNoChatUseCase(transactions, clock, advisor),
+    },
   ],
   exports: [TOKENS_INTELLIGENCE.AiAdvisor, TOKENS_INTELLIGENCE.Clock],
 })
