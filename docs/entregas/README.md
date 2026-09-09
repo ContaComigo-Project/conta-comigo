@@ -70,3 +70,4 @@ commit de fechamento, porque a estrutura foi versionada antes de a rule de
 commit existir. O motivo está registrado na entrega.
 | 2026-09-09 | [`HN-007`](./ENTREGA-HN-007-orcamento-semaforo.md) | Orçamento semáforo e aviso ao cruzar faixa | `v0.27.0` | `ed5bbf1` | `v0.27.0` |
 | 2026-09-09 | [`HN-008`](./ENTREGA-HN-008-historico-6-meses.md) | Histórico de 6 meses e problemas recorrentes | `v0.28.0` | `f2e066e` | `v0.28.0` |
+| 2026-09-09 | [`HN-009`](./ENTREGA-HN-009-diagnostico-saude-financeira.md) | Diagnóstico de saúde financeira | `v0.29.0` | `00ae874` | `v0.29.0` |

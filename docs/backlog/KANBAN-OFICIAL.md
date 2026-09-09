@@ -175,7 +175,7 @@ o backlog passou a considerar o frontend existente.
 
 | Ordem | Chave | Título | Tipo | Estado | Depende de | UI hoje |
 | --- | --- | --- | --- | --- | --- | --- |
-| 28 | `HN-009` | Diagnóstico de saúde financeira e insights | Negócio | **Em revisão** | HN-007, HT-014 | `AIInsightPanel` existe, com insights fixos |
+| 28 | `HN-009` | Diagnóstico de saúde financeira e insights | Negócio | **Done** | HN-007, HT-014 | `AIInsightPanel` existe, com insights fixos |
 | 29 | `HN-010` | Chatbot educativo com aviso permanente | Negócio | Backlog | HN-009 | `AIChatWidget` existe, com respostas roteirizadas |
 | 30 | `HN-011` | Simulação de compra e exportação PDF/CSV | Negócio | Backlog | HN-008 | `ExportDropdown` existe; **não gera arquivo** |
 | 31 | `HT-018` | Remover a lógica de negócio e os mocks do frontend | Técnica | Backlog | HN-010, HN-011 | Fecha a fronteira aberta em `HT-017` |
@@ -190,7 +190,7 @@ o backlog passou a considerar o frontend existente.
 - _(vazio)__
 
 ### Em revisão
-- `HN-009` — Diagnóstico de saúde financeira e insights
+- _(vazio)_
 
 ### Done
 - `HT-000` `v0.1.0` · `HT-001` `v0.2.0` · `HT-002` `v0.3.0` · `HT-003` `v0.4.0` · `HT-004` `v0.5.0` · `HT-016` `v0.6.0` · `HT-005` `v0.7.0` · `HT-006` `v0.8.0` · `HT-009` `v0.9.0` · `HT-010` `v0.10.0` · `HT-017` `v0.11.0` · `HT-008` `v0.12.0` · `HN-001` `v0.13.0` · `HT-011` `v0.14.0` · `HT-019` `v0.15.0` · `HT-020` `v0.16.0` · `HN-002` `v0.17.0` · `HN-012` `v0.18.0` · `HN-003` `v0.19.0` · `HT-012` `v0.20.0` · `HT-013` `v0.21.0` · `HT-014` `v0.22.0` · `HN-004` `v0.23.0` · `HN-005` `v0.24.0` · `HN-006` `v0.25.0`
