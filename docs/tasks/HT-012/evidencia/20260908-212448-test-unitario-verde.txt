@@ -1,0 +1,28 @@
+# evidência de execução — HT-012
+# Gerado por scripts/registrar-evidencia.sh. Não editar à mão.
+comando : scripts/harness.sh test-unitario
+data    : 2026-09-08 21:24:48 -0300
+commit  : c906aaf (árvore suja)
+sistema : MINGW64_NT-10.0-26200
+espera  : SUCESSO
+---------------------------------------------------------------
+harness: HARNESS_TEST_UNIT -> pnpm run test:unit
+
+> conta-comigo@0.7.0 test:unit C:\Users\migue\Documents\mocitec\conta-comigo
+> vitest run
+
+
+ RUN  v5.0.0 C:/Users/migue/Documents/mocitec/conta-comigo
+
+
+ Test Files  32 passed (32)
+      Tests  177 passed (177)
+   Start at  21:24:49
+   Duration  9.32s (import 68%, tests 19%, transform 11%, setup 1%, worker 1%)
+
+    Isolate  32 workers spawned · ~267ms startup each (spawn + environment, per file)
+             at least ~953ms faster with isolate: false — reuses workers across files instead of one per file
+
+---------------------------------------------------------------
+EXIT_CODE=0
+SHA256=5729f5edbf7051f47536403ca72f8ad6e2a7a48c8952ae6a0b0c32cf45134ede

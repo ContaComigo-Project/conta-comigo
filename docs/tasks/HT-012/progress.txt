@@ -1,0 +1,15 @@
+# progress — HT-012
+# Diário append-only do ciclo Ralph. Uma linha por evento.
+# Formato: AAAA-MM-DD HH:MM | FASE | descrição objetiva | evidência
+# FASE: PERCEBER | ORIENTAR | DECIDIR | AGIR | REGISTRAR
+
+AAAA-MM-DD HH:MM | PERCEBER | li KANBAN-OFICIAL.md, história e entregas relacionadas | -
+AAAA-MM-DD HH:MM | ORIENTAR | critérios de aceite x rules x riscos comparados | -
+AAAA-MM-DD HH:MM | DECIDIR | próxima ação escolhida: ... | -
+AAAA-MM-DD HH:MM | AGIR | ... | comando/saída
+AAAA-MM-DD HH:MM | REGISTRAR | ... | arquivo atualizado
+2026-09-08 21:24 | AGIR | redacao no dominio e correlacao na fronteira HTTP — harness test-unitario exit 1 (VERMELHO) | docs/tasks/HT-012/evidencia/20260908-212428-test-unitario-verde.txt
+2026-09-08 21:24 | AGIR | redacao no dominio e correlacao na fronteira HTTP — harness test-unitario exit 0 (VERDE) | docs/tasks/HT-012/evidencia/20260908-212448-test-unitario-verde.txt
+2026-09-08 21:25 | AGIR | fronteiras do ADR-001 com o contexto observability — harness lint exit 1 (VERMELHO) | docs/tasks/HT-012/evidencia/20260908-212459-lint-verde.txt
+2026-09-08 21:27 | AGIR | fronteiras do ADR-001 com o contexto observability — harness lint exit 0 (VERDE) | docs/tasks/HT-012/evidencia/20260908-212716-lint-verde.txt
+2026-09-08 21:28 | AGIR | lint, testes, cobertura e seguranca com o log estruturado — harness gates exit 0 (VERDE) | docs/tasks/HT-012/evidencia/20260908-212723-gates-verde.txt

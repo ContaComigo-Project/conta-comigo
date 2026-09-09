@@ -51,6 +51,10 @@ Arquivo: `ENTREGA-[CHAVE]-titulo-em-kebab-case.md`, a partir de
 | 2026-09-08 | `HT-020` | Correção: tabelas físicas renomeadas para inglês | `v0.19.4` | `246c6da` | `v0.19.4` |
 | 2026-09-08 | `HT-020` | Correção: colunas físicas renomeadas para inglês | `v0.19.5` | `a5ad752` | `v0.19.5` |
 | 2026-09-08 | `HT-020` | Correção: renomeação de colunas guardada e com nome correto (`criado_em`) | `v0.19.6` | `7458dca` | `v0.19.6` |
+| 2026-09-08 | `HT-008` | Correção: `.env` local deixa de reprovar a varredura de segredo | `v0.19.7` | `d293a70` | `v0.19.7` |
+| 2026-09-08 | `HT-008` | Correção: override de `multer` 2.3.0 (4 CVEs conhecidas) | `v0.19.8` | `c906aaf` | `v0.19.8` |
+| 2026-09-08 | `HN-003` | Correção: `ConnectedBanksWidget` sem `setState` dentro do efeito | `v0.19.9` | `a15d499` | `v0.19.9` |
+| 2026-09-08 | [`HT-012`](./ENTREGA-HT-012-observabilidade-minima.md) | Observabilidade mínima: log estruturado e erro rastreável | `v0.20.0` | `<fechamento>` | `v0.20.0` |
 
 
 Toda linha acima foi verificada por `scripts/verificar-fechamento.sh`: a tag

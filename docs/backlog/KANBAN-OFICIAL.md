@@ -47,19 +47,14 @@ uma tem a coluna "UI hoje" dizendo o que já está pronto na tela.
 
 ## Próxima demanda
 
-**`HT-012` — Observabilidade mínima: log estruturado e erro rastreável**
-(ordem 18, `Ready`).
+**Nenhuma.** A fila não tem item em `Ready`: `HT-012` fechou a ordem 18 e o
+próximo da fila, `HT-013`, ainda não foi groomado.
 
-Com `HN-002`, `HN-012` e `HN-003` fechadas, a ordem 18 é o menor item não
-concluído fora de `HT-007`, que segue adiada por depender de ação no GitHub.
-Depende só de `HT-009`, concluída. Entrega `RNF-008` (erro diagnosticável sem
-acesso à máquina, com correlação de requisição) e `RNF-015` (nenhum dado
-financeiro ou pessoal em log), fechando a lacuna de diagnóstico que `HN-002` e
-`HN-003` abriram ao introduzir chamadas externas ao agregador.
-
-Depois dela, a fila entra na **Fase 4** (`HT-013` adaptador Gemini/LangChain,
-`HT-014` guarda de saída), e `HT-007` volta a `Ready` quando o time decidir
-publicar `develop`.
+O menor item não concluído é **`HT-007` — Pipeline de CI com gates bloqueantes**
+(ordem 8), adiada por depender de ação no GitHub (ver nota abaixo). Depois dela,
+a **Fase 4** abre com `HT-013` (adaptador Gemini/LangChain com teto de custo e
+cache), que depende só de `HT-009` e precisa de arquivo de história antes de ser
+puxado.
 
 ### Nota de reordenação (2026-09-07)
 
@@ -144,7 +139,7 @@ o backlog passou a considerar o frontend existente.
 | 15 | `HN-002` | Conectar instituição com consentimento e sincronizar | Negócio | **Done** | HN-001, HT-011 | `ConnectedBanksWidget` existe; falta fluxo de consentimento |
 | 16 | `HN-012` | Revogar consentimento e excluir conta e dados | Negócio | **Done** | HN-002 | **Sem tela** — construção do zero |
 | 17 | `HN-003` | Painel consolidado de saldos, cartões e lançamentos | Negócio | **Done** | HN-002, HT-017 | `MetricsCards`, `SpendingChart`, `TransactionsListView`, `MonthPicker`, `QuickFilterBar` |
-| 18 | `HT-012` | Observabilidade mínima: log estruturado e erro rastreável | Técnica | Backlog | HT-009 | — |
+| 18 | `HT-012` | Observabilidade mínima: log estruturado e erro rastreável | Técnica | **Done** | HT-009 | `v0.20.0` |
 | 19 | `HT-019` | Documentação OpenAPI/Swagger da API | Técnica | **Done** | HT-009, HT-010, HN-001 | — |
 | 20 | `HT-020` | Padronizar código e estrutura do backend em inglês | Técnica | **Done** | HT-009, HT-010, HT-011, HN-001 | — |
 
@@ -178,7 +173,7 @@ o backlog passou a considerar o frontend existente.
 ## Quadro
 
 ### Ready
-- `HT-012` — Observabilidade mínima: log estruturado e erro rastreável (ordem 18)
+- _(vazio — `HT-012` fechada; a próxima demanda precisa de grooming)_
 
 ### Em execução
 - _(vazio)_
@@ -187,7 +182,7 @@ o backlog passou a considerar o frontend existente.
 - _(vazio)_
 
 ### Done
-- `HT-000` `v0.1.0` · `HT-001` `v0.2.0` · `HT-002` `v0.3.0` · `HT-003` `v0.4.0` · `HT-004` `v0.5.0` · `HT-016` `v0.6.0` · `HT-005` `v0.7.0` · `HT-006` `v0.8.0` · `HT-009` `v0.9.0` · `HT-010` `v0.10.0` · `HT-017` `v0.11.0` · `HT-008` `v0.12.0` · `HN-001` `v0.13.0` · `HT-011` `v0.14.0` · `HT-019` `v0.15.0` · `HT-020` `v0.16.0` · `HN-002` `v0.17.0` · `HN-012` `v0.18.0` · `HN-003` `v0.19.0`
+- `HT-000` `v0.1.0` · `HT-001` `v0.2.0` · `HT-002` `v0.3.0` · `HT-003` `v0.4.0` · `HT-004` `v0.5.0` · `HT-016` `v0.6.0` · `HT-005` `v0.7.0` · `HT-006` `v0.8.0` · `HT-009` `v0.9.0` · `HT-010` `v0.10.0` · `HT-017` `v0.11.0` · `HT-008` `v0.12.0` · `HN-001` `v0.13.0` · `HT-011` `v0.14.0` · `HT-019` `v0.15.0` · `HT-020` `v0.16.0` · `HN-002` `v0.17.0` · `HN-012` `v0.18.0` · `HN-003` `v0.19.0` · `HT-012` `v0.20.0`
 
 Todas verificadas por `scripts/verificar-fechamento.sh`: tag e commit no mesmo
 hash, mensagem semântica citando a chave, documento de entrega presente.
@@ -285,3 +280,6 @@ cada tela é aproveitável, e isso muda o critério de aceite de quase todas ela
 | 2026-09-08 | `HN-003` `HN-001` `HT-020` | Done | Done | Correções `v0.19.1` a `v0.19.5`: API real no painel, CORS e rotas protegidas, perfil e logout, tabelas e colunas em inglês |
 | 2026-09-08 | `HT-020` | Done | Done | Correção `v0.19.6` → `7458dca`: migration de colunas guardada; `criada_em` não existia e travava todo banco |
 | 2026-09-08 | `HT-012` | Backlog | Ready | Groomada com critérios verificáveis (RNF-008, RNF-015); dependência `HT-009` concluída |
+| 2026-09-08 | `HT-012` | Ready | Em execução | `docs/tasks/HT-012/` criado com TASK e IMPLEMENTATION; vermelho inicial registrado |
+| 2026-09-08 | `HT-008` `HN-003` | Done | Done | Correções `v0.19.7` a `v0.19.9`: `.env` na allowlist do gate, `multer` 2.3.0, `eslint` do `ConnectedBanksWidget` |
+| 2026-09-08 | `HT-012` | Em execução | Em revisão | Contexto `observability` completo; 177+9+3 testes verdes; `gates` verde de ponta a ponta; 4 evidências |
