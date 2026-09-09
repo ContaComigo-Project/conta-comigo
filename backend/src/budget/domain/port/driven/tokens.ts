@@ -7,4 +7,6 @@ export const TOKENS_BUDGET = {
   GetBudgetSemaphore: Symbol.for('budget/GetBudgetSemaphore'),
   GetBudgetHistory: Symbol.for('budget/GetBudgetHistory'),
   GetDiagnosis: Symbol.for('budget/GetDiagnosis'),
+  SimularPlanoDeCompra: Symbol.for('budget/SimularPlanoDeCompra'),
+  ExportarRelatorioPDF: Symbol.for('budget/ExportarRelatorioPDF'),
 } as const;

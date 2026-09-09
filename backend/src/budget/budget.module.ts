@@ -4,6 +4,8 @@ import { IntelligenceModule } from '../intelligence/intelligence.module';
 import { TOKENS_INTELLIGENCE } from '../intelligence/domain/port/driven/tokens';
 import type { AiAdvisor } from '../intelligence/domain/port/driven/ai-advisor';
 import { GetDiagnosisUseCase } from './application/get-diagnosis';
+import { SimularPlanoDeCompraUseCase } from './application/simulate-purchase';
+import { ExportarRelatorioPDF } from './application/export-relatorio-pdf';
 import { TransactionsModule } from '../transactions/transactions.module';
 import { TOKENS } from '../transactions/domain/port/driven/tokens';
 import type { RepositorioDeTransactions } from '../transactions/domain/port/driven/transaction-repository';
@@ -40,6 +42,18 @@ import { TokenIdentity } from '../transactions/infrastructure/http/token-identit
       inject: [TOKENS_BUDGET.BudgetRepository, TOKENS.RepositorioDeTransactions, TOKENS.Clock],
       useFactory: (repo: BudgetRepository, transactions: RepositorioDeTransactions, clock: Clock) =>
         new GetBudgetHistoryUseCase(repo, transactions, clock),
+    },
+    {
+      provide: TOKENS_BUDGET.SimularPlanoDeCompra,
+      inject: [TOKENS_BUDGET.BudgetRepository, TOKENS.RepositorioDeTransactions, TOKENS.Clock],
+      useFactory: (repo: BudgetRepository, transactions: RepositorioDeTransactions, clock: Clock) =>
+        new SimularPlanoDeCompraUseCase(repo, transactions, clock),
+    },
+    {
+      provide: TOKENS_BUDGET.ExportarRelatorioPDF,
+      inject: [TOKENS_BUDGET.BudgetRepository, TOKENS.RepositorioDeTransactions, TOKENS.Clock],
+      useFactory: (repo: BudgetRepository, transactions: RepositorioDeTransactions, clock: Clock) =>
+        new ExportarRelatorioPDF(repo, transactions, clock),
     },
     {
       provide: TOKENS_BUDGET.GetDiagnosis,

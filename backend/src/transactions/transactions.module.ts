@@ -3,6 +3,7 @@ import { GetMonthSummaryUseCase } from './application/month-summary';
 import { GetConsolidatedSummaryUseCase } from './application/consolidated-summary';
 import { ListarTransactionsUseCase } from './application/list-transactions';
 import { CorrectCategory } from './application/correct-category';
+import { ExportarLancamentosCSV } from './application/export-lancamentos-csv';
 import type { Clock } from './domain/port/driven/clock';
 import type { RepositorioDeTransactions } from './domain/port/driven/transaction-repository';
 import { TOKENS } from './domain/port/driven/tokens';
@@ -32,6 +33,11 @@ import { SystemClock } from './infrastructure/clock/system-clock';
       provide: TOKENS.ListarTransactions,
       inject: [TOKENS.RepositorioDeTransactions],
       useFactory: (repositorio: RepositorioDeTransactions) => new ListarTransactionsUseCase(repositorio),
+    },
+    {
+      provide: TOKENS.ExportarLancamentosCSV,
+      inject: [TOKENS.RepositorioDeTransactions],
+      useFactory: (transactions: RepositorioDeTransactions) => new ExportarLancamentosCSV(transactions),
     },
     {
       provide: TOKENS.CorrectCategory,

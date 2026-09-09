@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, Get, Inject, NotFoundException, Param, Patch, UnauthorizedException, UseGuards } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Get, Header, Inject, NotFoundException, Param, Patch, UnauthorizedException, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CorrigirCategoriaDTO, ok, type TransactionDTO, type Result } from '@contacomigo/contract';
 import type { GetMonthSummary } from '../../domain/port/driving/month-summary';
@@ -7,6 +7,7 @@ import type { Identity } from '../../domain/port/driven/identity';
 import type { CorrectCategory } from '../../application/correct-category';
 import { GuardaDeHolder } from './holder-guard';
 import { TOKENS } from '../../domain/port/driven/tokens';
+import { ExportarLancamentosCSV } from '../../application/export-lancamentos-csv';
 import { paraTransactionDTO } from './transaction.dto';
 
 // Adaptador de input. Traduz HTTP para a porta; nao passa objeto de requisicao
@@ -23,6 +24,7 @@ export class TransactionsController {
     @Inject(TOKENS.ListarTransactions) private readonly listar: ListarTransactions,
     @Inject(TOKENS.Identity) private readonly identity: Identity,
     @Inject(TOKENS.CorrectCategory) private readonly corrigirCategoria: CorrectCategory,
+    @Inject(TOKENS.ExportarLancamentosCSV) private readonly exportadorCSV: ExportarLancamentosCSV,
   ) {}
 
   // A guarda ja recusou a requisicao sem holder; aqui o null so aconteceria
@@ -39,6 +41,15 @@ export class TransactionsController {
   @ApiResponse({ status: 401, description: 'Sem token Bearer válido' })
   resumoDoMes() {
     return this.consultar.executar(this.holder());
+  }
+
+  @Get('export.csv')
+  @Header('Content-Type', 'text/csv; charset=utf-8')
+  @Header('Content-Disposition', 'attachment; filename="lancamentos.csv"')
+  @ApiOperation({ summary: 'Exportar lançamentos em CSV', description: 'RF-024: lançamentos do titular em CSV (separador ;) que importa em planilha sem quebra de coluna.' })
+  @ApiResponse({ status: 200, description: 'Arquivo CSV' })
+  async exportarCSV() {
+    return this.exportadorCSV.executar(this.holder());
   }
 
   @Get()

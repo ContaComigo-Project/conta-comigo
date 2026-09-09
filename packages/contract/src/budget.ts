@@ -116,3 +116,30 @@ export const ChatRespostaDTO = z
   })
   .strict();
 export type ChatRespostaDTO = z.infer<typeof ChatRespostaDTO>;
+
+// Purchase simulation (HN-011/RF-022): impact of a planned purchase on the
+// month's semaphore. The answer never recommends credit (RN-017).
+export const SimulacaoDTO = z
+  .object({ categoria: z.string().min(1), valorEmCentavos: z.number().int().positive(), month: z.string().optional() })
+  .strict();
+export type SimulacaoDTO = z.infer<typeof SimulacaoDTO>;
+
+export const ResultadoSimulacaoDTO = z
+  .object({
+    month: z.string(),
+    categorias: z
+      .array(
+        z
+          .object({
+            category: z.string(),
+            limitInCents: z.number().int().nullable(),
+            spentInCents: z.number().int(),
+            band: z.string(),
+            bandComImpacto: z.string(),
+            impactoEmCentavos: z.number().int(),
+          })
+          .strict(),
+      ),
+  })
+  .strict();
+export type ResultadoSimulacaoDTO = z.infer<typeof ResultadoSimulacaoDTO>;

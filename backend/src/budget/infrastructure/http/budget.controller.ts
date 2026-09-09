@@ -4,17 +4,21 @@ import {
   Controller,
   Delete,
   Get,
+  Header,
   HttpCode,
   Inject,
   NotFoundException,
   Param,
+  Post,
   Put,
   Query,
+  Res,
   UnauthorizedException,
   UseGuards,
 } from '@nestjs/common';
+import type { Response } from 'express';
 import { ApiBearerAuth, ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { BudgetHistoryDTO, BudgetSemaphoreDTO, DefinirLimiteDTO, DiagnosisDTO, ok, type MonthlyLimitDTO, type Result } from '@contacomigo/contract';
+import { BudgetHistoryDTO, BudgetSemaphoreDTO, DefinirLimiteDTO, DiagnosisDTO, ResultadoSimulacaoDTO, SimulacaoDTO, ok, type MonthlyLimitDTO, type Result } from '@contacomigo/contract';
 import { zodParaSchema } from '../../../openapi';
 import type { Identity } from '../../../transactions/domain/port/driven/identity';
 import type { ListMonthlyLimits } from '../../application/list-monthly-limits';
@@ -22,6 +26,8 @@ import type { RemoveMonthlyLimit } from '../../application/remove-monthly-limit'
 import type { SetMonthlyLimit } from '../../application/set-monthly-limit';
 import type { GetBudgetHistory } from '../../domain/port/driving/get-budget-history';
 import type { GetDiagnosis } from '../../domain/port/driving/get-diagnosis';
+import type { SimularPlanoDeCompra } from '../../domain/port/driving/simulate-purchase';
+import { ExportarRelatorioPDF } from '../../application/export-relatorio-pdf';
 import type { GetBudgetSemaphore } from '../../domain/port/driving/get-budget-semaphore';
 import { TOKENS_BUDGET } from '../../domain/port/driven/tokens';
 import { GuardaDeHolderDoBudget, TOKEN_IDENTITY_BUDGET } from './holder-guard';
@@ -42,6 +48,8 @@ export class BudgetController {
     @Inject(TOKENS_BUDGET.GetBudgetSemaphore) private readonly calcularSemaforo: GetBudgetSemaphore,
     @Inject(TOKENS_BUDGET.GetBudgetHistory) private readonly historico: GetBudgetHistory,
     @Inject(TOKENS_BUDGET.GetDiagnosis) private readonly diagnostico: GetDiagnosis,
+    @Inject(TOKENS_BUDGET.SimularPlanoDeCompra) private readonly simular: SimularPlanoDeCompra,
+    @Inject(TOKENS_BUDGET.ExportarRelatorioPDF) private readonly relatorio: ExportarRelatorioPDF,
     @Inject(TOKEN_IDENTITY_BUDGET) private readonly identity: Identity,
   ) {}
 
@@ -81,6 +89,25 @@ export class BudgetController {
       case 'ia-bloqueou':
         return { estado: 'ia-bloqueou', motivo: r.motivo };
     }
+  }
+
+  @Post('simulation')
+  @ApiOperation({ summary: 'Simular impacto no orçamento', description: 'RF-022: impacto de um valor na categoria no semáforo do mês. Nunca recomenda crédito (RN-017).' })
+  @ApiResponse({ status: 200, description: 'Impacto por categoria' })
+  async simularCompra(@Body() body: SimulacaoDTO): Promise<ResultadoSimulacaoDTO> {
+    const r = await this.simular.executar(this.titular(), body.categoria, body.valorEmCentavos, body.month);
+    return { month: r.month, categorias: [...r.categorias] };
+  }
+
+  @Get('report.pdf')
+  @ApiOperation({ summary: 'Relatório em PDF', description: 'RF-023: relatório do mês (via query month) ou do histórico, com os mesmos números do painel (RN-019).' })
+  @ApiResponse({ status: 200, description: 'Arquivo PDF' })
+  async relatorioPDF(@Query('month') month: string | undefined, @Res() res: Response) {
+    const buffer = await this.relatorio.executar(this.titular(), month);
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', 'attachment; filename="relatorio-orcamento.pdf"');
+    res.setHeader('Content-Length', buffer.length);
+    res.send(buffer);
   }
 
   @Get('history')

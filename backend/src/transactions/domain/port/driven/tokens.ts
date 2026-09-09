@@ -9,4 +9,5 @@ export const TOKENS = {
   GetConsolidatedSummary: Symbol.for('transactions/GetConsolidatedSummary'),
   Identity: Symbol.for('transactions/Identity'),
   CorrectCategory: Symbol.for('transactions/CorrectCategory'),
+  ExportarLancamentosCSV: Symbol.for('transactions/ExportarLancamentosCSV'),
 } as const;

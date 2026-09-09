@@ -1,0 +1,13 @@
+# progress — HN-011
+# Diário append-only do ciclo Ralph. Uma linha por evento.
+# Formato: AAAA-MM-DD HH:MM | FASE | descrição objetiva | evidência
+# FASE: PERCEBER | ORIENTAR | DECIDIR | AGIR | REGISTRAR
+
+2026-09-09 04:00 | PERCEBER | li RF-022/023/024; sem lib de PDF no repo; ExportDropdown mockado | docs, frontend
+2026-09-09 04:05 | ORIENTAR | escopo: simulação (impacto no semáforo, sem crédito), CSV (escape), PDF (pdfkit) | -
+2026-09-09 04:10 | AGIR | grooming HN-011 + kanban Em execução + TASK/IMPLEMENTATION | docs
+2026-09-09 04:20 | AGIR | pdfkit + @types instalados (audit limpo); SimularPlanoDeCompra + ExportarLancamentosCSV + ExportarRelatorioPDF | backend
+2026-09-09 04:30 | AGIR | endpoints POST /budgets/simulation, GET /transactions/export.csv, GET /budgets/report.pdf | controllers
+2026-09-09 04:40 | AGIR | bug PDF: passthrough serializava Buffer como JSON; corrigido com @Res() direto + res.send | controller
+2026-09-09 04:50 | AGIR | suíte 314+22+3 verdes; build ok; auditoria 100%; 3 endpoints validados na API | pnpm, curl
+2026-09-09 04:55 | REGISTRAR | ENTREGA-HN-011 criada; kanban Em revisão | docs/entregas, KANBAN
