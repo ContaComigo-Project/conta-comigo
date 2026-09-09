@@ -45,6 +45,11 @@ Arquivo: `ENTREGA-[CHAVE]-titulo-em-kebab-case.md`, a partir de
 | 2026-09-08 | [`HN-002`](./ENTREGA-HN-002-conectar-instituicao.md) | Conectar instituição com consentimento e sincronizar | `v0.17.0` | `b3ae538` | `v0.17.0` |
 | 2026-09-08 | [`HN-012`](./ENTREGA-HN-012-revogar-consentimento-e-excluir-conta.md) | Revogar consentimento e excluir conta e dados | `v0.18.0` | `7c63b24` | `v0.18.0` |
 | 2026-09-08 | [`HN-003`](./ENTREGA-HN-003-painel-consolidado.md) | Painel consolidado de saldos, cartões e lançamentos | `v0.19.0` | `d1b04ac` | `v0.19.0` |
+| 2026-09-08 | `HN-003` | Correção: painel ligado à API real e `db:seed` | `v0.19.1` | `c54b6c0` | `v0.19.1` |
+| 2026-09-08 | `HN-001` | Correção: CORS habilitado e rotas do dashboard protegidas | `v0.19.2` | `59ff0d2` | `v0.19.2` |
+| 2026-09-08 | `HN-001` | Correção: perfil vindo do banco e logout na sidebar | `v0.19.3` | `8d7662c` | `v0.19.3` |
+| 2026-09-08 | `HT-020` | Correção: tabelas físicas renomeadas para inglês | `v0.19.4` | `246c6da` | `v0.19.4` |
+| 2026-09-08 | `HT-020` | Correção: colunas físicas renomeadas para inglês | `v0.19.5` | `a5ad752` | `v0.19.5` |
 
 
 Toda linha acima foi verificada por `scripts/verificar-fechamento.sh`: a tag

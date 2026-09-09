@@ -47,40 +47,19 @@ uma tem a coluna "UI hoje" dizendo o que já está pronto na tela.
 
 ## Próxima demanda
 
-**`HN-002` — Conectar instituição com consentimento e sincronizar** (ordem 15,
-`Ready`).
+**`HT-012` — Observabilidade mínima: log estruturado e erro rastreável**
+(ordem 18, `Ready`).
 
-Groomada com critérios verificáveis (RN-012, RN-014, RN-015; RF-004/005/007).
-Todas as dependências estão prontas: `HN-001` deu a sessão, `HT-011` a porta de
-agregação com política de falha, `HT-010` a cifra em repouso e `HT-008` a
-barreira por titular. É a primeira história a exercitar a skill
-`open-finance-security-agent` por inteiro: consentimento como registro de
-primeira classe, com escopo, expiração e revogação (`RN-012` a `RN-014`), e o
-token do agregador cifrado.
+Com `HN-002`, `HN-012` e `HN-003` fechadas, a ordem 18 é o menor item não
+concluído fora de `HT-007`, que segue adiada por depender de ação no GitHub.
+Depende só de `HT-009`, concluída. Entrega `RNF-008` (erro diagnosticável sem
+acesso à máquina, com correlação de requisição) e `RNF-015` (nenhum dado
+financeiro ou pessoal em log), fechando a lacuna de diagnóstico que `HN-002` e
+`HN-003` abriram ao introduzir chamadas externas ao agregador.
 
-É a primeira história de **negócio**: as três anteriores da fila (`HT-011`,
-`HT-012`) são técnicas e não bloqueiam. `HN-001` fecha a lacuna deixada por
-`HT-008` — a barreira por titular existe e é provada, mas quem afirma ser o
-titular ainda é um cabeçalho forjável.
-
-### Dependência parcialmente resolvida
-
-`HT-008` depende de `HT-007` (CI), que segue adiada. `RNF-012` exige varredura
-de segredo "no harness **e** no CI": a metade do harness é entregue aqui, a
-metade do CI fica **pendente e registrada** na entrega, não marcada como feita.
-Os outros dois requisitos da história (`RNF-013` autorização, `RNF-015` log) não
-dependem de CI e são verificáveis localmente.
-
-Depois dela, os caminhos abertos são:
-
-- **`HT-011` — Adaptador Pluggy Sandbox** (ordem 14): depende só de `HT-009`,
-  concluída. É o próximo passo que não exige nada de fora do repositório.
-- **`HT-007` — CI com gates bloqueantes** (ordem 8, adiada): volta a fazer
-  sentido assim que `develop` for publicado, porque a proteção de branch e o
-  PR de prova acontecem no GitHub.
-
-`HT-010` (`v0.10.0`) e `HT-017` (`v0.11.0`) fecharam; com o contrato no lugar,
-`HN-001` só espera `HT-008`.
+Depois dela, a fila entra na **Fase 4** (`HT-013` adaptador Gemini/LangChain,
+`HT-014` guarda de saída), e `HT-007` volta a `Ready` quando o time decidir
+publicar `develop`.
 
 ### Nota de reordenação (2026-09-07)
 
@@ -95,12 +74,17 @@ conforme `spec-to-execution-plan`, obrigação 7:
 - Metade de `HT-007` depende de ação fora do repositório — push, proteção de
   branch no GitHub, PR de prova. Sem o remoto atualizado ela ficaria pela
   metade, esperando.
-- Com `HT-009` pronta, o PR de prova de `HT-007` pode violar uma fronteira em
-  código real em vez de fixture.
 
 **Consequência assumida:** `RNF-021` ("gates bloqueiam de fato") fica satisfeito
-só localmente até `HT-007`. `HT-007` volta a `Ready` quando o time decidir fazer
-o push de `develop`.
+só localmente até `HT-007`.
+
+### Nota de fechamento retroativo (2026-09-08)
+
+As entregas `HT-019` a `HN-003` estavam documentadas com versão e hash, mas as
+tags não existiam no repositório — o passo 9 do ciclo ficou pela metade. As tags
+`v0.15.0` a `v0.19.0` foram criadas nos hashes já declarados nas entregas, e os
+cinco commits de correção posteriores a `v0.19.0` ganharam versão patch própria
+(`v0.19.1` a `v0.19.5`). Todas verificadas por `verificar-fechamento`.
 
 ## Fluxo de estados
 
@@ -194,7 +178,7 @@ o backlog passou a considerar o frontend existente.
 ## Quadro
 
 ### Ready
-- _(vazio — `HN-003` em execução, WIP 1)_
+- `HT-012` — Observabilidade mínima: log estruturado e erro rastreável (ordem 18)
 
 ### Em execução
 - _(vazio)_
@@ -203,7 +187,7 @@ o backlog passou a considerar o frontend existente.
 - _(vazio)_
 
 ### Done
-- `HT-000` `v0.1.0` · `HT-001` `v0.2.0` · `HT-002` `v0.3.0` · `HT-003` `v0.4.0` · `HT-004` `v0.5.0` · `HT-016` `v0.6.0` · `HT-005` `v0.7.0` · `HT-006` `v0.8.0` · `HT-009` `v0.9.0` · `HT-010` `v0.10.0` · `HT-017` `v0.11.0` · `HT-008` `v0.12.0` · `HN-001` `v0.13.0` · `HT-011` `v0.14.0` · `HT-019` `v0.15.0` · `HT-020` `v0.16.0`
+- `HT-000` `v0.1.0` · `HT-001` `v0.2.0` · `HT-002` `v0.3.0` · `HT-003` `v0.4.0` · `HT-004` `v0.5.0` · `HT-016` `v0.6.0` · `HT-005` `v0.7.0` · `HT-006` `v0.8.0` · `HT-009` `v0.9.0` · `HT-010` `v0.10.0` · `HT-017` `v0.11.0` · `HT-008` `v0.12.0` · `HN-001` `v0.13.0` · `HT-011` `v0.14.0` · `HT-019` `v0.15.0` · `HT-020` `v0.16.0` · `HN-002` `v0.17.0` · `HN-012` `v0.18.0` · `HN-003` `v0.19.0`
 
 Todas verificadas por `scripts/verificar-fechamento.sh`: tag e commit no mesmo
 hash, mensagem semântica citando a chave, documento de entrega presente.
@@ -295,3 +279,8 @@ cada tela é aproveitável, e isso muda o critério de aceite de quase todas ela
 | 2026-09-07 | `HN-002` | Backlog | Ready | Groomada com critérios verificáveis (RN-012/014/015; RF-004/005/007); dependências concluídas |
 | 2026-09-08 | `HN-002` | Ready | Em execução | `docs/tasks/HN-002/` criado; contexto consent implementado |
 | 2026-09-08 | `HN-002` | Em execução | Em revisão | Consentimento de primeira classe; 148+7+2 testes verdes; fronteiras 185; API real validada |
+| 2026-09-08 | `HN-002` | Em revisão | Done | `v0.17.0` → `b3ae538`; `verificar-fechamento` verde |
+| 2026-09-08 | `HN-012` | Backlog | Done | `v0.18.0` → `7c63b24`; revogação e exclusão com dados |
+| 2026-09-08 | `HN-003` | Ready | Done | `v0.19.0` → `d1b04ac`; painel consolidado sobre dado sincronizado |
+| 2026-09-08 | `HN-003` `HN-001` `HT-020` | Done | Done | Correções `v0.19.1` a `v0.19.5`: API real no painel, CORS e rotas protegidas, perfil e logout, tabelas e colunas em inglês |
+| 2026-09-08 | `HT-012` | Backlog | Ready | Groomada com critérios verificáveis (RNF-008, RNF-015); dependência `HT-009` concluída |
