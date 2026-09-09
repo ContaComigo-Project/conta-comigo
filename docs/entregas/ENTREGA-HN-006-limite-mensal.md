@@ -12,8 +12,8 @@ max_lines: 300
 - **Data:** 2026-09-09
 - **Tipo:** Negócio
 - **Versão:** `v0.25.0`
-- **Commit:** `<hash do commit de fechamento>`
-- **Tag:** `v0.25.0` → `<hash do commit de fechamento>`
+- **Commit:** `7d7fa72`
+- **Tag:** `v0.25.0` → `7d7fa72`
 
 ## O que foi entregue
 
@@ -144,8 +144,8 @@ mesma chave do banco. É a terceira vez que esse gate pega o mesmo atalho
 
 ## Verificação de fechamento
 
-- [ ] Testes e gates aplicáveis verdes
-- [ ] Commit semântico contém a chave `HN-006`
-- [ ] Commit não contém arquivos de outra história
-- [ ] Tag `v0.25.0` aponta para o mesmo hash do commit
-- [ ] `KANBAN-OFICIAL.md` atualizado
+- [x] Testes e gates aplicáveis verdes
+- [x] Commit semântico contém a chave `HN-006`
+- [x] Commit não contém arquivos de outra história
+- [x] Tag `v0.25.0` aponta para o mesmo hash do commit
+- [x] `KANBAN-OFICIAL.md` atualizado
