@@ -1,0 +1,96 @@
+import { describe, expect, it } from 'vitest';
+import { examinarSaida, valoresMonetariosDe } from './output-guard';
+
+const dados = { totalEmCentavos: 128_432, categorias: { mercado: 40_000 } };
+
+describe('valoresMonetariosDe — RN-019', () => {
+  it('reconhece o valor em qualquer formato usado por um modelo', () => {
+    expect(valoresMonetariosDe('gastou R$ 1.284,32 no mes')).toEqual([128_432]);
+    expect(valoresMonetariosDe('gastou R$ 1284,32')).toEqual([128_432]);
+    expect(valoresMonetariosDe('gastou 1284.32 reais')).toEqual([128_432]);
+    expect(valoresMonetariosDe('R$ 400,00 em mercado')).toEqual([40_000]);
+  });
+
+  it('nao trata contagem, mes nem porcentagem como dinheiro', () => {
+    expect(valoresMonetariosDe('voce tem 3 contas conectadas')).toEqual([]);
+    expect(valoresMonetariosDe('em janeiro de 2026')).toEqual([]);
+    expect(valoresMonetariosDe('40% do total foi mercado')).toEqual([]);
+  });
+});
+
+describe('examinarSaida — RNF-017', () => {
+  it('aprova texto coerente com os dados', () => {
+    const veredito = examinarSaida('Voce gastou R$ 1.284,32 no mes, com destaque para mercado.', dados);
+
+    expect(veredito.aprovado).toBe(true);
+  });
+
+  it('RN-019 — bloqueia valor que o painel nao tem', () => {
+    const veredito = examinarSaida('Voce gastou cerca de R$ 1.300,00 neste mes.', dados);
+
+    expect(veredito.aprovado).toBe(false);
+    expect(veredito.aprovado === false && veredito.motivo).toBe('valor-divergente');
+    // O motivo carrega amostra curta para diagnostico, nunca o texto inteiro.
+    expect(veredito.aprovado === false && veredito.amostra.length).toBeLessThanOrEqual(80);
+  });
+
+  it('RN-019 — texto sem numero nenhum passa: a guarda nao exige numero', () => {
+    expect(examinarSaida('Seu mes seguiu o padrao dos anteriores.', dados).aprovado).toBe(true);
+  });
+
+  it('RN-019 — porcentagem e contagem nao bloqueiam', () => {
+    expect(examinarSaida('Mercado representou 31% do total, em 2 categorias.', dados).aprovado).toBe(true);
+  });
+
+  it('RN-017 — bloqueia recomendacao de produto financeiro', () => {
+    const proibidos = [
+      'Invista em CDB para render mais.',
+      'Considere o Tesouro Direto.',
+      'Vale a pena pedir um empréstimo pessoal.',
+      'O cartão de crédito do Banco Exemplo tem cashback.',
+      'sugiro aplicar em ações',
+      'CONTRATE UM FINANCIAMENTO',
+      'abra uma conta em uma corretora',
+    ];
+
+    for (const texto of proibidos) {
+      const veredito = examinarSaida(texto, dados);
+      expect(veredito.aprovado, texto).toBe(false);
+      expect(veredito.aprovado === false && veredito.motivo).toBe('recomendacao-de-produto');
+    }
+  });
+
+  it('RN-017 — falar de habito nao e recomendar produto', () => {
+    const permitidos = [
+      'Voce pode poupar reduzindo gasto com delivery.',
+      'Compare seus gastos com os meses anteriores.',
+      'Anotar as despesas ajuda a perceber padroes.',
+    ];
+
+    for (const texto of permitidos) {
+      expect(examinarSaida(texto, dados).aprovado, texto).toBe(true);
+    }
+  });
+
+  it('RNF-017 — bloqueia resposta vazia, gigante ou com bloco de codigo', () => {
+    const vazia = examinarSaida('   ', dados);
+    const gigante = examinarSaida('a'.repeat(4_001), dados);
+    const comCodigo = examinarSaida('Segue o script:\n```js\nfetch("http://x")\n```', dados);
+
+    expect(vazia.aprovado === false && vazia.motivo).toBe('formato-invalido');
+    expect(gigante.aprovado === false && gigante.motivo).toBe('formato-invalido');
+    expect(comCodigo.aprovado === false && comCodigo.motivo).toBe('formato-invalido');
+  });
+
+  it('RNF-017 — o exame de formato vem antes: texto vazio nao e avaliado por valor', () => {
+    const veredito = examinarSaida('', {});
+
+    expect(veredito.aprovado === false && veredito.motivo).toBe('formato-invalido');
+  });
+
+  it('valor presente em dado aninhado tambem e aceito', () => {
+    const veredito = examinarSaida('Mercado somou R$ 400,00.', dados);
+
+    expect(veredito.aprovado).toBe(true);
+  });
+});

@@ -47,17 +47,17 @@ uma tem a coluna "UI hoje" dizendo o que já está pronto na tela.
 
 ## Próxima demanda
 
-**`HT-014` — Guarda de saída da IA: validação, coerência e fronteira**
-(ordem 22, `Ready`).
+**`HN-004` — Descrição legível do lançamento (limpeza semântica)** (ordem 23,
+`Ready`).
 
-`HT-013` entregou a porta e as políticas de custo; falta a metade que trata a
-resposta do modelo como **entrada não confiável** (`RNF-017`). Sem ela, nenhuma
-história de negócio da Fase 4 pode exibir texto de IA: `RN-019` proíbe número
-vindo do modelo, `RN-017` proíbe recomendação de produto financeiro e `RN-018`
-exige o aviso de não aconselhamento.
+Primeira história de negócio da Fase 4 e a primeira a consumir a porta de IA:
+`HT-013` deu o teto, o cache e a degradação; `HT-014` deu a guarda de saída. A
+lista de lançamentos já existe na tela, exibindo a descrição crua do agregador
+(`PAG*MERCADO CENTRAL`); falta traduzi-la para algo legível, guardando a
+original.
 
-A guarda tem lugar óbvio no desenho: mais um decorador da porta `AiAdvisor`,
-entre o cache e a tela.
+Ela precisa ser groomada antes de ser puxada — arquivo em
+`docs/backlog/historias/HN-004-descricao-legivel.md` com critérios verificáveis.
 
 `HT-007` (ordem 8) continua adiada por depender de ação no GitHub.
 
@@ -153,7 +153,7 @@ o backlog passou a considerar o frontend existente.
 | Ordem | Chave | Título | Tipo | Estado | Depende de | UI hoje |
 | --- | --- | --- | --- | --- | --- | --- |
 | 21 | `HT-013` | Adaptador Gemini com teto de custo e cache | Técnica | **Done** | HT-009 | `v0.21.0` |
-| 22 | `HT-014` | Guarda de saída da IA: validação, coerência e fronteira | Técnica | Backlog | HT-013 | — |
+| 22 | `HT-014` | Guarda de saída da IA: validação, coerência e fronteira | Técnica | **Done** | HT-013 | `v0.22.0` |
 | 23 | `HN-004` | Descrição legível do lançamento (limpeza semântica) | Negócio | Backlog | HN-003, HT-014 | Lista existe; **sem tratamento de descrição** |
 | 24 | `HN-005` | Categorização automática e correção manual | Negócio | Backlog | HN-004 | Categorias exibidas; **sem correção manual** |
 
@@ -178,7 +178,7 @@ o backlog passou a considerar o frontend existente.
 ## Quadro
 
 ### Ready
-- `HT-014` — Guarda de saída da IA: validação, coerência e fronteira (ordem 22)
+- `HN-004` — Descrição legível do lançamento (limpeza semântica) (ordem 23)
 
 ### Em execução
 - _(vazio)_
@@ -187,7 +187,7 @@ o backlog passou a considerar o frontend existente.
 - _(vazio)_
 
 ### Done
-- `HT-000` `v0.1.0` · `HT-001` `v0.2.0` · `HT-002` `v0.3.0` · `HT-003` `v0.4.0` · `HT-004` `v0.5.0` · `HT-016` `v0.6.0` · `HT-005` `v0.7.0` · `HT-006` `v0.8.0` · `HT-009` `v0.9.0` · `HT-010` `v0.10.0` · `HT-017` `v0.11.0` · `HT-008` `v0.12.0` · `HN-001` `v0.13.0` · `HT-011` `v0.14.0` · `HT-019` `v0.15.0` · `HT-020` `v0.16.0` · `HN-002` `v0.17.0` · `HN-012` `v0.18.0` · `HN-003` `v0.19.0` · `HT-012` `v0.20.0` · `HT-013` `v0.21.0`
+- `HT-000` `v0.1.0` · `HT-001` `v0.2.0` · `HT-002` `v0.3.0` · `HT-003` `v0.4.0` · `HT-004` `v0.5.0` · `HT-016` `v0.6.0` · `HT-005` `v0.7.0` · `HT-006` `v0.8.0` · `HT-009` `v0.9.0` · `HT-010` `v0.10.0` · `HT-017` `v0.11.0` · `HT-008` `v0.12.0` · `HN-001` `v0.13.0` · `HT-011` `v0.14.0` · `HT-019` `v0.15.0` · `HT-020` `v0.16.0` · `HN-002` `v0.17.0` · `HN-012` `v0.18.0` · `HN-003` `v0.19.0` · `HT-012` `v0.20.0` · `HT-013` `v0.21.0` · `HT-014` `v0.22.0`
 
 Todas verificadas por `scripts/verificar-fechamento.sh`: tag e commit no mesmo
 hash, mensagem semântica citando a chave, documento de entrega presente.
@@ -292,3 +292,7 @@ cada tela é aproveitável, e isso muda o critério de aceite de quase todas ela
 | 2026-09-08 | `HT-013` | Backlog | Ready | Groomada com critérios verificáveis (RNF-009, RNF-010, RNF-005/006, RNF-020); dependência `HT-009` concluída |
 | 2026-09-08 | `HT-013` | Ready | Em execução | `docs/tasks/HT-013/` criado com TASK e IMPLEMENTATION; vermelho inicial registrado |
 | 2026-09-08 | `HT-013` | Em execução | Em revisão | Porta de IA com teto, cache e resiliência; `ADR-006` recusa LangChain/SDK; 207+13+3 testes verdes |
+| 2026-09-08 | `HT-013` | Em revisão | Done | `v0.21.0` → `c862ac5`; `verificar-fechamento` verde |
+| 2026-09-08 | `HT-014` | Backlog | Ready | Groomada com critérios verificáveis (RNF-017, RN-017, RN-019); dependência `HT-013` concluída |
+| 2026-09-08 | `HT-014` | Ready | Em execução | `docs/tasks/HT-014/` criado com TASK e IMPLEMENTATION |
+| 2026-09-08 | `HT-014` | Em execução | Em revisão | Guarda de saída com três exames; provedor adulterado bloqueado; 224+13+3 testes verdes |

@@ -13,7 +13,9 @@ export type MotivoDaFalhaDeIa =
   /** Teto diario da pessoa atingido (RNF-009). Nao e erro: e limite combinado. */
   | 'teto-atingido'
   /** O provedor respondeu, mas com algo que nao da para usar. */
-  | 'resposta-invalida';
+  | 'resposta-invalida'
+  /** A guarda de saida reprovou o texto (HT-014, RNF-017). */
+  | 'resposta-bloqueada';
 
 export interface FalhaDeIa {
   readonly tipo: 'falha';

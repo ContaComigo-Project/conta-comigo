@@ -56,6 +56,7 @@ Arquivo: `ENTREGA-[CHAVE]-titulo-em-kebab-case.md`, a partir de
 | 2026-09-08 | `HN-003` | Correção: `ConnectedBanksWidget` sem `setState` dentro do efeito | `v0.19.9` | `a15d499` | `v0.19.9` |
 | 2026-09-08 | [`HT-012`](./ENTREGA-HT-012-observabilidade-minima.md) | Observabilidade mínima: log estruturado e erro rastreável | `v0.20.0` | `17e9628` | `v0.20.0` |
 | 2026-09-08 | [`HT-013`](./ENTREGA-HT-013-adaptador-gemini.md) | Adaptador Gemini com teto de custo e cache | `v0.21.0` | `c862ac5` | `v0.21.0` |
+| 2026-09-08 | [`HT-014`](./ENTREGA-HT-014-guarda-de-saida-da-ia.md) | Guarda de saída da IA: validação, coerência e fronteira | `v0.22.0` | `<fechamento>` | `v0.22.0` |
 
 
 Toda linha acima foi verificada por `scripts/verificar-fechamento.sh`: a tag
