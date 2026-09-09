@@ -8,6 +8,8 @@ export interface Transaction {
   descriptionOriginal?: string;
   merchant?: string;
   category: string;
+  /** Id do catálogo do domínio (HN-005); `null` = não classificado. */
+  categoryId?: string | null;
   categoryIcon: string;
   bank: string;
   bankColor: string;
@@ -24,6 +26,7 @@ export const mockTransactions: Transaction[] = [
     description: 'Uber',
     merchant: 'Uber Brasil',
     category: 'Transporte',
+    categoryId: 'transporte',
     categoryIcon: 'fa-car',
     bank: 'Nubank',
     bankColor: '#8B5CF6',
@@ -38,6 +41,7 @@ export const mockTransactions: Transaction[] = [
     description: 'Pão de Açúcar',
     merchant: 'Grupo Pão de Açúcar',
     category: 'Alimentação',
+    categoryId: 'alimentacao',
     categoryIcon: 'fa-basket-shopping',
     bank: 'Itaú',
     bankColor: '#F97316',
@@ -52,6 +56,7 @@ export const mockTransactions: Transaction[] = [
     description: 'Salário Junho',
     merchant: 'Empresa XYZ LTDA',
     category: 'Receita',
+    categoryId: 'receita',
     categoryIcon: 'fa-arrow-trend-up',
     bank: 'Nubank',
     bankColor: '#8B5CF6',
@@ -66,6 +71,7 @@ export const mockTransactions: Transaction[] = [
     description: 'Netflix',
     merchant: 'Netflix International',
     category: 'Lazer',
+    categoryId: 'lazer',
     categoryIcon: 'fa-film',
     bank: 'Bradesco',
     bankColor: '#EF4444',
@@ -80,6 +86,7 @@ export const mockTransactions: Transaction[] = [
     description: 'Farmácia São João',
     merchant: 'Farmácia São João',
     category: 'Saúde',
+    categoryId: 'saude',
     categoryIcon: 'fa-pills',
     bank: 'Itaú',
     bankColor: '#F97316',
@@ -94,6 +101,7 @@ export const mockTransactions: Transaction[] = [
     description: 'Rendimento CDB',
     merchant: 'Banco Inter',
     category: 'Investimentos',
+    categoryId: 'investimentos',
     categoryIcon: 'fa-chart-line',
     bank: 'Banco Inter',
     bankColor: '#F97316',

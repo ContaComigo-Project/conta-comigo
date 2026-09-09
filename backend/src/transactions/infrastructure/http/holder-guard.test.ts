@@ -27,7 +27,7 @@ const transaction = (id: string, dono: typeof A, description: string) => ({
   id,
   holderId: dono,
   description,
-  readableDescription: null,
+  readableDescription: null, category: null, categoryOrigin: null,
   amountInCents: 10_00,
   externalId: null,
   dueDate: new Date('2026-01-10T12:00:00Z'),

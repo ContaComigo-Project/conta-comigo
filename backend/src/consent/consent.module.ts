@@ -8,6 +8,8 @@ import { TOKENS_INTELLIGENCE } from '../intelligence/domain/port/driven/tokens';
 import type { AiAdvisor } from '../intelligence/domain/port/driven/ai-advisor';
 import { MakeDescriptionsReadable } from '../transactions/application/make-descriptions-readable';
 import { AdvisorDescriptionTranslator } from '../transactions/infrastructure/ai/advisor-description-translator';
+import { CategorizeTransactions } from '../transactions/application/categorize-transactions';
+import { AdvisorCategorySuggester } from '../transactions/infrastructure/ai/advisor-category-suggester';
 import { TOKENS } from '../transactions/domain/port/driven/tokens';
 import { ConnectInstitutionUseCase } from './application/connect-institution';
 import { ListConnectionsUseCase } from './application/list-connections';
@@ -70,6 +72,7 @@ import type { ExternalAccountRepository } from '../transactions/domain/port/driv
           contas,
           lancamentos,
           new MakeDescriptionsReadable(new AdvisorDescriptionTranslator(advisor)),
+          new CategorizeTransactions(new AdvisorCategorySuggester(advisor)),
         ),
     },
     {

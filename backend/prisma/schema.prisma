@@ -18,6 +18,10 @@ model Transaction {
   // Versao legivel derivada (HN-004, RF-010). O original acima nunca e
   // sobrescrito: RN-010 exige que ele permaneca consultavel.
   readableDescription String? @map("readable_description")
+  // Categoria e quem a definiu (HN-005). `category_origin` = 'manual' bloqueia
+  // a sobrescrita por sincronizacao (RN-011).
+  category            String? @map("category")
+  categoryOrigin      String? @map("category_origin")
   amountInCents Int      @map("amount_in_cents")
   dueDate       DateTime @map("due_date") @db.Timestamptz(3)
   externalId    String?  @map("external_id")

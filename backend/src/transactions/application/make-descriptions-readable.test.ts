@@ -10,7 +10,7 @@ const lancamento = (id: string, description: string): Transaction => ({
   id,
   holderId: TITULAR,
   description,
-  readableDescription: null,
+  readableDescription: null, category: null, categoryOrigin: null,
   amountInCents: -12_345,
   dueDate: new Date('2026-01-15T14:30:00Z'),
   externalId: `ext-${id}`,

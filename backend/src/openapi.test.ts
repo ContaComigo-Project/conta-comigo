@@ -24,6 +24,7 @@ const ENDPOINTS_ESPERADOS = [
   '/dashboard/summary',
   '/transactions',
   '/transactions/month-summary',
+  '/transactions/{id}/category',
 ];
 
 describe('HT-019 — a API e descoberta pela propria documentacao', () => {
@@ -65,11 +66,11 @@ describe('HT-019 — a API e descoberta pela propria documentacao', () => {
     expect(caminhos).toEqual([...ENDPOINTS_ESPERADOS].sort());
 
     // /access/sessions tem POST e DELETE; /consents tem POST e GET;
-    // /consents/{id} e /consents/account têm DELETE; o restante, um método
-    // cada: 12 no total.
+    // /consents/{id} e /consents/account têm DELETE; /transactions/{id}/category
+    // tem PATCH (HN-005); o restante, um método cada.
     const metodos = Object.values(spec.paths).flatMap((p) => Object.keys(p));
     expect(metodos.sort()).toEqual([
-      'delete', 'delete', 'delete', 'get', 'get', 'get', 'get', 'get', 'post', 'post', 'post', 'post', 'post',
+      'delete', 'delete', 'delete', 'get', 'get', 'get', 'get', 'get', 'patch', 'post', 'post', 'post', 'post', 'post',
     ]);
   });
 
@@ -79,7 +80,7 @@ describe('HT-019 — a API e descoberta pela propria documentacao', () => {
       paths: Record<string, Record<string, { security?: Array<Record<string, unknown>> }>>;
     };
 
-    for (const caminho of ['/transactions', '/transactions/month-summary']) {
+    for (const caminho of ['/transactions', '/transactions/month-summary', '/transactions/{id}/category']) {
       const operacoes = spec.paths[caminho];
       for (const operacao of Object.values(operacoes)) {
         const seguranca = operacao.security ?? [];

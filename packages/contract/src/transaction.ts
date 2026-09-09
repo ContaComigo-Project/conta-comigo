@@ -22,6 +22,12 @@ export const TransactionDTO = z
   .strict();
 export type TransactionDTO = z.infer<typeof TransactionDTO>;
 
+// Corpo da correcao manual de categoria (HN-005, RF-012). O identificador da
+// categoria e o mesmo do catalogo do dominio; a web ja mapeia icone e cor por
+// ele.
+export const CorrigirCategoriaDTO = z.object({ category: z.string().min(1) }).strict();
+export type CorrigirCategoriaDTO = z.infer<typeof CorrigirCategoriaDTO>;
+
 export const ResumoDoMesDTO = z
   .object({ month: ReferenceMonth, quantidade: z.number().int().min(0), totalEmCents: Cents })
   .strict();

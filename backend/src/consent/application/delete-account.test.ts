@@ -38,6 +38,12 @@ class ConsentsFake implements ConsentRepository {
 }
 
 class TransactionsFake implements RepositorioDeTransactions {
+  async buscarDoHolder() {
+    return null;
+  }
+
+  async salvar() {}
+
   apagados: string[] = [];
   async listarDoHolder() { return []; }
   async salvarSincronizados() {}

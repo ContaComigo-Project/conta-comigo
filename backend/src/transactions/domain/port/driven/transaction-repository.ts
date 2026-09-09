@@ -10,6 +10,16 @@ export interface RepositorioDeTransactions {
   listarDoHolder(holderId: HolderId): Promise<readonly Transaction[]>;
 
   /**
+   * Busca UM lancamento do titular (HN-005). O holder entra na consulta, e nao
+   * em um `if` depois: id de outra pessoa devolve null, e nao um objeto que
+   * alguem poderia esquecer de checar (RN-015).
+   */
+  buscarDoHolder(holderId: HolderId, transactionId: string): Promise<Transaction | null>;
+
+  /** Grava um lancamento ja existente (HN-005: correcao manual de categoria). */
+  salvar(transaction: Transaction): Promise<void>;
+
+  /**
    * Persists transactions from a sync with dedup by (holderId, externalId)
    * (RN-008): the same external id and due date is stored once.
    */

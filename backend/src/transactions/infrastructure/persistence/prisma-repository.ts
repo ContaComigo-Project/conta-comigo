@@ -35,29 +35,45 @@ export class RepositorioDeTransactionsPrisma implements RepositorioDeTransaction
   }
 
   async salvarSincronizados(lancamentos: readonly Transaction[]): Promise<void> {
-    const existentes = new Set<string>();
     for (const l of lancamentos) {
-      if (l.externalId === null) continue;
-      const linha = await this.prisma.transaction.findFirst({
-        where: { holderId: l.holderId, externalId: l.externalId },
-        select: { id: true },
-      });
-      if (linha) existentes.add(l.externalId);
-    }
-    for (const l of lancamentos) {
-      if (l.externalId !== null && existentes.has(l.externalId)) continue;
-      await this.prisma.transaction.create({
+      const existente =
+        l.externalId === null
+          ? null
+          : await this.prisma.transaction.findFirst({
+              where: { holderId: l.holderId, externalId: l.externalId },
+              select: { id: true, categoryOrigin: true },
+            });
+
+      if (!existente) {
+        await this.prisma.transaction.create({ data: paraLinha(l) });
+        continue;
+      }
+
+      // RN-008: o mesmo lancamento externo nao duplica. RN-011: a categoria
+      // MANUAL nunca e sobrescrita por sincronizacao — a decisao mora aqui, no
+      // unico caminho de escrita da sincronizacao, e nao no caso de uso, onde
+      // um segundo caminho a contornaria sem ninguem perceber.
+      const preservaCategoria = existente.categoryOrigin === 'manual';
+      await this.prisma.transaction.update({
+        where: { id: existente.id },
         data: {
-          id: l.id,
-          holderId: l.holderId,
           description: l.description,
+          readableDescription: l.readableDescription,
           amountInCents: l.amountInCents,
           dueDate: l.dueDate,
-          externalId: l.externalId,
+          ...(preservaCategoria ? {} : { category: l.category, categoryOrigin: l.categoryOrigin }),
         },
       });
     }
   }
+
+  async buscarDoHolder(holderId: HolderId, transactionId: string): Promise<Transaction | null> {
+    // O holder entra na consulta (RN-015): id de outra pessoa nao volta.
+    const linha = await this.prisma.transaction.findFirst({ where: { holderId, id: transactionId } });
+    return linha ? paraEntidade(linha) : null;
+  }
+
+
 
   async deleteByHolder(holderId: HolderId): Promise<void> {
     await this.prisma.transaction.deleteMany({ where: { holderId } });
@@ -79,6 +95,8 @@ function paraLinha(l: Transaction): LinhaDeTransaction {
     holderId: l.holderId,
     description: l.description,
     readableDescription: l.readableDescription,
+    category: l.category,
+    categoryOrigin: l.categoryOrigin,
     amountInCents: l.amountInCents,
     dueDate: l.dueDate,
     externalId: l.externalId,
@@ -91,6 +109,8 @@ function paraEntidade(linha: LinhaDeTransaction): Transaction {
     holderId: linha.holderId as HolderId,
     description: linha.description,
     readableDescription: linha.readableDescription,
+    category: linha.category as Transaction['category'],
+    categoryOrigin: linha.categoryOrigin as Transaction['categoryOrigin'],
     amountInCents: linha.amountInCents,
     dueDate: linha.dueDate,
     externalId: linha.externalId,

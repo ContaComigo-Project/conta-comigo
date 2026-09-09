@@ -7,9 +7,23 @@ interface TransactionsListViewProps {
   label: string;
   transactions: Transaction[];
   cats: BudgetCategory[];
+  /** HN-005 (RF-012): corrigir a categoria. Ausente quando a tela é só leitura. */
+  onCorrigirCategoria?: (transactionId: string, category: string) => void;
 }
 
-export function TransactionsListView({ label, transactions, cats }: TransactionsListViewProps) {
+// Catálogo do domínio (HN-005). O rótulo é apresentação; o id é o que viaja.
+const CATEGORIAS_CORRIGIVEIS: readonly { id: string; label: string }[] = [
+  { id: 'alimentacao', label: 'Alimentação' },
+  { id: 'transporte', label: 'Transporte' },
+  { id: 'moradia', label: 'Moradia' },
+  { id: 'saude', label: 'Saúde' },
+  { id: 'lazer', label: 'Lazer' },
+  { id: 'receita', label: 'Receita' },
+  { id: 'investimentos', label: 'Investimentos' },
+  { id: 'outros', label: 'Outros' },
+];
+
+export function TransactionsListView({ label, transactions, cats, onCorrigirCategoria }: TransactionsListViewProps) {
   const [page, setPage] = useState(0);
   const PAGE_SIZE = 5;
   const totalPages = Math.max(1, Math.ceil(transactions.length / PAGE_SIZE));
@@ -70,7 +84,27 @@ export function TransactionsListView({ label, transactions, cats }: Transactions
                   )}
                 </div>
                 <div className="flex items-center gap-2 text-[0.7rem] text-slate-500">
-                  <span>{tx.category}</span>
+                  {onCorrigirCategoria ? (
+                    // RF-012: a correção é uma escolha explícita da pessoa, e a
+                    // partir dela a categoria passa a ser manual (RN-011).
+                    <select
+                      aria-label={`Categoria de ${tx.description}`}
+                      className="text-[0.7rem] text-slate-600 bg-transparent border border-slate-200 rounded px-1 py-px"
+                      value={tx.categoryId ?? ''}
+                      onChange={(e) => onCorrigirCategoria(tx.id, e.target.value)}
+                    >
+                      <option value="" disabled>
+                        Não classificado
+                      </option>
+                      {CATEGORIAS_CORRIGIVEIS.map((c) => (
+                        <option key={c.id} value={c.id}>
+                          {c.label}
+                        </option>
+                      ))}
+                    </select>
+                  ) : (
+                    <span>{tx.category}</span>
+                  )}
                   <span>·</span>
                   <span>{tx.formattedDate}</span>
                   <span>·</span>

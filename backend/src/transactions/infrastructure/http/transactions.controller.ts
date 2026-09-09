@@ -1,9 +1,10 @@
-import { Controller, Get, Inject, UnauthorizedException, UseGuards } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Get, Inject, NotFoundException, Param, Patch, UnauthorizedException, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { ok, type TransactionDTO, type Result } from '@contacomigo/contract';
+import { CorrigirCategoriaDTO, ok, type TransactionDTO, type Result } from '@contacomigo/contract';
 import type { GetMonthSummary } from '../../domain/port/driving/month-summary';
 import type { ListarTransactions } from '../../domain/port/driving/list-transactions';
 import type { Identity } from '../../domain/port/driven/identity';
+import type { CorrectCategory } from '../../application/correct-category';
 import { GuardaDeHolder } from './holder-guard';
 import { TOKENS } from '../../domain/port/driven/tokens';
 import { paraTransactionDTO } from './transaction.dto';
@@ -21,6 +22,7 @@ export class TransactionsController {
     @Inject(TOKENS.GetMonthSummary) private readonly consultar: GetMonthSummary,
     @Inject(TOKENS.ListarTransactions) private readonly listar: ListarTransactions,
     @Inject(TOKENS.Identity) private readonly identity: Identity,
+    @Inject(TOKENS.CorrectCategory) private readonly corrigirCategoria: CorrectCategory,
   ) {}
 
   // A guarda ja recusou a requisicao sem holder; aqui o null so aconteceria
@@ -46,5 +48,31 @@ export class TransactionsController {
   async transactions(): Promise<Result<TransactionDTO[]>> {
     const transactions = await this.listar.executar(this.holder());
     return ok(transactions.map(paraTransactionDTO));
+  }
+
+  // RF-012: a pessoa corrige a categoria; a partir daqui ela e manual e nenhuma
+  // sincronizacao a sobrescreve (RN-011). O titular vem da Identity, nunca da
+  // requisicao — id de outra pessoa devolve 404, e nao 403: confirmar que o
+  // recurso existe ja seria vazamento (RN-015).
+  @Patch(':id/category')
+  @ApiOperation({ summary: 'Corrigir categoria', description: 'Define manualmente a categoria de um lançamento do titular.' })
+  @ApiResponse({ status: 200, description: 'Categoria corrigida' })
+  @ApiResponse({ status: 400, description: 'Categoria fora do catálogo' })
+  @ApiResponse({ status: 401, description: 'Sem token Bearer válido' })
+  @ApiResponse({ status: 404, description: 'Lançamento não encontrado para este titular' })
+  async corrigir(@Param('id') id: string, @Body() corpo: unknown): Promise<Result<{ id: string }>> {
+    const parse = CorrigirCategoriaDTO.safeParse(corpo);
+    if (!parse.success) throw new BadRequestException('categoria ausente ou invalida');
+
+    const resultado = await this.corrigirCategoria.executar({
+      holderId: this.holder(),
+      transactionId: id,
+      category: parse.data.category,
+    });
+
+    if (resultado.tipo === 'categoria-invalida') throw new BadRequestException('categoria fora do catalogo');
+    if (resultado.tipo === 'nao-encontrado') throw new NotFoundException();
+
+    return ok({ id });
   }
 }

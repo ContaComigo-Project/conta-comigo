@@ -75,6 +75,12 @@ class ContasFake implements ExternalAccountRepository {
 }
 
 class LancamentosFake implements RepositorioDeTransactions {
+  async buscarDoHolder() {
+    return null;
+  }
+
+  async salvar() {}
+
   async listarDoHolder() { return []; }
   async salvarSincronizados() {}
   async deleteByHolder() {}

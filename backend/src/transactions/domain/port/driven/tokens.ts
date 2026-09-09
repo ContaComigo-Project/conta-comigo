@@ -8,4 +8,5 @@ export const TOKENS = {
   ListarTransactions: Symbol.for('transactions/ListarTransactions'),
   GetConsolidatedSummary: Symbol.for('transactions/GetConsolidatedSummary'),
   Identity: Symbol.for('transactions/Identity'),
+  CorrectCategory: Symbol.for('transactions/CorrectCategory'),
 } as const;

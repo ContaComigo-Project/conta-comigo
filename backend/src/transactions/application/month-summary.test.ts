@@ -8,7 +8,7 @@ import type { RepositorioDeTransactions } from '../domain/port/driven/transactio
 const TITULAR = holderId('holder-a');
 
 function transaction(id: string, amountInCents: number, competenciaUtc: string): Transaction {
-  return { id, holderId: TITULAR, description: 'transaction ' + id, readableDescription: null, amountInCents, dueDate: new Date(competenciaUtc) , externalId: null };
+  return { id, holderId: TITULAR, description: 'transaction ' + id, readableDescription: null, category: null, categoryOrigin: null, amountInCents, dueDate: new Date(competenciaUtc) , externalId: null };
 }
 
 // Fakes construidos aqui, a partir das PORTAS. O teste de application/ nao
@@ -18,6 +18,8 @@ function transaction(id: string, amountInCents: number, competenciaUtc: string):
 const clockEm = (instanteUtc: string): Clock => ({ agora: () => new Date(instanteUtc) });
 const repositorioCom = (itens: readonly Transaction[]): RepositorioDeTransactions => ({
   listarDoHolder: async () => itens,
+  buscarDoHolder: async (_holder, id) => itens.find((l) => l.id === id) ?? null,
+  salvar: async () => {},
   salvarSincronizados: async () => {},
   deleteByHolder: async () => {},
 });

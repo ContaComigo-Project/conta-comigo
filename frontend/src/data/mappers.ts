@@ -54,9 +54,12 @@ export function paraTransactions(dados: TransactionDTO[], agora: Date): Transact
     return {
       id: l.id,
       description: l.description,
-      descriptionOriginal: l.descriptionOriginal,
+      // Só existe quando a limpeza de HN-004 mudou o texto; ausente é ausente,
+      // e não uma chave com `undefined` (o teste de equivalência compara forma).
+      ...(l.descriptionOriginal === undefined ? {} : { descriptionOriginal: l.descriptionOriginal }),
       merchant: l.estabelecimento,
-      category: l.category?.name ?? 'Outros',
+      category: l.category?.name ?? 'Não classificado',
+      categoryId: l.category?.id ?? null,
       categoryIcon: category.iconeNaLista,
       bank: l.instituicao.name,
       bankColor: banco?.cor ?? '#94a3b8',

@@ -21,6 +21,22 @@ export class ApiSource {
     return (await response.json()) as Result<TransactionDTO[]>;
   }
 
+  /**
+   * HN-005 (RF-012): corrige a categoria de um lançamento. A partir daqui ela é
+   * manual e a sincronização não a sobrescreve (RN-011).
+   */
+  async corrigirCategoria(transactionId: string, category: string): Promise<Result<{ id: string }>> {
+    const response = await fetch(`${BASE}/transactions/${transactionId}/category`, {
+      method: 'PATCH',
+      headers: { ...autorizado(), 'content-type': 'application/json' },
+      body: JSON.stringify({ category }),
+    });
+    if (!response.ok) {
+      return { estado: 'error', codigo: 'interno', mensagem: 'Não foi possível salvar a categoria.' };
+    }
+    return (await response.json()) as Result<{ id: string }>;
+  }
+
   async listarBancosConectados(): Promise<Result<ConnectedBankDTO[]>> {
     const response = await fetch(`${BASE}/consents`, { headers: autorizado() });
     if (!response.ok) return { estado: 'error', codigo: 'interno', mensagem: 'Falha ao listar conexões.' };

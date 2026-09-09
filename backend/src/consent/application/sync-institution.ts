@@ -5,6 +5,7 @@ import type { RepositorioDeTransactions } from '../../transactions/domain/port/d
 import type { HolderId } from '../../transactions/domain/model/holder';
 import type { Transaction } from '../../transactions/domain/model/transaction';
 import { MakeDescriptionsReadable } from '../../transactions/application/make-descriptions-readable';
+import type { CategorizeTransactions } from '../../transactions/application/categorize-transactions';
 import { estaAtivo } from '../domain/model/consent';
 import type { ConsentRepository } from '../domain/port/driven/consent-repository';
 import type { ResultadoDaSincronizacao, SyncInstitution, SyncInstitutionInput } from '../domain/port/driving/consent';
@@ -26,6 +27,9 @@ export class SyncInstitutionUseCase implements SyncInstitution {
     // HN-004: a limpeza acontece no momento da sincronizacao, nao a cada
     // leitura da tela — o custo se paga uma vez por lancamento novo.
     private readonly legibilizar?: MakeDescriptionsReadable,
+    // HN-005: a categoria e derivada da descricao JA legivel, entao esta etapa
+    // vem depois da limpeza — nunca antes.
+    private readonly categorizar?: CategorizeTransactions,
   ) {}
 
   async executar(input: SyncInstitutionInput): Promise<ResultadoDaSincronizacao> {
@@ -72,6 +76,8 @@ export class SyncInstitutionUseCase implements SyncInstitution {
       // O texto do agregador entra como veio e nao e sobrescrito (RN-010).
       description: l.descriptionOriginal,
       readableDescription: null,
+      category: null,
+      categoryOrigin: null,
       amountInCents: l.amountInCents,
       dueDate: l.dueDate,
       externalId: l.idExterno,
@@ -79,7 +85,8 @@ export class SyncInstitutionUseCase implements SyncInstitution {
 
     // Sem o caso de uso de legibilidade, os lancamentos entram com a descricao
     // crua: a sincronizacao nunca depende da limpeza para acontecer (RNF-005).
-    const paraSalvar = this.legibilizar ? await this.legibilizar.executar(novos) : novos;
+    const legiveis = this.legibilizar ? await this.legibilizar.executar(novos) : novos;
+    const paraSalvar = this.categorizar ? await this.categorizar.executar(legiveis) : legiveis;
 
     await this.lancamentos.salvarSincronizados(paraSalvar);
 

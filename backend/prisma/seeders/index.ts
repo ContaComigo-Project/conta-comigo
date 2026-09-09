@@ -8,6 +8,7 @@ import { PrismaPg } from '@prisma/adapter-pg';
 import { PrismaClient } from '../../src/transactions/infrastructure/persistence/gerado/client';
 import { cipherr } from '../../src/transactions/infrastructure/persistence/cipher';
 import { limparDescricao } from '../../src/transactions/domain/model/readable-description';
+import { categorizarPorRegra } from '../../src/transactions/domain/model/category';
 
 const URL_PADRAO = 'postgresql://contacomigo:contacomigo_dev_local@localhost:5433/contacomigo';
 const prisma = new PrismaClient({ adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL ?? URL_PADRAO }) });
@@ -79,10 +80,12 @@ async function seed() {
   // (HN-004): the demo shows the real behaviour, not a hand-written label.
   for (const l of LANCAMENTOS) {
     const readableDescription = limparDescricao(l.description);
+    const category = categorizarPorRegra(readableDescription, l.amountInCents);
+    const categoryOrigin = category === null ? null : 'automatica';
     await prisma.transaction.upsert({
       where: { id: l.id },
-      create: { ...l, readableDescription, holderId: HOLDER, externalId: l.externalId },
-      update: { amountInCents: l.amountInCents, readableDescription },
+      create: { ...l, readableDescription, category, categoryOrigin, holderId: HOLDER, externalId: l.externalId },
+      update: { amountInCents: l.amountInCents, readableDescription, category, categoryOrigin },
     });
   }
   console.log(`seed: ${LANCAMENTOS.length} lançamentos criados`);

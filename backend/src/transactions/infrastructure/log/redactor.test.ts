@@ -9,7 +9,7 @@ import type { Transaction } from '../../domain/model/transaction';
 const transaction: Transaction = {
   id: 'txn_001',
   holderId: holderId('holder-a'),
-  description: 'Farmacia Sao Joao', readableDescription: null,
+  description: 'Farmacia Sao Joao', readableDescription: null, category: null, categoryOrigin: null,
   amountInCents: -8740,
   dueDate: new Date('2026-09-05T15:30:00.000Z'),
   externalId: 'ext-1',

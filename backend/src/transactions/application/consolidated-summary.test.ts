@@ -18,6 +18,12 @@ class ContasFake implements ExternalAccountRepository {
 }
 
 class LancamentosFake implements RepositorioDeTransactions {
+  async buscarDoHolder() {
+    return null;
+  }
+
+  async salvar() {}
+
   private dados: Transaction[] = [];
   async listarDoHolder(h: typeof HOLDER_A) { return this.dados.filter((x) => x.holderId === h); }
   async salvarSincronizados(l: readonly Transaction[]) { this.dados.push(...l); }
@@ -29,7 +35,7 @@ const conta = (holderId: typeof HOLDER_A, type: 'corrente' | 'poupanca' | 'carta
 });
 
 const lancamento = (holderId: typeof HOLDER_A, amountInCents: number, dueDate: Date): Transaction => ({
-  id: `${holderId}-${amountInCents}-${dueDate.getTime()}`, holderId, description: 'x', readableDescription: null, amountInCents, dueDate, externalId: null,
+  id: `${holderId}-${amountInCents}-${dueDate.getTime()}`, holderId, description: 'x', readableDescription: null, category: null, categoryOrigin: null, amountInCents, dueDate, externalId: null,
 });
 
 const relogio = (instante: Date): Clock => ({ agora: () => instante });
