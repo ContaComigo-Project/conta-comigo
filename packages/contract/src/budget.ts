@@ -54,3 +54,39 @@ export const BudgetSemaphoreDTO = z
   })
   .strict();
 export type BudgetSemaphoreDTO = z.infer<typeof BudgetSemaphoreDTO>;
+
+// Six-month history per category and the top recurrent problems (HN-008).
+export const BudgetHistoryDTO = z
+  .object({
+    meses: z
+      .array(
+        z
+          .object({
+            month: z.string(),
+            categorias: z
+              .array(
+                z
+                  .object({
+                    category: z.string(),
+                    limitInCents: z.number().int().nullable(),
+                    spentInCents: z.number().int(),
+                    band: z.enum(['verde', 'amarela', 'vermelha', 'sem-limite']),
+                  })
+                  .strict(),
+              ),
+          })
+          .strict(),
+      ),
+    problemas: z
+      .array(
+        z
+          .object({
+            category: z.string(),
+            vezesEmVermelho: z.number().int(),
+            excessoTotalEmCentavos: z.number().int(),
+          })
+          .strict(),
+      ),
+  })
+  .strict();
+export type BudgetHistoryDTO = z.infer<typeof BudgetHistoryDTO>;

@@ -14,12 +14,13 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { BudgetSemaphoreDTO, DefinirLimiteDTO, ok, type MonthlyLimitDTO, type Result } from '@contacomigo/contract';
+import { BudgetHistoryDTO, BudgetSemaphoreDTO, DefinirLimiteDTO, ok, type MonthlyLimitDTO, type Result } from '@contacomigo/contract';
 import { zodParaSchema } from '../../../openapi';
 import type { Identity } from '../../../transactions/domain/port/driven/identity';
 import type { ListMonthlyLimits } from '../../application/list-monthly-limits';
 import type { RemoveMonthlyLimit } from '../../application/remove-monthly-limit';
 import type { SetMonthlyLimit } from '../../application/set-monthly-limit';
+import type { GetBudgetHistory } from '../../domain/port/driving/get-budget-history';
 import type { GetBudgetSemaphore } from '../../domain/port/driving/get-budget-semaphore';
 import { TOKENS_BUDGET } from '../../domain/port/driven/tokens';
 import { GuardaDeHolderDoBudget, TOKEN_IDENTITY_BUDGET } from './holder-guard';
@@ -38,6 +39,7 @@ export class BudgetController {
     @Inject(TOKENS_BUDGET.RemoveMonthlyLimit) private readonly remover: RemoveMonthlyLimit,
     @Inject(TOKENS_BUDGET.ListMonthlyLimits) private readonly listar: ListMonthlyLimits,
     @Inject(TOKENS_BUDGET.GetBudgetSemaphore) private readonly calcularSemaforo: GetBudgetSemaphore,
+    @Inject(TOKENS_BUDGET.GetBudgetHistory) private readonly historico: GetBudgetHistory,
     @Inject(TOKEN_IDENTITY_BUDGET) private readonly identity: Identity,
   ) {}
 
@@ -58,6 +60,17 @@ export class BudgetController {
     } catch {
       throw new BadRequestException('Mês inválido (esperado AAAA-MM).');
     }
+  }
+
+  @Get('history')
+  @ApiOperation({ summary: 'Histórico de 6 meses', description: 'Histórico por categoria dos meses fechados (RN-022) e os três problemas mais recorrentes (RN-023).' })
+  @ApiResponse({ status: 200, description: 'Histórico do titular' })
+  async historicoMeses(): Promise<BudgetHistoryDTO> {
+    const r = await this.historico.executar(this.titular());
+    return {
+      meses: r.meses.map((m) => ({ month: m.month, categorias: [...m.categorias] })),
+      problemas: [...r.problemas],
+    };
   }
 
   @Get(':month')

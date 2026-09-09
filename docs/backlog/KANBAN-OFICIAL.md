@@ -169,7 +169,7 @@ o backlog passou a considerar o frontend existente.
 | --- | --- | --- | --- | --- | --- | --- |
 | 25 | `HN-006` | Definir e editar limite mensal por categoria | Negócio | **Done** | HN-005 | `v0.25.0` (tela pendente — ver `HT-018`) |
 | 26 | `HN-007` | Orçamento semáforo e aviso ao cruzar faixa | Negócio | **Done** | HN-006 | Barras e faixas prontas; **a regra sai de `budget.mock.ts` para o domínio** |
-| 27 | `HN-008` | Histórico de 6 meses e problemas recorrentes | Negócio | Backlog | HN-007 | `HistoricalOverview` completo, sobre dados simulados |
+| 27 | `HN-008` | Histórico de 6 meses e problemas recorrentes | Negócio | **Em revisão** | HN-007 | `HistoricalOverview` completo, sobre dados simulados |
 
 ### Fase 6 — Consultoria educativa, limpeza e publicação
 
@@ -187,7 +187,7 @@ o backlog passou a considerar o frontend existente.
 - _(vazio — `HN-007` em execução, WIP 1)_
 
 ### Em execução
-- _(vazio)_
+- `HN-008` — Histórico de 6 meses e problemas recorrentes_
 
 ### Em revisão
 - _(vazio)_

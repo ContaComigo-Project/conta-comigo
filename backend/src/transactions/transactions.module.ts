@@ -51,6 +51,6 @@ import { SystemClock } from './infrastructure/clock/system-clock';
         new GetConsolidatedSummaryUseCase(contas, repositorio, clock),
     },
   ],
-  exports: [TOKENS.RepositorioDeTransactions, TOKENS.ExternalAccountRepository],
+  exports: [TOKENS.RepositorioDeTransactions, TOKENS.ExternalAccountRepository, TOKENS.Clock],
 })
 export class TransactionsModule {}

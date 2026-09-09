@@ -4,6 +4,8 @@ import { TransactionsModule } from '../transactions/transactions.module';
 import { TOKENS } from '../transactions/domain/port/driven/tokens';
 import type { RepositorioDeTransactions } from '../transactions/domain/port/driven/transaction-repository';
 import { GetBudgetSemaphoreUseCase } from './application/get-budget-semaphore';
+import { GetBudgetHistoryUseCase } from './application/get-budget-history';
+import type { Clock } from '../transactions/domain/port/driven/clock';
 import { ListMonthlyLimits } from './application/list-monthly-limits';
 import { RemoveMonthlyLimit } from './application/remove-monthly-limit';
 import { SetMonthlyLimit } from './application/set-monthly-limit';
@@ -28,6 +30,12 @@ import { TokenIdentity } from '../transactions/infrastructure/http/token-identit
       inject: [TOKENS_BUDGET.BudgetRepository, TOKENS.RepositorioDeTransactions],
       useFactory: (repo: BudgetRepository, transactions: RepositorioDeTransactions) =>
         new GetBudgetSemaphoreUseCase(repo, transactions),
+    },
+    {
+      provide: TOKENS_BUDGET.GetBudgetHistory,
+      inject: [TOKENS_BUDGET.BudgetRepository, TOKENS.RepositorioDeTransactions, TOKENS.Clock],
+      useFactory: (repo: BudgetRepository, transactions: RepositorioDeTransactions, clock: Clock) =>
+        new GetBudgetHistoryUseCase(repo, transactions, clock),
     },
 
     { provide: TOKEN_IDENTITY_BUDGET, useClass: TokenIdentity },

@@ -1,0 +1,12 @@
+# progress — HN-008
+# Diário append-only do ciclo Ralph. Uma linha por evento.
+# Formato: AAAA-MM-DD HH:MM | FASE | descrição objetiva | evidência
+# FASE: PERCEBER | ORIENTAR | DECIDIR | AGIR | REGISTRAR
+
+2026-09-09 01:40 | PERCEBER | li RF-016/017 e RN-022/023; entendi que o ranking é calculado, nunca IA | docs/requisitos
+2026-09-09 01:45 | ORIENTAR | escopo: histórico dos meses fechados (até 6) + top 3 problemas recorrentes; helper de cálculo compartilhado | -
+2026-09-09 01:50 | AGIR | grooming HN-008 + kanban Em execução + TASK/IMPLEMENTATION | docs
+2026-09-09 02:00 | AGIR | helper por-categoria-do-mes + caso de uso GetBudgetHistory (RN-022 janela, RN-023 ranking/desempate) | backend/budget
+2026-09-09 02:10 | AGIR | endpoint GET /budgets/history + DTO + wiring (Clock exportado do TransactionsModule — bug de bootstrap corrigido) | controller, module
+2026-09-09 02:20 | AGIR | suíte 300+22+3 verdes; fronteiras verdes; build ok; auditoria 100%; history validado na API | pnpm, curl
+2026-09-09 02:25 | REGISTRAR | ENTREGA-HN-008 criada; kanban Em revisão | docs/entregas, KANBAN
