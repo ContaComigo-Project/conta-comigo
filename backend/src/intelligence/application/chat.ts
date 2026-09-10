@@ -43,7 +43,9 @@ export class PerguntarNoChatUseCase implements PerguntarNoChat {
     });
 
     if (resultado.tipo === 'ok') {
-      return { tipo: 'ok', resposta: resultado.dados.texto, aviso: AVISO_DE_NAO_ACONSELHAMENTO };
+      return resultado.dados.origem === 'contingencia'
+        ? { tipo: 'ok', resposta: resultado.dados.texto, aviso: AVISO_DE_NAO_ACONSELHAMENTO, contingencia: true, contingenciaDetalhe: resultado.dados.falhaDetalhe }
+        : { tipo: 'ok', resposta: resultado.dados.texto, aviso: AVISO_DE_NAO_ACONSELHAMENTO };
     }
     switch (resultado.motivo) {
       case 'teto-atingido':

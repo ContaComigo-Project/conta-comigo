@@ -1,6 +1,6 @@
 import type { Conselho, PedidoDeConselho } from '../../domain/model/advice';
 import { falhaDeIa, type ResultadoDeIa } from '../../domain/model/ai-result';
-import { examinarSaida, type MotivoDoBloqueio } from '../../domain/model/output-guard';
+import { examinarSaida, sanitizarTexto, type MotivoDoBloqueio } from '../../domain/model/output-guard';
 import type { AiAdvisor } from '../../domain/port/driven/ai-advisor';
 import type { GuardLog } from '../../domain/port/driven/guard-log';
 
@@ -37,7 +37,14 @@ export class GuardedAdvisor implements AiAdvisor {
     if (resultado.tipo === 'falha') return resultado;
 
     const veredito = examinarSaida(resultado.dados.texto, pedido.dados);
-    if (veredito.aprovado) return resultado;
+    if (veredito.aprovado) {
+      // RNF-017 + apresentação: a resposta sai limpa de markdown/emojis e com
+      // limite de leitura — o texto bruto do modelo nunca chega à tela.
+      return {
+        ...resultado,
+        dados: { ...resultado.dados, texto: sanitizarTexto(resultado.dados.texto) },
+      };
+    }
 
     // Quem opera precisa enxergar a reprovacao; a amostra curta basta para
     // diagnosticar sem despejar o texto inteiro no log (RNF-015).

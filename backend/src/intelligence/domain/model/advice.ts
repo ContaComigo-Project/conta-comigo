@@ -27,5 +27,7 @@ export interface PedidoDeConselho {
 export interface Conselho {
   readonly texto: string;
   /** De onde veio: ajuda o teste e o log a distinguir cache de chamada nova. */
-  readonly origem: 'provedor' | 'cache';
+  readonly origem: 'provedor' | 'cache' | 'contingencia';
+  /** Quando `origem === 'contingencia'`, o motivo da falha do provedor (ex.: alta demanda). */
+  readonly falhaDetalhe?: string;
 }

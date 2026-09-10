@@ -68,7 +68,11 @@ export class GetDiagnosisUseCase implements GetDiagnosis {
       dados: { meses: mesesComDados },
     });
 
-    if (resultado.tipo === 'ok') return { tipo: 'ok', texto: resultado.dados.texto };
+    if (resultado.tipo === 'ok') {
+      return resultado.dados.origem === 'contingencia'
+        ? { tipo: 'ok', texto: resultado.dados.texto, contingencia: true, contingenciaDetalhe: resultado.dados.falhaDetalhe }
+        : { tipo: 'ok', texto: resultado.dados.texto };
+    }
     switch (resultado.motivo) {
       case 'teto-atingido':
         return { tipo: 'teto-atingido' };

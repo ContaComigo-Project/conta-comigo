@@ -35,7 +35,7 @@ export class ChatController {
     const r = await this.perguntar.executar(this.titular(), body.pergunta);
     switch (r.tipo) {
       case 'ok':
-        return { estado: 'ok', resposta: r.resposta, aviso: r.aviso };
+        return { estado: 'ok', resposta: r.resposta, aviso: r.aviso, ...(r.contingencia ? { contingencia: true, contingenciaDetalhe: r.contingenciaDetalhe } : {}) };
       case 'ia-indisponivel':
         return { estado: 'ia-indisponivel', motivo: r.motivo };
       case 'teto-atingido':

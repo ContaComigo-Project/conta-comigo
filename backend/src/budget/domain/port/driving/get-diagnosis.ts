@@ -1,5 +1,5 @@
 export type ResultadoDoDiagnostico =
-  | { readonly tipo: 'ok'; readonly texto: string }
+  | { readonly tipo: 'ok'; readonly texto: string; readonly contingencia?: boolean; readonly contingenciaDetalhe?: string }
   | { readonly tipo: 'dados-insuficientes' }
   | { readonly tipo: 'ia-indisponivel'; readonly motivo: string }
   | { readonly tipo: 'teto-atingido' }

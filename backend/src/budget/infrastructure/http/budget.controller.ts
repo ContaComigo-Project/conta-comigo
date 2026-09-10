@@ -79,7 +79,7 @@ export class BudgetController {
     const r = await this.diagnostico.executar(this.titular());
     switch (r.tipo) {
       case 'ok':
-        return { estado: 'ok', texto: r.texto };
+        return { estado: 'ok', texto: r.texto, ...(r.contingencia ? { contingencia: true, contingenciaDetalhe: r.contingenciaDetalhe } : {}) };
       case 'dados-insuficientes':
         return { estado: 'dados-insuficientes' };
       case 'ia-indisponivel':

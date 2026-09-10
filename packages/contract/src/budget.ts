@@ -98,6 +98,8 @@ export const DiagnosisDTO = z
     estado: z.enum(['ok', 'dados-insuficientes', 'ia-indisponivel', 'teto-atingido', 'ia-bloqueou']),
     texto: z.string().optional(),
     motivo: z.string().optional(),
+    contingencia: z.boolean().optional(),
+    contingenciaDetalhe: z.string().optional(),
   })
   .strict();
 export type DiagnosisDTO = z.infer<typeof DiagnosisDTO>;
@@ -113,6 +115,8 @@ export const ChatRespostaDTO = z
     resposta: z.string().optional(),
     aviso: z.string().optional(),
     motivo: z.string().optional(),
+    contingencia: z.boolean().optional(),
+    contingenciaDetalhe: z.string().optional(),
   })
   .strict();
 export type ChatRespostaDTO = z.infer<typeof ChatRespostaDTO>;

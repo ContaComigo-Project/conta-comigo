@@ -4,7 +4,7 @@ import { ApiSource } from '../../../data/api-source';
 
 type EstadoDoDiagnostico =
   | { estado: 'carregando' }
-  | { estado: 'ok'; texto: string }
+  | { estado: 'ok'; texto: string; contingencia?: boolean; contingenciaDetalhe?: string }
   | { estado: 'dados-insuficientes' }
   | { estado: 'degradado'; motivo: string };
 
@@ -20,7 +20,7 @@ export default function AIInsightPanel() {
       .diagnostico()
       .then((r) => {
         if (!ativo) return;
-        if (r.estado === 'ok') setDados({ estado: 'ok', texto: r.texto ?? '' });
+        if (r.estado === 'ok') setDados({ estado: 'ok', texto: r.texto ?? '', contingencia: r.contingencia, contingenciaDetalhe: r.contingenciaDetalhe });
         else if (r.estado === 'dados-insuficientes') setDados({ estado: 'dados-insuficientes' });
         else setDados({ estado: 'degradado', motivo: r.estado });
       })
@@ -64,6 +64,12 @@ export default function AIInsightPanel() {
 
         {dados.estado === 'ok' && (
           <>
+            {dados.contingencia && (
+              <p className="text-[0.7rem] text-amber-700 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2 mb-3 leading-relaxed">
+                A IA educativa está em modo de contingência: o provedor está indisponível no momento
+                {dados.contingenciaDetalhe ? ` (${dados.contingenciaDetalhe})` : ''}. O texto abaixo é educativo e genérico.
+              </p>
+            )}
             <p className="text-sm text-slate-600 leading-relaxed mb-4">{dados.texto}</p>
             <div className="flex items-start gap-2 px-3 py-2 rounded-lg border border-emerald-100 bg-emerald-50/50 text-[0.68rem] text-emerald-700 leading-relaxed">
               <Info size={12} strokeWidth={2.2} className="shrink-0 mt-0.5" />
