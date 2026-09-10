@@ -81,6 +81,29 @@ function toCategory(cat: { category: string; limitInCents: number | null; spentI
   };
 }
 
+// O semáforo/histórico só listam categorias com limite OU gasto no mês. A tela
+// de limites precisa do catálogo inteiro para permitir definir um limite em
+// qualquer categoria (RF-013) — inclusive as vazias e as sem gasto.
+function completarComCatalogo(porMes: Record<string, CategoryOfMonth[]>): void {
+  for (const month of Object.keys(porMes)) {
+    const existentes = new Set(porMes[month].map((c) => c.category));
+    for (const [id, v] of Object.entries(CATEGORIAS)) {
+      if (existentes.has(id)) continue;
+      porMes[month].push({
+        category: id,
+        name: v.name,
+        icon: v.iconeNaLista,
+        color: v.cor,
+        limitInCents: null,
+        spentInCents: 0,
+        band: 'no-limit',
+        percentage: 0,
+        trend: null,
+      });
+    }
+  }
+}
+
 export interface UseExpensesStateResult {
   problems: Array<{ category: string; vezesEmVermelho: number; excessoTotalEmCentavos: number }>;
   loading: boolean;
@@ -110,6 +133,7 @@ export interface UseExpensesStateResult {
   nudgeDraft: (id: string, currentLimit: number, delta: number) => void;
   setDraftValue: (id: string, currentLimit: number, raw: string) => void;
   removeLimit: (id: string) => Promise<void>;
+  refresh: () => Promise<void>;
   goPrev: () => void;
   goNext: () => void;
   isAtStart: boolean;
@@ -136,6 +160,7 @@ export function useExpensesState(): UseExpensesStateResult {
     const byMonth: Record<string, CategoryOfMonth[]> = {};
     for (const m of history.meses) byMonth[m.month] = m.categorias.map(toCategory);
     byMonth[semaphore.month] = semaphore.categorias.map(toCategory);
+    completarComCatalogo(byMonth);
     setDataByMonth(byMonth);
     setProblems(history.problemas.map((p) => ({ category: p.category, vezesEmVermelho: p.vezesEmVermelho, excessoTotalEmCentavos: p.excessoTotalEmCentavos })));
     setTransactions(txs.estado === 'ok' ? paraTransactions((txs as { dados: TransactionDTO[] }).dados, new Date()) : []);
@@ -176,17 +201,6 @@ useEffect(() => {
     if (!base.includes(mesCorrente())) base.push(mesCorrente());
     return base.sort().reverse();
   }, [dataByMonth]);
-
-  // Deriva o mês selecionado: se o mês atual não tem categorias (ex.: corrente
-  // ainda sem dados), cai no mês fechado mais recente que as tem. Ajuste de
-  // estado derivado após o fetch — padrão do React, não setState de efeito.
-  useEffect(() => {
-    if (loading) return;
-    if ((dataByMonth[selectedMonth]?.length ?? 0) > 0) return;
-    const comDados = months.filter((m) => (dataByMonth[m]?.length ?? 0) > 0);
-    // eslint-disable-next-line react-hooks/set-state-in-effect -- derived-state adjustment after async fetch
-    if (comDados.length > 0 && selectedMonth !== comDados[0]) setSelectedMonth(comDados[0]);
-  }, [loading, months, dataByMonth, selectedMonth]);
 
   const summaries = useMemo<MonthSummary[]>(
     () =>
@@ -337,7 +351,7 @@ useEffect(() => {
     summaries, currentCats, currentTxs, currentSummary,
     filtered, transactionsByCategory,
     enterEdit, cancelEdit, applyDraft,
-    nudgeDraft, setDraftValue, removeLimit,
+    nudgeDraft, setDraftValue, removeLimit, refresh,
     goPrev, goNext, isAtStart, isAtEnd,
   };
 }

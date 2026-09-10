@@ -24,15 +24,13 @@ export default function Expenses() {
     currentCats, currentTxs, currentSummary,
     filtered, transactionsByCategory,
     enterEdit, cancelEdit, applyDraft,
-    nudgeDraft, setDraftValue, removeLimit,
+    nudgeDraft, setDraftValue, removeLimit, refresh,
     goPrev, goNext, isAtStart, isAtEnd,
   } = useExpensesState();
 
   const corrigirCategoria = async (transactionId: string, category: string) => {
     const r = await new ApiSource().corrigirCategoria(transactionId, category);
-    if (r.estado === 'ok') {
-      // State reloads on the next mount/selection; the list re-renders below.
-    }
+    if (r.estado === 'ok') await refresh();
   };
 
   if (errored && currentCats.length === 0) {
