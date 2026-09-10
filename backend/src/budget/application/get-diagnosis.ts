@@ -35,11 +35,27 @@ export class GetDiagnosisUseCase implements GetDiagnosis {
     const corrente = mesDeReferencia(this.clock.agora());
     const transacoes = await this.transactions.listarDoHolder(holderId as HolderId);
 
-    const mesesComDados: Array<{ month: string; categorias: unknown[] }> = [];
+    const mesesComDados: Array<{
+      month: string;
+      totalGastoEmCentavos: number;
+      totalLimiteEmCentavos: number;
+      categoriasDeAtencao: Array<{ category: string; spentInCents: number; limitInCents: number | null; band: string }>;
+    }> = [];
     for (const month of mesesFechados(corrente.ano, corrente.mes)) {
       const limites = await this.repo.listarDoMes(holderId, month);
       const categorias = await categoriasDoMes(limites, transacoes, month);
-      if (categorias.length > 0) mesesComDados.push({ month, categorias: [...categorias] });
+      if (categorias.length === 0) continue;
+      const comLimite = categorias.filter((c) => c.limitInCents !== null);
+      // Resumo compacto para o modelo: só totais + categorias de atenção. Um
+      // payload grande faz o Gemini estourar o limite de espera (RNF-006).
+      mesesComDados.push({
+        month,
+        totalGastoEmCentavos: comLimite.reduce((s, c) => s + c.spentInCents, 0),
+        totalLimiteEmCentavos: comLimite.reduce((s, c) => s + (c.limitInCents ?? 0), 0),
+        categoriasDeAtencao: categorias
+          .filter((c) => c.band === 'amarela' || c.band === 'vermelha')
+          .map((c) => ({ category: c.category, spentInCents: c.spentInCents, limitInCents: c.limitInCents, band: c.band })),
+      });
     }
 
     // RN-020: conta recém-conectada (sem mês fechado com lançamentos) não recebe diagnóstico.

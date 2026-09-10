@@ -13,8 +13,8 @@ import type { AiAdvisor } from '../../domain/port/driven/ai-advisor';
 // operar, como o JwtIssuer de HN-001 e o PluggyAggregator de HT-011.
 
 const BASE_PADRAO = 'https://generativelanguage.googleapis.com/v1beta/models';
-const MODELO_PADRAO = 'gemini-3.5-flash';
-const MODELOS_CANDIDATOS = ['gemini-3.5-flash', 'gemini-flash-latest', 'gemini-3.7-flash'];
+const MODELO_PADRAO = 'gemini-3.7-flash';
+const MODELOS_CANDIDATOS = ['gemini-3.7-flash', 'gemini-3.5-flash', 'gemini-flash-latest'];
 
 export class ChaveDeIaAusente extends Error {
   constructor() {

@@ -5,8 +5,8 @@
   "type": "module",
   "description": "API do ContaComigo. Arquitetura hexagonal por contexto (ADR-001): domain/ nao conhece framework, banco nem rede.",
   "scripts": {
-    "dev": "tsx watch src/main.ts",
-    "start": "tsx src/main.ts",
+    "dev": "tsx watch --env-file=.env src/main.ts",
+    "start": "tsx --env-file=.env src/main.ts",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate deploy",

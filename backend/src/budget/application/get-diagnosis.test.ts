@@ -88,8 +88,10 @@ describe('HN-009 — diagnóstico de saúde financeira (RF-018, RN-019, RN-020, 
     expect(json).not.toContain('@');
     expect(json).not.toContain('holder');
     expect(json).not.toContain('cpf');
-    const meses = pedido.dados.meses as Array<{ categorias: Array<{ spentInCents: number; limitInCents: number }> }>;
-    expect(meses[0].categorias[0].spentInCents).toBe(8_000_00);
+    const meses = pedido.dados.meses as Array<{ totalGastoEmCentavos: number; categoriasDeAtencao: Array<{ category: string; spentInCents: number; band: string }> }>;
+    expect(meses[0].totalGastoEmCentavos).toBe(8_000_00);
+    // moradia a 80% do limite é amarela → entra como atenção, só com números.
+    expect(meses[0].categoriasDeAtencao[0]).toEqual({ category: 'moradia', spentInCents: 8_000_00, limitInCents: 10_000_00, band: 'amarela' });
   });
 
   it('RN-021 — provedor indisponível degrada em resultado estruturado, não em erro', async () => {
