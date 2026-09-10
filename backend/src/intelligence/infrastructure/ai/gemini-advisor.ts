@@ -13,8 +13,30 @@ import type { AiAdvisor } from '../../domain/port/driven/ai-advisor';
 // operar, como o JwtIssuer de HN-001 e o PluggyAggregator de HT-011.
 
 const BASE_PADRAO = 'https://generativelanguage.googleapis.com/v1beta/models';
-const MODELO_PADRAO = 'gemini-3.7-flash';
-const MODELOS_CANDIDATOS = ['gemini-3.7-flash', 'gemini-3.5-flash', 'gemini-flash-latest'];
+const MODELO_PADRAO = 'gemini-flash-lite-latest';
+
+// Modelos em ORDEM DE CUSTO (mais barato primeiro). A cascata NUNCA escala para
+// um modelo mais caro: se o configurado (ex.: flash-lite) atingir cota, não faz
+// sentido queimar a cota dos modelos maiores — cai apenas para modelos iguais
+// ou mais baratos.
+const MODELOS_POR_CUSTO = [
+  'gemini-flash-lite-latest',
+  'gemini-3.1-flash-lite',
+  'gemini-3.5-flash',
+  'gemini-flash-latest',
+  'gemini-3.7-flash',
+];
+
+function custoDoModelo(modelo: string): number {
+  const idx = MODELOS_POR_CUSTO.indexOf(modelo);
+  return idx === -1 ? MODELOS_POR_CUSTO.length : idx;
+}
+
+/** Cascata de modelos com custo <= ao configurado (nunca mais caro). */
+function modelosDaCascata(configurado: string): string[] {
+  const custo = custoDoModelo(configurado);
+  return [configurado, ...MODELOS_POR_CUSTO.filter((m) => m !== configurado && custoDoModelo(m) <= custo)];
+}
 
 export class ChaveDeIaAusente extends Error {
   constructor() {
@@ -81,7 +103,7 @@ export class GeminiAdvisor implements AiAdvisor {
     const expirar = setTimeout(() => controle.abort(), this.limiteEmMs);
 
     // Lista de modelos a tentar em cascata caso o modelo padrão atinja cota (429) ou indisponibilidade (503/404)
-    const modelosParaTentar = [this.modelo, ...MODELOS_CANDIDATOS.filter((m) => m !== this.modelo)];
+    const modelosParaTentar = modelosDaCascata(this.modelo);
 
     try {
       let ultimoStatus = 500;
