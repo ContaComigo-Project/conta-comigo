@@ -8,11 +8,11 @@ max_lines: 500
 
 # ROTEIRO — Apresentação ContaComigo (MOCITEC)
 
-- **Apresentadores:** Raul Lize Teixeira e Miguel Leonardo Strapazon Lewandowski
-  *(Thiago Rodrigues Caputi não participará — viagem a serviço da empresa)*
+- **Apresentadores:** Raul Lize Teixeira e Thiago Rodrigues Caputi
+  *(Miguel Leonardo Strapazon Lewandowski não participará — viagem a serviço da empresa)*
 - **Formato:** demonstração ao vivo no localhost (sem deploy), narrada com apoio
   de capturas de tela como plano B
-- **Duração sugerida:** 10–12 minutos + perguntas
+- **Duração:** 15 minutos de apresentação + 5 minutos de perguntas
 
 > O resumo oficial já está **fechado como versão final** (`docs/RESUMO-MOCITEC.md`).
 > Este roteiro NÃO altera o resumo — apenas organiza a fala e os dados.
@@ -210,17 +210,17 @@ Checklist de capturas:
 
 ---
 
-## 8. Divisão da apresentação (2 apresentadores)
-
-> Thiago (ausente) teria o bloco de tecnologia/infraestrutura.
+## 8. Divisão da apresentação (2 apresentadores — 15 minutos)
 
 | Bloco | Apresentador | Min |
 |---|---|---|
 | Contexto + Problema (dados) | Raul | 3 |
-| Proposta + Objetivos | Miguel | 2 |
-| Tecnologia/Infraestrutura | Miguel | 1 |
-| Demonstração ao vivo | Raul (navega) + Miguel (narra) | 5 |
-| Encerramento + perguntas | Ambos | 2 |
+| Proposta + Objetivos | Thiago | 2 |
+| Tecnologia/Infraestrutura | Thiago | 2 |
+| Demonstração ao vivo | Raul (navega) + Thiago (narra) | 6 |
+| Encerramento | Ambos | 2 |
+
+**Total:** 15 min · **Perguntas:** 5 min (a banca decide a ordem)
 
 ---
 

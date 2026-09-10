@@ -23,8 +23,9 @@ const CONTAS = [
   { id: 'seed-cartao', externalId: 'seed-acc-cartao', institutionId: 'Banco Exemplo', type: 'cartao-de-credito', balanceInCents: -87_450 },
 ];
 
-// Meses com dados: jan a ago/2026. O corrente é set/2026; os 6 meses fechados
-// do histórico (RN-022) são mar..ago, então a janela inteira tem dados.
+// Meses com dados: jan a set/2026. O corrente é set/2026 — com dados no mês
+// atual, a demo abre o semáforo preenchido. Os 6 meses fechados do histórico
+// (RN-022) são mar..ago.
 const MESES = [
   { month: '2026-01', dias: 31 },
   { month: '2026-02', dias: 28 },
@@ -34,6 +35,7 @@ const MESES = [
   { month: '2026-06', dias: 30 },
   { month: '2026-07', dias: 31 },
   { month: '2026-08', dias: 31 },
+  { month: '2026-09', dias: 30 },
 ];
 
 // Limites mensais por categoria (RN-002). Todas as categorias do catálogo
