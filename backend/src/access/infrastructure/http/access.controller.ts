@@ -1,10 +1,26 @@
-import { BadRequestException, Body, Controller, Delete, HttpCode, Inject, Post, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Delete, HttpCode, Inject, Post, Req, Res, UnauthorizedException } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import type { Request, Response } from 'express';
 import { AccountDTO, CredentialsDTO, CreateAccountDTO, RefreshDTO, type SessionDTO } from '@contacomigo/contract';
 import type { Authenticate, CriarAccount, EncerrarSession, RenovarSession } from '../../domain/port/driving/access';
 import { RegistrationRefused, InvalidCredentials } from '../../domain/port/driving/access';
 import { TOKENS_ACCESS } from '../../domain/port/driven/tokens';
 import { zodParaSchema } from '../../../openapi';
+
+// Nome do cookie httpOnly do refresh token. Nunca em localStorage (ADR-004);
+// o cookie é invisível para scripts e viaja sozinho nas requisições (HT-018).
+const COOKIE_DE_REFRESH = 'cc_refresh';
+const VIDA_DO_COOKIE_MS = 30 * 24 * 60 * 60_000;
+
+function opcoesDoCookie() {
+  return {
+    httpOnly: true,
+    sameSite: 'strict' as const,
+    secure: process.env.NODE_ENV === 'production',
+    path: '/',
+    maxAge: VIDA_DO_COOKIE_MS,
+  };
+}
 
 // Adaptador de input do access. As routes sao publicas por natureza — e a
 // unica excecao a guarda do resto do sistema. Decorators Swagger (HT-019) so
@@ -43,11 +59,12 @@ export class AccessController {
   @ApiBody({ schema: zodParaSchema(CredentialsDTO), description: 'Credenciais de access' })
   @ApiResponse({ status: 200, description: 'Sessão válida' })
   @ApiResponse({ status: 401, description: 'E-mail ou senha inválidos (response idêntica para ambos)' })
-  async entrar(@Body() body: unknown): Promise<SessionDTO> {
+  async entrar(@Body() body: unknown, @Res({ passthrough: true }) res: Response): Promise<SessionDTO> {
     const input = CredentialsDTO.safeParse(body);
     if (!input.success) throw new UnauthorizedException('E-mail ou senha invalidos.');
     try {
       const session = await this.authenticate.executar(input.data.email, input.data.senha);
+      res.cookie(COOKIE_DE_REFRESH, session.refresh, opcoesDoCookie());
       return {
         account: { id: session.account.id, email: session.account.email },
         accessToken: session.access.valor,
@@ -67,11 +84,17 @@ export class AccessController {
   @ApiBody({ schema: zodParaSchema(RefreshDTO), description: 'Refresh token emitido na input' })
   @ApiResponse({ status: 200, description: 'Sessão renovada' })
   @ApiResponse({ status: 401, description: 'Refresh token inválido ou revogado' })
-  async renovarSession(@Body() body: unknown): Promise<SessionDTO> {
-    const input = RefreshDTO.safeParse(body);
-    if (!input.success) throw new UnauthorizedException('E-mail ou senha invalidos.');
+  async renovarSession(@Req() req: Request, @Body() body: unknown, @Res({ passthrough: true }) res: Response): Promise<SessionDTO> {
+    // O refresh vem do cookie httpOnly quando presente; senão do body (compat).
+    const refreshDoCookie = req.cookies?.[COOKIE_DE_REFRESH];
+    const refreshToken = refreshDoCookie ?? (() => {
+      const parsed = RefreshDTO.safeParse(body);
+      if (!parsed.success) throw new UnauthorizedException('E-mail ou senha invalidos.');
+      return parsed.data.refreshToken;
+    })();
     try {
-      const session = await this.renovar.executar(input.data.refreshToken);
+      const session = await this.renovar.executar(refreshToken);
+      res.cookie(COOKIE_DE_REFRESH, session.refresh, opcoesDoCookie());
       return {
         account: { id: session.account.id, email: session.account.email },
         accessToken: session.access.valor,
@@ -86,13 +109,18 @@ export class AccessController {
 
   @Delete('sessions')
   @HttpCode(204)
-  @ApiOperation({ summary: 'Encerrar sessão', description: 'Invalida o refresh token.' })
-  @ApiBody({ schema: zodParaSchema(RefreshDTO), description: 'Refresh token a revogar' })
+  @ApiOperation({ summary: 'Encerrar sessão', description: 'Invalida o refresh token (do cookie ou do body).' })
+  @ApiBody({ schema: zodParaSchema(RefreshDTO), description: 'Refresh token a revogar (opcional se vier no cookie)' })
   @ApiResponse({ status: 204, description: 'Sessão encerrada' })
   @ApiResponse({ status: 400, description: 'Dados inválidos' })
-  async sair(@Body() body: unknown): Promise<void> {
-    const input = RefreshDTO.safeParse(body);
-    if (!input.success) throw new BadRequestException('Dados invalidos.');
-    await this.encerrar.executar(input.data.refreshToken);
+  async sair(@Req() req: Request, @Body() body: unknown, @Res({ passthrough: true }) res: Response): Promise<void> {
+    const refreshDoCookie = req.cookies?.[COOKIE_DE_REFRESH];
+    const refreshToken = refreshDoCookie ?? (() => {
+      const parsed = RefreshDTO.safeParse(body);
+      if (!parsed.success) throw new BadRequestException('Dados invalidos.');
+      return parsed.data.refreshToken;
+    })();
+    await this.encerrar.executar(refreshToken);
+    res.clearCookie(COOKIE_DE_REFRESH, { httpOnly: true, sameSite: 'strict', secure: process.env.NODE_ENV === 'production', path: '/' });
   }
 }

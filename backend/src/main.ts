@@ -1,4 +1,5 @@
 import 'reflect-metadata';
+import cookieParser from 'cookie-parser';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { configurarOpenApi } from './openapi';
@@ -15,8 +16,10 @@ const PORTA = Number(process.env.PORT ?? 3000);
 async function iniciar() {
   const app = await NestFactory.create(AppModule);
   // A web roda em outra origem (Vite dev em :5173); sem CORS o navegador
-  // bloqueia o login e as chamadas do painel (HN-003 integration).
-  app.enableCors({ origin: ['http://localhost:5173', 'http://localhost:4173'] });
+  // bloqueia o login e as chamadas do painel (HN-003 integration). Credentials
+  // habilitado para o cookie httpOnly do refresh (HT-018).
+  app.enableCors({ origin: ['http://localhost:5173', 'http://localhost:4173'], credentials: true });
+  app.use(cookieParser());
   configurarOpenApi(app);
 
   // Observabilidade (HT-012): uma linha por requisicao e erro rastreavel pela

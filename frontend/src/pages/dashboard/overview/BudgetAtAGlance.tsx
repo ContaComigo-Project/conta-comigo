@@ -2,19 +2,18 @@ import { ArrowRight, ShieldCheck, ShieldAlert, ShieldX } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ApiSource, mesCorrente } from '../../../data/api-source';
+import { bandFromBackend, type Band } from '../../../data/band';
 import { formatBRL } from '../../../utils/formatters';
 import { useMountedAnimation } from '../../../hooks/use-mounted-animation';
 
 // Apresentação apenas: cores/ícones por faixa. A decisão de faixa vem pronta do
 // backend (RN-001) — este mapa não contém limiar nenhum.
-const META_BAND = {
-  verde: { Icon: ShieldCheck, label: 'Dentro do limite', badgeClass: 'bg-emerald-100 text-emerald-700', barClass: 'bg-linear-to-t from-cc-dark-green to-cc-green' },
-  amarela: { Icon: ShieldAlert, label: 'Atenção', badgeClass: 'bg-amber-100 text-amber-700', barClass: 'bg-linear-to-t from-amber-500 to-amber-400' },
-  vermelha: { Icon: ShieldX, label: 'Estourou', badgeClass: 'bg-red-100 text-red-700', barClass: 'bg-linear-to-t from-red-600 to-red-400' },
-  'sem-limite': { Icon: ShieldCheck, label: 'Sem limite', badgeClass: 'bg-slate-100 text-slate-600', barClass: 'bg-linear-to-t from-slate-300 to-slate-200' },
-} as const;
-
-type Band = keyof typeof META_BAND;
+const META_BAND: Record<Band, { Icon: typeof ShieldCheck; label: string; badgeClass: string; barClass: string }> = {
+  green: { Icon: ShieldCheck, label: 'Dentro do limite', badgeClass: 'bg-emerald-100 text-emerald-700', barClass: 'bg-linear-to-t from-cc-dark-green to-cc-green' },
+  amber: { Icon: ShieldAlert, label: 'Atenção', badgeClass: 'bg-amber-100 text-amber-700', barClass: 'bg-linear-to-t from-amber-500 to-amber-400' },
+  red: { Icon: ShieldX, label: 'Estourou', badgeClass: 'bg-red-100 text-red-700', barClass: 'bg-linear-to-t from-red-600 to-red-400' },
+  'no-limit': { Icon: ShieldCheck, label: 'Sem limite', badgeClass: 'bg-slate-100 text-slate-600', barClass: 'bg-linear-to-t from-slate-300 to-slate-200' },
+};
 
 const MESES_PT = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
 
@@ -45,7 +44,7 @@ export default function BudgetAtAGlance() {
             category: c.category,
             limitInCents: c.limitInCents,
             spentInCents: c.spentInCents,
-            band: c.band as Band,
+            band: bandFromBackend(c.band),
           })),
         });
       })
@@ -76,11 +75,11 @@ export default function BudgetAtAGlance() {
 
   const counts = categorias.reduce(
     (acc, c) => ({ ...acc, [c.band]: acc[c.band] + 1 }),
-    { verde: 0, amarela: 0, vermelha: 0, 'sem-limite': 0 } as Record<Band, number>,
+    { green: 0, amber: 0, red: 0, 'no-limit': 0 } as Record<Band, number>,
   );
 
   const alerts = categorias
-    .filter((c) => c.band !== 'verde' && c.band !== 'sem-limite')
+    .filter((c) => c.band !== 'green' && c.band !== 'no-limit')
     .sort((a, b) => percentual(b) - percentual(a))
     .slice(0, 2);
 
@@ -117,7 +116,7 @@ export default function BudgetAtAGlance() {
           </div>
         </div>
         <div className="grid grid-cols-3 gap-1 shrink-0">
-          {(['verde', 'amarela', 'vermelha'] as Band[]).map((s) => {
+          {(['green', 'amber', 'red'] as Band[]).map((s) => {
             const m = META_BAND[s];
             return (
               <div key={s} className="flex flex-col items-center px-2.5 py-1.5 rounded-lg bg-white border border-slate-100">

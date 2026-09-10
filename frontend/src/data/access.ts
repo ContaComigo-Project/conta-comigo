@@ -56,7 +56,12 @@ export async function createAccount(dados: CreateAccountDTO) {
 }
 
 export async function signIn(credenciais: CredentialsDTO) {
-  const response = await enviar('/access/sessions', 'POST', credenciais);
+  const response = await fetch(`${BASE}/access/sessions`, {
+    method: 'POST',
+    credentials: 'include',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify(credenciais),
+  });
   if (!response.ok) throw new AccessFailure(await errorMessage(response, 'E-mail ou senha inválidos.'));
 
   const nova = SessionDTO.safeParse(await response.json());
@@ -65,10 +70,37 @@ export async function signIn(credenciais: CredentialsDTO) {
   return nova.data;
 }
 
+/** Restaura a sessão via refresh token em cookie httpOnly (HT-018): o F5 e a
+ *  navegação direta deixam de expulsar a pessoa. O access token continua só em
+ *  memória; o cookie é invisível para scripts (ADR-004). */
+export async function restoreSession(): Promise<boolean> {
+  if (sessionAtual) return true;
+  try {
+    const response = await fetch(`${BASE}/access/sessions/refresh`, {
+      method: 'POST',
+      credentials: 'include',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({}),
+    });
+    if (!response.ok) return false;
+    const nova = SessionDTO.safeParse(await response.json());
+    if (!nova.success) return false;
+    sessionAtual = nova.data;
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 export async function signOut() {
   const refreshToken = sessionAtual?.refreshToken;
   sessionAtual = null;
-  if (refreshToken) await enviar('/access/sessions', 'DELETE', { refreshToken });
+  await fetch(`${BASE}/access/sessions`, {
+    method: 'DELETE',
+    credentials: 'include',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify(refreshToken ? { refreshToken } : {}),
+  }).catch(() => undefined);
 }
 
 /** Perfil do titular autenticado — o nome vem do banco (HN-001). */

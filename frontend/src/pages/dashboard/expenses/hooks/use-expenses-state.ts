@@ -7,6 +7,7 @@ import { useMountedAnimation } from '../../../../hooks/use-mounted-animation';
 import type { Transaction } from '../../../../data/transaction';
 import type { ViewMode } from '../components/SegmentedViewToggle';
 import { bandFromCounts, FILTER_BANDS, type Band } from '../band';
+import { bandFromBackend } from '../../../../data/band';
 
 // Real expenses data (HT-018 part 2). Bands come ready from the backend
 // (RN-001); here we only aggregate and sort for presentation. No threshold.
@@ -74,7 +75,7 @@ function toCategory(cat: { category: string; limitInCents: number | null; spentI
     color: visual.cor,
     limitInCents: cat.limitInCents,
     spentInCents: cat.spentInCents,
-    band: cat.band as Band,
+    band: bandFromBackend(cat.band),
     percentage: limit > 0 ? (cat.spentInCents / limit) * 100 : 0,
     trend: null,
   };

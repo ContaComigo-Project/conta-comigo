@@ -1,9 +1,10 @@
 import { CheckCircle2, AlertTriangle, XCircle, MinusCircle } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
+import type { Band } from '../../../data/band';
 
 // Presentation only. The band decision comes ready from the backend (RN-001);
 // this map holds no threshold — just color/icon/label for the screen.
-export type Band = 'green' | 'amber' | 'red' | 'no-limit';
+export type { Band };
 
 export interface BandMeta {
   label: string;
@@ -69,3 +70,4 @@ export function bandFromCounts(counts: Record<Band, number>): Band {
   if (counts['no-limit'] > 0) return 'no-limit';
   return 'green';
 }
+
