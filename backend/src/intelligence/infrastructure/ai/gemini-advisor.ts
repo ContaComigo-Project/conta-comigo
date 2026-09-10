@@ -44,6 +44,7 @@ function montarPrompt(pedido: PedidoDeConselho): string {
     'Seja educativo, encorajador e objetivo, apresentando boas práticas de organização financeira e hábitos saudáveis.',
     'Formato: responda em TEXTO CORRIDO, sem títulos de seção, sem listas numeradas, sem negrito e sem emojis.',
     'Seja breve: no máximo 3 frases curtas (o bloco é exibido como um parágrafo).',
+    'Interatividade: quando precisar de mais informação para personalizar (ex.: valor da meta, prazo), faça UMA pergunta curta de acompanhamento em vez de um texto longo. Use o histórico (campo "historico") para dar continuidade à conversa.',
     `Tarefa: ${pedido.tipo}`,
     `Pergunta: ${pedido.pergunta}`,
     `Dados: ${JSON.stringify(pedido.dados)}`,

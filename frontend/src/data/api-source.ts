@@ -1,4 +1,4 @@
-import { ok, type BudgetHistoryDTO, type BudgetSemaphoreDTO, type ChatRespostaDTO, type ConnectedBankDTO, type ConsolidatedSummaryDTO, type DiagnosisDTO, type PerguntaChatDTO, type Result, type ResultadoSimulacaoDTO, type SimulacaoDTO, type SpendingCategoryDTO, type TransactionDTO } from '@contacomigo/contract';
+import { ok, type BudgetHistoryDTO, type BudgetSemaphoreDTO, type ChatRespostaDTO, type ConnectedBankDTO, type ConsolidatedSummaryDTO, type DiagnosisDTO, type MensagemChatDTO, type PerguntaChatDTO, type Result, type ResultadoSimulacaoDTO, type SimulacaoDTO, type SpendingCategoryDTO, type TransactionDTO } from '@contacomigo/contract';
 import { getAccessToken } from './access';
 
 // API source (HT-017 + HT-018): the real backend behind the DataSource port.
@@ -99,8 +99,8 @@ export class ApiSource {
     return json(await fetch(`${BASE}/budgets/diagnosis`, { headers: autorizado() }));
   }
 
-  async perguntarNoChat(pergunta: string): Promise<ChatRespostaDTO> {
-    const body: PerguntaChatDTO = { pergunta };
+  async perguntarNoChat(pergunta: string, historico?: MensagemChatDTO[]): Promise<ChatRespostaDTO> {
+    const body: PerguntaChatDTO = historico && historico.length > 0 ? { pergunta, historico } : { pergunta };
     return json(
       await fetch(`${BASE}/intelligence/chat`, {
         method: 'POST',

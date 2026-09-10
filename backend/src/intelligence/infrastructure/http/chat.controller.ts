@@ -32,7 +32,7 @@ export class ChatController {
   @ApiBody({ schema: zodParaSchema(PerguntaChatDTO) })
   @ApiResponse({ status: 200, description: 'Resposta (ou estado de degradação)' })
   async perguntarNoChat(@Body() body: PerguntaChatDTO): Promise<ChatRespostaDTO> {
-    const r = await this.perguntar.executar(this.titular(), body.pergunta);
+    const r = await this.perguntar.executar(this.titular(), body.pergunta, body.historico);
     switch (r.tipo) {
       case 'ok':
         return { estado: 'ok', resposta: r.resposta, aviso: r.aviso, ...(r.contingencia ? { contingencia: true, contingenciaDetalhe: r.contingenciaDetalhe } : {}) };

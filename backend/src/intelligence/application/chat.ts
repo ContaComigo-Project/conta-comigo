@@ -3,7 +3,7 @@ import type { Clock } from '../../transactions/domain/port/driven/clock';
 import type { RepositorioDeTransactions } from '../../transactions/domain/port/driven/transaction-repository';
 import type { HolderId } from '../../transactions/domain/model/holder';
 import type { AiAdvisor } from '../domain/port/driven/ai-advisor';
-import type { PerguntarNoChat, RespostaDoChat } from '../domain/port/driving/chat';
+import type { MensagemDoHistorico, PerguntarNoChat, RespostaDoChat } from '../domain/port/driving/chat';
 
 // RN-018: toda superfície com saída de IA carrega o aviso de não
 // aconselhamento. Vive no domínio porque é regra do produto, e o backend a
@@ -22,7 +22,7 @@ export class PerguntarNoChatUseCase implements PerguntarNoChat {
     private readonly advisor: AiAdvisor,
   ) {}
 
-  async executar(holderId: string, pergunta: string): Promise<RespostaDoChat> {
+  async executar(holderId: string, pergunta: string, historico?: readonly MensagemDoHistorico[]): Promise<RespostaDoChat> {
     const transacoes = await this.transactions.listarDoHolder(holderId as HolderId);
 
     // Só DÉBITOS são gasto (RN-003); créditos (salário, rendimento) são receita.
@@ -47,7 +47,7 @@ export class PerguntarNoChatUseCase implements PerguntarNoChat {
       holder: holderId,
       tipo: 'pergunta-livre',
       pergunta,
-      dados: { gastos, receitasDoPeriodoEmCentavos },
+      dados: { gastos, receitasDoPeriodoEmCentavos, ...(historico && historico.length > 0 ? { historico } : {}) },
     });
 
     if (resultado.tipo === 'ok') {

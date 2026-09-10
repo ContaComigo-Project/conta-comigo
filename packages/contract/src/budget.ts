@@ -106,7 +106,16 @@ export type DiagnosisDTO = z.infer<typeof DiagnosisDTO>;
 
 // Educational chat (HN-010). The answer uses the person's own data (RF-020)
 // and always carries the non-advice notice (RN-018).
-export const PerguntaChatDTO = z.object({ pergunta: z.string().trim().min(1).max(500) }).strict();
+export const MensagemChatDTO = z
+  .object({ role: z.enum(['usuario', 'assistente']), texto: z.string().min(1).max(1000) })
+  .strict();
+export type MensagemChatDTO = z.infer<typeof MensagemChatDTO>;
+
+// O chat tem CONTEXTO: o histórico das últimas mensagens acompanha a pergunta
+// (HN-010). Texto puro, sem identidade (RN-019).
+export const PerguntaChatDTO = z
+  .object({ pergunta: z.string().trim().min(1).max(500), historico: z.array(MensagemChatDTO).max(10).optional() })
+  .strict();
 export type PerguntaChatDTO = z.infer<typeof PerguntaChatDTO>;
 
 export const ChatRespostaDTO = z

@@ -4,6 +4,11 @@ export type RespostaDoChat =
   | { readonly tipo: 'teto-atingido' }
   | { readonly tipo: 'ia-bloqueou'; readonly motivo: string };
 
+export interface MensagemDoHistorico {
+  role: 'usuario' | 'assistente';
+  texto: string;
+}
+
 export interface PerguntarNoChat {
-  executar(holderId: string, pergunta: string): Promise<RespostaDoChat>;
+  executar(holderId: string, pergunta: string, historico?: readonly MensagemDoHistorico[]): Promise<RespostaDoChat>;
 }

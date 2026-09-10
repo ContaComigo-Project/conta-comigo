@@ -57,7 +57,12 @@ export default function AIChatWidget({ embedded = false }: { embedded?: boolean 
     setInput('');
     setTyping(true);
     try {
-      const resposta = await new ApiSource().perguntarNoChat(trimmed);
+      // Contexto: as últimas trocas acompanham a pergunta, para o assistente
+      // dar continuidade à conversa e questionar de volta quando precisar.
+      const historico = messages
+        .slice(-8)
+        .map((m) => ({ role: m.role === 'user' ? ('usuario' as const) : ('assistente' as const), texto: m.content }));
+      const resposta = await new ApiSource().perguntarNoChat(trimmed, historico);
       const conteudo =
         resposta.estado === 'ok'
           ? (resposta.resposta ?? 'Sem resposta no momento.')
