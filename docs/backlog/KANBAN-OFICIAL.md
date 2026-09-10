@@ -130,7 +130,7 @@ o backlog passou a considerar o frontend existente.
 | 5 | `HT-016` | Inventário do frontend existente e destino dos mocks | Técnica | **Done** | HT-004 | RNF-018, RNF-020 |
 | 6 | `HT-005` | Harness local reprodutível com docker compose | Técnica | **Done** | HT-004 | `v0.7.0` |
 | 7 | `HT-006` | Infraestrutura de testes funcional/BDD e unitário | Técnica | **Done** | HT-005 | `v0.8.0` |
-| 8 | `HT-007` | Pipeline de CI com gates bloqueantes | Técnica | **Em execução** | HT-006 | RNF-021 |
+| 8 | `HT-007` | Pipeline de CI com gates bloqueantes | Técnica | **Em execução** | HT-006 | RNF-021 (`v0.41.0` — mock e2e alinhado ao contrato) |
 | 9 | `HT-008` | Baseline de segurança: segredos, autorização, varredura | Técnica | **Done** | ~~HT-007~~ (parcial — ver nota) | `v0.12.0` |
 
 ### Fase 2 — Esqueleto do sistema e fronteira com a web
