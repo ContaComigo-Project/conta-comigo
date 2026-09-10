@@ -43,6 +43,8 @@ describe('precisaDeAjuda — quando vale gastar IA', () => {
   it('o que ficou reconhecivel nao vai para o provedor', () => {
     expect(precisaDeAjuda('Mercado Central')).toBe(false);
     expect(precisaDeAjuda('Uber')).toBe(false);
+    expect(precisaDeAjuda('')).toBe(false);
+    expect(precisaDeAjuda('   ')).toBe(false);
   });
 
   it('sigla curta, codigo e sopa de consoante pedem ajuda', () => {

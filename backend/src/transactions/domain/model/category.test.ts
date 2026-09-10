@@ -17,6 +17,7 @@ describe('categorizarPorRegra — RF-011', () => {
   it('entrada de dinheiro e receita, independentemente da descricao', () => {
     expect(categorizarPorRegra('Transf Recebida', 850_000)).toBe('receita');
     expect(categorizarPorRegra('Salario', 500_000)).toBe('receita');
+    expect(categorizarPorRegra('Credito Desconhecido Sem Termo', 50_000)).toBe('receita');
   });
 
   it('rendimento de aplicacao e investimento, nao receita de trabalho', () => {

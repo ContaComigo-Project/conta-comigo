@@ -47,7 +47,7 @@ jobs:
       - name: Segurança (segredos + dependências)
         run: pnpm run security
 
-      - name: Cobertura do domínio (>= 80%)
+      - name: Cobertura rigorosa do domínio (100% linhas e funções)
         run: pnpm run coverage
 
       - name: Build (web + typecheck)

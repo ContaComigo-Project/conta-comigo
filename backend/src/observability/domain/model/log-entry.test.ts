@@ -78,3 +78,17 @@ describe('logEntry', () => {
     expect(entrada.message).not.toContain('pessoa@exemplo.com');
   });
 });
+
+describe('requestId — RNF-008', () => {
+  it('retorna sem-correlacao para strings vazias ou sem caracteres alfanumericos validos', () => {
+    expect(requestId('')).toBe('sem-correlacao');
+    expect(requestId('   ')).toBe('sem-correlacao');
+    expect(requestId('!@#$%^&*()')).toBe('sem-correlacao');
+  });
+
+  it('preserva identificador valido e limita a 128 caracteres', () => {
+    expect(requestId('req-123.abc:456')).toBe('req-123.abc:456');
+    const longo = 'a'.repeat(200);
+    expect(requestId(longo).length).toBe(128);
+  });
+});

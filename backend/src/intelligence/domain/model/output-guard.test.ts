@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { examinarSaida, valoresMonetariosDe } from './output-guard';
+import { examinarSaida, valoresMonetariosDe, valoresPermitidos } from './output-guard';
 
 const dados = { totalEmCentavos: 128_432, categorias: { mercado: 40_000 } };
 
@@ -15,6 +15,27 @@ describe('valoresMonetariosDe — RN-019', () => {
     expect(valoresMonetariosDe('voce tem 3 contas conectadas')).toEqual([]);
     expect(valoresMonetariosDe('em janeiro de 2026')).toEqual([]);
     expect(valoresMonetariosDe('40% do total foi mercado')).toEqual([]);
+  });
+
+  it('ignora formato monetario com caracteres invalidos', () => {
+    expect(valoresMonetariosDe('R$ abc')).toEqual([]);
+    expect(valoresMonetariosDe('R$ ...')).toEqual([]);
+  });
+});
+
+describe('valoresPermitidos', () => {
+  it('ignora dados nulos e tipos primitivos nao numericos', () => {
+    expect(Array.from(valoresPermitidos(null))).toEqual([]);
+    expect(Array.from(valoresPermitidos('texto'))).toEqual([]);
+    expect(Array.from(valoresPermitidos(undefined))).toEqual([]);
+  });
+
+  it('coleta numeros em arrays e objetos aninhados', () => {
+    const nums = valoresPermitidos([100, { valor: 50.5 }]);
+    expect(nums.has(100)).toBe(true);
+    expect(nums.has(10000)).toBe(true);
+    expect(nums.has(51)).toBe(true);
+    expect(nums.has(5050)).toBe(true);
   });
 });
 
@@ -60,6 +81,11 @@ describe('examinarSaida — RNF-017', () => {
     }
   });
 
+  it('RN-017 — palavras legitimas contendo sufixos de produto nao bloqueiam (ex: movimentacoes)', () => {
+    const veredito = examinarSaida('Suas movimentações de mercado foram normais.', dados);
+    expect(veredito.aprovado).toBe(true);
+  });
+
   it('RN-017 — falar de habito nao e recomendar produto', () => {
     const permitidos = [
       'Voce pode poupar reduzindo gasto com delivery.',
@@ -91,6 +117,11 @@ describe('examinarSaida — RNF-017', () => {
   it('valor presente em dado aninhado tambem e aceito', () => {
     const veredito = examinarSaida('Mercado somou R$ 400,00.', dados);
 
+    expect(veredito.aprovado).toBe(true);
+  });
+
+  it('aceita array de valores diretamente na raiz dos dados', () => {
+    const veredito = examinarSaida('Gastou R$ 100,00.', [10000]);
     expect(veredito.aprovado).toBe(true);
   });
 });

@@ -18,10 +18,8 @@ export default defineConfig({
       exclude: ['**/*.test.ts', '**/*.d.ts'],
       reporter: ['text', 'lcov'],
       reportsDirectory: 'coverage',
-      // Limiar de RNF-018. Hoje vacuamente verde: nao ha dominio. Vira prova real
-      // em HT-009, cujo criterio de aceite inclui "arquivo de dominio sem teste
-      // derruba `harness coverage`".
-      thresholds: { lines: 80, functions: 80, branches: 80, statements: 80 },
+      // Limiar rigoroso de cobertura do dominio (RNF-018): 100% linhas e funcoes, 99% stmts, 95% branches
+      thresholds: { lines: 100, functions: 100, branches: 95, statements: 99 },
     },
   },
 });

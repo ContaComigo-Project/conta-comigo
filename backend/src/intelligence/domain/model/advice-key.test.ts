@@ -35,6 +35,13 @@ describe('chaveDoConselho — RNF-010', () => {
   it('a impressao muda quando um centavo muda', () => {
     expect(impressaoDe({ v: 100 })).not.toBe(impressaoDe({ v: 101 }));
   });
+
+  it('lida com arrays, nulos e valores indefinidos de forma estavel', () => {
+    expect(impressaoDe([1, 2, 3])).toBe(impressaoDe([1, 2, 3]));
+    expect(impressaoDe(null)).toBe(impressaoDe(null));
+    expect(impressaoDe({ a: undefined })).toBe(impressaoDe({ a: undefined }));
+    expect(impressaoDe({ b: [null, 'texto'] })).toBe(impressaoDe({ b: [null, 'texto'] }));
+  });
 });
 
 describe('teto diario — RNF-009', () => {

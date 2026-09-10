@@ -11,7 +11,7 @@
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate deploy",
     "prisma:migrate:dev": "prisma migrate dev",
-    "db:seed": "tsx prisma/seeders/index.ts",
+    "db:seed": "tsx --env-file=.env prisma/seeders/index.ts",
     "prisma:studio": "prisma studio"
   },
   "dependencies": {
