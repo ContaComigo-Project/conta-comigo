@@ -88,7 +88,7 @@ export default function AIChatWidget({ embedded = false }: { embedded?: boolean 
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="fixed z-50 bottom-6 right-6 md:bottom-8 md:right-8 group flex items-center gap-2 pl-4 pr-5 py-3 rounded-full bg-linear-to-br from-cc-dark-green to-cc-green text-white shadow-[0_12px_32px_rgba(54,179,126,0.45)] hover:shadow-[0_16px_40px_rgba(54,179,126,0.55)] transition-all duration-300 hover:-translate-y-0.5 cursor-pointer"
+        className="fixed z-50 bottom-24 right-4 md:bottom-8 md:right-8 group flex items-center gap-2 pl-4 pr-5 py-3 rounded-full bg-linear-to-br from-cc-dark-green to-cc-green text-white shadow-[0_12px_32px_rgba(54,179,126,0.45)] hover:shadow-[0_16px_40px_rgba(54,179,126,0.55)] transition-all duration-300 hover:-translate-y-0.5 cursor-pointer"
       >
         <span className="relative">
           <span className="absolute inset-0 rounded-full bg-white/20 animate-ping" />
@@ -105,7 +105,7 @@ export default function AIChatWidget({ embedded = false }: { embedded?: boolean 
   } else if (embedded) {
     wrapperClass = 'w-full h-full flex flex-col rounded-4xl border border-slate-100 bg-white overflow-hidden pointer-events-none select-none';
   } else {
-    wrapperClass = 'fixed z-50 bottom-6 right-6 md:bottom-8 md:right-8 w-[calc(100vw-3rem)] sm:w-105 max-w-md h-[min(76vh,720px)] sm:h-160 flex flex-col rounded-2xl border border-slate-100 bg-white shadow-[0_24px_64px_rgba(15,23,42,0.18)] animate-fade-in overflow-hidden';
+    wrapperClass = 'fixed z-50 bottom-24 right-4 md:bottom-8 md:right-8 w-[calc(100vw-2rem)] sm:w-105 max-w-md h-[min(72vh,720px)] sm:h-160 flex flex-col rounded-2xl border border-slate-100 bg-white shadow-[0_24px_64px_rgba(15,23,42,0.18)] animate-fade-in overflow-hidden';
   }
 
   return (

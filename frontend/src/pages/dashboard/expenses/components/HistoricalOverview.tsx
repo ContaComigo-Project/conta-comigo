@@ -46,7 +46,7 @@ export function HistoricalOverview({ summaries, problems, onSelectMonth, animate
               <span className="text-base font-semibold text-white/80">R$</span>
               <span className="text-3xl font-bold tabular-nums tracking-tight">{formatCents(avgSpent)}</span>
             </div>
-            <div className="flex items-center gap-1.5 mt-3">
+            <div className="flex flex-wrap items-center gap-1.5 mt-3">
               <span
                 className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[0.65rem] font-bold bg-white/15 ${
                   trendPct >= 0 ? 'text-amber-200' : 'text-emerald-200'
