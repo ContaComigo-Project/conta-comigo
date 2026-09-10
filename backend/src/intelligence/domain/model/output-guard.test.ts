@@ -120,6 +120,24 @@ describe('examinarSaida — RNF-017', () => {
     expect(naoPedido.aprovado === false && naoPedido.motivo).toBe('recomendacao-de-produto');
   });
 
+  it('RN-017 — perguntar a preferência do usuário (financiar/consórcio/à vista) é permitido', () => {
+    // Elicitação educativa: pergunta delegando a escolha ao usuário, sem sugerir via.
+    const elicita = examinarSaida(
+      'Pretende financiar, usar consórcio ou pagar à vista?',
+      dados,
+      'quero comprar uma casa de 350 mil',
+    );
+    expect(elicita.aprovado).toBe(true);
+
+    // Interrogativa com verbo de recomendação continua bloqueada.
+    const sugestiva = examinarSaida(
+      'Vale a pena contratar um financiamento para a casa?',
+      dados,
+      'quero comprar uma casa de 350 mil',
+    );
+    expect(sugestiva.aprovado === false && sugestiva.motivo).toBe('recomendacao-de-produto');
+  });
+
   it('RNF-017 — bloqueia resposta vazia, gigante ou com bloco de codigo', () => {
     const vazia = examinarSaida('   ', dados);
     const gigante = examinarSaida('a'.repeat(4_001), dados);

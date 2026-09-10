@@ -143,6 +143,19 @@ function contemVerboDeRecomendacao(textoNormalizado: string): boolean {
   return VERBOS_DE_RECOMENDACAO.some((verbo) => contemTermoProibido(textoNormalizado, verbo));
 }
 
+// Perguntar a PREFERÊNCIA do usuário (financiar? consórcio? à vista?) é
+// personalização educativa, não recomendação. A pergunta precisa ser
+// interrogativa E delegar a escolha ao usuário — nunca sugerir uma via.
+const VERBOS_DE_ELICITACAO = [
+  'pretende', 'pretende usar', 'quer', 'prefere', 'vai', 'gostaria de usar', 'pensa em',
+  'qual modalidade', 'como pretende', 'planeja usar', 'esta pensando em',
+];
+
+function ehElicitacaoDePreferencia(textoNormalizado: string): boolean {
+  if (!textoNormalizado.includes('?')) return false;
+  return VERBOS_DE_ELICITACAO.some((verbo) => contemTermoProibido(textoNormalizado, verbo));
+}
+
 export function examinarSaida(texto: string, dados: unknown, pergunta = ''): Veredito {
   const bloquear = (motivo: MotivoDoBloqueio): Veredito => ({ aprovado: false, motivo, amostra: amostraDe(texto) });
 
@@ -153,12 +166,17 @@ export function examinarSaida(texto: string, dados: unknown, pergunta = ''): Ver
   const normalizado = normalizar(texto);
   const perguntaNormalizada = normalizar(pergunta);
   const haVerbo = contemVerboDeRecomendacao(normalizado);
+  const elicita = ehElicitacaoDePreferencia(normalizado);
   for (const termo of TERMOS_DE_PRODUTO) {
     if (!contemTermoProibido(normalizado, termo)) continue;
-    // Explicar o produto que o usuário perguntou (educação) é permitido;
-    // recomendar (verbo) ou citar produto não solicitado é bloqueio.
     const perguntouSobre = contemTermoProibido(perguntaNormalizada, termo);
-    if (haVerbo || !perguntouSobre) return bloquear('recomendacao-de-produto');
+    // Recomendação explícita sempre bloqueia (mesmo interrogativa: "vale a pena financiar?").
+    if (haVerbo) return bloquear('recomendacao-de-produto');
+    // Explicar o produto que o usuário perguntou, ou perguntar a preferência
+    // dele sobre modalidades (financiar/consórcio/à vista): permitido.
+    if (perguntouSobre || elicita) continue;
+    // Citação não solicitada em frase declarativa: bloqueio.
+    return bloquear('recomendacao-de-produto');
   }
 
   const permitidos = valoresPermitidos(dados);
