@@ -1,7 +1,7 @@
 import { Check, Pencil, Trash2, TrendingDown, TrendingUp, X } from 'lucide-react';
 import type { CategoryOfMonth } from '../hooks/use-expenses-state';
 import type { Transaction } from '../../../../data/transaction';
-import { formatBRL } from '../../../../utils/formatters';
+import { formatCents } from '../../../../utils/formatters';
 import { BAND_META } from '../band';
 
 interface CategoryCardProps {
@@ -124,7 +124,7 @@ export function CategoryCard({
         <div className="flex items-baseline justify-center gap-1">
           <span className="text-[0.7rem] font-semibold text-slate-400">R$</span>
           <span className="text-base font-bold text-slate-800 tabular-nums">
-            {formatBRL(c.spentInCents)}
+            {formatCents(c.spentInCents)}
           </span>
         </div>
 
@@ -157,7 +157,7 @@ export function CategoryCard({
           <div className="text-[0.7rem] text-slate-500 mt-0.5">
             limite{' '}
             <span className="font-bold text-slate-700 tabular-nums">
-              {c.limitInCents === null ? 'sem limite' : `R$ ${formatBRL(limit)}`}
+              {c.limitInCents === null ? 'sem limite' : `R$ ${formatCents(limit)}`}
             </span>
           </div>
         )}

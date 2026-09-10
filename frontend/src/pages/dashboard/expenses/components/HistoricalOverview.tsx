@@ -1,6 +1,6 @@
 import { ArrowUpRight, TrendingUp, TrendingDown, XCircle } from 'lucide-react';
 import type { MonthSummary } from '../hooks/use-expenses-state';
-import { formatBRL } from '../../../../utils/formatters';
+import { formatCents } from '../../../../utils/formatters';
 import { BAND_META, FILTER_BANDS } from '../band';
 
 export interface RecurrentProblem {
@@ -44,7 +44,7 @@ export function HistoricalOverview({ summaries, problems, onSelectMonth, animate
             </p>
             <div className="flex items-baseline gap-1">
               <span className="text-base font-semibold text-white/80">R$</span>
-              <span className="text-3xl font-bold tabular-nums tracking-tight">{formatBRL(avgSpent)}</span>
+              <span className="text-3xl font-bold tabular-nums tracking-tight">{formatCents(avgSpent)}</span>
             </div>
             <div className="flex items-center gap-1.5 mt-3">
               <span
@@ -120,7 +120,7 @@ export function HistoricalOverview({ summaries, problems, onSelectMonth, animate
                       {issue.category}
                     </p>
                     <p className="text-[0.65rem] text-slate-500">
-                      {issue.vezesEmVermelho}x estourou · R$ {formatBRL(issue.excessoTotalEmCentavos)} no total
+                      {issue.vezesEmVermelho}x estourou · R$ {formatCents(issue.excessoTotalEmCentavos)} no total
                     </p>
                   </div>
                 </div>
@@ -176,7 +176,7 @@ export function HistoricalOverview({ summaries, problems, onSelectMonth, animate
                   <div
                     className="absolute left-1/2 -translate-x-1/2 w-12 border-t-2 border-dashed border-slate-300"
                     style={{ bottom: `${limitHeight}%` }}
-                    title={`Limite R$ ${formatBRL(s.totalLimit)}`}
+                    title={`Limite R$ ${formatCents(s.totalLimit)}`}
                   />
 
                   <div className="relative w-10 h-full flex items-end">
@@ -186,7 +186,7 @@ export function HistoricalOverview({ summaries, problems, onSelectMonth, animate
                       style={{ height: animate ? `${pctHeight}%` : '0%' }}
                     >
                       <div className="absolute -top-7 left-1/2 -translate-x-1/2 whitespace-nowrap px-2 py-0.5 rounded-md bg-slate-900 text-white text-[0.62rem] font-bold tabular-nums opacity-0 group-hover:opacity-100 transition-opacity shadow-md pointer-events-none">
-                        R$ {formatBRL(s.totalSpent)}
+                        R$ {formatCents(s.totalSpent)}
                       </div>
                     </div>
                   </div>
@@ -206,7 +206,7 @@ export function HistoricalOverview({ summaries, problems, onSelectMonth, animate
                   </div>
                   <span className="text-[0.8rem] font-bold text-slate-700">{s.label}</span>
                   <span className="text-[0.65rem] text-slate-400 tabular-nums">
-                    R$ {formatBRL(s.totalSpent)}
+                    R$ {formatCents(s.totalSpent)}
                   </span>
                   <div className="flex items-center gap-1 mt-0.5">
                     {s.counts.red > 0 && (
@@ -246,7 +246,7 @@ export function HistoricalOverview({ summaries, problems, onSelectMonth, animate
                       )}
                     </div>
                     <p className="text-[0.7rem] text-slate-500">
-                      R$ {formatBRL(s.totalSpent)} de R$ {formatBRL(s.totalLimit)}
+                      R$ {formatCents(s.totalSpent)} de R$ {formatCents(s.totalLimit)}
                     </p>
                   </div>
                   <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[0.6rem] font-bold uppercase border ${meta.badgeClass}`}>

@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ApiSource, mesCorrente } from '../../../data/api-source';
 import { bandFromBackend, type Band } from '../../../data/band';
-import { formatBRL } from '../../../utils/formatters';
+import { formatCents } from '../../../utils/formatters';
 import { useMountedAnimation } from '../../../hooks/use-mounted-animation';
 
 // Apresentação apenas: cores/ícones por faixa. A decisão de faixa vem pronta do
@@ -110,8 +110,8 @@ export default function BudgetAtAGlance() {
           </div>
           <div className="flex items-baseline gap-1">
             <span className="text-xs font-semibold text-slate-400">R$</span>
-            <span className="text-xl font-bold text-slate-800 tabular-nums">{formatBRL(totalSpent)}</span>
-            <span className="text-xs text-slate-400 tabular-nums">de R$ {formatBRL(totalLimit)}</span>
+            <span className="text-xl font-bold text-slate-800 tabular-nums">{formatCents(totalSpent)}</span>
+            <span className="text-xs text-slate-400 tabular-nums">de R$ {formatCents(totalLimit)}</span>
             <span className="ml-1 text-[0.7rem] font-semibold text-slate-500 tabular-nums">({pct.toFixed(0)}%)</span>
           </div>
         </div>
@@ -167,7 +167,7 @@ export default function BudgetAtAGlance() {
                   <div className="min-w-0">
                     <p className="text-[0.75rem] font-bold text-slate-800 leading-tight">{a.category}</p>
                     <p className="text-[0.65rem] text-slate-500 leading-tight tabular-nums">
-                      R$ {formatBRL(a.spentInCents)} de R$ {formatBRL(a.limitInCents ?? 0)}
+                      R$ {formatCents(a.spentInCents)} de R$ {formatCents(a.limitInCents ?? 0)}
                     </p>
                   </div>
                 </div>

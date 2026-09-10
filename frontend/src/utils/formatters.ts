@@ -17,3 +17,8 @@ export function formatBRL(value: number): string {
     maximumFractionDigits: 2,
   });
 }
+
+/** Formata um valor que chega em CENTAVOS (contrato HT-017) para reais pt-BR. */
+export function formatCents(centavos: number): string {
+  return formatBRL(centavos / 100);
+}

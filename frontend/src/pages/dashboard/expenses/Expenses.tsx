@@ -1,5 +1,5 @@
 import { Calendar, Info } from 'lucide-react';
-import { formatBRL } from '../../../utils/formatters';
+import { formatCents } from '../../../utils/formatters';
 import { useExpensesState } from './hooks/use-expenses-state';
 import { SegmentedViewToggle } from './components/SegmentedViewToggle';
 import { ExportDropdown } from './components/ExportDropdown';
@@ -113,12 +113,12 @@ export default function Expenses() {
                 <div className="flex items-baseline gap-1">
                   <span className="text-base font-semibold text-white/80">R$</span>
                   <span className="text-3xl font-bold tabular-nums tracking-tight">
-                    {formatBRL(currentSummary.totalSpent)}
+                    {formatCents(currentSummary.totalSpent)}
                   </span>
                 </div>
                 <div className="flex items-baseline gap-2 mt-1">
                   <span className="text-[0.8rem] text-white/70 tabular-nums">
-                    de R$ {formatBRL(currentSummary.totalLimit)}
+                    de R$ {formatCents(currentSummary.totalLimit)}
                   </span>
                   <span
                     className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[0.65rem] font-bold bg-white/20 ${
