@@ -3,19 +3,19 @@ import LandingChatMock from './LandingChatMock';
 const featuresList = [
   {
     title: 'Visão Consolidada Multi-banco',
-    description: 'Saldo consolidado, despesas do mês e orçamento total de múltiplos bancos em 3 cards com indicadores de tendência percentual mês a mês.',
+    description: 'Saldo consolidado, gastos do mês e fatura do cartão em um único painel, com orçamento por categoria à vista.',
   },
   {
-    title: 'Simulador de Compra Orçamentária',
-    description: 'Informe o valor do item desejado. A IA analisa seu orçamento e calcula múltiplos cenários de parcelamento mostrando o impacto real no mês e status de viabilidade.',
+    title: 'Simulador de Compra no Orçamento',
+    description: 'Informe o valor de um item planejado e veja o impacto real no semáforo do mês — sem incentivar crédito nem parcelamento.',
   },
   {
     title: 'Relatórios Detalhados',
     description: 'Exporte relatórios do orçamento e transações em PDF e CSV diretamente das telas de Despesas e Visão Geral.',
   },
   {
-    title: 'Insights IA com Barra de Confiança',
-    description: '3 tipos de diagnósticos automáticos — Oportunidades de economia, Alertas de risco e Metas recomendadas — todos com barra de confiança percentual e auto-rotação.',
+    title: 'Diagnóstico de IA em Linguagem Simples',
+    description: 'A IA educativa resume a saúde do seu orçamento em texto claro, com aviso de que não é aconselhamento financeiro.',
   },
 ];
 

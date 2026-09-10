@@ -2,7 +2,7 @@ const benefitsData = [
   {
     icon: 'fas fa-link',
     title: 'Integração Completa',
-    description: 'Conecte todas suas contas bancárias, cartões e investimentos em um só lugar através do Open Finance.',
+    description: 'Conecte suas contas bancárias e cartões em um só lugar através do Open Finance, sempre com o seu consentimento.',
   },
   {
     icon: 'fas fa-chart-pie',
@@ -27,7 +27,7 @@ const benefitsData = [
   {
     icon: 'fas fa-comments',
     title: 'Consultor Financeiro 24/7',
-    description: 'Converse direto com nosso Chatbot Educativo integrado. Tire dúvidas sobre investimentos, inflação ou valide se uma compra cabe no seu orçamento.',
+    description: 'Converse com o assistente educativo para entender seus números e conceitos de finanças — ele usa os seus dados e não recomenda produtos, crédito nem instituições.',
   },
 ];
 
