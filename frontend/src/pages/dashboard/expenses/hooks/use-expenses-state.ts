@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import type { TransactionDTO } from '@contacomigo/contract';
 import { ApiSource, mesCorrente } from '../../../../data/api-source';
 import { paraTransactions } from '../../../../data/mappers';
 import { CATEGORIAS } from '../../../../data/presentation';
@@ -129,34 +130,37 @@ export function useExpensesState(): UseExpensesStateResult {
   const [filter, setFilter] = useState<QuickFilter>('todas');
   const transactionsSectionRef = useRef<HTMLDivElement | null>(null);
 
-  const reload = useCallback(async () => {
-    setLoading(true);
-    setErrored(false);
-    try {
-      const api = new ApiSource();
-      const [history, txs, semaphore] = await Promise.all([
-        api.historico(),
-        api.listarTransactions(),
-        api.semaphoreDoMes(mesCorrente()),
-      ]);
-      const byMonth: Record<string, CategoryOfMonth[]> = {};
-      for (const m of (history as { meses: Array<{ month: string; categorias: Array<{ category: string; limitInCents: number | null; spentInCents: number; band: string }> }> }).meses) {
-        byMonth[m.month] = m.categorias.map(toCategory);
-      }
-      byMonth[semaphore.month] = semaphore.categorias.map(toCategory);
-      setDataByMonth(byMonth);
-      setProblems(history.problemas.map((p) => ({ category: p.category, vezesEmVermelho: p.vezesEmVermelho, excessoTotalEmCentavos: p.excessoTotalEmCentavos })));
-      setTransactions(txs.estado === 'ok' ? paraTransactions(txs.dados, new Date()) : []);
-    } catch {
-      setErrored(true);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+  const applyData = useCallback(
+  (history: { meses: Array<{ month: string; categorias: Array<{ category: string; limitInCents: number | null; spentInCents: number; band: string }> }>; problemas: Array<{ category: string; vezesEmVermelho: number; excessoTotalEmCentavos: number }> }, txs: { estado: string; dados?: TransactionDTO[] }, semaphore: { month: string; categorias: Array<{ category: string; limitInCents: number | null; spentInCents: number; band: string }> }) => {
+    const byMonth: Record<string, CategoryOfMonth[]> = {};
+    for (const m of history.meses) byMonth[m.month] = m.categorias.map(toCategory);
+    byMonth[semaphore.month] = semaphore.categorias.map(toCategory);
+    setDataByMonth(byMonth);
+    setProblems(history.problemas.map((p) => ({ category: p.category, vezesEmVermelho: p.vezesEmVermelho, excessoTotalEmCentavos: p.excessoTotalEmCentavos })));
+    setTransactions(txs.estado === 'ok' ? paraTransactions((txs as { dados: TransactionDTO[] }).dados, new Date()) : []);
+  },
+  [],
+);
 
-  useEffect(() => {
-    void reload();
-  }, [reload]);
+useEffect(() => {
+  // Fetch-on-mount: os setState acontecem em continuação assíncrona (.then),
+  // nunca de forma síncrona no corpo do efeito (react-hooks/set-state-in-effect).
+  let ativo = true;
+  const api = new ApiSource();
+  Promise.all([api.historico(), api.listarTransactions(), api.semaphoreDoMes(mesCorrente())])
+    .then(([history, txs, semaphore]) => {
+      if (ativo) applyData(history, txs, semaphore);
+    })
+    .catch(() => {
+      if (ativo) setErrored(true);
+    })
+    .finally(() => {
+      if (ativo) setLoading(false);
+    });
+  return () => {
+    ativo = false;
+  };
+}, [applyData]);
 
   useEffect(() => {
     const hash = window.location.hash;
@@ -171,6 +175,17 @@ export function useExpensesState(): UseExpensesStateResult {
     if (!base.includes(mesCorrente())) base.push(mesCorrente());
     return base.sort().reverse();
   }, [dataByMonth]);
+
+  // Deriva o mês selecionado: se o mês atual não tem categorias (ex.: corrente
+  // ainda sem dados), cai no mês fechado mais recente que as tem. Ajuste de
+  // estado derivado após o fetch — padrão do React, não setState de efeito.
+  useEffect(() => {
+    if (loading) return;
+    if ((dataByMonth[selectedMonth]?.length ?? 0) > 0) return;
+    const comDados = months.filter((m) => (dataByMonth[m]?.length ?? 0) > 0);
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- derived-state adjustment after async fetch
+    if (comDados.length > 0 && selectedMonth !== comDados[0]) setSelectedMonth(comDados[0]);
+  }, [loading, months, dataByMonth, selectedMonth]);
 
   const summaries = useMemo<MonthSummary[]>(
     () =>
@@ -199,7 +214,7 @@ export function useExpensesState(): UseExpensesStateResult {
     [months, dataByMonth],
   );
 
-  const currentCats = dataByMonth[selectedMonth] ?? [];
+  const currentCats = useMemo(() => dataByMonth[selectedMonth] ?? [], [dataByMonth, selectedMonth]);
   const currentTxs = useMemo(
     () => transactions.filter((t) => monthOfDate(t.date) === selectedMonth && t.amount < 0),
     [transactions, selectedMonth],
@@ -248,6 +263,16 @@ export function useExpensesState(): UseExpensesStateResult {
     });
   };
 
+  const refresh = useCallback(async () => {
+    const api = new ApiSource();
+    const [history, txs, semaphore] = await Promise.all([
+      api.historico(),
+      api.listarTransactions(),
+      api.semaphoreDoMes(mesCorrente()),
+    ]);
+    applyData(history, txs, semaphore);
+  }, [applyData]);
+
   const applyDraft = async (id: string) => {
     const draft = drafts[id];
     if (typeof draft !== 'number' || draft <= 0) return;
@@ -255,7 +280,7 @@ export function useExpensesState(): UseExpensesStateResult {
     try {
       await new ApiSource().definirLimite(selectedMonth, id, Math.round(draft * 100));
       cancelEdit(id);
-      await reload();
+      await refresh();
     } catch {
       setSaveError('Não foi possível salvar o limite agora.');
     }
@@ -265,7 +290,7 @@ export function useExpensesState(): UseExpensesStateResult {
     setSaveError(null);
     try {
       await new ApiSource().removerLimite(selectedMonth, id);
-      await reload();
+      await refresh();
     } catch {
       setSaveError('Não foi possível remover o limite agora.');
     }
