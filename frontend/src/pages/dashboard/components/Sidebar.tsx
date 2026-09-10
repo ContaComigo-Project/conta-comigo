@@ -114,6 +114,14 @@ export default function Sidebar() {
 
         {menuAberto && (
           <div className="absolute bottom-20 left-3 right-3 bg-white border border-slate-100 rounded-xl shadow-lg p-1.5">
+            <Link
+              to="/dashboard/configuracoes"
+              onClick={() => setMenuAberto(false)}
+              className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-slate-700 hover:bg-slate-50 transition-colors"
+            >
+              <Settings size={15} strokeWidth={2} />
+              Configurações
+            </Link>
             <button
               id="sidebar-logout"
               onClick={sair}
