@@ -14,7 +14,7 @@ export default function PrivacyAndDataCard() {
               <Shield className="w-4 h-4" />
             </div>
             <div>
-              <h2 className="text-base font-bold text-slate-800">Privacidade e Dados (LGPD)</h2>
+              <h2 className="text-base font-bold text-slate-800">Privacidade e Dados</h2>
               <p className="text-xs text-slate-500">Transparência no armazenamento e soberania sobre seus dados financeiros</p>
             </div>
           </div>

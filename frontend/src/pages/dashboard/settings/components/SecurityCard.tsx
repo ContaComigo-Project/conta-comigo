@@ -35,7 +35,7 @@ export default function SecurityCard() {
           <div className="p-4 rounded-xl bg-slate-50 border border-slate-100 space-y-1.5">
             <div className="flex items-center gap-2 text-xs font-semibold text-slate-700">
               <Check className="w-3.5 h-3.5 text-emerald-600" />
-              <span>Token em Memória (ADR-004)</span>
+              <span>Token de Acesso em Memória</span>
             </div>
             <p className="text-xs text-slate-500 leading-relaxed">
               O Access Token viaja exclusivamente na memória do navegador, protegido contra ataques de XSS e extrações indevidas.
@@ -45,10 +45,10 @@ export default function SecurityCard() {
           <div className="p-4 rounded-xl bg-slate-50 border border-slate-100 space-y-1.5">
             <div className="flex items-center gap-2 text-xs font-semibold text-slate-700">
               <Check className="w-3.5 h-3.5 text-emerald-600" />
-              <span>Cookie HttpOnly Seguro</span>
+              <span>Sessão Persistente Segura</span>
             </div>
             <p className="text-xs text-slate-500 leading-relaxed">
-              Sessões persistidas utilizam cookie `SameSite=Strict` com flag `httpOnly`, invisível a scripts maliciosos.
+              Sua sessão permanece ativa ao recarregar a página, com proteção invisível a scripts maliciosos.
             </p>
           </div>
         </div>
@@ -59,8 +59,8 @@ export default function SecurityCard() {
               <KeyRound className="w-4 h-4" />
             </div>
             <div>
-              <p className="text-xs font-semibold text-slate-800">Criptografia em Repouso (AES-256-GCM)</p>
-              <p className="text-xs text-slate-500">Credenciais e tokens do Open Finance são cifrados antes de gravar no banco (RNF-014).</p>
+              <p className="text-xs font-semibold text-slate-800">Criptografia em Repouso</p>
+              <p className="text-xs text-slate-500">Credenciais e tokens do Open Finance são cifrados antes de gravar no banco.</p>
             </div>
           </div>
         </div>

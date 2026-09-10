@@ -61,7 +61,7 @@ export default function Ecosystem() {
         <div className="mt-16 flex flex-wrap justify-center gap-10">
           <div className="flex items-center gap-3 text-gray-400">
             <i className="fas fa-lock text-[#36b37e]"></i>
-            <span className="text-sm font-medium">Segurança Bancária AES-256</span>
+            <span className="text-sm font-medium">Segurança Bancária de Ponta</span>
           </div>
           <div className="flex items-center gap-3 text-gray-400">
             <i className="fas fa-shield-alt text-[#36b37e]"></i>

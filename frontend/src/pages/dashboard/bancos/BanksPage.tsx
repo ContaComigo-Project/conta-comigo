@@ -34,7 +34,7 @@ export default function BanksPage() {
             </p>
             <div className="pt-2 border-t border-slate-100 flex items-center gap-2 text-[0.75rem] text-slate-500">
               <Lock size={14} strokeWidth={2} className="text-slate-400" />
-              <span>Credenciais cifradas com AES-256-GCM</span>
+              <span>Credenciais cifradas e protegidas</span>
             </div>
           </div>
 

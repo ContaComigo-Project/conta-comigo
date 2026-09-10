@@ -15,7 +15,7 @@ test.describe('Conexões Open Finance — RF-005 e RNF-012', () => {
 
     // Verifica menção aos padrões de segurança Open Finance e criptografia AES-256
     await expect(page.getByText(/segurança open finance/i)).toBeVisible();
-    await expect(page.getByText(/aes-256/i)).toBeVisible();
+    await expect(page.getByText(/credenciais cifradas e protegidas/i)).toBeVisible();
   });
 
   test('permite retornar ao painel principal', async ({ page }) => {
