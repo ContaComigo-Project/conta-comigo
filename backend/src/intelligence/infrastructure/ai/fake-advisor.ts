@@ -20,6 +20,18 @@ const RESPOSTAS: Record<PedidoDeConselho['tipo'], string> = {
 
 export class FakeAdvisor implements AiAdvisor {
   async aconselhar(pedido: PedidoDeConselho): Promise<ResultadoDeIa<Conselho>> {
+    if (pedido.tipo === 'pergunta-livre') {
+      const dados = pedido.dados as { resumoDoGasto?: Array<{ categoria: string; totalEmCentavos: number }> } | undefined;
+      const gastos = dados?.resumoDoGasto;
+      if (gastos && gastos.length > 0) {
+        const top = gastos.map((g) => g.categoria).filter(Boolean).slice(0, 3).join(', ');
+        return okDeIa({
+          texto: `Com base nas suas transações registradas, a maior concentração de gastos está em ${top}. Uma recomendação prática e educativa é planejar um teto semanal para essas áreas, monitorar lançamentos frequentes e priorizar necessidades imediatas para manter seu orçamento saudável.`,
+          origem: 'provedor',
+        });
+      }
+    }
+
     return okDeIa({ texto: RESPOSTAS[pedido.tipo], origem: 'provedor' });
   }
 }

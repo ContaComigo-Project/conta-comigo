@@ -13,7 +13,8 @@ import type { AiAdvisor } from '../../domain/port/driven/ai-advisor';
 // operar, como o JwtIssuer de HN-001 e o PluggyAggregator de HT-011.
 
 const BASE_PADRAO = 'https://generativelanguage.googleapis.com/v1beta/models';
-const MODELO_PADRAO = 'gemini-3.6-flash';
+const MODELO_PADRAO = 'gemini-3.5-flash';
+const MODELOS_CANDIDATOS = ['gemini-3.5-flash', 'gemini-flash-latest', 'gemini-3.7-flash'];
 
 export class ChaveDeIaAusente extends Error {
   constructor() {
@@ -35,9 +36,12 @@ export interface ConfiguracaoDoGemini {
 // pessoa não muda a resposta e não tem por que sair do sistema.
 function montarPrompt(pedido: PedidoDeConselho): string {
   return [
-    'Você é um assistente educativo de finanças pessoais.',
-    'Interprete apenas os números fornecidos; não invente valores.',
-    'Não recomende produto financeiro, investimento, crédito nem instituição.',
+    'Você é um assistente educativo de finanças pessoais do aplicativo ContaComigo.',
+    'Interprete com clareza a dúvida do usuário com base nos dados reais fornecidos.',
+    'NÃO invente valores monetários, nem cite valores fictícios em R$ que não estejam nos Dados.',
+    'Ao citar valores, use EXCLUSIVAMENTE o formato "R$ X.XXX,XX" ou "R$ XX,XX". NUNCA escreva números seguidos da palavra centavos (ex: não escreva "150.000 centavos").',
+    'NÃO recomende produtos financeiros específicos (como CDB, LCI, ações, cripto, empréstimos), investimentos nem instituições bancárias.',
+    'Seja educativo, encorajador e objetivo, apresentando boas práticas de organização financeira e hábitos saudáveis.',
     `Tarefa: ${pedido.tipo}`,
     `Pergunta: ${pedido.pergunta}`,
     `Dados: ${JSON.stringify(pedido.dados)}`,
@@ -65,30 +69,55 @@ export class GeminiAdvisor implements AiAdvisor {
     const controle = new AbortController();
     const expirar = setTimeout(() => controle.abort(), this.limiteEmMs);
 
+    // Lista de modelos a tentar em cascata caso o modelo padrão atinja cota (429) ou indisponibilidade (503/404)
+    const modelosParaTentar = [this.modelo, ...MODELOS_CANDIDATOS.filter((m) => m !== this.modelo)];
+
     try {
-      const resposta = await this.buscar(`${this.base}/${this.modelo}:generateContent`, {
-        method: 'POST',
-        // A chave vai no cabeçalho, não na query: URL vaza em log de proxy e em
-        // histórico de terminal (RNF-012).
-        headers: { 'content-type': 'application/json', 'x-goog-api-key': this.apiKey },
-        body: JSON.stringify({ contents: [{ parts: [{ text: montarPrompt(pedido) }] }] }),
-        signal: controle.signal,
-      });
+      let ultimoStatus = 500;
 
-      if (!resposta.ok) return this.falhaDeStatus(resposta.status);
+      for (const modelo of modelosParaTentar) {
+        try {
+          const resposta = await this.buscar(`${this.base}/${modelo}:generateContent`, {
+            method: 'POST',
+            // A chave vai no cabeçalho, não na query: URL vaza em log de proxy e em
+            // histórico de terminal (RNF-012).
+            headers: { 'content-type': 'application/json', 'x-goog-api-key': this.apiKey },
+            body: JSON.stringify({ contents: [{ parts: [{ text: montarPrompt(pedido) }] }] }),
+            signal: controle.signal,
+          });
 
-      const corpo = (await resposta.json()) as {
-        candidates?: { content?: { parts?: { text?: string }[] } }[];
-      };
-      const texto = corpo.candidates?.[0]?.content?.parts?.[0]?.text?.trim();
+          if (!resposta.ok) {
+            ultimoStatus = resposta.status;
+            // Se for cota esgotada (429), indisponibilidade (503) ou modelo não encontrado (404),
+            // tenta o próximo modelo candidato da lista antes de falhar
+            if ((resposta.status === 429 || resposta.status === 503 || resposta.status === 404) && modelo !== modelosParaTentar[modelosParaTentar.length - 1]) {
+              continue;
+            }
+            return this.falhaDeStatus(resposta.status);
+          }
 
-      // Resposta vazia não é conselho: devolver string vazia empurraria o
-      // problema para a tela, que mostraria um bloco de IA em branco.
-      if (!texto) return falhaDeIa('resposta-invalida', 'provedor respondeu sem texto utilizável');
+          const corpo = (await resposta.json()) as {
+            candidates?: { content?: { parts?: { text?: string }[] } }[];
+          };
+          const texto = corpo.candidates?.[0]?.content?.parts?.[0]?.text?.trim();
 
-      return okDeIa({ texto, origem: 'provedor' });
-    } catch (erro) {
-      return falhaDeIa('indisponivel', erro instanceof Error ? erro.message : 'falha desconhecida no provedor');
+          // Resposta vazia não é conselho: devolver string vazia empurraria o
+          // problema para a tela, que mostraria um bloco de IA em branco.
+          if (!texto) return falhaDeIa('resposta-invalida', 'provedor respondeu sem texto utilizável');
+
+          return okDeIa({ texto, origem: 'provedor' });
+        } catch (erro) {
+          if (erro instanceof Error && erro.name === 'AbortError') {
+            return falhaDeIa('indisponivel', 'tempo limite excedido ao comunicar com o provedor de IA');
+          }
+          // Em erro de rede pontual, se ainda houver modelos candidatos, continua
+          if (modelo === modelosParaTentar[modelosParaTentar.length - 1]) {
+            return falhaDeIa('indisponivel', erro instanceof Error ? erro.message : 'falha desconhecida no provedor');
+          }
+        }
+      }
+
+      return this.falhaDeStatus(ultimoStatus);
     } finally {
       clearTimeout(expirar);
     }

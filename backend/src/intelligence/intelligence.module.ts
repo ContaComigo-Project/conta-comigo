@@ -13,6 +13,7 @@ import { TOKENS_INTELLIGENCE } from './domain/port/driven/tokens';
 import { CachedAdvisor } from './infrastructure/ai/cached-advisor';
 import { CappedAdvisor } from './infrastructure/ai/capped-advisor';
 import { FakeAdvisor } from './infrastructure/ai/fake-advisor';
+import { FallbackAdvisor } from './infrastructure/ai/fallback-advisor';
 import { GeminiAdvisor } from './infrastructure/ai/gemini-advisor';
 import { GuardedAdvisor } from './infrastructure/ai/guarded-advisor';
 import { GuardLogEstruturado } from './infrastructure/ai/guard-log-estruturado';
@@ -25,14 +26,14 @@ import { UsageCounterPrisma } from './infrastructure/persistence/usage-counter-p
 
 // Wiring do contexto `intelligence` (ADR-001): porta -> adaptador por token.
 //
-// Escolha do adaptador base, igual à de `HT-011`: o Gemini só entra quando há
-// chave no ambiente. Sem ela o falso assume, e o ambiente local sobe sem
-// cadastro em provedor. O Gemini nunca tenta falar sem chave — ele mesmo recusa
-// construir.
+// Escolha do adaptador base: o Gemini entra quando há chave no ambiente.
+// O FallbackAdvisor garante que, mesmo com chave configurada, se a cota da API
+// do Gemini for excedida (HTTP 429) ou o serviço oscilar (HTTP 503), o usuário
+// não receba erro genérico, recorrendo ao FakeAdvisor educativo (RNF-021).
 //
 // A ordem da pilha é regra, não estética:
 //
-//   Capped -> Cached -> Guarded -> Resilient -> (Gemini | Falso)
+//   Capped -> Cached -> Guarded -> Resilient -> (Fallback(Gemini, Falso) | Falso)
 //
 // O teto vem primeiro para que quem está acima da cota não consuma nem cache
 // nem rede. O cache vem antes da resiliência para que um acerto de cache não
@@ -42,9 +43,12 @@ import { UsageCounterPrisma } from './infrastructure/persistence/usage-counter-p
 // teto, sem cache, sem guarda e sem limite de espera.
 function montarAdvisor() {
   const chave = process.env.GEMINI_API_KEY;
-  const base = chave ? new GeminiAdvisor({ apiKey: chave }) : new FakeAdvisor();
+  const fake = new FakeAdvisor();
+  const base = chave
+    ? new FallbackAdvisor(new ResilientAdvisor(new GeminiAdvisor({ apiKey: chave })), fake)
+    : fake;
 
-  const guardado = new GuardedAdvisor(new ResilientAdvisor(base), new GuardLogEstruturado(new JsonLogSink()));
+  const guardado = new GuardedAdvisor(base, new GuardLogEstruturado(new JsonLogSink()));
 
   return new CappedAdvisor(
     new CachedAdvisor(guardado, new AdviceCachePrisma()),
