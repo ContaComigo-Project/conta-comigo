@@ -69,9 +69,10 @@ export class GetDiagnosisUseCase implements GetDiagnosis {
     });
 
     if (resultado.tipo === 'ok') {
-      return resultado.dados.origem === 'contingencia'
-        ? { tipo: 'ok', texto: resultado.dados.texto, contingencia: true, contingenciaDetalhe: resultado.dados.falhaDetalhe }
-        : { tipo: 'ok', texto: resultado.dados.texto };
+      if (resultado.dados.origem === 'contingencia') {
+        return { tipo: 'ia-indisponivel', motivo: resultado.dados.falhaDetalhe ?? 'provedor indisponível' };
+      }
+      return { tipo: 'ok', texto: resultado.dados.texto };
     }
     switch (resultado.motivo) {
       case 'teto-atingido':

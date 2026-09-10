@@ -51,9 +51,12 @@ export class PerguntarNoChatUseCase implements PerguntarNoChat {
     });
 
     if (resultado.tipo === 'ok') {
-      return resultado.dados.origem === 'contingencia'
-        ? { tipo: 'ok', resposta: resultado.dados.texto, aviso: AVISO_DE_NAO_ACONSELHAMENTO, contingencia: true, contingenciaDetalhe: resultado.dados.falhaDetalhe }
-        : { tipo: 'ok', resposta: resultado.dados.texto, aviso: AVISO_DE_NAO_ACONSELHAMENTO };
+      // Contingência (provedor fora) NÃO vira resposta: o usuário vê o erro,
+      // nunca um texto educativo simulado fingindo ser resposta real.
+      if (resultado.dados.origem === 'contingencia') {
+        return { tipo: 'ia-indisponivel', motivo: resultado.dados.falhaDetalhe ?? 'provedor indisponível' };
+      }
+      return { tipo: 'ok', resposta: resultado.dados.texto, aviso: AVISO_DE_NAO_ACONSELHAMENTO };
     }
     switch (resultado.motivo) {
       case 'teto-atingido':
