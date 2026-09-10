@@ -106,6 +106,13 @@ function amostraDe(texto: string): string {
  * Os tres exames, na ordem em que fazem sentido: formato primeiro (texto vazio
  * nao tem valor nem termo a examinar), depois produto, depois numero.
  */
+function contemTermoProibido(textoNormalizado: string, termo: string): boolean {
+  // Termos de produto exigem fronteira de palavra para evitar falsos positivos
+  // em palavras legítimas do português (ex: "movimentações" contém o sufixo "acoes").
+  const regex = new RegExp(`(^|[^a-z0-9])${termo}([^a-z0-9]|$)`, 'i');
+  return regex.test(textoNormalizado);
+}
+
 export function examinarSaida(texto: string, dados: unknown): Veredito {
   const bloquear = (motivo: MotivoDoBloqueio): Veredito => ({ aprovado: false, motivo, amostra: amostraDe(texto) });
 
@@ -114,7 +121,7 @@ export function examinarSaida(texto: string, dados: unknown): Veredito {
   }
 
   const normalizado = normalizar(texto);
-  if (TERMOS_DE_PRODUTO.some((termo) => normalizado.includes(termo))) {
+  if (TERMOS_DE_PRODUTO.some((termo) => contemTermoProibido(normalizado, termo))) {
     return bloquear('recomendacao-de-produto');
   }
 

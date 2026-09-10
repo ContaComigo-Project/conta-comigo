@@ -13,7 +13,7 @@ import type { AiAdvisor } from '../../domain/port/driven/ai-advisor';
 // operar, como o JwtIssuer de HN-001 e o PluggyAggregator de HT-011.
 
 const BASE_PADRAO = 'https://generativelanguage.googleapis.com/v1beta/models';
-const MODELO_PADRAO = 'gemini-2.0-flash';
+const MODELO_PADRAO = 'gemini-3.6-flash';
 
 export class ChaveDeIaAusente extends Error {
   constructor() {
@@ -35,9 +35,14 @@ export interface ConfiguracaoDoGemini {
 // pessoa não muda a resposta e não tem por que sair do sistema.
 function montarPrompt(pedido: PedidoDeConselho): string {
   return [
-    'Você é um assistente educativo de finanças pessoais.',
-    'Interprete apenas os números fornecidos; não invente valores.',
-    'Não recomende produto financeiro, investimento, crédito nem instituição.',
+    'Você é um assistente educativo de finanças pessoais do ContaComigo.',
+    'Regras essenciais (RN-017 / RN-019 / RNF-017):',
+    '- Interprete apenas os números fornecidos nos Dados.',
+    '- NUNCA invente, calcule somas, subtrações ou novos valores monetários (R$). Cite EXCLUSIVAMENTE os valores monetários exatos presentes nos Dados (convertendo de centavos para reais). Qualquer valor monetário (R$) que não esteja presente nos Dados causará o bloqueio automático da resposta pela guarda de segurança.',
+    '- Se precisar falar sobre o todo ou proporções, use termos qualitativos ou percentuais aproximados, sem criar valores em R$.',
+    '- Não recomende produto financeiro, investimento, crédito nem instituição.',
+    '- Nunca use blocos de código com crases (```).',
+    '- Seja amigável, direto, conciso e responda em português.',
     `Tarefa: ${pedido.tipo}`,
     `Pergunta: ${pedido.pergunta}`,
     `Dados: ${JSON.stringify(pedido.dados)}`,
@@ -55,7 +60,7 @@ export class GeminiAdvisor implements AiAdvisor {
     if (!configuracao.apiKey) throw new ChaveDeIaAusente();
 
     this.apiKey = configuracao.apiKey;
-    this.modelo = configuracao.modelo ?? MODELO_PADRAO;
+    this.modelo = configuracao.modelo ?? process.env.GEMINI_MODEL ?? MODELO_PADRAO;
     this.base = configuracao.base ?? BASE_PADRAO;
     this.buscar = configuracao.buscar ?? fetch;
     this.limiteEmMs = configuracao.limiteEmMs ?? 10_000;

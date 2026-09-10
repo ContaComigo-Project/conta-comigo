@@ -63,7 +63,9 @@ export default function AIChatWidget({ embedded = false }: { embedded?: boolean 
           ? (resposta.resposta ?? 'Sem resposta no momento.')
           : resposta.estado === 'teto-atingido'
             ? 'Você atingiu o limite diário de consultas da IA. Tente novamente amanhã.'
-            : 'A consulta não pôde ser respondida agora. Tente novamente em instantes.';
+            : resposta.estado === 'ia-bloqueou'
+              ? (resposta.motivo ?? 'A resposta foi bloqueada pelas diretrizes de segurança do assistente.')
+              : 'A consulta não pôde ser respondida agora. Tente novamente em instantes.';
       const aiMsg: ChatMessage = {
         id: nextId('a'),
         role: 'assistant',
