@@ -22,7 +22,11 @@ export class CachedAdvisor implements AiAdvisor {
     if (guardado) return okDeIa({ ...guardado, origem: 'cache' });
 
     const resultado = await this.interno.aconselhar(pedido);
-    if (resultado.tipo === 'ok') await this.cache.guardar(chave, resultado.dados);
+    // Contingência (provedor fora) NÃO entra no cache: é uma indisponibilidade
+    // momentânea, e cacheá-la faria o texto simulado voltar como se fosse real.
+    if (resultado.tipo === 'ok' && resultado.dados.origem !== 'contingencia') {
+      await this.cache.guardar(chave, resultado.dados);
+    }
 
     return resultado;
   }
