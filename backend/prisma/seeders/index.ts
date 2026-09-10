@@ -36,8 +36,9 @@ const MESES = [
   { month: '2026-08', dias: 31 },
 ];
 
-// Limites mensais por categoria (RN-002). Os mesmos valores para todos os
-// meses gerados, para o semáforo e o histórico terem comparação.
+// Limites mensais por categoria (RN-002). Todas as categorias do catálogo
+// ganham limite em todos os meses gerados, para o semáforo e o histórico terem
+// comparação e a tela de limites mostrar o perfil completo.
 const LIMITES_MENSAIS: readonly { category: string; limitInCents: number }[] = [
   { category: 'alimentacao', limitInCents: 150_000 },
   { category: 'transporte', limitInCents: 80_000 },
@@ -45,6 +46,8 @@ const LIMITES_MENSAIS: readonly { category: string; limitInCents: number }[] = [
   { category: 'saude', limitInCents: 70_000 },
   { category: 'lazer', limitInCents: 60_000 },
   { category: 'outros', limitInCents: 100_000 },
+  { category: 'receita', limitInCents: 900_000 },
+  { category: 'investimentos', limitInCents: 150_000 },
 ];
 
 // PRNG determinístico: o mesmo seed produz sempre a mesma massa (reprodutível).
