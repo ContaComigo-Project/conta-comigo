@@ -36,7 +36,7 @@ export default function PreferencesCard() {
               <p className="text-xs font-semibold text-slate-800">Aviso de Faixa Amarela (70%)</p>
             </div>
             <p className="text-xs text-slate-500 mt-1">
-              Alerta no semáforo quando os gastos de uma categoria cruzam 70% do limite mensal estipulado (RN-001).
+              Alerta no semáforo quando os gastos de uma categoria cruzam 70% do limite mensal estipulado.
             </p>
           </div>
           <button

@@ -25,7 +25,7 @@ export default function PrivacyAndDataCard() {
             <div className="p-4 rounded-xl bg-slate-50 border border-slate-100 space-y-1.5">
               <div className="flex items-center gap-2 text-xs font-semibold text-slate-700">
                 <Database className="w-3.5 h-3.5 text-indigo-600" />
-                <span>Consentimento Ativo (RN-012)</span>
+                <span>Consentimento Ativo</span>
               </div>
               <p className="text-xs text-slate-500 leading-relaxed">
                 Seus dados de contas e lançamentos só são agregados enquanto existir um consentimento válido e autorizado por você.
@@ -35,7 +35,7 @@ export default function PrivacyAndDataCard() {
             <div className="p-4 rounded-xl bg-slate-50 border border-slate-100 space-y-1.5">
               <div className="flex items-center gap-2 text-xs font-semibold text-slate-700">
                 <Clock className="w-3.5 h-3.5 text-indigo-600" />
-                <span>Expiração e Revogação (RN-013)</span>
+                <span>Expiração e Revogação</span>
               </div>
               <p className="text-xs text-slate-500 leading-relaxed">
                 Ao revogar uma conexão bancária, a instituição é removida do painel imediatamente e a exclusão definitiva ocorre em até 24h.

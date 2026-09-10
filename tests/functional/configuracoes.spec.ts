@@ -19,7 +19,7 @@ test.describe('Configurações e Privacidade LGPD — RF-001, RN-012 e RN-016', 
     // Navega para a seção de privacidade e valida conformidade LGPD e consentimentos
     await page.getByRole('button', { name: /privacidade e dados/i }).click();
     await expect(page.getByText(/privacidade e dados \(lgpd\)/i)).toBeVisible();
-    await expect(page.getByText(/consentimento ativo \(rn-012\)/i)).toBeVisible();
+    await expect(page.getByText(/consentimento ativo/i)).toBeVisible();
   });
 
   test('exibe botão de exclusão de conta e modal de confirmação (RN-016)', async ({ page }) => {

@@ -41,7 +41,7 @@ export default function AIDiversificationCard() {
       <div className="p-3.5 rounded-xl bg-amber-50/80 border border-amber-200/80 text-xs text-amber-900 space-y-1">
         <div className="flex items-center gap-2 font-semibold text-amber-800">
           <ShieldAlert className="w-4 h-4 text-amber-700 shrink-0" />
-          <span>Aviso Regulatório de Educação Financeira (RN-017)</span>
+          <span>Aviso Regulatório de Educação Financeira</span>
         </div>
         <p className="text-[0.72rem] leading-relaxed text-amber-950/80">
           O ContaComigo é uma plataforma de consolidação orçamentária e financeira para fins exclusivamente educativos. Não fornecemos aconselhamento financeiro, análise de títulos, intermediação ou recomendação de investimentos regulamentada pela CVM ou Banco Central do Brasil.

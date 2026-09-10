@@ -54,7 +54,7 @@ export default function DeleteAccountModal({ isOpen, onClose }: DeleteAccountMod
         <div>
           <h3 className="text-lg font-bold text-slate-900">Excluir Conta Permanentemente?</h3>
           <p className="text-xs text-slate-500 mt-1.5 leading-relaxed">
-            Esta operação é <strong className="text-rose-600">irreversível</strong>. Conforme a regra <span className="font-mono font-semibold">RN-016</span> e as diretrizes da LGPD, todos os seus dados cadastrais, conexões bancárias Open Finance, histórico de lançamentos e orçamentos serão apagados imediatamente do banco de dados.
+            Esta operação é <strong className="text-rose-600">irreversível</strong>. Conforme as diretrizes da LGPD, todos os seus dados cadastrais, conexões bancárias Open Finance, histórico de lançamentos e orçamentos serão apagados imediatamente do banco de dados.
           </p>
         </div>
 

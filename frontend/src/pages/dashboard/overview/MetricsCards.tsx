@@ -96,7 +96,7 @@ function MetricCard({ metric }: { metric: Metrica }) {
 
 function metricasDoResumo(saldoCentavos: number, gastosCentavos: number, faturaCentavos: number): Metrica[] {
   return [
-    { id: 'saldo', label: 'Saldo Total', value: saldoCentavos / 100, icon: 'wallet', highlight: true, trend: 0, trendLabel: 'contas ativas (RN-009)' },
+    { id: 'saldo', label: 'Saldo Total', value: saldoCentavos / 100, icon: 'wallet', highlight: true, trend: 0, trendLabel: 'contas ativas' },
     { id: 'gastos', label: 'Gastos do Mês', value: gastosCentavos / 100, icon: 'trending-down', highlight: false, trend: 0, trendLabel: 'mês de referência' },
     { id: 'fatura', label: 'Fatura do Cartão', value: faturaCentavos / 100, icon: 'bar-chart', highlight: false, trend: 0, trendLabel: 'separada do saldo' },
   ];
