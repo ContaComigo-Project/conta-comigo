@@ -55,6 +55,26 @@ describe('examinarSaida — RNF-017', () => {
     expect(veredito.aprovado === false && veredito.amostra.length).toBeLessThanOrEqual(80);
   });
 
+  it('RN-019 — repetir a meta informada pelo usuário ("350mil") é permitido', () => {
+    // O usuário disse "350mil"; a IA pode citar R$ 350.000,00 (não é invenção).
+    // No chat (checarValoresDivergentes=false) o plano calculado é permitido.
+    const veredito = examinarSaida(
+      'Para a casa de R$ 350.000,00, você precisaria reservar cerca de R$ 5.833,33 por mês.',
+      dados,
+      'quero comprar uma casa\n350mil',
+      false,
+    );
+    expect(veredito.aprovado).toBe(true);
+
+    // No diagnóstico (default true) o mesmo plano é bloqueado (não está no painel).
+    const noDiagnostico = examinarSaida(
+      'O gasto do mês foi de R$ 5.833,33.',
+      dados,
+      'quero comprar uma casa\n350mil',
+    );
+    expect(noDiagnostico.aprovado === false && noDiagnostico.motivo).toBe('valor-divergente');
+  });
+
   it('RN-019 — texto sem numero nenhum passa: a guarda nao exige numero', () => {
     expect(examinarSaida('Seu mes seguiu o padrao dos anteriores.', dados).aprovado).toBe(true);
   });

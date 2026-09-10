@@ -145,7 +145,24 @@ function contemVerboDeRecomendacao(textoNormalizado: string): boolean {
   return VERBOS_DE_RECOMENDACAO.some((verbo) => contemTermoProibido(textoNormalizado, verbo));
 }
 
-export function examinarSaida(texto: string, dados: unknown, pergunta = ''): Veredito {
+/**
+ * Valores que o próprio usuário informou (pergunta + histórico). São legítimos:
+ * RN-019 impede o modelo de INVENTAR número, não de repetir a meta que a pessoa
+ * deu. Reconhece "350mil", "2 milhões" e o formato "R$ 350.000,00".
+ */
+export function valoresInformadosPeloUsuario(contexto: string): number[] {
+  const valores = valoresMonetariosDe(contexto);
+  for (const achado of contexto.matchAll(/(\d+(?:[.,]\d+)?)\s*(mil|milh(?:ao|ões|oes))/gi)) {
+    const base = Number(achado[1].replace(/\./g, '').replace(',', '.'));
+    if (!Number.isFinite(base)) continue;
+    const reais = base * (/^mil$/i.test(achado[2]) ? 1_000 : 1_000_000);
+    valores.push(Math.round(reais));
+    valores.push(Math.round(reais * 100));
+  }
+  return valores;
+}
+
+export function examinarSaida(texto: string, dados: unknown, pergunta = '', checarValoresDivergentes = true): Veredito {
   const bloquear = (motivo: MotivoDoBloqueio): Veredito => ({ aprovado: false, motivo, amostra: amostraDe(texto) });
 
   if (texto.trim() === '' || texto.length > LIMITE_DE_TAMANHO || texto.includes('```')) {
@@ -165,9 +182,16 @@ export function examinarSaida(texto: string, dados: unknown, pergunta = ''): Ver
     return bloquear('recomendacao-de-produto');
   }
 
-  const permitidos = valoresPermitidos(dados);
-  if (valoresMonetariosDe(texto).some((valor) => !permitidos.has(valor))) {
-    return bloquear('valor-divergente');
+  // RN-019: o DIAGNÓSTICO só interpreta números do consolidado — todo valor
+  // citado precisa estar no painel (ou ser a meta informada pelo usuário). No
+  // chat, o plano pode CALCULAR valores novos (ex.: reserva mensal) sem inventar
+  // os dados da pessoa — bloquear o cálculo silenciaria o próprio propósito.
+  if (checarValoresDivergentes) {
+    const permitidos = valoresPermitidos(dados);
+    for (const valor of valoresInformadosPeloUsuario(pergunta)) permitidos.add(valor);
+    if (valoresMonetariosDe(texto).some((valor) => !permitidos.has(valor))) {
+      return bloquear('valor-divergente');
+    }
   }
 
   return { aprovado: true };
