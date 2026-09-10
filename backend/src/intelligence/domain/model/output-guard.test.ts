@@ -66,8 +66,8 @@ describe('examinarSaida — RNF-017', () => {
   it('RN-017 — bloqueia recomendacao de produto financeiro', () => {
     const proibidos = [
       'Invista em CDB para render mais.',
-      'Considere o Tesouro Direto.',
-      'Vale a pena pedir um empréstimo pessoal.',
+      'Recomendo o Tesouro Direto.',
+      'Contrate um empréstimo pessoal.',
       'O cartão de crédito do Banco Exemplo tem cashback.',
       'sugiro aplicar em ações',
       'CONTRATE UM FINANCIAMENTO',
@@ -115,9 +115,17 @@ describe('examinarSaida — RNF-017', () => {
     );
     expect(recomendacao.aprovado === false && recomendacao.motivo).toBe('recomendacao-de-produto');
 
-    // Produto não solicitado na resposta bloqueia, mesmo sem verbo.
-    const naoPedido = examinarSaida('O CDB do Banco X paga 110% do CDI.', dados, 'onde estou gastando mais?');
-    expect(naoPedido.aprovado === false && naoPedido.motivo).toBe('recomendacao-de-produto');
+    // Produto + verbo de recomendação bloqueia, mesmo sem estar na pergunta.
+    const recomendou = examinarSaida('Recomendo o CDB do Banco X para render mais.', dados, 'onde estou gastando mais?');
+    expect(recomendou.aprovado === false && recomendou.motivo).toBe('recomendacao-de-produto');
+
+    // Produto de uma instituição específica bloqueia mesmo sem verbo (promoção).
+    const institucional = examinarSaida('O cartão de crédito do Banco X tem cashback.', dados, 'onde estou gastando mais?');
+    expect(institucional.aprovado === false && institucional.motivo).toBe('recomendacao-de-produto');
+
+    // Explicar/comparar produtos sem recomendar é permitido (conversa educativa).
+    const educativo = examinarSaida('O consórcio é uma compra coletiva, diferente do financiamento bancário.', dados, 'pensei em abrir um consorcio');
+    expect(educativo.aprovado).toBe(true);
   });
 
   it('RN-017 — perguntar a preferência do usuário (financiar/consórcio/à vista) é permitido', () => {

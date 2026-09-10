@@ -17,9 +17,9 @@ export type Veredito =
 const LIMITE_DE_TAMANHO = 4_000;
 const TAMANHO_DA_AMOSTRA = 80;
 
-// Termos de PRODUTO, nao de assunto. "poupar" passa; "poupanca do banco X" nao.
-// A diferenca importa: RN-017 proibe recomendar produto, e nao falar de
-// dinheiro — uma lista por assunto silenciaria o proprio propósito do sistema.
+// Produtos financeiros. FALAR deles é educação (o usuário pode perguntar como
+// funciona um consórcio); o que RN-017 proíbe é RECOMENDAR. Por isso um termo
+// de produto só bloqueia junto de um verbo de recomendação (ver examinarSaida).
 const TERMOS_DE_PRODUTO = [
   'cdb',
   'lci',
@@ -35,14 +35,14 @@ const TERMOS_DE_PRODUTO = [
   'emprestimo',
   'financiamento',
   'consorcio',
+];
+
+// Citar produto de uma INSTITUIÇÃO específica é promoção — bloqueia mesmo sem
+// verbo ("o cartão de crédito do Banco X tem cashback").
+const TERMOS_INSTITUCIONAIS = [
   'cartao de credito do',
   'conta no banco',
-  'abra uma conta',
-  'invista',
-  'investir em',
-  'aplicar em',
-  'contrate',
-  'contratar um',
+  'conta na corretora',
   'recomendo o banco',
 ];
 
@@ -132,28 +132,17 @@ function contemTermoProibido(textoNormalizado: string, termo: string): boolean {
 // Verbos que transformam a menção de um produto em RECOMENDAÇÃO (RN-017).
 // Explicar o produto que o usuário perguntou é educação; "recomendo/vale a
 // pena/invista" é recomendação, mesmo quando o assunto foi solicitado.
+// Apenas RECOMENDAÇÕES DIRETAS. Expressões ambíguas ("vale a pena", "pode ser
+// uma boa", "considere") aparecem naturalmente em explicações educativas e
+// bloqueá-las silenciava a própria conversa que o produto quer estimular.
 const VERBOS_DE_RECOMENDACAO = [
   'recomendo', 'recomendamos', 'recomendaria', 'sugiro', 'sugerimos', 'aconselho', 'aconselhamos',
-  'invista', 'invistam', 'investir em', 'vale a pena', 'vale contratar', 'vale pedir',
-  'considere', 'consideraria', 'contrate', 'abrir uma conta', 'abra uma conta', 'adquirir',
-  'deveria', 'deveriam', 'pode ser uma boa', 'aproveite', 'garanta', 'pode render', 'renda mais',
+  'invista', 'invistam', 'investir em', 'contrate', 'contratar um', 'aplicar em',
+  'abrir uma conta', 'abra uma conta', 'adquirir', 'recomendo o banco',
 ];
 
 function contemVerboDeRecomendacao(textoNormalizado: string): boolean {
   return VERBOS_DE_RECOMENDACAO.some((verbo) => contemTermoProibido(textoNormalizado, verbo));
-}
-
-// Perguntar a PREFERÊNCIA do usuário (financiar? consórcio? à vista?) é
-// personalização educativa, não recomendação. A pergunta precisa ser
-// interrogativa E delegar a escolha ao usuário — nunca sugerir uma via.
-const VERBOS_DE_ELICITACAO = [
-  'pretende', 'pretende usar', 'quer', 'prefere', 'vai', 'gostaria de usar', 'pensa em',
-  'qual modalidade', 'como pretende', 'planeja usar', 'esta pensando em',
-];
-
-function ehElicitacaoDePreferencia(textoNormalizado: string): boolean {
-  if (!textoNormalizado.includes('?')) return false;
-  return VERBOS_DE_ELICITACAO.some((verbo) => contemTermoProibido(textoNormalizado, verbo));
 }
 
 export function examinarSaida(texto: string, dados: unknown, pergunta = ''): Veredito {
@@ -164,18 +153,15 @@ export function examinarSaida(texto: string, dados: unknown, pergunta = ''): Ver
   }
 
   const normalizado = normalizar(texto);
-  const perguntaNormalizada = normalizar(pergunta);
-  const haVerbo = contemVerboDeRecomendacao(normalizado);
-  const elicita = ehElicitacaoDePreferencia(normalizado);
-  for (const termo of TERMOS_DE_PRODUTO) {
-    if (!contemTermoProibido(normalizado, termo)) continue;
-    const perguntouSobre = contemTermoProibido(perguntaNormalizada, termo);
-    // Recomendação explícita sempre bloqueia (mesmo interrogativa: "vale a pena financiar?").
-    if (haVerbo) return bloquear('recomendacao-de-produto');
-    // Explicar o produto que o usuário perguntou, ou perguntar a preferência
-    // dele sobre modalidades (financiar/consórcio/à vista): permitido.
-    if (perguntouSobre || elicita) continue;
-    // Citação não solicitada em frase declarativa: bloqueio.
+  // Promoção de produto de uma instituição específica: bloqueia sempre.
+  if (TERMOS_INSTITUCIONAIS.some((termo) => contemTermoProibido(normalizado, termo))) {
+    return bloquear('recomendacao-de-produto');
+  }
+  // Recomendação = produto financeiro citado JUNTO de um verbo de recomendação.
+  // Explicar ou perguntar a preferência (financiar? consórcio? à vista?) não é
+  // recomendar — a conversa educativa continua.
+  const temProduto = TERMOS_DE_PRODUTO.some((termo) => contemTermoProibido(normalizado, termo));
+  if (temProduto && contemVerboDeRecomendacao(normalizado)) {
     return bloquear('recomendacao-de-produto');
   }
 
