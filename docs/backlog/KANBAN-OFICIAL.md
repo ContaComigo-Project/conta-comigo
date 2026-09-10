@@ -33,10 +33,10 @@ uma tem a coluna "UI hoje" dizendo o que já está pronto na tela.
 
 ## Notas do inventário (`HT-016`, `docs/inventario-frontend.md`)
 
-- **Navegação do dashboard:** as telas `/dashboard/investimentos`, `/bancos`,
-  `/configuracoes` e `/metas` **são mantidas**; em um primeiro momento o link
-  leva a uma tela com o estado **"Em construção"**. A decisão de implementar ou
-  cortar cada uma fica com o product-manager antes do fim da PoC.
+- **Navegação do dashboard:** as telas `/dashboard/investimentos`, `/bancos` e
+  `/configuracoes` **foram implementadas** (seções reais). A rota `/metas`
+  (estado "Em construção") foi **cortada** por decisão do product-manager
+  (2026-09-10) — a PoC apresenta as seções prontas, sem tela placeholder.
 - `HN-001` precisa **eliminar o `console.log` de credenciais** (`Login.tsx:23`,
   `Register.tsx:53`) durante a reescrita de autenticação.
 - `HT-018` precisa **substituir a identidade pessoal real dos mocks**
@@ -44,6 +44,13 @@ uma tem a coluna "UI hoje" dizendo o que já está pronto na tela.
   camada de mock.
 - `RN-024` e `RN-025` foram **descartadas** pelo inventário; a única fonte de
   faixa é `RN-001`.
+
+## Decisões de escopo da PoC (2026-09-10)
+
+- `HT-015` (publicação) **cortada**: a MOCITEC é apresentada no localhost, sem deploy.
+- Telas "Em construção" **cortadas**: resta só o que está implementado.
+- `HT-007` (CI) em ponto satisfatório para a PoC; a proteção de branch e o PR de
+  prova ficam como ação futura opcional, não bloqueiam a apresentação.
 
 ## Próxima demanda
 
@@ -179,7 +186,7 @@ o backlog passou a considerar o frontend existente.
 | 29 | `HN-010` | Chatbot educativo com aviso permanente | Negócio | **Done** | HN-009 | `AIChatWidget` existe, com respostas roteirizadas |
 | 30 | `HN-011` | Simulação de compra e exportação PDF/CSV | Negócio | **Done** | HN-008 | `ExportDropdown` existe; **não gera arquivo** |
 | 31 | `HT-018` | Remover a lógica de negócio e os mocks do frontend | Técnica | **Done** | HN-010, HN-011 | Fecha a fronteira aberta em `HT-017` (`v0.33.0` parte 2 — telas reais) |
-| 32 | `HT-015` | Publicação da PoC e verificação de custo zero | Técnica | Backlog | HT-018 | — |
+| 32 | `HT-015` | Publicação da PoC e verificação de custo zero | Técnica | **Cortada (PoC)** | HT-018 | MOCITEC apresentada no localhost (decisão 2026-09-10); sem deploy na PoC |
 
 ## Quadro
 
