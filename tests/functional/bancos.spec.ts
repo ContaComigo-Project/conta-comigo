@@ -20,7 +20,7 @@ test.describe('Conexões Open Finance — RF-005 e RNF-012', () => {
 
   test('permite retornar ao painel principal', async ({ page }) => {
     await page.goto('/dashboard/bancos');
-    await page.getByRole('link', { name: /voltar ao início/i }).click();
+    await page.getByRole('link', { name: /visão geral/i }).click();
     await expect(page).toHaveURL(/\/dashboard$/, { timeout: 10_000 });
   });
 });

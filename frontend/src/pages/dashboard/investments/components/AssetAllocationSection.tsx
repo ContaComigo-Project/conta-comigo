@@ -8,14 +8,14 @@ interface AssetAllocationSectionProps {
 
 export default function AssetAllocationSection({ allocations }: AssetAllocationSectionProps) {
   return (
-    <div className="bg-white border border-slate-200/80 rounded-2xl p-6 shadow-xs space-y-6">
+    <div className="bg-white border border-slate-100/80 rounded-2xl p-6 shadow-sm space-y-6">
       <div className="flex items-center justify-between pb-3 border-b border-slate-100">
         <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-lg bg-emerald-50 text-[#36b37e] flex items-center justify-center">
+          <div className="w-8 h-8 rounded-lg bg-emerald-50 text-cc-green flex items-center justify-center">
             <PieChart className="w-4 h-4" />
           </div>
           <div>
-            <h2 className="text-base font-bold text-[#001b42]">Alocação por Classe de Ativos</h2>
+            <h2 className="text-base font-bold text-slate-800">Alocação por Classe de Ativos</h2>
             <p className="text-xs text-slate-500">Distribuição patrimonial entre renda fixa, renda variável e títulos públicos</p>
           </div>
         </div>
@@ -47,7 +47,7 @@ export default function AssetAllocationSection({ allocations }: AssetAllocationS
           >
             <div className="flex items-center gap-3">
               <span
-                className="w-3.5 h-3.5 rounded-md shrink-0 shadow-xs"
+                className="w-3.5 h-3.5 rounded-md shrink-0 shadow-sm"
                 style={{ backgroundColor: item.color }}
               />
               <div>
@@ -55,7 +55,7 @@ export default function AssetAllocationSection({ allocations }: AssetAllocationS
                 <p className="text-xs text-slate-500">R$ {formatBRL(item.totalInCents / 100)}</p>
               </div>
             </div>
-            <span className="text-sm font-bold text-[#001b42]">
+            <span className="text-sm font-bold text-slate-800">
               {item.percentage}%
             </span>
           </div>

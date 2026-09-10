@@ -14,14 +14,14 @@ export default function PreferencesCard() {
   };
 
   return (
-    <div className="bg-white border border-slate-200/80 rounded-2xl p-6 shadow-xs space-y-6">
+    <div className="bg-white border border-slate-100/80 rounded-2xl p-6 shadow-sm space-y-6">
       <div className="flex items-center justify-between pb-3 border-b border-slate-100">
         <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-lg bg-emerald-50 text-[#36b37e] flex items-center justify-center">
+          <div className="w-8 h-8 rounded-lg bg-emerald-50 text-cc-green flex items-center justify-center">
             <Bell className="w-4 h-4" />
           </div>
           <div>
-            <h2 className="text-base font-bold text-[#001b42]">Alertas e Preferências</h2>
+            <h2 className="text-base font-bold text-slate-800">Alertas e Preferências</h2>
             <p className="text-xs text-slate-500">Configure como o ContaComigo sinaliza seu progresso orçamentário</p>
           </div>
         </div>
@@ -43,7 +43,7 @@ export default function PreferencesCard() {
             type="button"
             onClick={() => handleToggle('alertYellowBand')}
             className={`w-11 h-6 flex items-center rounded-full p-1 transition-colors ${
-              prefs.alertYellowBand ? 'bg-[#36b37e]' : 'bg-slate-300'
+              prefs.alertYellowBand ? 'bg-cc-green' : 'bg-slate-300'
             }`}
           >
             <div
@@ -69,7 +69,7 @@ export default function PreferencesCard() {
             type="button"
             onClick={() => handleToggle('alertRedBand')}
             className={`w-11 h-6 flex items-center rounded-full p-1 transition-colors ${
-              prefs.alertRedBand ? 'bg-[#36b37e]' : 'bg-slate-300'
+              prefs.alertRedBand ? 'bg-cc-green' : 'bg-slate-300'
             }`}
           >
             <div
@@ -92,7 +92,7 @@ export default function PreferencesCard() {
             type="button"
             onClick={() => handleToggle('syncNotifications')}
             className={`w-11 h-6 flex items-center rounded-full p-1 transition-colors ${
-              prefs.syncNotifications ? 'bg-[#36b37e]' : 'bg-slate-300'
+              prefs.syncNotifications ? 'bg-cc-green' : 'bg-slate-300'
             }`}
           >
             <div
@@ -106,7 +106,7 @@ export default function PreferencesCard() {
         {/* Teto de IA Info */}
         <div className="p-4 rounded-xl bg-emerald-50/40 border border-emerald-100 flex items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-emerald-100 text-[#36b37e] flex items-center justify-center shrink-0">
+            <div className="w-8 h-8 rounded-lg bg-emerald-100 text-cc-green flex items-center justify-center shrink-0">
               <Sparkles className="w-4 h-4" />
             </div>
             <div>

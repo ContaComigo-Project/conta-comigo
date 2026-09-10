@@ -76,7 +76,7 @@ export default function DeleteAccountModal({ isOpen, onClose }: DeleteAccountMod
             onChange={(e) => setConfirmText(e.target.value)}
             disabled={loading}
             placeholder="EXCLUIR"
-            className="w-full px-3.5 py-2 text-sm border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 font-mono"
+            className="w-full px-3.5 py-2 text-sm border border-slate-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 font-mono"
           />
         </div>
 
@@ -95,7 +95,7 @@ export default function DeleteAccountModal({ isOpen, onClose }: DeleteAccountMod
             type="button"
             onClick={handleDelete}
             disabled={!isConfirmed || loading}
-            className="inline-flex items-center gap-2 px-4 py-2 text-xs font-semibold text-white bg-rose-600 hover:bg-rose-700 rounded-xl transition-colors shadow-xs disabled:opacity-40 disabled:cursor-not-allowed"
+            className="inline-flex items-center gap-2 px-4 py-2 text-xs font-semibold text-white bg-rose-600 hover:bg-rose-700 rounded-xl transition-colors shadow-sm disabled:opacity-40 disabled:cursor-not-allowed"
           >
             {loading ? (
               <Loader2 className="w-3.5 h-3.5 animate-spin" />

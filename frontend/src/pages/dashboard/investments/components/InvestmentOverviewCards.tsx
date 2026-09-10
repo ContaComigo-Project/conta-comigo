@@ -10,17 +10,17 @@ export default function InvestmentOverviewCards({ summary }: InvestmentOverviewC
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
       {/* Total Investido */}
-      <div className="bg-white border border-slate-200/80 rounded-2xl p-5 shadow-xs hover:border-slate-300 transition-all">
+      <div className="bg-white border border-slate-100/80 rounded-2xl p-5 shadow-sm hover:border-slate-300 transition-all">
         <div className="flex items-center justify-between">
           <span className="text-xs font-semibold uppercase tracking-wider text-slate-400">
             Total Investido
           </span>
-          <div className="w-9 h-9 rounded-xl bg-emerald-50 text-[#36b37e] flex items-center justify-center">
+          <div className="w-9 h-9 rounded-xl bg-emerald-50 text-cc-green flex items-center justify-center">
             <DollarSign className="w-5 h-5" />
           </div>
         </div>
         <div className="mt-3">
-          <p className="text-2xl font-bold text-[#001b42]">
+          <p className="text-xl font-bold text-slate-800">
             R$ {formatBRL(summary.totalInvestedInCents / 100)}
           </p>
           <div className="flex items-center gap-1.5 mt-1 text-xs text-emerald-600 font-medium">
@@ -31,7 +31,7 @@ export default function InvestmentOverviewCards({ summary }: InvestmentOverviewC
       </div>
 
       {/* Proventos do Mês */}
-      <div className="bg-white border border-slate-200/80 rounded-2xl p-5 shadow-xs hover:border-slate-300 transition-all">
+      <div className="bg-white border border-slate-100/80 rounded-2xl p-5 shadow-sm hover:border-slate-300 transition-all">
         <div className="flex items-center justify-between">
           <span className="text-xs font-semibold uppercase tracking-wider text-slate-400">
             Proventos do Mês
@@ -41,7 +41,7 @@ export default function InvestmentOverviewCards({ summary }: InvestmentOverviewC
           </div>
         </div>
         <div className="mt-3">
-          <p className="text-2xl font-bold text-[#001b42]">
+          <p className="text-xl font-bold text-slate-800">
             R$ {formatBRL(summary.monthlyEarningsInCents / 100)}
           </p>
           <p className="mt-1 text-xs text-slate-500">
@@ -51,7 +51,7 @@ export default function InvestmentOverviewCards({ summary }: InvestmentOverviewC
       </div>
 
       {/* Rentabilidade Acumulada */}
-      <div className="bg-white border border-slate-200/80 rounded-2xl p-5 shadow-xs hover:border-slate-300 transition-all">
+      <div className="bg-white border border-slate-100/80 rounded-2xl p-5 shadow-sm hover:border-slate-300 transition-all">
         <div className="flex items-center justify-between">
           <span className="text-xs font-semibold uppercase tracking-wider text-slate-400">
             Desempenho Geral
@@ -61,7 +61,7 @@ export default function InvestmentOverviewCards({ summary }: InvestmentOverviewC
           </div>
         </div>
         <div className="mt-3">
-          <p className="text-2xl font-bold text-purple-700">
+          <p className="text-xl font-bold text-purple-700">
             +{summary.totalProfitabilityPercent}%
           </p>
           <p className="mt-1 text-xs text-slate-500">
@@ -71,7 +71,7 @@ export default function InvestmentOverviewCards({ summary }: InvestmentOverviewC
       </div>
 
       {/* Benchmark */}
-      <div className="bg-white border border-slate-200/80 rounded-2xl p-5 shadow-xs hover:border-slate-300 transition-all">
+      <div className="bg-white border border-slate-100/80 rounded-2xl p-5 shadow-sm hover:border-slate-300 transition-all">
         <div className="flex items-center justify-between">
           <span className="text-xs font-semibold uppercase tracking-wider text-slate-400">
             Benchmark (CDI)
@@ -81,7 +81,7 @@ export default function InvestmentOverviewCards({ summary }: InvestmentOverviewC
           </div>
         </div>
         <div className="mt-3">
-          <p className="text-2xl font-bold text-[#001b42]">
+          <p className="text-xl font-bold text-slate-800">
             +{summary.portfolioVsBenchmarkPercent}%
           </p>
           <p className="mt-1 text-xs text-slate-500">

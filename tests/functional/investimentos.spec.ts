@@ -19,7 +19,7 @@ test.describe('Carteira de Investimentos e Alocação — RF-008 e RN-017', () =
 
   test('permite retornar ao painel principal a partir de investimentos', async ({ page }) => {
     await page.goto('/dashboard/investimentos');
-    await page.getByRole('link', { name: /voltar ao início/i }).click();
+    await page.getByRole('link', { name: /visão geral/i }).click();
     await expect(page).toHaveURL(/\/dashboard$/, { timeout: 10_000 });
   });
 });
