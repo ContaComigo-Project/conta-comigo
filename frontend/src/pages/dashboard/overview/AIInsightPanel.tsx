@@ -88,7 +88,7 @@ export default function AIInsightPanel() {
         {dados.estado === 'degradado' && (
           <p className="text-sm text-slate-500 leading-relaxed flex items-start gap-2">
             <AlertTriangle size={15} strokeWidth={2} className="shrink-0 mt-0.5 text-amber-500" />
-            O diagnóstico não está disponível no momento (estado: {dados.motivo}). Seus números continuam visíveis no painel.
+            A feature de IA não está disponível no momento. Verifique se o provedor foi configurado ou tente novamente em instantes.
           </p>
         )}
       </div>

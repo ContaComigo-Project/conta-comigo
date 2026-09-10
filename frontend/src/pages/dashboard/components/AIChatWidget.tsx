@@ -125,7 +125,7 @@ export default function AIChatWidget({ embedded = false }: { embedded?: boolean 
             <p className="text-sm font-bold leading-tight truncate">Consultor Financeiro IA</p>
             <p className="text-[0.7rem] text-white/70 leading-tight flex items-center gap-1 truncate">
               <Sparkles size={10} strokeWidth={2.2} />
-              Esclareça dúvidas sobre seus números e orçamento
+              Esclareça dúvidas sobre seus dados e orçamento
             </p>
           </div>
         </div>
