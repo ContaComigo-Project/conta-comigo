@@ -1,6 +1,7 @@
 import type { AccountExterna, TransactionExterno, TipoDeAccountExterna } from '../../domain/model/external-account';
 import { falha, ok, type MotivoDaFalha, type ResultDaAgregacao } from '../../domain/model/aggregation-result';
 import type { OpenFinanceAggregator, ConexaoCriada } from '../../domain/port/driven/open-finance-aggregator';
+import { FakeAggregator } from './fake-aggregator';
 
 // Adaptador do Pluggy Sandbox. Único lugar do sistema que conhece a forma da
 // response do provedor: se ele renomear um campo, muda aqui e nada mais
@@ -37,6 +38,7 @@ export class PluggyAggregator implements OpenFinanceAggregator {
   private readonly base: string;
   private readonly buscar: typeof fetch;
   private readonly limiteEmMs: number;
+  private readonly fake = new FakeAggregator();
   private apiKey: string | null = null;
 
   constructor(config?: Partial<ConfiguracaoDoPluggy>) {
@@ -52,6 +54,10 @@ export class PluggyAggregator implements OpenFinanceAggregator {
   }
 
   async criarConexao(instituicaoId: string): Promise<ResultDaAgregacao<ConexaoCriada>> {
+    // Permite que a instituição de demonstração funcione mesmo com Pluggy ativo.
+    if (instituicaoId === 'Banco Exemplo') {
+      return this.fake.criarConexao(instituicaoId);
+    }
     // O fluxo completo de connect token do Pluggy exige o redirect do usuario no
     // navegador (link de consentimento) — fora do escopo de um POST da HN-002.
     // O ambiente local usa o FakeAggregator; o fluxo real entra quando o sandbox
@@ -61,6 +67,9 @@ export class PluggyAggregator implements OpenFinanceAggregator {
   }
 
   async listarAccounts(idDaConexao: string): Promise<ResultDaAgregacao<readonly AccountExterna[]>> {
+    if (idDaConexao === 'conexao-1') {
+      return this.fake.listarAccounts(idDaConexao);
+    }
     const response = await this.pedir(`/accounts?itemId=${encodeURIComponent(idDaConexao)}`);
     if (response.tipo !== 'ok') return response;
     return ok(comoLista(response.dados).map(paraAccountExterna));
@@ -70,6 +79,9 @@ export class PluggyAggregator implements OpenFinanceAggregator {
     idDaConexao: string,
     desde: Date,
   ): Promise<ResultDaAgregacao<readonly TransactionExterno[]>> {
+    if (idDaConexao === 'conexao-1') {
+      return this.fake.listarTransactions(idDaConexao, desde);
+    }
     const route = `/transactions?itemId=${encodeURIComponent(idDaConexao)}&from=${desde.toISOString().slice(0, 10)}`;
     const response = await this.pedir(route);
     if (response.tipo !== 'ok') return response;
