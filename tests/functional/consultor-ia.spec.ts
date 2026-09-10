@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from './fixtures';
 
 test.describe('Consultor IA — RF-018, RF-020 e RN-018', () => {
   test.beforeEach(async ({ page }) => {

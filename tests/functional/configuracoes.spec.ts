@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from './fixtures';
 
 test.describe('Configurações e Privacidade LGPD — RF-001, RN-012 e RN-016', () => {
   test.beforeEach(async ({ page }) => {

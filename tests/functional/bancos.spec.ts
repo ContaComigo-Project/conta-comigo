@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from './fixtures';
 
 test.describe('Conexões Open Finance — RF-005 e RNF-012', () => {
   test.beforeEach(async ({ page }) => {

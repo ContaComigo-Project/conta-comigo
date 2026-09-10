@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from './fixtures';
 
 test.describe('Autenticação e Acesso — RF-001 e RF-002', () => {
   test('validação de formulário de login com campos vazios', async ({ page }) => {

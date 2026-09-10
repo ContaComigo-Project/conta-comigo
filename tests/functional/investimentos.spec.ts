@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from './fixtures';
 
 test.describe('Carteira de Investimentos e Alocação — RF-008 e RN-017', () => {
   test.beforeEach(async ({ page }) => {

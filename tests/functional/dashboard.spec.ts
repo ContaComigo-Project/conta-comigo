@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from './fixtures';
 
 test.describe('Dashboard e Gestão Financeira — RF-008 e RF-009', () => {
   test.beforeEach(async ({ page }) => {

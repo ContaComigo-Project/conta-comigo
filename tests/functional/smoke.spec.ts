@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from './fixtures';
 
 // Smoke scenario: proves the functional infrastructure boots the real web and
 // sees the screen. Not a business-rule scenario — the `RN-XXX` ones arrive with
