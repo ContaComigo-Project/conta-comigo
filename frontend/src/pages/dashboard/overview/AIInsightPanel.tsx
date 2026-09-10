@@ -59,7 +59,7 @@ export default function AIInsightPanel() {
         </div>
 
         {dados.estado === 'carregando' && (
-          <p className="text-sm text-slate-400 animate-pulse">Gerando diagnóstico a partir dos seus números...</p>
+          <p className="text-sm text-slate-400 animate-pulse">Gerando diagnóstico a partir dos seus dados...</p>
         )}
 
         {dados.estado === 'ok' && (
