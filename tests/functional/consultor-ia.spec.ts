@@ -19,8 +19,8 @@ test.describe('Consultor IA — RF-018, RF-020 e RN-018', () => {
     await expect(page.getByText('Consultor Financeiro IA')).toBeVisible();
 
     // RN-018: aviso de não aconselhamento permanente em toda superfície de IA
-    await expect(page.getByText(/o consultor ia é educativo e usa seus números/i)).toBeVisible();
-    await expect(page.getByText(/não recomenda produtos, investimentos, crédito ou instituições/i)).toBeVisible();
+    await expect(page.getByText(/o consultor ia é educativo e usa seus números/i).first()).toBeVisible();
+    await expect(page.getByText(/não recomenda produtos, investimentos, crédito ou instituições/i).first()).toBeVisible();
 
     // Fecha o widget
     const closeBtn = page.getByRole('button', { name: 'Fechar' });
