@@ -55,8 +55,8 @@ describe('HN-007 — semáforo do orçamento (RF-014, RN-001, RN-002, RN-005)', 
   it('RN-001 — faixa exata: verde ≤70%, amarela ≤90%, vermelha >90%', async () => {
     const limite = { holderId: HOLDER, month: MES, category: 'moradia', limitInCents: 10_000_00 };
     const uso = casos([limite], [
-      transacao('moradia', 7_000_00), // 70% → verde
-      transacao('lazer', 9_000_00, 15), // 90% → amarela (limite lazer separado? sem limite... )
+      transacao('moradia', -7_000_00), // 70% → verde
+      transacao('lazer', -9_000_00, 15), // 90% → amarela (limite lazer separado? sem limite... )
     ]);
 
     // moradia com 70% → verde
@@ -64,13 +64,13 @@ describe('HN-007 — semáforo do orçamento (RF-014, RN-001, RN-002, RN-005)', 
     expect(r.categorias.find((c) => c.category === 'moradia')?.band).toBe('verde');
 
     // moradia com 90,01% → vermelha
-    const usoVermelho = casos([limite], [transacao('moradia', 9_001_00)]);
+    const usoVermelho = casos([limite], [transacao('moradia', -9_001_00)]);
     r = await usoVermelho.executar(HOLDER, MES);
     expect(r.categorias.find((c) => c.category === 'moradia')?.band).toBe('vermelha');
   });
 
   it('RN-002 — categoria sem limite retorna "sem-limite", nunca verde', async () => {
-    const uso = casos([], [transacao('alimentacao', 5_000_00)]);
+    const uso = casos([], [transacao('alimentacao', -5_000_00)]);
     const r = await uso.executar(HOLDER, MES);
     expect(r.categorias.find((c) => c.category === 'alimentacao')?.band).toBe('sem-limite');
     expect(r.categorias.find((c) => c.category === 'alimentacao')?.limitInCents).toBeNull();
@@ -84,7 +84,7 @@ describe('HN-007 — semáforo do orçamento (RF-014, RN-001, RN-002, RN-005)', 
     const uso = new GetBudgetSemaphoreUseCase(repo, txs);
 
     // Cruzou 70% (amarela)
-    txs.itens = [transacao('transporte', 7_001_00)];
+    txs.itens = [transacao('transporte', -7_001_00)];
     const primeira = await uso.executar(HOLDER, MES);
     expect(primeira.alertas.filter((a) => a.category === 'transporte')).toHaveLength(1);
 
@@ -101,7 +101,7 @@ describe('HN-007 — semáforo do orçamento (RF-014, RN-001, RN-002, RN-005)', 
     const uso = new GetBudgetSemaphoreUseCase(repo, txs);
 
     // Direto na vermelha (>90%): um aviso amarelo + um vermelho.
-    txs.itens = [transacao('moradia', 9_500_00)];
+    txs.itens = [transacao('moradia', -9_500_00)];
     const r = await uso.executar(HOLDER, MES);
 
     const bandas = r.alertas.filter((a) => a.category === 'moradia').map((a) => a.band).sort();

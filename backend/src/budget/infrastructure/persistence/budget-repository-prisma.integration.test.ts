@@ -8,7 +8,8 @@ describe('BudgetRepositoryPrisma — limites no PostgreSQL real', () => {
   const repositorio = new BudgetRepositoryPrisma();
 
   beforeEach(async () => {
-    await repositorio.limparTudo();
+    await repositorio.limparTudo('holder-a');
+    await repositorio.limparTudo('holder-b');
   });
 
   afterAll(async () => {

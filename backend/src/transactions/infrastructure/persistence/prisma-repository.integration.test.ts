@@ -13,7 +13,7 @@ describe('RepositorioDeTransactionsPrisma — ida e volta no PostgreSQL real', (
   const repositorio = new RepositorioDeTransactionsPrisma();
 
   beforeEach(async () => {
-    await repositorio.limparTudo();
+    await repositorio.limparTudo([TITULAR_A, TITULAR_B]);
   });
 
   afterAll(async () => {

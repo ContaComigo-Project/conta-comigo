@@ -50,9 +50,11 @@ export class BudgetRepositoryPrisma implements BudgetRepository {
     }));
   }
 
-  /** So para teste de integracao: limpa a tabela entre cenarios. */
-  async limparTudo(): Promise<void> {
-    await this.prisma.monthlyBudget.deleteMany();
+  /** Limpa só os orçamentos de um holder (usado por testes de integração).
+   *  NUNCA `deleteMany()` global: isso apagaria o seed. */
+  async limparTudo(holderId: string): Promise<void> {
+    await this.prisma.monthlyBudget.deleteMany({ where: { holderId } });
+    await this.prisma.budgetAlert.deleteMany({ where: { holderId } });
   }
 
   async encerrar(): Promise<void> {

@@ -74,7 +74,7 @@ describe('HN-009 — diagnóstico de saúde financeira (RF-018, RN-019, RN-020, 
     const repo = new RepoFake();
     repo.limites = [{ holderId: HOLDER, month: '2026-02', category: 'moradia', limitInCents: 10_000_00 }];
     const txs = new TransacoesFake();
-    txs.itens = [transacao('moradia', 8_000_00, '2026-02')];
+    txs.itens = [transacao('moradia', -8_000_00, '2026-02')];
     const advisor = new AdvisorFake();
     const uso = casos(repo, txs, advisor);
 
@@ -96,7 +96,7 @@ describe('HN-009 — diagnóstico de saúde financeira (RF-018, RN-019, RN-020, 
     const repo = new RepoFake();
     repo.limites = [{ holderId: HOLDER, month: '2026-02', category: 'moradia', limitInCents: 10_000_00 }];
     const txs = new TransacoesFake();
-    txs.itens = [transacao('moradia', 8_000_00, '2026-02')];
+    txs.itens = [transacao('moradia', -8_000_00, '2026-02')];
     const advisor = new AdvisorFake();
     advisor.resposta = falhaDeIa('indisponivel', 'provedor fora');
     const uso = casos(repo, txs, advisor);
@@ -109,7 +109,7 @@ describe('HN-009 — diagnóstico de saúde financeira (RF-018, RN-019, RN-020, 
     const repo = new RepoFake();
     repo.limites = [{ holderId: HOLDER, month: '2026-02', category: 'moradia', limitInCents: 10_000_00 }];
     const txs = new TransacoesFake();
-    txs.itens = [transacao('moradia', 8_000_00, '2026-02')];
+    txs.itens = [transacao('moradia', -8_000_00, '2026-02')];
     const advisor = new AdvisorFake();
     advisor.resposta = falhaDeIa('teto-atingido', 'teto diario atingido');
     const uso = casos(repo, txs, advisor);

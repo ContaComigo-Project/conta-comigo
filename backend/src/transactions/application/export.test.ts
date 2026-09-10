@@ -75,7 +75,7 @@ describe('HN-011 — exportação (RF-023, RF-024)', () => {
     const repo = new RepoFake();
     repo.limites = [{ holderId: HOLDER, month: '2026-08', category: 'moradia', limitInCents: 10_000_00 }];
     const txs = new TransacoesFake();
-    txs.itens = [transacao('aluguel', 8_000_00, 'moradia')];
+    txs.itens = [transacao('aluguel', -8_000_00, 'moradia')];
 
     const buffer = await new ExportarRelatorioPDF(repo, txs, relogio).executar(HOLDER, '2026-08');
 

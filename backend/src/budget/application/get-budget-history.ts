@@ -45,7 +45,10 @@ export class GetBudgetHistoryUseCase implements GetBudgetHistory {
         if (c.band !== 'vermelha') continue;
         const p = problemas.get(c.category) ?? { vezes: 0, excesso: 0 };
         p.vezes += 1;
-        p.excesso += c.spentInCents - (c.limitInCents ?? 0);
+        // Excesso = quanto passou do INÍCIO da faixa vermelha (90% do limite,
+        // RN-001): sempre ≥ 0 para band vermelha, e significativo no desempate.
+        const limiteDaFaixa = Math.round((c.limitInCents ?? 0) * 0.9);
+        p.excesso += c.spentInCents - limiteDaFaixa;
         problemas.set(c.category, p);
       }
       resultadoMeses.push({ month, categorias });

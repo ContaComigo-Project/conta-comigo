@@ -20,9 +20,10 @@ export function categoriasDoMes(
   const gastos = new Map<string, number>();
   for (const t of transacoes) {
     if (!t.category) continue; // "não classificado" não entra
+    if (t.amountInCents >= 0) continue; // receita não é gasto (RN-003)
     const m = mesDeReferencia(t.dueDate);
     if (`${m.ano}-${String(m.mes).padStart(2, '0')}` !== month) continue;
-    gastos.set(t.category, (gastos.get(t.category) ?? 0) + t.amountInCents);
+    gastos.set(t.category, (gastos.get(t.category) ?? 0) + Math.abs(t.amountInCents));
   }
 
   const categorias: CategoriaCalculada[] = limites.map((l) => {

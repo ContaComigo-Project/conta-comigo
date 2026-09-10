@@ -60,8 +60,8 @@ describe('HN-008 — histórico de 6 meses (RF-016, RN-022, RF-017, RN-023)', ()
     const uso = casos(
       [limite, { ...limite, month: '2026-02' }],
       [
-        transacao('moradia', 5_000_00, '2026-01'),
-        transacao('moradia', 6_000_00, '2026-02'),
+        transacao('moradia', -5_000_00, '2026-01'),
+        transacao('moradia', -6_000_00, '2026-02'),
       ],
       relogio(2026, 3),
     );
@@ -76,7 +76,7 @@ describe('HN-008 — histórico de 6 meses (RF-016, RN-022, RF-017, RN-023)', ()
   it('RF-016 — cada mês traz gasto, limite e faixa por categoria', async () => {
     const uso = casos(
       [{ holderId: HOLDER, month: '2026-02', category: 'moradia', limitInCents: 10_000_00 }],
-      [transacao('moradia', 8_000_00, '2026-02')], // 80% → amarela
+      [transacao('moradia', -8_000_00, '2026-02')], // 80% → amarela
       relogio(2026, 3),
     );
 
@@ -88,9 +88,10 @@ describe('HN-008 — histórico de 6 meses (RF-016, RN-022, RF-017, RN-023)', ()
     expect(moradia?.band).toBe('amarela');
   });
 
-  it('RF-017/RN-023 — o ranking vem dos dados e é desempatado pelo maior valor absoluto', async () => {
+it('RF-017/RN-023 — o ranking vem dos dados e é desempatado pelo maior valor absoluto', async () => {
     // moradia estoura 3 meses; lazer estoura 3 meses também (empate na
-    // recorrência) mas com excesso maior → moradia vence (maior valor absoluto).
+    // recorrência) mas com excesso menor → moradia vence (maior valor absoluto).
+    // Excesso = quanto passou do início da faixa vermelha (90% do limite).
     const meses = ['2026-01', '2026-02', '2026-03'];
     const limiteMoradia = { holderId: HOLDER, month: '', category: 'moradia', limitInCents: 10_000_00 };
     const limiteLazer = { holderId: HOLDER, month: '', category: 'lazer', limitInCents: 10_000_00 };
@@ -99,10 +100,10 @@ describe('HN-008 — histórico de 6 meses (RF-016, RN-022, RF-017, RN-023)', ()
       ...meses.map((m) => ({ ...limiteLazer, month: m })),
     ];
     const transacoes = [
-      // moradia: 11.000 em cada mês (excesso 1.000)
-      ...meses.map((m) => transacao('moradia', 11_000_00, m)),
-      // lazer: 10.500 em cada mês (excesso 500)
-      ...meses.map((m) => transacao('lazer', 10_500_00, m)),
+      // moradia: 11.000 em cada mês (110% → excesso 2.000/mês)
+      ...meses.map((m) => transacao('moradia', -11_000_00, m)),
+      // lazer: 10.500 em cada mês (105% → excesso 1.500/mês)
+      ...meses.map((m) => transacao('lazer', -10_500_00, m)),
     ];
 
     const uso = casos(limites, transacoes, relogio(2026, 4));
@@ -110,7 +111,7 @@ describe('HN-008 — histórico de 6 meses (RF-016, RN-022, RF-017, RN-023)', ()
 
     expect(r.problemas[0].category).toBe('moradia'); // mais recorrente E maior excesso
     expect(r.problemas[0].vezesEmVermelho).toBe(3);
-    expect(r.problemas[0].excessoTotalEmCentavos).toBe(3_000_00);
+    expect(r.problemas[0].excessoTotalEmCentavos).toBe(6_000_00); // 3 × 2.000
     expect(r.problemas.length).toBeLessThanOrEqual(3);
   });
 });

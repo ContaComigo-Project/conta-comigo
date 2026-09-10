@@ -80,8 +80,10 @@ export class RepositorioDeTransactionsPrisma implements RepositorioDeTransaction
   }
 
   /** So para teste de integracao: limpa a tabela entre cenarios. */
-  async limparTudo(): Promise<void> {
-    await this.prisma.transaction.deleteMany();
+  /** Limpa só os dados de um conjunto de holders (usado por testes de
+   *  integração). NUNCA `deleteMany()` global: isso apagaria o seed. */
+  async limparTudo(holders: readonly HolderId[]): Promise<void> {
+    await this.prisma.transaction.deleteMany({ where: { holderId: { in: holders.map((h) => h) } } });
   }
 
   async encerrar(): Promise<void> {

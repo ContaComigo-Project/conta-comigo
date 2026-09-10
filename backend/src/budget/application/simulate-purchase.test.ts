@@ -49,7 +49,7 @@ describe('HN-011 — simulação de compra (RF-022, RN-017)', () => {
     const repo = new RepoFake();
     repo.limites = [{ holderId: HOLDER, month: '2026-09', category: 'moradia', limitInCents: 10_000_00 }];
     const txs = new TransacoesFake();
-    txs.itens = [transacao('moradia', 8_000_00)]; // 80% → amarela
+    txs.itens = [transacao('moradia', -8_000_00)]; // 80% → amarela
     const uso = new SimularPlanoDeCompraUseCase(repo, txs, relogio);
 
     const r = await uso.executar(HOLDER, 'moradia', 3_000_00); // total 11.000 → vermelha

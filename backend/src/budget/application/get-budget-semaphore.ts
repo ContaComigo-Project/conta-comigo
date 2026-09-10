@@ -1,16 +1,16 @@
 import { randomUUID } from 'node:crypto';
 import type { RepositorioDeTransactions } from '../../transactions/domain/port/driven/transaction-repository';
 import type { HolderId } from '../../transactions/domain/model/holder';
-import { mesDeReferencia } from '../../transactions/domain/reference-month';
-import { faixaDoSemaforo } from '../domain/budget-band';
 import { mesValido } from '../domain/model/monthly-limit';
 import type { BudgetRepository } from '../domain/port/driven/budget-repository';
 import type { CategoriaDoSemaforo, GetBudgetSemaphore, SemaforoDoOrcamento } from '../domain/port/driving/get-budget-semaphore';
+import { categoriasDoMes } from './por-categoria-do-mes';
 
 // RF-014 / RN-001 / RN-002: the budget semaphore per category for a month.
 // The spend comes from the persisted transactions (HN-003) grouped by category
-// in the reference month (RN-003). RN-005: crossing a band emits an alert AT
-// MOST once per band per category per month — persisted, so it cannot repeat.
+// in the reference month (RN-003) — shared helper, so semaphore, history and
+// diagnosis never diverge. RN-005: crossing a band emits an alert AT MOST once
+// per band per category per month — persisted, so it cannot repeat.
 export class GetBudgetSemaphoreUseCase implements GetBudgetSemaphore {
   constructor(
     private readonly repo: BudgetRepository,
@@ -21,30 +21,16 @@ export class GetBudgetSemaphoreUseCase implements GetBudgetSemaphore {
     if (!mesValido(month)) throw new Error('Mes invalido (esperado AAAA-MM).');
 
     const limites = await this.repo.listarDoMes(holderId, month);
-
-    // Gasto por categoria no mês de referência (RN-003), fuso de São Paulo.
-    const gastos = new Map<string, number>();
     const transacoes = await this.transactions.listarDoHolder(holderId as HolderId);
-    for (const t of transacoes) {
-      if (!t.category) continue; // "não classificado" não entra no semáforo
-      const m = mesDeReferencia(t.dueDate);
-      if (`${m.ano}-${String(m.mes).padStart(2, '0')}` !== month) continue;
-      gastos.set(t.category, (gastos.get(t.category) ?? 0) + t.amountInCents);
-    }
+    const base = await categoriasDoMes(limites, transacoes, month);
 
-    const categorias: CategoriaDoSemaforo[] = limites.map((l) => {
-      const spent = gastos.get(l.category) ?? 0;
-      const band = faixaDoSemaforo(spent, l.limitInCents);
-      const percentage = l.limitInCents > 0 ? (spent * 100) / l.limitInCents : 0;
-      return { category: l.category, limitInCents: l.limitInCents, spentInCents: spent, percentage, band };
-    });
-
-    // Categorias gastas SEM limite: RN-002 — "sem-limite", nunca verde.
-    for (const [cat, spent] of gastos) {
-      if (!limites.some((l) => l.category === cat)) {
-        categorias.push({ category: cat, limitInCents: null, spentInCents: spent, percentage: 0, band: 'sem-limite' });
-      }
-    }
+    const categorias: CategoriaDoSemaforo[] = base.map((c) => ({
+      category: c.category,
+      limitInCents: c.limitInCents,
+      spentInCents: c.spentInCents,
+      percentage: c.limitInCents && c.limitInCents > 0 ? (c.spentInCents * 100) / c.limitInCents : 0,
+      band: c.band,
+    }));
 
     // RN-005: emite o aviso no máximo uma vez por faixa por categoria por mês.
     // Se o gasto pula direto para a vermelha, cruzou a amarela também.
