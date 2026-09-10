@@ -59,12 +59,15 @@ export class ApiSource {
       status: string;
       lastSyncAt: string | null;
     }>;
+    // RN-012: Sem consentimento ativo não há exibição nem sincronização.
+    // Conexões revogadas ou expiradas não aparecem como bancos conectados no painel.
+    const ativos = consents.filter((c) => c.status === 'ativo');
     return ok(
-      consents.map((c) => ({
+      ativos.map((c) => ({
         id: c.id,
         name: c.institutionId,
         saldoEmCents: 0,
-        status: c.status === 'ativo' ? ('ativo' as const) : ('error' as const),
+        status: 'ativo' as const,
         ultimaSincronizacao: c.lastSyncAt,
       })),
     );

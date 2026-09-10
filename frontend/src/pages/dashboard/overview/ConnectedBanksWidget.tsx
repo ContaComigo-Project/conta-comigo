@@ -73,24 +73,45 @@ export default function ConnectedBanksWidget() {
   const conectar = async () => {
     const token = getAccessToken();
     if (!token) return;
-    await fetch(`${BASE}/consents`, {
-      method: 'POST',
-      headers: { authorization: `Bearer ${token}`, 'content-type': 'application/json' },
-      body: JSON.stringify({ institutionId: 'Banco Exemplo', scope: 'accounts-and-transactions' }),
-    });
-    await carregar();
+    try {
+      setErro(null);
+      const res = await fetch(`${BASE}/consents`, {
+        method: 'POST',
+        headers: { authorization: `Bearer ${token}`, 'content-type': 'application/json' },
+        body: JSON.stringify({ institutionId: 'Banco Exemplo', scope: 'accounts-and-transactions' }),
+      });
+      if (!res.ok) {
+        const payload = await res.json().catch(() => ({}));
+        setErro(payload.message ?? 'Não foi possível conectar a instituição.');
+        return;
+      }
+      await carregar();
+    } catch {
+      setErro('Erro de conexão ao conectar com a instituição.');
+    }
   };
 
   const sincronizar = async (id: string) => {
     const token = getAccessToken();
     if (!token) return;
     setSincronizando(true);
-    await fetch(`${BASE}/consents/${id}/sync`, {
-      method: 'POST',
-      headers: { authorization: `Bearer ${token}` },
-    });
-    await carregar();
-    setSincronizando(false);
+    setErro(null);
+    try {
+      const res = await fetch(`${BASE}/consents/${id}/sync`, {
+        method: 'POST',
+        headers: { authorization: `Bearer ${token}` },
+      });
+      if (!res.ok) {
+        const payload = await res.json().catch(() => ({}));
+        setErro(payload.message ?? 'Falha ao sincronizar instituição.');
+      } else {
+        await carregar();
+      }
+    } catch {
+      setErro('Erro de rede ao sincronizar instituição.');
+    } finally {
+      setSincronizando(false);
+    }
   };
 
   return (
