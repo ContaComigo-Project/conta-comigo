@@ -28,7 +28,7 @@ class AdvisorFake implements AiAdvisor {
   }
 }
 
-const relogio: Clock = { agora: () => new Date(Date.UTC(2026, 8, 15)) };
+const relogio: Clock = { agora: () => new Date(Date.UTC(2026, 7, 15)) };
 
 function transacao(categoria: string, valorCentavos: number): Transaction {
   return {
@@ -55,13 +55,13 @@ describe('HN-010 — chat educativo (RF-020, RF-021/RN-018, RN-021)', () => {
     const r = await uso.executar(HOLDER, 'Onde estou gastando mais?');
 
     expect(r.tipo).toBe('ok');
-    const gastos = advisor.ultimoPedido!.dados.gastos as Array<{ categoria: string; totalEmCentavos: number }>;
+    const gastos = advisor.ultimoPedido!.dados.gastosDoMes as Array<{ categoria: string; totalEmCentavos: number }>;
     expect(gastos).toEqual([
       { categoria: 'moradia', totalEmCentavos: 8_000_00 },
       { categoria: 'lazer', totalEmCentavos: 3_000_00 },
     ]);
     // O crédito não entra nos gastos: vai como receita separada (RN-003).
-    expect(advisor.ultimoPedido!.dados.receitasDoPeriodoEmCentavos).toBe(85_000_00);
+    expect(advisor.ultimoPedido!.dados.receitasDoMesEmCentavos).toBe(85_000_00);
     const json = JSON.stringify(advisor.ultimoPedido!.dados);
     expect(json).not.toContain('@');
     expect(json).not.toContain('holder');

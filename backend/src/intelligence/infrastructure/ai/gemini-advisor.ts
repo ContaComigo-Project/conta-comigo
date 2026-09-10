@@ -72,6 +72,10 @@ function montarPrompt(pedido: PedidoDeConselho): string {
   if (pedido.tipo === 'pergunta-livre') {
     linhas.push(
       'Interatividade: quando precisar de mais informação para personalizar (ex.: valor da meta, prazo), faça UMA pergunta curta de acompanhamento em vez de um texto longo. Use o histórico (campo "historico") para dar continuidade à conversa.',
+      'NUNCA repita uma pergunta que o usuário já respondeu no histórico. Aproveite tudo o que ele já informou (valor, prazo, forma de compra) antes de perguntar qualquer coisa.',
+      'Quando já tiver os dados necessários, AVANCE em vez de perguntar de novo: apresente um plano com números (ex.: quanto reservar por mês), calculado a partir dos dados do mês.',
+      'Interprete valores por extenso: "350mil" = R$ 350.000,00; "1900" = R$ 1.900,00; "6 meses" = prazo de 6 meses.',
+      'Os dados são do MÊS corrente (campo "mes"); trate receitasDoMes e gastosDoMes como valores mensais, não anuais.',
     );
   } else if (pedido.tipo === 'diagnostico-do-mes') {
     linhas.push('Apresente APENAS o diagnóstico, em linguagem simples, sem fazer perguntas ao usuário.');

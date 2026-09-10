@@ -25,20 +25,25 @@ export class PerguntarNoChatUseCase implements PerguntarNoChat {
   async executar(holderId: string, pergunta: string, historico?: readonly MensagemDoHistorico[]): Promise<RespostaDoChat> {
     const transacoes = await this.transactions.listarDoHolder(holderId as HolderId);
 
+    // Resumo do MÊS corrente (não o acumulado de todos os meses): citar "receita
+    // de R$ 78.000" como se fosse do mês faz o modelo errar qualquer plano.
+    const corrente = mesDeReferencia(this.clock.agora());
+    const mesStr = `${corrente.ano}-${String(corrente.mes).padStart(2, '0')}`;
+
     // Só DÉBITOS são gasto (RN-003); créditos (salário, rendimento) são receita.
-    // Misturar as duas somas faz o modelo ler "receita" como despesa e concluir
-    // errado — por isso os dados vão separados.
     const gastosPorCategoria = new Map<string, number>();
-    let receitasDoPeriodoEmCentavos = 0;
+    let receitasDoMesEmCentavos = 0;
     for (const t of transacoes) {
       if (!t.category) continue;
+      const m = mesDeReferencia(t.dueDate);
+      if (`${m.ano}-${String(m.mes).padStart(2, '0')}` !== mesStr) continue;
       if (t.amountInCents < 0) {
         gastosPorCategoria.set(t.category, (gastosPorCategoria.get(t.category) ?? 0) + Math.abs(t.amountInCents));
       } else {
-        receitasDoPeriodoEmCentavos += t.amountInCents;
+        receitasDoMesEmCentavos += t.amountInCents;
       }
     }
-    const gastos = [...gastosPorCategoria.entries()]
+    const gastosDoMes = [...gastosPorCategoria.entries()]
       .sort((a, b) => b[1] - a[1])
       .slice(0, 5)
       .map(([categoria, total]) => ({ categoria, totalEmCentavos: total }));
@@ -47,7 +52,7 @@ export class PerguntarNoChatUseCase implements PerguntarNoChat {
       holder: holderId,
       tipo: 'pergunta-livre',
       pergunta,
-      dados: { gastos, receitasDoPeriodoEmCentavos, ...(historico && historico.length > 0 ? { historico } : {}) },
+      dados: { mes: mesStr, gastosDoMes, receitasDoMesEmCentavos, ...(historico && historico.length > 0 ? { historico } : {}) },
     });
 
     if (resultado.tipo === 'ok') {
