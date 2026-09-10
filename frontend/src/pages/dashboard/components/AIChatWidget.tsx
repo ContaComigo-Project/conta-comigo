@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Bot, Send, X, MessageCircle, Sparkles, Maximize, Minimize, Info } from 'lucide-react';
+import { Bot, Paperclip, Send, X, MessageCircle, Sparkles, Maximize, Minimize, Info } from 'lucide-react';
 import { ApiSource } from '../../../data/api-source';
 
 // Chips de sugestão — apresentação local; a resposta sempre vem do backend
@@ -238,6 +238,14 @@ export default function AIChatWidget({ embedded = false }: { embedded?: boolean 
           }}
           className="flex items-center gap-2 rounded-xl border border-slate-200 focus-within:border-[#36b37e] focus-within:ring-2 focus-within:ring-[#36b37e]/20 bg-slate-50 transition-all px-2 py-1.5"
         >
+          <button
+            type="button"
+            aria-label="Anexar arquivo"
+            title="Anexo (indisponível na PoC)"
+            className="w-9 h-9 shrink-0 rounded-lg flex items-center justify-center text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors cursor-pointer"
+          >
+            <Paperclip size={16} strokeWidth={2} />
+          </button>
           <input
             type="text"
             value={input}
