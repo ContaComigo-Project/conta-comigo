@@ -1,12 +1,20 @@
 import { TrendingUp, DollarSign, Award, ArrowUpRight, BarChart3 } from 'lucide-react';
 import { formatBRL } from '../../../../utils/formatters';
+import { useCountUp } from '../../../../hooks/use-count-up';
 import type { PortfolioSummary } from '../../../../data/investments';
 
 interface InvestmentOverviewCardsProps {
   summary: PortfolioSummary;
 }
 
+// Mesmo padrão das métricas do painel (MetricsCards): os números começam em 0
+// e sobem até o valor (useCountUp). As porcentagens usam 1 casa decimal.
 export default function InvestmentOverviewCards({ summary }: InvestmentOverviewCardsProps) {
+  const totalInvestido = useCountUp(summary.totalInvestedInCents / 100, 1400);
+  const proventos = useCountUp(summary.monthlyEarningsInCents / 100, 1400);
+  const desempenho = useCountUp(summary.totalProfitabilityPercent, 1400, 1);
+  const benchmark = useCountUp(summary.portfolioVsBenchmarkPercent, 1400, 1);
+
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
       {/* Total Investido */}
@@ -20,8 +28,8 @@ export default function InvestmentOverviewCards({ summary }: InvestmentOverviewC
           </div>
         </div>
         <div className="mt-3">
-          <p className="text-xl font-bold text-slate-800">
-            R$ {formatBRL(summary.totalInvestedInCents / 100)}
+          <p className="text-xl font-bold text-slate-800 tabular-nums">
+            R$ {formatBRL(totalInvestido)}
           </p>
           <div className="flex items-center gap-1.5 mt-1 text-xs text-emerald-600 font-medium">
             <ArrowUpRight className="w-3.5 h-3.5" />
@@ -41,8 +49,8 @@ export default function InvestmentOverviewCards({ summary }: InvestmentOverviewC
           </div>
         </div>
         <div className="mt-3">
-          <p className="text-xl font-bold text-slate-800">
-            R$ {formatBRL(summary.monthlyEarningsInCents / 100)}
+          <p className="text-xl font-bold text-slate-800 tabular-nums">
+            R$ {formatBRL(proventos)}
           </p>
           <p className="mt-1 text-xs text-slate-500">
             Dividendos, JCP e rendimentos recebidos
@@ -61,8 +69,8 @@ export default function InvestmentOverviewCards({ summary }: InvestmentOverviewC
           </div>
         </div>
         <div className="mt-3">
-          <p className="text-xl font-bold text-purple-700">
-            +{summary.totalProfitabilityPercent}%
+          <p className="text-xl font-bold text-purple-700 tabular-nums">
+            +{desempenho.toFixed(1)}%
           </p>
           <p className="mt-1 text-xs text-slate-500">
             Retorno ponderado da carteira
@@ -81,8 +89,8 @@ export default function InvestmentOverviewCards({ summary }: InvestmentOverviewC
           </div>
         </div>
         <div className="mt-3">
-          <p className="text-xl font-bold text-slate-800">
-            +{summary.portfolioVsBenchmarkPercent}%
+          <p className="text-xl font-bold text-slate-800 tabular-nums">
+            +{benchmark.toFixed(1)}%
           </p>
           <p className="mt-1 text-xs text-slate-500">
             Acima do CDI ({summary.benchmarkRate})

@@ -1,5 +1,6 @@
 import { Calendar, Info } from 'lucide-react';
-import { formatCents } from '../../../utils/formatters';
+import { formatBRL } from '../../../utils/formatters';
+import { useCountUp } from '../../../hooks/use-count-up';
 import { useExpensesState } from './hooks/use-expenses-state';
 import { SegmentedViewToggle } from './components/SegmentedViewToggle';
 import { ExportDropdown } from './components/ExportDropdown';
@@ -27,6 +28,10 @@ export default function Expenses() {
     nudgeDraft, setDraftValue, removeLimit, refresh,
     goPrev, goNext, isAtStart, isAtEnd,
   } = useExpensesState();
+
+  // Números do mês sobem de 0 até o valor (padrão do painel, useCountUp).
+  const gastoAnimado = useCountUp(currentSummary.totalSpent / 100, 1400);
+  const limiteAnimado = useCountUp(currentSummary.totalLimit / 100, 1400);
 
   const corrigirCategoria = async (transactionId: string, category: string) => {
     const r = await new ApiSource().corrigirCategoria(transactionId, category);
@@ -113,12 +118,12 @@ export default function Expenses() {
                 <div className="flex items-baseline gap-1">
                   <span className="text-base font-semibold text-white/80">R$</span>
                   <span className="text-3xl font-bold tabular-nums tracking-tight">
-                    {formatCents(currentSummary.totalSpent)}
+                    {formatBRL(gastoAnimado)}
                   </span>
                 </div>
                 <div className="flex items-baseline gap-2 mt-1">
                   <span className="text-[0.8rem] text-white/70 tabular-nums">
-                    de R$ {formatCents(currentSummary.totalLimit)}
+                    de R$ {formatBRL(limiteAnimado)}
                   </span>
                   <span
                     className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[0.65rem] font-bold bg-white/20 ${
