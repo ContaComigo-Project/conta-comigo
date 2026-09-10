@@ -151,13 +151,13 @@ pnpm build
 pnpm preview
 ```
 
-### 5. (Backend futuro) Docker / .env
+### 5. Backend — variáveis de ambiente
 
-A infraestrutura de containers ainda não existe: ela é entregue pela história
-`HT-005`, e os comandos reprodutíveis ficam em
-[scripts/README.md](./scripts/README.md). Quando a camada NestJS for adicionada,
-copie `.env.example` → `.env` e preencha as chaves de
-`PLUGGY_CLIENT_ID / PLUGGY_CLIENT_SECRET` e `GOOGLE_GEMINI_API_KEY`.
+O backend (NestJS) lê as variáveis de `backend/.env`. Copie o modelo
+`backend/.env.example` → `backend/.env` e preencha: `JWT_SECRET` (obrigatório),
+`ENCRYPTION_KEY`, `GEMINI_API_KEY` (IA educativa; sem ela o adaptador falso
+assume), e opcionais `PLUGGY_CLIENT_ID / PLUGGY_CLIENT_SECRET` e
+`AI_DAILY_LIMIT`. A credencial do Postgres local já vem no `docker-compose.yml`.
 
 ---
 
