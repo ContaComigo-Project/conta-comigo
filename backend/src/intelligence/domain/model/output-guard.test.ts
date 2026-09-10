@@ -98,6 +98,28 @@ describe('examinarSaida — RNF-017', () => {
     }
   });
 
+  it('RN-017 — explicar o produto perguntado é permitido; recomendar bloqueia', () => {
+    // Perguntou sobre consórcio → a explicação educativa passa (não é recomendação).
+    const explicacao = examinarSaida(
+      'O consórcio é uma compra coletiva: um grupo contribui mensalmente e, a cada contemplado, recebe a carta de crédito.',
+      dados,
+      'como funciona um consorcio?',
+    );
+    expect(explicacao.aprovado).toBe(true);
+
+    // Mas recomendar consórcio, mesmo na pergunta sobre ele, bloqueia (verbo).
+    const recomendacao = examinarSaida(
+      'Vale a pena contratar um consórcio para o seu caso.',
+      dados,
+      'como funciona um consorcio?',
+    );
+    expect(recomendacao.aprovado === false && recomendacao.motivo).toBe('recomendacao-de-produto');
+
+    // Produto não solicitado na resposta bloqueia, mesmo sem verbo.
+    const naoPedido = examinarSaida('O CDB do Banco X paga 110% do CDI.', dados, 'onde estou gastando mais?');
+    expect(naoPedido.aprovado === false && naoPedido.motivo).toBe('recomendacao-de-produto');
+  });
+
   it('RNF-017 — bloqueia resposta vazia, gigante ou com bloco de codigo', () => {
     const vazia = examinarSaida('   ', dados);
     const gigante = examinarSaida('a'.repeat(4_001), dados);

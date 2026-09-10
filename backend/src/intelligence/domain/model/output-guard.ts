@@ -129,7 +129,21 @@ function contemTermoProibido(textoNormalizado: string, termo: string): boolean {
   return regex.test(textoNormalizado);
 }
 
-export function examinarSaida(texto: string, dados: unknown): Veredito {
+// Verbos que transformam a menção de um produto em RECOMENDAÇÃO (RN-017).
+// Explicar o produto que o usuário perguntou é educação; "recomendo/vale a
+// pena/invista" é recomendação, mesmo quando o assunto foi solicitado.
+const VERBOS_DE_RECOMENDACAO = [
+  'recomendo', 'recomendamos', 'recomendaria', 'sugiro', 'sugerimos', 'aconselho', 'aconselhamos',
+  'invista', 'invistam', 'investir em', 'vale a pena', 'vale contratar', 'vale pedir',
+  'considere', 'consideraria', 'contrate', 'abrir uma conta', 'abra uma conta', 'adquirir',
+  'deveria', 'deveriam', 'pode ser uma boa', 'aproveite', 'garanta', 'pode render', 'renda mais',
+];
+
+function contemVerboDeRecomendacao(textoNormalizado: string): boolean {
+  return VERBOS_DE_RECOMENDACAO.some((verbo) => contemTermoProibido(textoNormalizado, verbo));
+}
+
+export function examinarSaida(texto: string, dados: unknown, pergunta = ''): Veredito {
   const bloquear = (motivo: MotivoDoBloqueio): Veredito => ({ aprovado: false, motivo, amostra: amostraDe(texto) });
 
   if (texto.trim() === '' || texto.length > LIMITE_DE_TAMANHO || texto.includes('```')) {
@@ -137,8 +151,14 @@ export function examinarSaida(texto: string, dados: unknown): Veredito {
   }
 
   const normalizado = normalizar(texto);
-  if (TERMOS_DE_PRODUTO.some((termo) => contemTermoProibido(normalizado, termo))) {
-    return bloquear('recomendacao-de-produto');
+  const perguntaNormalizada = normalizar(pergunta);
+  const haVerbo = contemVerboDeRecomendacao(normalizado);
+  for (const termo of TERMOS_DE_PRODUTO) {
+    if (!contemTermoProibido(normalizado, termo)) continue;
+    // Explicar o produto que o usuário perguntou (educação) é permitido;
+    // recomendar (verbo) ou citar produto não solicitado é bloqueio.
+    const perguntouSobre = contemTermoProibido(perguntaNormalizada, termo);
+    if (haVerbo || !perguntouSobre) return bloquear('recomendacao-de-produto');
   }
 
   const permitidos = valoresPermitidos(dados);

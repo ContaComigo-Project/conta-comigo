@@ -36,7 +36,7 @@ export class GuardedAdvisor implements AiAdvisor {
     // reprovada" pedem reacoes diferentes de quem opera.
     if (resultado.tipo === 'falha') return resultado;
 
-    const veredito = examinarSaida(resultado.dados.texto, pedido.dados);
+    const veredito = examinarSaida(resultado.dados.texto, pedido.dados, pedido.pergunta);
     if (veredito.aprovado) {
       // RNF-017 + apresentação: a resposta sai limpa de markdown/emojis e com
       // limite de leitura — o texto bruto do modelo nunca chega à tela.
