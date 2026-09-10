@@ -35,7 +35,7 @@ export interface ConfiguracaoDoGemini {
 // O prompt recebe a pergunta e os números — nunca o titular (RNF-015). Quem é a
 // pessoa não muda a resposta e não tem por que sair do sistema.
 function montarPrompt(pedido: PedidoDeConselho): string {
-  return [
+  const linhas = [
     'Você é um assistente educativo de finanças pessoais do aplicativo ContaComigo.',
     'Interprete com clareza a dúvida do usuário com base nos dados reais fornecidos.',
     'NÃO invente valores monetários, nem cite valores fictícios em R$ que não estejam nos Dados.',
@@ -44,11 +44,19 @@ function montarPrompt(pedido: PedidoDeConselho): string {
     'Seja educativo, encorajador e objetivo, apresentando boas práticas de organização financeira e hábitos saudáveis.',
     'Formato: responda em TEXTO CORRIDO, sem títulos de seção, sem listas numeradas, sem negrito e sem emojis.',
     'Seja breve: no máximo 3 frases curtas (o bloco é exibido como um parágrafo).',
-    'Interatividade: quando precisar de mais informação para personalizar (ex.: valor da meta, prazo), faça UMA pergunta curta de acompanhamento em vez de um texto longo. Use o histórico (campo "historico") para dar continuidade à conversa.',
-    `Tarefa: ${pedido.tipo}`,
-    `Pergunta: ${pedido.pergunta}`,
-    `Dados: ${JSON.stringify(pedido.dados)}`,
-  ].join('\n');
+  ];
+
+  // Só o chat (pergunta-livre) questiona de volta; o diagnóstico apenas apresenta.
+  if (pedido.tipo === 'pergunta-livre') {
+    linhas.push(
+      'Interatividade: quando precisar de mais informação para personalizar (ex.: valor da meta, prazo), faça UMA pergunta curta de acompanhamento em vez de um texto longo. Use o histórico (campo "historico") para dar continuidade à conversa.',
+    );
+  } else if (pedido.tipo === 'diagnostico-do-mes') {
+    linhas.push('Apresente APENAS o diagnóstico, em linguagem simples, sem fazer perguntas ao usuário.');
+  }
+
+  linhas.push(`Tarefa: ${pedido.tipo}`, `Pergunta: ${pedido.pergunta}`, `Dados: ${JSON.stringify(pedido.dados)}`);
+  return linhas.join('\n');
 }
 
 export class GeminiAdvisor implements AiAdvisor {
