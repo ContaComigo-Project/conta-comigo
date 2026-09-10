@@ -25,12 +25,20 @@ export class PerguntarNoChatUseCase implements PerguntarNoChat {
   async executar(holderId: string, pergunta: string): Promise<RespostaDoChat> {
     const transacoes = await this.transactions.listarDoHolder(holderId as HolderId);
 
+    // Só DÉBITOS são gasto (RN-003); créditos (salário, rendimento) são receita.
+    // Misturar as duas somas faz o modelo ler "receita" como despesa e concluir
+    // errado — por isso os dados vão separados.
     const gastosPorCategoria = new Map<string, number>();
+    let receitasDoPeriodoEmCentavos = 0;
     for (const t of transacoes) {
       if (!t.category) continue;
-      gastosPorCategoria.set(t.category, (gastosPorCategoria.get(t.category) ?? 0) + t.amountInCents);
+      if (t.amountInCents < 0) {
+        gastosPorCategoria.set(t.category, (gastosPorCategoria.get(t.category) ?? 0) + Math.abs(t.amountInCents));
+      } else {
+        receitasDoPeriodoEmCentavos += t.amountInCents;
+      }
     }
-    const resumo = [...gastosPorCategoria.entries()]
+    const gastos = [...gastosPorCategoria.entries()]
       .sort((a, b) => b[1] - a[1])
       .slice(0, 5)
       .map(([categoria, total]) => ({ categoria, totalEmCentavos: total }));
@@ -39,7 +47,7 @@ export class PerguntarNoChatUseCase implements PerguntarNoChat {
       holder: holderId,
       tipo: 'pergunta-livre',
       pergunta,
-      dados: { resumoDoGasto: resumo },
+      dados: { gastos, receitasDoPeriodoEmCentavos },
     });
 
     if (resultado.tipo === 'ok') {

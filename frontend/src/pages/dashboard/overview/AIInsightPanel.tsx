@@ -70,7 +70,7 @@ export default function AIInsightPanel() {
                 {dados.contingenciaDetalhe ? ` (${dados.contingenciaDetalhe})` : ''}. O texto abaixo é educativo e genérico.
               </p>
             )}
-            <p className="text-sm text-slate-600 leading-relaxed mb-4">{dados.texto}</p>
+            <p className="text-sm text-slate-600 leading-relaxed mb-4 whitespace-pre-line">{dados.texto}</p>
             <div className="flex items-start gap-2 px-3 py-2 rounded-lg border border-emerald-100 bg-emerald-50/50 text-[0.68rem] text-emerald-700 leading-relaxed">
               <Info size={12} strokeWidth={2.2} className="shrink-0 mt-0.5" />
               <span>

@@ -42,6 +42,8 @@ function montarPrompt(pedido: PedidoDeConselho): string {
     'Ao citar valores, use EXCLUSIVAMENTE o formato "R$ X.XXX,XX" ou "R$ XX,XX". NUNCA escreva números seguidos da palavra centavos (ex: não escreva "150.000 centavos").',
     'NÃO recomende produtos financeiros específicos (como CDB, LCI, ações, cripto, empréstimos), investimentos nem instituições bancárias.',
     'Seja educativo, encorajador e objetivo, apresentando boas práticas de organização financeira e hábitos saudáveis.',
+    'Formato: responda em TEXTO CORRIDO, sem títulos de seção, sem listas numeradas, sem negrito e sem emojis.',
+    'Seja breve: no máximo 3 frases curtas (o bloco é exibido como um parágrafo).',
     `Tarefa: ${pedido.tipo}`,
     `Pergunta: ${pedido.pergunta}`,
     `Dados: ${JSON.stringify(pedido.dados)}`,

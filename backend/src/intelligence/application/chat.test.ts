@@ -47,18 +47,21 @@ function transacao(categoria: string, valorCentavos: number): Transaction {
 describe('HN-010 — chat educativo (RF-020, RF-021/RN-018, RN-021)', () => {
   it('RF-020/RN-019 — a resposta usa o gasto da pessoa; o modelo recebe só números', async () => {
     const txs = new TransacoesFake();
-    txs.itens = [transacao('moradia', 8_000_00), transacao('lazer', 3_000_00)];
+    // Débitos (gasto) e um crédito (receita) — o modelo recebe os dois separados.
+    txs.itens = [transacao('moradia', -8_000_00), transacao('lazer', -3_000_00), transacao('salario', 85_000_00)];
     const advisor = new AdvisorFake();
     const uso = new PerguntarNoChatUseCase(txs, relogio, advisor);
 
     const r = await uso.executar(HOLDER, 'Onde estou gastando mais?');
 
     expect(r.tipo).toBe('ok');
-    const resumo = advisor.ultimoPedido!.dados.resumoDoGasto as Array<{ categoria: string; totalEmCentavos: number }>;
-    expect(resumo).toEqual([
+    const gastos = advisor.ultimoPedido!.dados.gastos as Array<{ categoria: string; totalEmCentavos: number }>;
+    expect(gastos).toEqual([
       { categoria: 'moradia', totalEmCentavos: 8_000_00 },
       { categoria: 'lazer', totalEmCentavos: 3_000_00 },
     ]);
+    // O crédito não entra nos gastos: vai como receita separada (RN-003).
+    expect(advisor.ultimoPedido!.dados.receitasDoPeriodoEmCentavos).toBe(85_000_00);
     const json = JSON.stringify(advisor.ultimoPedido!.dados);
     expect(json).not.toContain('@');
     expect(json).not.toContain('holder');

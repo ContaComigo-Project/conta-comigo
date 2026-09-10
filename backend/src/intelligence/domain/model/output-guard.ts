@@ -73,7 +73,7 @@ function paraCentavos(bruto: string): number | null {
 // (`**`, `###`, `---`, listas, código) nem de emojis. É regra do produto — o
 // painel renderiza texto, não é um editor de markdown. O limite de tamanho
 // mantém o bloco legível na tela (o diagnóstico não pode virar um ensaio).
-const LIMITE_DE_TEXTO = 700;
+const LIMITE_DE_TEXTO = 1000;
 const EMOJIS = /[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{2B00}-\u{2BFF}\u{FE0F}\u{200D}\u{1F1E6}-\u{1F1FF}]/gu;
 const MARKDOWN = /```[\s\S]*?```|`|[*_~>]|^#+\s*|^\s*[-+]\s+|^-{3,}$|^=+$/gm;
 

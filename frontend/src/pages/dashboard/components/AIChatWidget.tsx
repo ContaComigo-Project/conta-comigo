@@ -182,7 +182,7 @@ export default function AIChatWidget({ embedded = false }: { embedded?: boolean 
               )}
               <div className={`flex flex-col gap-1.5 ${m.role === 'user' ? 'items-end' : 'items-start'}`}>
                 <div
-                  className={`text-[0.78rem] leading-relaxed px-3.5 py-2.5 rounded-2xl shadow-sm ${
+                  className={`text-[0.78rem] leading-relaxed whitespace-pre-line px-3.5 py-2.5 rounded-2xl shadow-sm ${
                     m.role === 'user'
                       ? 'bg-linear-to-br from-cc-dark-green to-cc-green text-white rounded-br-md'
                       : 'bg-white text-slate-700 border border-slate-100 rounded-bl-md'
