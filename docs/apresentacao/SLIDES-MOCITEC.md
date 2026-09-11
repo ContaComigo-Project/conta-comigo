@@ -11,7 +11,7 @@ max_lines: 500
 - **Apresentadores:** Raul Lize Teixeira e Thiago Rodrigues Caputi
 - **Miguel Lewandowski** não participará (viagem a serviço da empresa) — citado na capa
 - **Orientador:** Everton Oliveira Fernandes
-- **Formato:** 9 slides · **15 min** de fala + **5 min** de perguntas
+- **Formato:** 10 slides · **15 min** de fala + **5 min** de perguntas
 - **Timing sugerido por slide:** 1–2 min cada (Capa/Problema/Demonstração mais longos)
 
 ---
@@ -113,11 +113,10 @@ max_lines: 500
 5. **Bancos Conectados:** integração de bancos via Open Finance (Sandbox)
 6. **Configurações:** dados pessoais, alertas, segurança e revogação de dados
 7. **Consultor IA:** chatbot de consulta financeira pessoal (pergunte, converse, veja o aviso educativo)
+8. **Interface Responsiva:** interface responsiva para dispositivos móveis
 
 **Fala de transição**
 > "Agora vamos demonstrar o que construímos. Começando pelo acesso, pelo painel consolidado e pelas telas de orçamento, passando pela exportação de relatórios, pelas conexões bancárias, pelas configurações e pelo consultor de IA."
-
-**Dica:** alternar entre desktop e **modo responsivo (390px)** para mostrar a adaptação mobile.
 
 ---
 
@@ -148,7 +147,24 @@ max_lines: 500
 
 ---
 
-## SLIDE 9 — Dúvidas
+## SLIDE 9 — Referências
+
+**Apresentador:** Raul
+
+**Conteúdo no slide**
+- Fontes citadas (com links):
+  - Agência Brasil / CNC — Pesquisa de Endividamento e Inadimplência do Consumidor (PEIC), 2026
+  - ANBIMA/Datafolha — Raio X do Investidor Brasileiro, 2026
+  - InfoMoney (com base na ANBIMA), 2026
+  - Febraban, 2025
+  - Valor Econômico (CNC/PEIC), 2026
+
+**Fala**
+> "Todos os dados que apresentamos têm fonte pública: a Pesquisa de Endividamento e Inadimplência da CNC, o Raio X do Investidor da ANBIMA com o Datafolha, além da Febraban e do Valor Econômico. As referências completas estão no nosso relatório."
+
+---
+
+## SLIDE 10 — Dúvidas
 
 **Apresentador:** Raul
 
@@ -166,4 +182,7 @@ max_lines: 500
 - **"Como a IA não inventa número?"** → Camada de guarda: a IA só recebe valores agregados e a resposta é validada; número exibido vem do dado, nunca do modelo.
 - **"Por que não é aconselhamento?"** → Regra de produto: a IA educa e interpreta, mas não recomenda produtos, investimentos, crédito ou instituições.
 - **"O que diferencia de um banco?"** → O banco mostra o número; o ContaComigo mostra o número e o que ele significa, com orçamento, diagnóstico, chat e simulação em um só lugar.
+- **"Qual é o público-alvo da aplicação?"** → Pessoas físicas que querem entender e organizar as próprias finanças, com foco em quem tem pouco acesso a educação financeira e em quem se sente perdido com a linguagem dos bancos — do jovem que começa a trabalhar à família que precisa organizar o orçamento.
+- **"Como vocês avaliam a viabilidade financeira da aplicação?"** → A arquitetura de monólito modular e a infraestrutura têm custo baixo de manutenção; a PoC usou serviços gratuitos (Gemini no tier gratuito, dados Sandbox). A viabilidade passa por validar o valor percebido com os usuários antes de qualquer custo relevante.
+- **"Qual seria a monetização?"** → Modelos possíveis, sem nunca recomendar produto: (1) assinatura de planos premium (relatórios avançados, histórico maior, múltiplas contas); (2) modelo B2B2C — bancos e fintechs pagarem para oferecer a experiência educativa aos clientes; (3) API/white-label. Decisão de negócio, não de produto — a regra RN-017 (não recomendar produtos) continua valendo em qualquer modelo.
 - **"Quanto tem de projeto?"** → Backend e frontend separados, ~350+ testes, pipeline de CI; PoC com arquitetura de monólito modular pronta para crescer.
