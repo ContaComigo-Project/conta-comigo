@@ -22,6 +22,9 @@ model Transaction {
   // a sobrescrita por sincronizacao (RN-011).
   category            String? @map("category")
   categoryOrigin      String? @map("category_origin")
+  // Instituicao/banco de origem do lancamento (ex.: 'Banco Exemplo'). Ausente
+  // enquanto o agregador nao a preencher — o transporte nao inventa valor.
+  institutionId      String? @map("institution_id")
   amountInCents Int      @map("amount_in_cents")
   dueDate       DateTime @map("due_date") @db.Timestamptz(3)
   externalId    String?  @map("external_id")

@@ -206,7 +206,7 @@ async function seed() {
       const category = categorizarPorRegra(readableDescription, l.amountInCents);
       const categoryOrigin = category === null ? null : 'automatica';
       await prisma.transaction.create({
-        data: { ...l, readableDescription, category, categoryOrigin, holderId: HOLDER },
+        data: { ...l, institutionId: 'Banco Exemplo', readableDescription, category, categoryOrigin, holderId: HOLDER },
       });
     }
     totalLancamentos += lancamentos.length;

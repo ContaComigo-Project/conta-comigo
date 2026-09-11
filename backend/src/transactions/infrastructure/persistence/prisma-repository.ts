@@ -102,6 +102,7 @@ function paraLinha(l: Transaction): LinhaDeTransaction {
     amountInCents: l.amountInCents,
     dueDate: l.dueDate,
     externalId: l.externalId,
+    institutionId: l.institutionId ?? null,
   };
 }
 
@@ -116,5 +117,6 @@ function paraEntidade(linha: LinhaDeTransaction): Transaction {
     amountInCents: linha.amountInCents,
     dueDate: linha.dueDate,
     externalId: linha.externalId,
+    institutionId: linha.institutionId ?? undefined,
   };
 }

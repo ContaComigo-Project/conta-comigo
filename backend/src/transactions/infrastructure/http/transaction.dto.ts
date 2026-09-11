@@ -32,7 +32,7 @@ export function paraTransactionDTO(l: Transaction): TransactionDTO {
     description: legivel,
     ...(legivel === l.description ? {} : { descriptionOriginal: l.description }),
     category: l.category ? { id: l.category, name: NOMES_DE_CATEGORIA[l.category] } : null,
-    instituicao: { id: 'desconhecida', name: 'Desconhecida' },
+    instituicao: l.institutionId ? { id: l.institutionId, name: l.institutionId } : { id: 'desconhecida', name: 'Desconhecida' },
     amountInCents: l.amountInCents,
     tipo: l.amountInCents < 0 ? 'debito' : 'credito',
     dueDate: l.dueDate.toISOString(),

@@ -26,6 +26,11 @@ export interface Transaction {
   /** Data de competencia — a que define o mes de referencia (RN-003). */
   readonly dueDate: Date;
   /**
+   * Instituicao/banco de origem (ex.: 'Banco Exemplo'). Ausente enquanto o
+   * agregador nao a preencher — o transporte nao inventa valor (HT-017).
+   */
+  readonly institutionId?: string;
+  /**
    * Identificador externo do agregador (RN-008): mesma instituicao, mesmo
    * identificador e mesma data => mesmo lancamento, nao duplica.
    */
