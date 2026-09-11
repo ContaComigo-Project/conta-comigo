@@ -36,7 +36,7 @@ export function HistoricalOverview({ summaries, problems, onSelectMonth, animate
   return (
     <div className="flex flex-col gap-6">
       <section className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <article className="rounded-2xl p-5 bg-[#0a6d42] text-white shadow-md shadow-slate-900/10">
+        <article className="rounded-2xl p-5 bg-linear-to-br from-cc-dark-blue to-cc-dark-green text-white shadow-md shadow-slate-900/10">
             <p className="text-[0.7rem] font-semibold uppercase tracking-widest text-white/70 mb-1.5">
               Gasto médio dos meses
             </p>
