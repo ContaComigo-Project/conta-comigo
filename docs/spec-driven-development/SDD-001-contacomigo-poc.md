@@ -13,7 +13,7 @@ max_lines: 300
 - **Orientador:** Everton Oliveira Fernandes
 - **Data:** 2026-09-02
 - **Status:** Aprovada
-- **Fonte:** [`docs/RESUMO-MOCITEC.md`](../RESUMO-MOCITEC.md) e `README.md`
+- **Fonte:** [`docs/apresentacao/RESUMO-MOCITEC.md`](../apresentacao/RESUMO-MOCITEC.md) e `README.md`
 
 ## 1. Problema
 

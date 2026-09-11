@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Plus, RefreshCw } from 'lucide-react';
+import { Plus, RefreshCw, Unlink } from 'lucide-react';
 import { ApiSource } from '../../../data/api-source';
 import { getAccessToken } from '../../../data/access';
 
@@ -39,6 +39,7 @@ export default function ConnectedBanksWidget() {
   const [bancos, setBancos] = useState<BancoConectado[]>([]);
   const [erro, setErro] = useState<string | null>(null);
   const [sincronizando, setSincronizando] = useState(false);
+  const [revogando, setRevogando] = useState(false);
 
   const carregar = async (aindaNaTela: () => boolean = () => true) => {
     const r = await api.listarBancosConectados();
@@ -88,6 +89,26 @@ export default function ConnectedBanksWidget() {
       await carregar();
     } catch {
       setErro('Erro de conexão ao conectar com a instituição.');
+    }
+  };
+
+  const revogar = async (id: string) => {
+    const token = getAccessToken();
+    if (!token) return;
+    setRevogando(true);
+    setErro(null);
+    try {
+      const res = await fetch(`${BASE}/consents/${id}`, { method: 'DELETE', headers: { authorization: `Bearer ${token}` } });
+      if (!res.ok) {
+        const payload = await res.json().catch(() => ({}));
+        setErro(payload.message ?? 'Não foi possível revogar o acesso.');
+      } else {
+        await carregar();
+      }
+    } catch {
+      setErro('Erro de rede ao revogar o acesso.');
+    } finally {
+      setRevogando(false);
     }
   };
 
@@ -146,6 +167,15 @@ export default function ConnectedBanksWidget() {
               </div>
               <p className="text-[0.68rem] text-slate-400 truncate">{formatarUltimaSync(bank.lastSyncAt)}</p>
             </div>
+            <button
+              onClick={() => revogar(bank.id)}
+              disabled={revogando}
+              aria-label={`Revogar acesso aos dados de ${bank.name}`}
+              title="Revogar acesso aos dados"
+              className="p-1.5 rounded-lg text-slate-400 hover:text-red-600 hover:bg-red-50 transition-colors cursor-pointer disabled:opacity-40"
+            >
+              <Unlink size={14} strokeWidth={2} />
+            </button>
             <button
               onClick={() => sincronizar(bank.id)}
               disabled={sincronizando}

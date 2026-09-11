@@ -14,7 +14,7 @@ max_lines: 500
   de capturas de tela como plano B
 - **Duração:** 15 minutos de apresentação + 5 minutos de perguntas
 
-> O resumo oficial já está **fechado como versão final** (`docs/RESUMO-MOCITEC.md`).
+> O resumo oficial já está **fechado como versão final** (`docs/apresentacao/RESUMO-MOCITEC.md`).
 > Este roteiro NÃO altera o resumo — apenas organiza a fala e os dados.
 
 ---
