@@ -61,9 +61,6 @@ max_lines: 500
 >
 > **Síntese (fala):** "Ou seja: o brasileiro não entende o próprio dinheiro, não tem reserva para imprevistos e se endivida em patamar recorde. O problema não é falta de informação crua — é a falta de uma interpretação acessível que transforme os números em decisão. É aí que o ContaComigo atua."
 
-**Nota de melhoria do parágrafo** (substitui a versão antiga, mais solta):
-> *O brasileiro não entende o próprio dinheiro, não tem reserva para imprevistos e se endivida em patamar recorde. O problema não é falta de informação — é a ausência de uma interpretação acessível que transforme os números em decisão.*
-
 ---
 
 ## SLIDE 4 — Proposta
