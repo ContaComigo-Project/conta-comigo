@@ -10,6 +10,8 @@ export interface PerfilExibido {
   email: string;
   iniciais: string;
   cor: string;
+  /** ISO do cadastro (perfil); ausente no fallback. */
+  cadastradoEm?: string;
 }
 
 const FALLBACK: PerfilExibido = {
@@ -40,6 +42,7 @@ export function useProfile(): PerfilExibido {
           email: p.email,
           iniciais: iniciaisDe(p.name, p.email),
           cor: FALLBACK.cor,
+          cadastradoEm: p.createdAt,
         });
       })
       .catch(() => {

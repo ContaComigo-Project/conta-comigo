@@ -34,6 +34,6 @@ export class ProfileController {
     const holder = this.holderDoCabecalho(req.headers?.authorization);
     const conta = await this.contas.porId(holder);
     if (!conta) throw new UnauthorizedException();
-    return { id: conta.id, email: conta.email, name: conta.name };
+    return { id: conta.id, email: conta.email, name: conta.name, createdAt: (conta.createdAt ?? new Date(0)).toISOString() };
   }
 }

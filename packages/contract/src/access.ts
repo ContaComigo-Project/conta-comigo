@@ -26,7 +26,7 @@ export type CredentialsDTO = z.infer<typeof CredentialsDTO>;
 export const AccountDTO = z.object({ id: z.string().min(1), email: z.email() }).strict();
 
 /** Perfil do titular autenticado (HN-001): o nome vem do banco. */
-export const AccountProfileDTO = AccountDTO.extend({ name: z.string() }).strict();
+export const AccountProfileDTO = AccountDTO.extend({ name: z.string(), createdAt: z.iso.datetime({ offset: true }) }).strict();
 export type AccountProfileDTO = z.infer<typeof AccountProfileDTO>;
 export type AccountDTO = z.infer<typeof AccountDTO>;
 

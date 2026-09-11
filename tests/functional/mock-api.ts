@@ -95,6 +95,7 @@ export async function setupMockApi(page: Page): Promise<void> {
         id: 'demo-holder-id',
         email: 'demo@contacomigo.com',
         name: 'Usuário Demo',
+        createdAt: '2026-01-01T00:00:00.000Z',
       });
     }
 
@@ -105,6 +106,7 @@ export async function setupMockApi(page: Page): Promise<void> {
           id: 'novo-holder-id',
           email: 'novo@contacomigo.com',
           name: 'Novo Usuário',
+          createdAt: '2026-01-01T00:00:00.000Z',
         });
       }
     }

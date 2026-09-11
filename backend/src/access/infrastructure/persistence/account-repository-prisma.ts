@@ -38,5 +38,5 @@ export class RepositorioDeAccountsPrisma implements RepositorioDeAccounts {
 }
 
 function paraEntidade(linha: LinhaDeAccount | null): Account | null {
-  return linha ? { id: linha.id, email: fazerEmail(linha.email), passwordHash: linha.passwordHash, name: linha.name } : null;
+  return linha ? { id: linha.id, email: fazerEmail(linha.email), passwordHash: linha.passwordHash, name: linha.name, createdAt: linha.createdAt } : null;
 }

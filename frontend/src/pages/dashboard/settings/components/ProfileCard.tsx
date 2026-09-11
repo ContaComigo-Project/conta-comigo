@@ -38,10 +38,15 @@ export default function ProfileCard({ perfil }: ProfileCardProps) {
             <Mail className="w-3.5 h-3.5 text-slate-400" />
             <span>{perfil.email}</span>
           </div>
-          <div className="flex items-center gap-2 text-xs text-slate-400 pt-1">
-            <Shield className="w-3.5 h-3.5 text-cc-green" />
-            <span>Titular individual autenticado via JWT</span>
-          </div>
+          {perfil.cadastradoEm && (
+            <div className="flex items-center gap-2 text-xs text-slate-400 pt-1">
+              <Shield className="w-3.5 h-3.5 text-cc-green" />
+              <span>
+                Cadastrado em{' '}
+                {new Intl.DateTimeFormat('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' }).format(new Date(perfil.cadastradoEm))}
+              </span>
+            </div>
+          )}
         </div>
       </div>
     </div>

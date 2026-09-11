@@ -36,9 +36,7 @@ export function HistoricalOverview({ summaries, problems, onSelectMonth, animate
   return (
     <div className="flex flex-col gap-6">
       <section className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <article className="rounded-2xl p-5 bg-linear-to-br from-cc-dark-blue to-cc-dark-green text-white shadow-md shadow-slate-900/10 relative overflow-hidden">
-          <div className="absolute -top-10 -right-10 w-40 h-40 rounded-full bg-white/10" />
-          <div className="relative">
+        <article className="rounded-2xl p-5 bg-linear-to-br from-cc-dark-blue to-cc-dark-green text-white shadow-md shadow-slate-900/10">
             <p className="text-[0.7rem] font-semibold uppercase tracking-widest text-white/70 mb-1.5">
               Gasto médio dos meses
             </p>
@@ -60,11 +58,10 @@ export function HistoricalOverview({ summaries, problems, onSelectMonth, animate
                 {trendPct >= 0 ? '+' : ''}
                 {trendPct}% na série
               </span>
-              <span className="text-[0.65rem] text-white/70">
+              <span className="text-[0.65rem] text-white/95">
                 média {avgPct.toFixed(0)}% dos limites
               </span>
             </div>
-          </div>
         </article>
 
         <article className="rounded-2xl p-5 bg-white border border-slate-100 shadow-sm">

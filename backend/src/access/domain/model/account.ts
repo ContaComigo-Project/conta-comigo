@@ -8,4 +8,6 @@ export interface Account {
   readonly passwordHash: string;
   /** Display name from the profile; may be empty until edited. */
   readonly name: string;
+  /** Quando a conta foi criada (mostrado no perfil); ausente em fakes/legados. */
+  readonly createdAt?: Date;
 }
