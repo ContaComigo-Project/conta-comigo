@@ -79,7 +79,8 @@ const GASTOS: readonly { category: string; desc: string; count: number; range: [
   { category: 'lazer', desc: 'NETFLIX.COM', count: 1, range: [5_590, 5_590] },
   { category: 'lazer', desc: 'SPOTIFY AB', count: 1, range: [2_190, 2_190] },
   { category: 'lazer', desc: 'CINEMA UCI', count: 1, range: [4_000, 9_000] },
-  { category: 'outros', desc: 'COMPRA AVULSA', count: 2, range: [3_000, 15_000] },
+  { category: 'outros', desc: 'PADARIA PÃO QUENTE', count: 1, range: [3_000, 9_000] },
+  { category: 'outros', desc: 'FARMACIA POPULAR', count: 1, range: [5_000, 12_000] },
 ];
 
 interface LancamentoGerado {
