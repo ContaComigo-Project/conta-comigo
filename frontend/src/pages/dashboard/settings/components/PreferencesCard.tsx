@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Bell, Sparkles } from 'lucide-react';
+import { Bell } from 'lucide-react';
 import { loadUserPreferences, saveUserPreferences, type UserPreferences } from '../../../../data/settings';
 
 export default function PreferencesCard() {
@@ -103,20 +103,6 @@ export default function PreferencesCard() {
           </button>
         </div>
 
-        {/* Teto de IA Info */}
-        <div className="p-4 rounded-xl bg-emerald-50/40 border border-emerald-100 flex items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-emerald-100 text-cc-green flex items-center justify-center shrink-0">
-              <Sparkles className="w-4 h-4" />
-            </div>
-            <div>
-
-            </div>
-          </div>
-          <span className="px-2.5 py-1 text-xs font-bold rounded-lg bg-emerald-100 text-emerald-800 shrink-0">
-            20 / dia
-          </span>
-        </div>
       </div>
     </div>
   );

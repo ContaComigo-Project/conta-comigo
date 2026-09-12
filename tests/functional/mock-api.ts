@@ -195,7 +195,11 @@ export async function setupMockApi(page: Page): Promise<void> {
     if (path === '/budgets/diagnosis') {
       return cumprir(route, DiagnosisDTO, {
         estado: 'ok',
-        texto: 'Seus gastos estão sob controle: a maior parte do orçamento seguiu o padrão dos meses anteriores.',
+        analises: [
+          { id: 'andamento', titulo: 'Andamento do mês', texto: 'O mês segue dentro do orçamento planejado, com os maiores gastos concentrados em moradia e alimentação.' },
+          { id: 'comparacao', titulo: 'Comparação com o mês anterior', texto: 'Os gastos se mantiveram estáveis em relação ao mês anterior, com leve aumento em alimentação.' },
+          { id: 'dicas', titulo: 'Dicas para o seu perfil', texto: 'Manter o registro dos gastos e revisar o limite de alimentação ajuda a preservar a folga mensal.' },
+        ],
       });
     }
 

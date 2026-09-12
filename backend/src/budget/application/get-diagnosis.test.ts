@@ -31,12 +31,12 @@ class TransacoesFake implements RepositorioDeTransactions {
   async deleteByHolder() {}
 }
 
-/** Captura o pedido para inspecionar o que foi enviado ao modelo (RN-019). */
+/** Captura os pedidos para inspecionar o que foi enviado ao modelo (RN-019). */
 class AdvisorFake implements AiAdvisor {
-  ultimoPedido: PedidoDeConselho | null = null;
-  resposta: ResultadoDeIa<Conselho> = okDeIa({ texto: 'Diagnóstico simulado: padrão dos meses anteriores.', origem: 'provedor' });
+  pedidos: PedidoDeConselho[] = [];
+  resposta: ResultadoDeIa<Conselho> = okDeIa({ texto: 'Análise educativa do perfil.', origem: 'provedor' });
   async aconselhar(pedido: PedidoDeConselho) {
-    this.ultimoPedido = pedido;
+    this.pedidos.push(pedido);
     return this.resposta;
   }
 }
@@ -79,9 +79,10 @@ describe('HN-009 — diagnóstico de saúde financeira (RF-018, RN-019, RN-020, 
     const uso = casos(repo, txs, advisor);
 
     const r = await uso.executar(HOLDER);
-    expect(r).toEqual({ tipo: 'ok', texto: 'Diagnóstico simulado: padrão dos meses anteriores.' });
+    expect(r.tipo).toBe('ok');
+    if (r.tipo === 'ok') expect(r.analises.length).toBe(3);
 
-    const pedido = advisor.ultimoPedido!;
+    const pedido = advisor.pedidos[0]!;
     expect(pedido.tipo).toBe('diagnostico-do-mes');
     // Só números/categorias no payload: sem email, nome, id de conta ou CPF.
     const json = JSON.stringify(pedido.dados);

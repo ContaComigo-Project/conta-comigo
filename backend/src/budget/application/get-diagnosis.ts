@@ -7,12 +7,19 @@ import type { BudgetRepository } from '../domain/port/driven/budget-repository';
 import type { GetDiagnosis, ResultadoDoDiagnostico } from '../domain/port/driving/get-diagnosis';
 import { categoriasDoMes } from './por-categoria-do-mes';
 
-// RF-018 / RN-020 / RN-019 / RN-021: diagnóstico de saúde financeira a partir
-// dos dados consolidados. O modelo recebe SÓ os números agregados (nunca a
-// pessoa, RN-019) e a guarda de saída (HT-014) valida o texto. Sem um mês
-// fechado com lançamentos, não há diagnóstico (RN-020). Provedor fora ou
-// resposta bloqueada degrada em resultado estruturado (RN-021).
+// RF-018 / RN-020 / RN-019 / RN-021: diagnóstico de saúde financeira em TRÊS
+// análises complementares — andamento do mês, comparação com o mês anterior e
+// dicas para o perfil (sem recomendar produto, RN-017). O modelo recebe SÓ os
+// números agregados (nunca a pessoa, RN-019) e a guarda de saída (HT-014)
+// valida cada texto. Sem mês fechado, não há diagnóstico (RN-020). Provedor
+// fora ou resposta bloqueada degrada em resultado estruturado (RN-021).
 const MESES_NO_DIAGNOSTICO = 6;
+
+const FOCOS = [
+  { id: 'andamento', titulo: 'Andamento do mês', pergunta: 'Analise o andamento do mês corrente em relação ao orçamento planejado, usando os números fornecidos.' },
+  { id: 'comparacao', titulo: 'Comparação com o mês anterior', pergunta: 'Compare os gastos dos meses fornecidos com o mês anterior e aponte as mudanças mais relevantes.' },
+  { id: 'dicas', titulo: 'Dicas para o seu perfil', pergunta: 'Dê dicas práticas e educativas de organização financeira adequadas a esse perfil de gastos, sem recomendar nenhum produto, investimento, crédito ou instituição.' },
+] as const;
 
 function mesesFechados(anoAtual: number, mesAtual: number): string[] {
   const meses: string[] = [];
@@ -61,26 +68,35 @@ export class GetDiagnosisUseCase implements GetDiagnosis {
     // RN-020: conta recém-conectada (sem mês fechado com lançamentos) não recebe diagnóstico.
     if (mesesComDados.length === 0) return { tipo: 'dados-insuficientes' };
 
-    const resultado = await this.advisor.aconselhar({
-      holder: holderId,
-      tipo: 'diagnostico-do-mes',
-      pergunta: 'Descreva o diagnóstico de saúde financeira deste orçamento a partir dos números fornecidos, em linguagem simples.',
-      dados: { meses: mesesComDados },
-    });
+    // As três análises são independentes: chamadas em PARALELO (Promise.all)
+    // para o tempo total não virar 3× o limite de espera (RNF-006).
+    const resultados = await Promise.all(
+      FOCOS.map((f) =>
+        this.advisor.aconselhar({
+          holder: holderId,
+          tipo: 'diagnostico-do-mes',
+          pergunta: f.pergunta,
+          dados: { meses: mesesComDados },
+        }),
+      ),
+    );
 
-    if (resultado.tipo === 'ok') {
-      if (resultado.dados.origem === 'contingencia') {
-        return { tipo: 'ia-indisponivel', motivo: resultado.dados.falhaDetalhe ?? 'provedor indisponível' };
+    const analises = [];
+    for (let i = 0; i < FOCOS.length; i += 1) {
+      const r = resultados[i];
+      if (r.tipo === 'ok' && r.dados.origem !== 'contingencia') {
+        analises.push({ id: FOCOS[i].id, titulo: FOCOS[i].titulo, texto: r.dados.texto });
       }
-      return { tipo: 'ok', texto: resultado.dados.texto };
     }
-    switch (resultado.motivo) {
-      case 'teto-atingido':
-        return { tipo: 'teto-atingido' };
-      case 'resposta-bloqueada':
-        return { tipo: 'ia-bloqueou', motivo: resultado.detalhe };
-      default:
-        return { tipo: 'ia-indisponivel', motivo: resultado.detalhe };
+    if (analises.length === 0) {
+      const primeira = resultados[0];
+      if (primeira?.tipo === 'falha') {
+        if (primeira.motivo === 'teto-atingido') return { tipo: 'teto-atingido' };
+        if (primeira.motivo === 'resposta-bloqueada') return { tipo: 'ia-bloqueou', motivo: primeira.detalhe };
+        return { tipo: 'ia-indisponivel', motivo: primeira.detalhe };
+      }
+      return { tipo: 'ia-indisponivel', motivo: 'provedor indisponível' };
     }
+    return { tipo: 'ok', analises };
   }
 }

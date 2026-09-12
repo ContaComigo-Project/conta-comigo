@@ -2,17 +2,22 @@ import { useEffect, useState } from 'react';
 import { Bot, Info, AlertTriangle } from 'lucide-react';
 import { ApiSource } from '../../../data/api-source';
 
+type Analise = { id: string; titulo: string; texto: string };
+
 type EstadoDoDiagnostico =
   | { estado: 'carregando' }
-  | { estado: 'ok'; texto: string; contingencia?: boolean; contingenciaDetalhe?: string }
+  | { estado: 'ok'; analises: Analise[] }
   | { estado: 'dados-insuficientes' }
   | { estado: 'degradado'; motivo: string };
 
 const MENSAGEM_DADOS_INSUFICIENTES =
   'Ainda não há um mês fechado com lançamentos para gerar o diagnóstico. Conecte sua conta e acompanhe um ciclo mensal.';
 
+const ROTACAO_MS = 6000;
+
 export default function AIInsightPanel() {
   const [dados, setDados] = useState<EstadoDoDiagnostico>({ estado: 'carregando' });
+  const [indice, setIndice] = useState(0);
 
   useEffect(() => {
     let ativo = true;
@@ -20,7 +25,7 @@ export default function AIInsightPanel() {
       .diagnostico()
       .then((r) => {
         if (!ativo) return;
-        if (r.estado === 'ok') setDados({ estado: 'ok', texto: r.texto ?? '', contingencia: r.contingencia, contingenciaDetalhe: r.contingenciaDetalhe });
+        if (r.estado === 'ok') setDados({ estado: 'ok', analises: r.analises ?? [] });
         else if (r.estado === 'dados-insuficientes') setDados({ estado: 'dados-insuficientes' });
         else setDados({ estado: 'degradado', motivo: r.estado });
       })
@@ -32,6 +37,17 @@ export default function AIInsightPanel() {
     };
   }, []);
 
+  // Rotação automática entre as análises (ex.: a cada 6 segundos).
+  useEffect(() => {
+    if (dados.estado !== 'ok' || dados.analises.length <= 1) return;
+    const timer = setInterval(() => {
+      setIndice((i) => (i + 1) % dados.analises.length);
+    }, ROTACAO_MS);
+    return () => clearInterval(timer);
+  }, [dados]);
+
+  const analiseAtiva = dados.estado === 'ok' ? dados.analises[indice % Math.max(1, dados.analises.length)] : undefined;
+
   return (
     <section aria-label="Diagnóstico de IA">
       <div className="flex items-center justify-between mb-3">
@@ -41,6 +57,22 @@ export default function AIInsightPanel() {
           </span>
           Diagnóstico de IA
         </h2>
+
+        {dados.estado === 'ok' && dados.analises.length > 1 && (
+          <div className="flex items-center gap-1.5">
+            {dados.analises.map((_, i) => (
+              <button
+                key={i}
+                type="button"
+                onClick={() => setIndice(i)}
+                aria-label={`Análise ${i + 1}`}
+                className={`rounded-full transition-all duration-300 cursor-pointer ${
+                  i === indice % dados.analises.length ? 'w-5 h-1.5 bg-[#36b37e]' : 'w-1.5 h-1.5 bg-slate-200 hover:bg-slate-300'
+                }`}
+              />
+            ))}
+          </div>
+        )}
       </div>
 
       <div className="rounded-2xl border-2 border-cc-green/30 p-5 bg-white shadow-[0_4px_24px_rgba(54,179,126,0.08)]">
@@ -53,7 +85,7 @@ export default function AIInsightPanel() {
               Consultor de IA
             </p>
             <h3 className="text-sm font-bold text-slate-800 leading-tight">
-              {dados.estado === 'ok' ? 'Saúde financeira do seu orçamento' : dados.estado === 'dados-insuficientes' ? 'Aguardando dados' : 'Diagnóstico indisponível'}
+              {dados.estado === 'ok' ? (analiseAtiva?.titulo ?? 'Saúde financeira do seu orçamento') : dados.estado === 'dados-insuficientes' ? 'Aguardando dados' : 'Diagnóstico indisponível'}
             </h3>
           </div>
         </div>
@@ -62,19 +94,13 @@ export default function AIInsightPanel() {
           <p className="text-sm text-slate-400 animate-pulse">Gerando diagnóstico a partir dos seus dados...</p>
         )}
 
-        {dados.estado === 'ok' && (
+        {dados.estado === 'ok' && analiseAtiva && (
           <>
-            {dados.contingencia && (
-              <p className="text-[0.7rem] text-amber-700 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2 mb-3 leading-relaxed">
-                A IA educativa está em modo de contingência: o provedor está indisponível no momento
-                {dados.contingenciaDetalhe ? ` (${dados.contingenciaDetalhe})` : ''}. O texto abaixo é educativo e genérico.
-              </p>
-            )}
-            <p className="text-sm text-slate-600 leading-relaxed mb-4 whitespace-pre-line">{dados.texto}</p>
+            <p className="text-sm text-slate-600 leading-relaxed mb-4 whitespace-pre-line">{analiseAtiva.texto}</p>
             <div className="flex items-start gap-2 px-3 py-2 rounded-lg border border-emerald-100 bg-emerald-50/50 text-[0.68rem] text-emerald-700 leading-relaxed">
               <Info size={12} strokeWidth={2.2} className="shrink-0 mt-0.5" />
               <span>
-                Este diagnóstico é educativo e usa seus números, mas não é aconselhamento financeiro.
+                Este diagnóstico é educativo e usa seus dados, mas não é aconselhamento financeiro.
                 Não recomenda produtos, investimentos, crédito ou instituições.
               </span>
             </div>

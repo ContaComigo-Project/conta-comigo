@@ -93,13 +93,22 @@ export type BudgetHistoryDTO = z.infer<typeof BudgetHistoryDTO>;
 
 // Financial diagnosis from the consolidated data (HN-009). The text is IA
 // output already guarded (RN-019); the state covers degradation (RN-021).
+// Três análises complementares (HN-009): andamento do mês, comparação com o
+// mês anterior e dicas para o perfil — todas educativas, sem recomendação.
+export const DiagnosticoAnaliseDTO = z
+  .object({
+    id: z.enum(['andamento', 'comparacao', 'dicas']),
+    titulo: z.string().min(1),
+    texto: z.string().min(1),
+  })
+  .strict();
+export type DiagnosticoAnaliseDTO = z.infer<typeof DiagnosticoAnaliseDTO>;
+
 export const DiagnosisDTO = z
   .object({
     estado: z.enum(['ok', 'dados-insuficientes', 'ia-indisponivel', 'teto-atingido', 'ia-bloqueou']),
-    texto: z.string().optional(),
+    analises: z.array(DiagnosticoAnaliseDTO).optional(),
     motivo: z.string().optional(),
-    contingencia: z.boolean().optional(),
-    contingenciaDetalhe: z.string().optional(),
   })
   .strict();
 export type DiagnosisDTO = z.infer<typeof DiagnosisDTO>;
