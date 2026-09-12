@@ -148,10 +148,6 @@ export function HistoricalOverview({ summaries, problems, onSelectMonth, animate
               <span className="w-3 h-3 rounded-sm bg-linear-to-t from-cc-dark-green to-cc-green" />
               Gasto
             </div>
-            <div className="flex items-center gap-1.5">
-              <span className="w-3 h-3 rounded-sm border-2 border-dashed border-slate-400" />
-              Limite
-            </div>
           </div>
         </div>
 
@@ -162,7 +158,6 @@ export function HistoricalOverview({ summaries, problems, onSelectMonth, animate
             // volume relativo entre meses. Assim 67% vira uma barra a 67% da
             // área (o limite é o topo, em 100%), e meses de 50% não parecem cheios.
             const pctHeight = Math.min(100, s.percentage);
-            const limitHeight = 100;
             return (
               <button
                 key={s.month}
@@ -171,12 +166,6 @@ export function HistoricalOverview({ summaries, problems, onSelectMonth, animate
                 className="group flex flex-col items-center gap-3 focus:outline-none cursor-pointer"
               >
                 <div className="relative w-full h-48 flex items-end justify-center">
-                  <div
-                    className="absolute left-1/2 -translate-x-1/2 w-12 border-t-2 border-dashed border-slate-300"
-                    style={{ bottom: `${limitHeight}%` }}
-                    title={`Limite R$ ${formatCents(s.totalLimit)}`}
-                  />
-
                   <div className="relative w-10 h-full flex items-end">
                     <div className="absolute inset-0 rounded-t-lg bg-slate-50 border border-slate-100" />
                     <div
