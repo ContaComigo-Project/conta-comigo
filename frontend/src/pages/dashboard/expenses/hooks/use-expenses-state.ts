@@ -84,10 +84,14 @@ function toCategory(cat: { category: string; limitInCents: number | null; spentI
 // O semáforo/histórico só listam categorias com limite OU gasto no mês. A tela
 // de limites precisa do catálogo inteiro para permitir definir um limite em
 // qualquer categoria (RF-013) — inclusive as vazias e as sem gasto.
+// Categorias que recebem LIMITE são só de GASTO. Receita e investimentos são
+// créditos — não faz sentido limitar quanto a pessoa recebe (RN-002).
+const CATEGORIAS_DE_GASTO = Object.entries(CATEGORIAS).filter(([id]) => id !== 'receita' && id !== 'investimentos');
+
 function completarComCatalogo(porMes: Record<string, CategoryOfMonth[]>): void {
   for (const month of Object.keys(porMes)) {
     const existentes = new Set(porMes[month].map((c) => c.category));
-    for (const [id, v] of Object.entries(CATEGORIAS)) {
+    for (const [id, v] of CATEGORIAS_DE_GASTO) {
       if (existentes.has(id)) continue;
       porMes[month].push({
         category: id,

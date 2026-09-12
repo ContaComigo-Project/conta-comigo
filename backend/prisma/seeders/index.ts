@@ -48,8 +48,6 @@ const LIMITES_MENSAIS: readonly { category: string; limitInCents: number }[] = [
   { category: 'saude', limitInCents: 70_000 },
   { category: 'lazer', limitInCents: 60_000 },
   { category: 'outros', limitInCents: 100_000 },
-  { category: 'receita', limitInCents: 900_000 },
-  { category: 'investimentos', limitInCents: 150_000 },
 ];
 
 // PRNG determinístico: o mesmo seed produz sempre a mesma massa (reprodutível).
