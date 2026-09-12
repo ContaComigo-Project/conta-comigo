@@ -43,7 +43,7 @@ max_lines: 500
 **Conteúdo no slide**
 - **O Desafio da Clareza** *(record_voice_over)*
   - A complexidade técnica e a burocracia financeira tradicional criam barreiras que afastam a maioria das pessoas do controle real do seu próprio dinheiro.
-- **Nossa proposta** *(auto_awesome)*
+- **A nossa visão** *(auto_awesome)*
   - Desmistificar a gestão financeira pessoal, unindo o Open Finance e a Inteligência Artificial em uma experiência intuitiva, acessível e centralizada.
 - Ícones/ilustração: "bancos falando uma língua que ninguém ensinou"
 
