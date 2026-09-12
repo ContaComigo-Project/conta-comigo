@@ -18,7 +18,7 @@ max_lines: 500
 
 ## SLIDE 1 — Capa
 
-**Apresentador:** Raul
+**Apresentador:** Raul e Caputi
 
 **Conteúdo no slide**
 - Logo ContaComigo
@@ -26,8 +26,13 @@ max_lines: 500
 - Nomes: Raul Lize Teixeira · Thiago Rodrigues Caputi · Miguel Lewandowski
 - Orientador: Everton Oliveira Fernandes
 
-**Fala**
-> "Bom dia. Começamos apresentando nossa equipe: eu, Raul; o Thiago Caputi; o Miguel, nosso integrante que não pode estar presente por conta de uma viagem a trabalho; e o professor Everton, nosso orientador, que nos apoiou ao longo da criação e desenvolvimento do projeto."
+**Fala — Raul**
+> "Bom dia a todos, sejam bem-vindos! Somos do projeto ContaComigo: democratizando a gestão financeira pessoal através do Open Finance e da Inteligência Artificial. Eu sou o Raul, e ao meu lado está o Caputi. Também faz parte da nossa equipe o Miguel, que não pôde estar presente hoje por conta de uma viagem a trabalho."
+
+**Fala — Caputi**
+> "Bom dia, pessoal! Eu sou o Thiago Caputi. E aproveitando, gostaria de apresentar o professor Everton, nosso orientador, que nos apoiou ao longo de toda a criação e desenvolvimento do projeto."
+
+**(Passar o slide após a apresentação da equipe.)**
 
 ---
 
