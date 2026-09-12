@@ -55,13 +55,15 @@ describe('HN-010 — chat educativo (RF-020, RF-021/RN-018, RN-021)', () => {
     const r = await uso.executar(HOLDER, 'Onde estou gastando mais?');
 
     expect(r.tipo).toBe('ok');
-    const gastos = advisor.ultimoPedido!.dados.gastosDoMes as Array<{ categoria: string; totalEmCentavos: number }>;
+    // Valores em REAIS (não centavos), para o modelo citar o que o painel mostra.
+    const gastos = advisor.ultimoPedido!.dados.gastosPorCategoriaEmReais as Array<{ categoria: string; totalEmReais: number }>;
     expect(gastos).toEqual([
-      { categoria: 'moradia', totalEmCentavos: 8_000_00 },
-      { categoria: 'lazer', totalEmCentavos: 3_000_00 },
+      { categoria: 'moradia', totalEmReais: 8_000 },
+      { categoria: 'lazer', totalEmReais: 3_000 },
     ]);
+    expect(advisor.ultimoPedido!.dados.gastosDoMesEmReais).toBe(11_000);
     // O crédito não entra nos gastos: vai como receita separada (RN-003).
-    expect(advisor.ultimoPedido!.dados.receitasDoMesEmCentavos).toBe(85_000_00);
+    expect(advisor.ultimoPedido!.dados.receitasDoMesEmReais).toBe(85_000);
     const json = JSON.stringify(advisor.ultimoPedido!.dados);
     expect(json).not.toContain('@');
     expect(json).not.toContain('holder');

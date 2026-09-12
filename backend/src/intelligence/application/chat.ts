@@ -46,13 +46,22 @@ export class PerguntarNoChatUseCase implements PerguntarNoChat {
     const gastosDoMes = [...gastosPorCategoria.entries()]
       .sort((a, b) => b[1] - a[1])
       .slice(0, 5)
-      .map(([categoria, total]) => ({ categoria, totalEmCentavos: total }));
+      .map(([categoria, total]) => ({ categoria, totalEmReais: total / 100 }));
+    const totalGastosDoMesEmReais = gastosPorCategoria.size > 0 ? [...gastosPorCategoria.values()].reduce((s, v) => s + v, 0) / 100 : 0;
 
+    // Valores em REAIS (não centavos) e o TOTAL já calculado: o modelo cita
+    // exatamente o que o painel mostra, sem conversão/soma que possa divergir.
     const resultado = await this.advisor.aconselhar({
       holder: holderId,
       tipo: 'pergunta-livre',
       pergunta,
-      dados: { mes: mesStr, gastosDoMes, receitasDoMesEmCentavos, ...(historico && historico.length > 0 ? { historico } : {}) },
+      dados: {
+        mes: mesStr,
+        receitasDoMesEmReais: receitasDoMesEmCentavos / 100,
+        gastosDoMesEmReais: totalGastosDoMesEmReais,
+        gastosPorCategoriaEmReais: gastosDoMes,
+        ...(historico && historico.length > 0 ? { historico } : {}),
+      },
     });
 
     if (resultado.tipo === 'ok') {
