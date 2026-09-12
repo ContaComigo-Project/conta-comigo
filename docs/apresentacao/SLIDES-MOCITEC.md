@@ -55,11 +55,11 @@ max_lines: 500
 
 **Conteúdo no slide**
 - **Endividamento**
-  - 1 em cada 5 famílias (19,5%) tem mais da metade da renda comprometida com dívidas; comprometimento médio de 29,7% do orçamento. *(Agência Brasil, 06/02/2026)*
-  - Entre famílias com renda de até 3 salários mínimos, o endividamento chega a 82,5%. *(Agência Brasil, 06/02/2026)*
+  - 1 em cada 5 famílias (19,5%) tem mais da metade da renda comprometida com dívidas, com comprometimento médio de 29,7% do orçamento. (1)
+  - Entre famílias com renda de até 3 salários mínimos, o endividamento chega a 82,5%. (1)
 - **Reserva e educação financeira**
-  - 31% dos brasileiros não têm NENHUMA reserva financeira; nas classes D/E, 48%. Somando quem cobre menos de 1 mês, mais da metade da população está exposta a qualquer imprevisto. *(InfoMoney, 15/06/2026)*
-  - Apenas 21% já participou de algum curso/palestra de educação financeira; 55% admite entender pouco ou nada do tema. *(ANBIMA e Febraban)*
+  - 31% dos brasileiros não têm NENHUMA reserva financeira; nas classes D/E chega a 48%. (2)
+  - Apenas 21% já participaram de cursos ou palestras do tema, e 55% admitem entender pouco ou nada sobre finanças. (2, 3)
 
 **Fala**
 > "Lhes apresento os seguintes dados. Um em cada cinco brasileiros compromete mais da metade da renda com dívidas, e nas famílias mais pobres o endividamento chega a 82%. Trinta e um por cento não tem nenhuma reserva para um imprevisto, e apenas um em cada cinco já recebeu algum tipo de educação financeira."
@@ -157,12 +157,11 @@ max_lines: 500
 **Apresentador:** Pular (apenas exibir o slide de fontes, sem falar)
 
 **Conteúdo no slide**
-- Fontes citadas (com links):
-  - Agência Brasil / CNC — Pesquisa de Endividamento e Inadimplência do Consumidor (PEIC), 2026
-  - ANBIMA/Datafolha — Raio X do Investidor Brasileiro, 2026
-  - InfoMoney (com base na ANBIMA), 2026
-  - Febraban, 2025
-  - Valor Econômico (CNC/PEIC), 2026
+- **Endividamento**
+  - [1] MOURA, B. F. Percentual de famílias com dívidas cresce, mas inadimplência cai. Agência Brasil, 2026.
+- **Reserva e educação financeira**
+  - [2] ANBIMA; DATAFOLHA. Raio X do Investidor Brasileiro. São Paulo: ANBIMA, 2026.
+  - [3] FEBRABAN. Maioria dos brasileiros admite entender pouco de educação financeira. São Paulo: Febraban, 2025.
 
 **Fala**
 > "Todos os dados que apresentamos têm fonte pública: a Pesquisa de Endividamento e Inadimplência da CNC, o Raio X do Investidor da ANBIMA com o Datafolha, além da Febraban e do Valor Econômico. As referências completas estão no nosso relatório."
