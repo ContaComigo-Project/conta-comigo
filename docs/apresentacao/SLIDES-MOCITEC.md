@@ -46,7 +46,7 @@ max_lines: 500
 - Ícones/ilustração: "bancos falando uma língua que ninguém ensinou"
 
 **Fala**
-> "Se entender o próprio dinheiro já é difícil, imagina quando os bancos falam uma língua que ninguém te ensinou — e a educação financeira quase não existe nas escolas e universidades. É exatamente nesse ponto que o ContaComigo entra: juntar os seus dados financeiros em um lugar só e traduzir isso em linguagem simples, com apoio de inteligência artificial e do Open Finance."
+> "Se entender o próprio dinheiro já é difícil, imagina quando os bancos falam uma língua que ninguém te ensinou — principalmente porque a educação financeira quase não é explorada nas escolas e universidades. É exatamente nesse ponto que o ContaComigo entra: juntar os seus dados financeiros em um lugar só e traduzir isso em linguagem simples, com apoio de inteligência artificial e do Open Finance."
 
 ---
 
