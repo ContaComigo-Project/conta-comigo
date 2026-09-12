@@ -1,7 +1,16 @@
 import { ArrowUpRight, TrendingUp, TrendingDown, XCircle } from 'lucide-react';
 import type { MonthSummary } from '../hooks/use-expenses-state';
 import { formatCents } from '../../../../utils/formatters';
-import { BAND_META, FILTER_BANDS } from '../band';
+import { BAND_META, FILTER_BANDS, type Band } from '../band';
+
+// Cor da barra do mês = utilização do orçamento (mesmas faixas 70/90 de RN-001),
+// alinhada com a % exibida. O "status de categoria mais severa" fica no card
+// "Status semáforo", não aqui.
+function faixaDoPercentual(pct: number): Band {
+  if (pct <= 70) return 'green';
+  if (pct <= 90) return 'amber';
+  return 'red';
+}
 
 export interface RecurrentProblem {
   category: string;
@@ -159,7 +168,7 @@ export function HistoricalOverview({ summaries, problems, onSelectMonth, animate
 
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4 items-end pb-2">
           {summaries.map((s) => {
-            const meta = BAND_META[s.status];
+            const meta = BAND_META[faixaDoPercentual(s.percentage)];
             const pctHeight = maxSpent > 0 ? (s.totalSpent / maxSpent) * 100 : 0;
             const limitHeight = maxSpent > 0 ? (s.totalLimit / maxSpent) * 100 : 0;
             return (
@@ -224,7 +233,7 @@ export function HistoricalOverview({ summaries, problems, onSelectMonth, animate
           .slice()
           .reverse()
           .map((s) => {
-            const meta = BAND_META[s.status];
+            const meta = BAND_META[faixaDoPercentual(s.percentage)];
             return (
               <button
                 key={s.month}
