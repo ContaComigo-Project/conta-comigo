@@ -55,11 +55,11 @@ max_lines: 500
 
 **Conteúdo no slide**
 - **Endividamento**
-  - 1 em cada 5 famílias (19,5%) tem mais da metade da renda comprometida com dívidas, com comprometimento médio de 29,7% do orçamento. (1)
-  - Entre famílias com renda de até 3 salários mínimos, o endividamento chega a 82,5%. (1)
+  - 1 em cada 5 famílias (19,5%) tem mais da metade da renda comprometida com dívidas, com comprometimento médio de 29,7% do orçamento. (AGÊNCIA BRASIL)
+  - Entre famílias com renda de até 3 salários mínimos, o endividamento chega a 82,5%. (AGÊNCIA BRASIL)
 - **Reserva e educação financeira**
-  - 31% dos brasileiros não têm NENHUMA reserva financeira; nas classes D/E chega a 48%. (2)
-  - Apenas 21% já participaram de cursos ou palestras do tema, e 55% admitem entender pouco ou nada sobre finanças. (2, 3)
+  - 31% dos brasileiros não têm NENHUMA reserva financeira; nas classes D/E chega a 48%. (ANBIMA)
+  - Apenas 21% já participaram de cursos ou palestras do tema, e 55% admitem entender pouco ou nada sobre finanças. (ANBIMA; FEBRABAN)
 
 **Fala**
 > "Lhes apresento os seguintes dados. Um em cada cinco brasileiros compromete mais da metade da renda com dívidas, e nas famílias mais pobres o endividamento chega a 82%. Trinta e um por cento não tem nenhuma reserva para um imprevisto, e apenas um em cada cinco já recebeu algum tipo de educação financeira."
