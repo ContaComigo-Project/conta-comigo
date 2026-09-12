@@ -63,6 +63,17 @@ export const BAND_META: Record<Band, BandMeta> = {
 /** Bands used in filters/sorting — no-limit stays out of the highlights. */
 export const FILTER_BANDS: readonly Band[] = ['green', 'amber', 'red'];
 
+/**
+ * Faixa pela UTILIZAÇÃO do orçamento (mesmas regras 70/90 de RN-001). É o que
+ * as barras/cards do histórico exibem — o "pior categoria" fica no card de
+ * status semáforo.
+ */
+export function faixaDoPercentual(pct: number): Band {
+  if (pct <= 70) return 'green';
+  if (pct <= 90) return 'amber';
+  return 'red';
+}
+
 /** Overall month band from per-category counts (visual aggregation, no threshold). */
 export function bandFromCounts(counts: Record<Band, number>): Band {
   if (counts.red > 0) return 'red';

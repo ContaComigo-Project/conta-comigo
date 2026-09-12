@@ -1,6 +1,6 @@
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import type { MonthSummary } from '../hooks/use-expenses-state';
-import { BAND_META } from '../band';
+import { BAND_META, faixaDoPercentual } from '../band';
 
 interface MonthPickerProps {
   months: string[];
@@ -39,7 +39,7 @@ export function MonthPicker({
         <div className="flex items-center gap-1.5 flex-wrap justify-center">
           {months.map((month) => {
             const s = summaries.find((sum) => sum.month === month);
-            const meta = s ? BAND_META[s.status] : BAND_META['no-limit'];
+            const meta = s ? BAND_META[faixaDoPercentual(s.percentage)] : BAND_META['no-limit'];
             const isSelected = month === selectedMonth;
             const [ano, mes] = month.split('-');
             const label = `${ano} ${mes}`;
