@@ -110,10 +110,7 @@ export default function PreferencesCard() {
               <Sparkles className="w-4 h-4" />
             </div>
             <div>
-              <p className="text-xs font-semibold text-emerald-900">Teto Diário do Assistente IA</p>
-              <p className="text-[0.72rem] text-emerald-700 leading-relaxed">
-                Cada titular possui uma cota diária garantida de 20 interações com a IA, otimizadas com cache semântico.
-              </p>
+
             </div>
           </div>
           <span className="px-2.5 py-1 text-xs font-bold rounded-lg bg-emerald-100 text-emerald-800 shrink-0">

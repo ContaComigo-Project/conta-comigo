@@ -122,7 +122,7 @@ max_lines: 500
 
 ## SLIDE 7 — Próximas etapas
 
-**Apresentador:** Caputi
+**Apresentador:** Raul
 
 **Conteúdo no slide**
 - Aplicativo **Mobile**
@@ -149,7 +149,7 @@ max_lines: 500
 
 ## SLIDE 9 — Referências
 
-**Apresentador:** Raul
+**Apresentador:** Pular (apenas exibir o slide de fontes, sem falar)
 
 **Conteúdo no slide**
 - Fontes citadas (com links):
@@ -166,7 +166,7 @@ max_lines: 500
 
 ## SLIDE 10 — Dúvidas
 
-**Apresentador:** Raul
+**Apresentador:** Caputi
 
 **Conteúdo no slide**
 - "Dúvidas?" + contatos/logo
