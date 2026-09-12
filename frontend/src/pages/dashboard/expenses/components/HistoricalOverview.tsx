@@ -17,8 +17,6 @@ interface HistoricalOverviewProps {
 }
 
 export function HistoricalOverview({ summaries, problems, onSelectMonth, animate }: HistoricalOverviewProps) {
-  const maxSpent = Math.max(...summaries.map((s) => s.totalSpent));
-
   const avgSpent = +(summaries.reduce((s, m) => s + m.totalSpent, 0) / summaries.length).toFixed(2);
   const avgLimit = summaries.reduce((s, m) => s + m.totalLimit, 0) / summaries.length;
   const avgPct = (avgSpent / avgLimit) * 100;
@@ -160,8 +158,11 @@ export function HistoricalOverview({ summaries, problems, onSelectMonth, animate
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4 items-end pb-2">
           {summaries.map((s) => {
             const meta = BAND_META[faixaDoPercentual(s.percentage)];
-            const pctHeight = maxSpent > 0 ? (s.totalSpent / maxSpent) * 100 : 0;
-            const limitHeight = Math.min(100, maxSpent > 0 ? (s.totalLimit / maxSpent) * 100 : 0);
+            // Altura da barra = UTILIZAÇÃO do orçamento (gasto ÷ limite), não o
+            // volume relativo entre meses. Assim 67% vira uma barra a 67% da
+            // área (o limite é o topo, em 100%), e meses de 50% não parecem cheios.
+            const pctHeight = Math.min(100, s.percentage);
+            const limitHeight = 100;
             return (
               <button
                 key={s.month}
