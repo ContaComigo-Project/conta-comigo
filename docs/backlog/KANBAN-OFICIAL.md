@@ -187,6 +187,7 @@ o backlog passou a considerar o frontend existente.
 | 30 | `HN-011` | Simulação de compra e exportação PDF/CSV | Negócio | **Done** | HN-008 | `ExportDropdown` existe; **não gera arquivo** |
 | 31 | `HT-018` | Remover a lógica de negócio e os mocks do frontend | Técnica | **Done** | HN-010, HN-011 | Fecha a fronteira aberta em `HT-017` (`v0.33.0` parte 2 — telas reais) |
 | 32 | `HT-015` | Publicação da PoC e verificação de custo zero | Técnica | **Cortada (PoC)** | HT-018 | MOCITEC apresentada no localhost (decisão 2026-09-10); sem deploy na PoC |
+| 33 | `HT-021` | Padronizar código, pastas e comentários em inglês no repositório | Técnica | **Backlog** | HT-020, HT-018 | Comentários PT, pasta `bancos`, identificadores PT e descrições de teste PT |
 
 ## Quadro
 
@@ -206,7 +207,7 @@ Todas verificadas por `scripts/verificar-fechamento.sh`: tag e commit no mesmo
 hash, mensagem semântica citando a chave, documento de entrega presente.
 
 ### Backlog
-Ordens 5 a 32 na tabela acima.
+Ordens 5 a 33 na tabela acima.
 
 ## Grooming
 
@@ -321,3 +322,4 @@ cada tela é aproveitável, e isso muda o critério de aceite de quase todas ela
 | 2026-09-08 | `HN-006` | Backlog | Ready | Groomada com critérios verificáveis (RF-013, RN-002, RN-006, RN-015) |
 | 2026-09-08 | `HN-006` | Ready | Em execução | `docs/tasks/HN-006/` criado com TASK e IMPLEMENTATION |
 | 2026-09-09 | `HN-006` | Em execução | Em revisão | Contexto `budget` completo; limite por titular/mês/categoria; 293+22+3 testes verdes |
+| 2026-09-14 | `HT-021` | — | Backlog | Inserida a pedido do time: padronização EN (comentários, pastas, identificadores, testes) + remoção de comentários desnecessários; ordem 33 |
