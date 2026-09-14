@@ -1,0 +1,15 @@
+# definir limite (RF-013)
+PUT /budgets/2026-01/alimentacao {"limiteEmCents":80000} -> 200
+GET /budgets/2026-01 -> {"estado":"ok","dados":[{"month":"2026-01","category":"alimentacao","limiteEmCents":80000}]}
+# substituir, nao duplicar
+GET /budgets/2026-01 -> {"estado":"ok","dados":[{"month":"2026-01","category":"alimentacao","limiteEmCents":95000}]}
+# validacoes
+mes invalido (2026-13) -> 400
+categoria fora do catalogo -> 400
+valor negativo -> 400
+sem token -> 401
+
+# remover volta ao estado sem limite (RN-002)
+DELETE /budgets/2026-01/alimentacao -> 204
+GET /budgets/2026-01 -> {"estado":"ok","dados":[]}
+DELETE de novo -> 404

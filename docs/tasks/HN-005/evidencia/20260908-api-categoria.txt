@@ -1,0 +1,15 @@
+# categoria automatica vinda da API (RF-011)
+seed-lanc-1  Mercado Central  ->  alimentacao
+seed-lanc-2  Transf Recebida  ->  receita
+seed-lanc-3  Uber  ->  transporte
+seed-lanc-4  Netflix  ->  lazer
+seed-lanc-5  Rendimento Poupanca  ->  investimentos
+
+# correcao manual (RF-012)
+PATCH /transactions/seed-lanc-1/category {"category":"lazer"} -> 200
+categoria fora do catalogo -> 400
+lancamento de outro titular (RN-015) -> 404
+sem token -> 401
+
+# depois da correcao
+seed-lanc-1  Mercado Central  ->  lazer

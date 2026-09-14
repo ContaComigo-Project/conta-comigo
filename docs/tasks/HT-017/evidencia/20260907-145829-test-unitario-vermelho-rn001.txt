@@ -1,0 +1,151 @@
+# evidência de execução — HT-017
+# Gerado por scripts/registrar-evidencia.sh. Não editar à mão.
+comando : scripts/harness.sh test-unitario
+data    : 2026-09-07 14:58:29 -0300
+commit  : a419cf4 (árvore suja)
+sistema : MINGW64_NT-10.0-26200
+espera  : FALHA (vermelho obrigatório)
+---------------------------------------------------------------
+harness: HARNESS_TEST_UNIT -> pnpm run test:unitario
+
+> conta-comigo@0.7.0 test:unitario C:\Users\migue\Documents\mocitec\conta-comigo
+> vitest run
+
+
+ RUN  v5.0.0 C:/Users/migue/Documents/mocitec/conta-comigo
+
+ ❯ backend/src/orcamento/domain/faixa-do-semaforo.test.ts (9 tests | 7 failed) 22ms
+   ❯ RN-001 — faixa do semaforo (7)
+     × acima de 70% e amarela 10ms
+     × exatamente 90% e amarela 1ms
+     × 90,01% e vermelha 1ms
+     × gasto acima do limite e vermelha (nao ha teto de 200%: RN-024 descartada) 1ms
+     × nao arredonda antes de comparar: 70,004% continua amarela 1ms
+   ❯ RN-002 — categoria sem limite (2)
+     × limite nulo e "sem-limite", nunca verde 1ms
+     × limite zero tambem e "sem-limite" (evita divisao por zero e faixa falsa) 1ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 7 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  backend/src/orcamento/domain/faixa-do-semaforo.test.ts > RN-001 — faixa do semaforo > acima de 70% e amarela
+AssertionError: expected 'verde' to be 'amarela' // Object.is equality
+
+Expected: "amarela"
+Received: "verde"
+
+ ❯ backend/src/orcamento/domain/faixa-do-semaforo.test.ts:13:44
+     11|
+     12|   it('acima de 70% e amarela', () => {
+     13|     expect(faixaDoSemaforo(70_01, limite)).toBe('amarela');
+       |                                            ^
+     14|   });
+     15|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/7]⎯
+
+ FAIL  backend/src/orcamento/domain/faixa-do-semaforo.test.ts > RN-001 — faixa do semaforo > exatamente 90% e amarela
+AssertionError: expected 'verde' to be 'amarela' // Object.is equality
+
+Expected: "amarela"
+Received: "verde"
+
+ ❯ backend/src/orcamento/domain/faixa-do-semaforo.test.ts:17:44
+     15|
+     16|   it('exatamente 90% e amarela', () => {
+     17|     expect(faixaDoSemaforo(90_00, limite)).toBe('amarela');
+       |                                            ^
+     18|   });
+     19|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/7]⎯
+
+ FAIL  backend/src/orcamento/domain/faixa-do-semaforo.test.ts > RN-001 — faixa do semaforo > 90,01% e vermelha
+AssertionError: expected 'verde' to be 'vermelha' // Object.is equality
+
+Expected: "vermelha"
+Received: "verde"
+
+ ❯ backend/src/orcamento/domain/faixa-do-semaforo.test.ts:21:44
+     19|
+     20|   it('90,01% e vermelha', () => {
+     21|     expect(faixaDoSemaforo(90_01, limite)).toBe('vermelha');
+       |                                            ^
+     22|   });
+     23|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/7]⎯
+
+ FAIL  backend/src/orcamento/domain/faixa-do-semaforo.test.ts > RN-001 — faixa do semaforo > gasto acima do limite e vermelha (nao ha teto de 200%: RN-024 descartada)
+AssertionError: expected 'verde' to be 'vermelha' // Object.is equality
+
+Expected: "vermelha"
+Received: "verde"
+
+ ❯ backend/src/orcamento/domain/faixa-do-semaforo.test.ts:29:45
+     27|
+     28|   it('gasto acima do limite e vermelha (nao ha teto de 200%: RN-024 de…
+     29|     expect(faixaDoSemaforo(350_00, limite)).toBe('vermelha');
+       |                                             ^
+     30|   });
+     31|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/7]⎯
+
+ FAIL  backend/src/orcamento/domain/faixa-do-semaforo.test.ts > RN-001 — faixa do semaforo > nao arredonda antes de comparar: 70,004% continua amarela
+AssertionError: expected 'verde' to be 'amarela' // Object.is equality
+
+Expected: "amarela"
+Received: "verde"
+
+ ❯ backend/src/orcamento/domain/faixa-do-semaforo.test.ts:34:52
+     32|   it('nao arredonda antes de comparar: 70,004% continua amarela', () =…
+     33|     // limite 100.000,00; gasto 70.004,00 -> 70,004%
+     34|     expect(faixaDoSemaforo(70_004_00, 100_000_00)).toBe('amarela');
+       |                                                    ^
+     35|   });
+     36| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/7]⎯
+
+ FAIL  backend/src/orcamento/domain/faixa-do-semaforo.test.ts > RN-002 — categoria sem limite > limite nulo e "sem-limite", nunca verde
+AssertionError: expected 'verde' to be 'sem-limite' // Object.is equality
+
+Expected: "sem-limite"
+Received: "verde"
+
+ ❯ backend/src/orcamento/domain/faixa-do-semaforo.test.ts:40:38
+     38| describe('RN-002 — categoria sem limite', () => {
+     39|   it('limite nulo e "sem-limite", nunca verde', () => {
+     40|     expect(faixaDoSemaforo(0, null)).toBe('sem-limite');
+       |                                      ^
+     41|     expect(faixaDoSemaforo(500_00, null)).toBe('sem-limite');
+     42|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/7]⎯
+
+ FAIL  backend/src/orcamento/domain/faixa-do-semaforo.test.ts > RN-002 — categoria sem limite > limite zero tambem e "sem-limite" (evita divisao por zero e faixa falsa)
+AssertionError: expected 'verde' to be 'sem-limite' // Object.is equality
+
+Expected: "sem-limite"
+Received: "verde"
+
+ ❯ backend/src/orcamento/domain/faixa-do-semaforo.test.ts:45:39
+     43|
+     44|   it('limite zero tambem e "sem-limite" (evita divisao por zero e faix…
+     45|     expect(faixaDoSemaforo(10_00, 0)).toBe('sem-limite');
+       |                                       ^
+     46|   });
+     47| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/7]⎯
+
+
+ Test Files  1 failed | 8 passed (9)
+      Tests  7 failed | 49 passed (56)
+   Start at  14:58:30
+   Duration  6.06s (import 84%, transform 9%, tests 6%, worker 1%)
+
+ ELIFECYCLE  Command failed with exit code 1.
+---------------------------------------------------------------
+EXIT_CODE=1
+SHA256=a1af5e140b106f68ee19ac83293b6d5628399cfa591a48ad6cbd8ecf4686400d

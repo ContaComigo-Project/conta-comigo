@@ -1,0 +1,61 @@
+# evidência de execução — HT-005
+# Gerado por scripts/registrar-evidencia.sh. Não editar à mão.
+comando : scripts/harness.sh setup
+data    : 2026-09-07 11:21:01 -0300
+commit  : af73267 (árvore suja)
+sistema : MINGW64_NT-10.0-26200
+espera  : SUCESSO
+---------------------------------------------------------------
+harness: HARNESS_SETUP -> pnpm run setup
+
+> conta-comigo@0.7.0 setup C:\Users\migue\Documents\mocitec\conta-comigo
+> node scripts/setup-ambiente.mjs
+
+
+=== 1. Verificando pre-requisitos
+  [OK]    Node 24.11.0
+  [OK]    pnpm 10.32.1
+  [OK]    Docker version 28.5.1, build e180ab8
+  [OK]    Docker Compose version v2.40.3-desktop.1
+  [OK]    motor do Docker 28.5.1
+
+=== 2. Instalando dependencias com o lockfile congelado
+Scope: all 3 workspace projects
+Lockfile is up to date, resolution step is skipped
+Already up to date
+
+Done in 504ms using pnpm v10.32.1
+  [OK]    dependencias instaladas
+
+=== 3. Navegadores de teste
+  [PULA]  @playwright/test ainda nao instalado — chega em HT-006.
+
+=== 4. Subindo o PostgreSQL
+ Network conta-comigo_default  Creating
+ Network conta-comigo_default  Created
+ Volume conta-comigo_contacomigo-pgdata  Creating
+ Volume conta-comigo_contacomigo-pgdata  Created
+ Container conta-comigo-postgres  Creating
+ Container conta-comigo-postgres  Created
+ Container conta-comigo-postgres  Starting
+ Container conta-comigo-postgres  Started
+ Container conta-comigo-postgres  Waiting
+ Container conta-comigo-postgres  Healthy
+  [OK]    PostgreSQL saudavel (healthcheck aprovado)
+
+=== 5. Conferindo a conexao com o banco
+  [OK]    /var/run/postgresql:5432 - accepting connections
+
+=== 6. Migracoes
+  [PULA]  nenhum esquema ainda — o fluxo de migracao chega em HT-010.
+
+=== Ambiente pronto
+  Node    24.11.0
+  pnpm    10.32.1
+  Docker version 28.5.1, build e180ab8
+  Postgres  localhost:5433  (usuario e base: contacomigo)
+
+Proximo: scripts/harness.sh gates
+---------------------------------------------------------------
+EXIT_CODE=0
+SHA256=3a19ad5c0140a411c78842085095fb7e6667a2c8594de12f4efda58dd5efe8a0

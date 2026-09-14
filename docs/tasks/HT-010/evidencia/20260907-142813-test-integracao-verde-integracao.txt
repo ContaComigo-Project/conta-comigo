@@ -1,0 +1,25 @@
+# evidência de execução — HT-010
+# Gerado por scripts/registrar-evidencia.sh. Não editar à mão.
+comando : scripts/harness.sh test-integracao
+data    : 2026-09-07 14:28:13 -0300
+commit  : 110050e (árvore suja)
+sistema : MINGW64_NT-10.0-26200
+espera  : SUCESSO
+---------------------------------------------------------------
+harness: HARNESS_TEST_INTEGRATION -> pnpm run test:integracao
+
+> conta-comigo@0.7.0 test:integracao C:\Users\migue\Documents\mocitec\conta-comigo
+> vitest run --config vitest.integracao.config.ts
+
+
+ RUN  v5.0.0 C:/Users/migue/Documents/mocitec/conta-comigo
+
+
+ Test Files  1 passed (1)
+      Tests  3 passed (3)
+   Start at  14:28:14
+   Duration  605ms (import 43%, tests 38%, transform 17%, worker 1%)
+
+---------------------------------------------------------------
+EXIT_CODE=0
+SHA256=2dbf04cfc876070cf7a332f572dfb725cc87f7490738e3090134b83a7e9c7af4

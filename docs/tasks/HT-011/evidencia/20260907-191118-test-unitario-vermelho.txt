@@ -1,0 +1,117 @@
+# evidência de execução — HT-011
+# Gerado por scripts/registrar-evidencia.sh. Não editar à mão.
+comando : scripts/harness.sh test-unitario
+data    : 2026-09-07 19:11:18 -0300
+commit  : e294cb6 (árvore suja)
+sistema : MINGW64_NT-10.0-26200
+espera  : FALHA (vermelho obrigatório)
+---------------------------------------------------------------
+harness: HARNESS_TEST_UNIT -> pnpm run test:unitario
+
+> conta-comigo@0.7.0 test:unitario C:\Users\migue\Documents\mocitec\conta-comigo
+> vitest run
+
+
+ RUN  v5.0.0 C:/Users/migue/Documents/mocitec/conta-comigo
+
+ ❯ backend/src/agregacao/infrastructure/agregador/agregador-resiliente.test.ts (8 tests | 5 failed) 60065ms
+   ❯ RNF-006 — limite de espera (2)
+     × provedor que nao responde e interrompido no limite, com erro tratavel 30016ms
+     × nao espera alem do limite mesmo com novas tentativas 30010ms
+   ❯ RNF-006 — nova tentativa controlada (6)
+     × falha transitoria e tentada de novo e o sucesso e devolvido 15ms
+     × tres falhas seguidas desistem — nao tenta uma quarta vez 4ms
+     × a espera entre tentativas cresce 11ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 5 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  backend/src/agregacao/infrastructure/agregador/agregador-resiliente.test.ts > RNF-006 — limite de espera > provedor que nao responde e interrompido no limite, com erro tratavel
+Error: Test timed out in 30000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ backend/src/agregacao/infrastructure/agregador/agregador-resiliente.test.ts:42:3
+     40|   afterEach(() => vi.useRealTimers());
+     41|
+     42|   it('provedor que nao responde e interrompido no limite, com erro tra…
+       |   ^
+     43|     const interno = agregadorQue(['nunca-responde']);
+     44|     const promessa = new AgregadorResiliente(interno, POLITICA).listar…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/5]⎯
+
+ FAIL  backend/src/agregacao/infrastructure/agregador/agregador-resiliente.test.ts > RNF-006 — limite de espera > nao espera alem do limite mesmo com novas tentativas
+Error: Test timed out in 30000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ backend/src/agregacao/infrastructure/agregador/agregador-resiliente.test.ts:55:3
+     53|   });
+     54|
+     55|   it('nao espera alem do limite mesmo com novas tentativas', async () …
+       |   ^
+     56|     const interno = agregadorQue(['nunca-responde']);
+     57|     const promessa = new AgregadorResiliente(interno, POLITICA).listar…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/5]⎯
+
+ FAIL  backend/src/agregacao/infrastructure/agregador/agregador-resiliente.test.ts > RNF-006 — nova tentativa controlada > falha transitoria e tentada de novo e o sucesso e devolvido
+AssertionError: expected 'falha' to be 'ok' // Object.is equality
+
+Expected: "ok"
+Received: "falha"
+
+ ❯ backend/src/agregacao/infrastructure/agregador/agregador-resiliente.test.ts:81:28
+     79|     const resultado = await promessa;
+     80|
+     81|     expect(resultado.tipo).toBe('ok');
+       |                            ^
+     82|     if (resultado.tipo !== 'ok') return;
+     83|     expect(resultado.dados).toEqual([CONTA]);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/5]⎯
+
+ FAIL  backend/src/agregacao/infrastructure/agregador/agregador-resiliente.test.ts > RNF-006 — nova tentativa controlada > tres falhas seguidas desistem — nao tenta uma quarta vez
+AssertionError: expected 1 to be 3 // Object.is equality
+
+- Expected
++ Received
+
+- 3
++ 1
+
+ ❯ backend/src/agregacao/infrastructure/agregador/agregador-resiliente.test.ts:95:30
+     93|
+     94|     expect((await promessa).tipo).toBe('falha');
+     95|     expect(interno.chamadas).toBe(3);
+       |                              ^
+     96|   });
+     97|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/5]⎯
+
+ FAIL  backend/src/agregacao/infrastructure/agregador/agregador-resiliente.test.ts > RNF-006 — nova tentativa controlada > a espera entre tentativas cresce
+AssertionError: expected [] to have a length of 2 but got +0
+
+- Expected
++ Received
+
+- 2
++ 0
+
+ ❯ backend/src/agregacao/infrastructure/agregador/agregador-resiliente.test.ts:135:29
+    133|     // Duas esperas, a segunda maior que a primeira.
+    134|     const entreTentativas = esperas.filter((ms) => ms >= POLITICA.espe…
+    135|     expect(entreTentativas).toHaveLength(2);
+       |                             ^
+    136|     expect(entreTentativas[1]).toBeGreaterThan(entreTentativas[0]);
+    137|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/5]⎯
+
+
+ Test Files  1 failed | 16 passed (17)
+      Tests  5 failed | 99 passed (104)
+   Start at  19:11:19
+   Duration  61.25s (tests 72%, import 23%, transform 5%)
+
+ ELIFECYCLE  Command failed with exit code 1.
+---------------------------------------------------------------
+EXIT_CODE=1
+SHA256=87b1308f7c2e40b6f825fa274a8ee374536d353f709e8025db7cd5ddc2194ff7

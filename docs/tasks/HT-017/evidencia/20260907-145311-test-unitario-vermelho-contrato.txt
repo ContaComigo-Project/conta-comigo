@@ -1,0 +1,275 @@
+# evidência de execução — HT-017
+# Gerado por scripts/registrar-evidencia.sh. Não editar à mão.
+comando : scripts/harness.sh test-unitario
+data    : 2026-09-07 14:53:11 -0300
+commit  : a419cf4 (árvore suja)
+sistema : MINGW64_NT-10.0-26200
+espera  : FALHA (vermelho obrigatório)
+---------------------------------------------------------------
+harness: HARNESS_TEST_UNIT -> pnpm run test:unitario
+
+> conta-comigo@0.7.0 test:unitario C:\Users\migue\Documents\mocitec\conta-comigo
+> vitest run
+
+
+ RUN  v5.0.0 C:/Users/migue/Documents/mocitec/conta-comigo
+
+ ❯ packages/contrato/src/contrato.test.ts (17 tests | 12 failed) 21ms
+   ❯ contrato — LancamentoDTO (5)
+     × exige valor inteiro em centavos (RN-006) 7ms
+     × exige data ISO 1ms
+     × rejeita campos de apresentacao: formattedAmount, formattedDate, categoryIcon, bankColor 1ms
+     × tipo e debito ou credito 1ms
+   ❯ contrato — ResumoDoMesDTO (2)
+     × mes entre 1 e 12 1ms
+   ❯ contrato — orcamento (3)
+     × faixa e um dos quatro valores de RN-001/RN-002 1ms
+     × categoria de orcamento transporta a faixa pronta e rejeita classes CSS 1ms
+   ❯ contrato — banco e categoria de gasto (2)
+     × banco conectado sem cor nem iniciais, status em portugues 0ms
+     × categoria de gasto transporta total, nao cor nem icone 1ms
+   ❯ contrato — Resultado<T> (RN-020, RN-021) (5)
+     × estado erro carrega codigo e mensagem, sem dados 1ms
+     × estado desconhecido e rejeitado 0ms
+     × ok sem dados e rejeitado 0ms
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 12 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/contrato/src/contrato.test.ts > contrato — LancamentoDTO > exige valor inteiro em centavos (RN-006)
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ packages/contrato/src/contrato.test.ts:34:94
+     32|
+     33|   it('exige valor inteiro em centavos (RN-006)', () => {
+     34|     expect(LancamentoDTO.safeParse({ ...lancamentoValido, valorEmCenta…
+       |                                                                                              ^
+     35|   });
+     36|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/12]⎯
+
+ FAIL  packages/contrato/src/contrato.test.ts > contrato — LancamentoDTO > exige data ISO
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ packages/contrato/src/contrato.test.ts:38:103
+     36|
+     37|   it('exige data ISO', () => {
+     38|     expect(LancamentoDTO.safeParse({ ...lancamentoValido, dataDeCompet…
+       |                                                                                                       ^
+     39|   });
+     40|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/12]⎯
+
+ FAIL  packages/contrato/src/contrato.test.ts > contrato — LancamentoDTO > rejeita campos de apresentacao: formattedAmount, formattedDate, categoryIcon, bankColor
+AssertionError: formattedAmount deveria ser rejeitado: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ packages/contrato/src/contrato.test.ts:44:59
+     42|     for (const campo of ['formattedAmount', 'formattedDate', 'category…
+     43|       const r = LancamentoDTO.safeParse({ ...lancamentoValido, [campo]…
+     44|       expect(r.success, `${campo} deveria ser rejeitado`).toBe(false);
+       |                                                           ^
+     45|     }
+     46|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/12]⎯
+
+ FAIL  packages/contrato/src/contrato.test.ts > contrato — LancamentoDTO > tipo e debito ou credito
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ packages/contrato/src/contrato.test.ts:49:85
+     47|
+     48|   it('tipo e debito ou credito', () => {
+     49|     expect(LancamentoDTO.safeParse({ ...lancamentoValido, tipo: 'debit…
+       |                                                                                     ^
+     50|   });
+     51| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/12]⎯
+
+ FAIL  packages/contrato/src/contrato.test.ts > contrato — ResumoDoMesDTO > mes entre 1 e 12
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ packages/contrato/src/contrato.test.ts:60:114
+     58|
+     59|   it('mes entre 1 e 12', () => {
+     60|     expect(ResumoDoMesDTO.safeParse({ mes: { ano: 2026, mes: 13 }, qua…
+       |                                                                                                                  ^
+     61|   });
+     62| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/12]⎯
+
+ FAIL  packages/contrato/src/contrato.test.ts > contrato — orcamento > faixa e um dos quatro valores de RN-001/RN-002
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ packages/contrato/src/contrato.test.ts:67:48
+     65|   it('faixa e um dos quatro valores de RN-001/RN-002', () => {
+     66|     for (const f of ['verde', 'amarela', 'vermelha', 'sem-limite']) ex…
+     67|     expect(Faixa.safeParse('amarelo').success).toBe(false);
+       |                                                ^
+     68|     expect(Faixa.safeParse('verde-claro').success).toBe(false);
+     69|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/12]⎯
+
+ FAIL  packages/contrato/src/contrato.test.ts > contrato — orcamento > categoria de orcamento transporta a faixa pronta e rejeita classes CSS
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ packages/contrato/src/contrato.test.ts:80:98
+     78|     };
+     79|     expect(CategoriaDeOrcamentoDTO.safeParse(valida).success).toBe(tru…
+     80|     expect(CategoriaDeOrcamentoDTO.safeParse({ ...valida, barClass: 'b…
+       |                                                                                                  ^
+     81|     expect(CategoriaDeOrcamentoDTO.safeParse({ ...valida, faixa: undef…
+     82|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/12]⎯
+
+ FAIL  packages/contrato/src/contrato.test.ts > contrato — banco e categoria de gasto > banco conectado sem cor nem iniciais, status em portugues
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ packages/contrato/src/contrato.test.ts:100:82
+     98|     const valido = { id: 'nubank', nome: 'Nubank', saldoEmCentavos: 15…
+     99|     expect(BancoConectadoDTO.safeParse(valido).success).toBe(true);
+    100|     expect(BancoConectadoDTO.safeParse({ ...valido, color: '#8B5CF6' }…
+       |                                                                                  ^
+    101|     expect(BancoConectadoDTO.safeParse({ ...valido, status: 'active' }…
+    102|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/12]⎯
+
+ FAIL  packages/contrato/src/contrato.test.ts > contrato — banco e categoria de gasto > categoria de gasto transporta total, nao cor nem icone
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ packages/contrato/src/contrato.test.ts:107:81
+    105|     const valida = { categoria: { id: 'mercado', nome: 'Mercado' }, to…
+    106|     expect(CategoriaDeGastoDTO.safeParse(valida).success).toBe(true);
+    107|     expect(CategoriaDeGastoDTO.safeParse({ ...valida, color: '#fff' })…
+       |                                                                                 ^
+    108|   });
+    109| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/12]⎯
+
+ FAIL  packages/contrato/src/contrato.test.ts > contrato — Resultado<T> (RN-020, RN-021) > estado erro carrega codigo e mensagem, sem dados
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ packages/contrato/src/contrato.test.ts:120:59
+    118|   it('estado erro carrega codigo e mensagem, sem dados', () => {
+    119|     expect(esquema.safeParse({ estado: 'erro', codigo: 'provedor-indis…
+    120|     expect(esquema.safeParse({ estado: 'erro' }).success).toBe(false);
+       |                                                           ^
+    121|   });
+    122|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/12]⎯
+
+ FAIL  packages/contrato/src/contrato.test.ts > contrato — Resultado<T> (RN-020, RN-021) > estado desconhecido e rejeitado
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ packages/contrato/src/contrato.test.ts:128:72
+    126|
+    127|   it('estado desconhecido e rejeitado', () => {
+    128|     expect(esquema.safeParse({ estado: 'talvez', dados: [] }).success)…
+       |                                                                        ^
+    129|   });
+    130|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/12]⎯
+
+ FAIL  packages/contrato/src/contrato.test.ts > contrato — Resultado<T> (RN-020, RN-021) > ok sem dados e rejeitado
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ packages/contrato/src/contrato.test.ts:132:57
+    130|
+    131|   it('ok sem dados e rejeitado', () => {
+    132|     expect(esquema.safeParse({ estado: 'ok' }).success).toBe(false);
+       |                                                         ^
+    133|   });
+    134| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/12]⎯
+
+
+ Test Files  1 failed | 7 passed (8)
+      Tests  12 failed | 35 passed (47)
+   Start at  14:53:12
+   Duration  6.07s (import 89%, transform 6%, tests 4%, worker 1%)
+
+ ELIFECYCLE  Command failed with exit code 1.
+---------------------------------------------------------------
+EXIT_CODE=1
+SHA256=c61d54763e1369d2c3c157c60655132d057983bf62cd1b8a57a52dbe60a2330f

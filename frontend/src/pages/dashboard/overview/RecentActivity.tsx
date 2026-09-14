@@ -1,5 +1,9 @@
+import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
-import { mockTransactions, type Transaction } from '../../../data/dashboard.mock';
+import { useEffect, useState } from 'react';
+import { ApiSource } from '../../../data/api-source';
+import { paraTransactions } from '../../../data/mappers';
+import type { Transaction } from '../../../data/transaction';
 
 function BankBadge({ name, color }: { name: string; color: string }) {
   return (
@@ -45,8 +49,32 @@ function TransactionRow({ tx }: { tx: Transaction }) {
   );
 }
 
+type Estado =
+  | { estado: 'carregando' }
+  | { estado: 'ok'; transactions: Transaction[] }
+  | { estado: 'erro' };
+
 export default function RecentActivity() {
-  const transactions = mockTransactions;
+  const [dados, setDados] = useState<Estado>({ estado: 'carregando' });
+
+  useEffect(() => {
+    let ativo = true;
+    void new ApiSource()
+      .listarTransactions()
+      .then((r) => {
+        if (!ativo) return;
+        if (r.estado === 'ok') setDados({ estado: 'ok', transactions: paraTransactions(r.dados, new Date()).slice(0, 5) });
+        else setDados({ estado: 'erro' });
+      })
+      .catch(() => {
+        if (ativo) setDados({ estado: 'erro' });
+      });
+    return () => {
+      ativo = false;
+    };
+  }, []);
+
+  const transactions = dados.estado === 'ok' ? dados.transactions : [];
 
   return (
     <section aria-label="Atividade recente" className="bg-white border border-slate-100 rounded-2xl shadow-sm p-5">
@@ -56,14 +84,27 @@ export default function RecentActivity() {
           <p className="text-[0.72rem] text-slate-400 mt-0.5">Via Open Finance · {transactions.length} transações</p>
         </div>
 
-        <button
+        <Link
           id="recent-activity-view-all"
-          className="text-[0.75rem] font-semibold text-[#36b37e] hover:text-[#0a6d42] hover:underline underline-offset-2 transition-colors flex items-center gap-1"
+          to="/dashboard/expenses#transacoes"
+          className="text-[0.75rem] font-semibold text-cc-green hover:text-cc-dark-green hover:underline underline-offset-2 transition-colors flex items-center gap-1"
         >
           Ver todas
           <ArrowRight size={13} strokeWidth={2.2} />
-        </button>
+        </Link>
       </div>
+
+      {dados.estado === 'carregando' && (
+        <p className="text-[0.75rem] text-slate-400 py-4 animate-pulse">Carregando transações...</p>
+      )}
+
+      {dados.estado === 'erro' && (
+        <p className="text-[0.75rem] text-slate-400 py-4">Não foi possível carregar as transações agora.</p>
+      )}
+
+      {dados.estado === 'ok' && transactions.length === 0 && (
+        <p className="text-[0.75rem] text-slate-400 py-4">Nenhuma transação ainda.</p>
+      )}
 
       <ul className="divide-y divide-slate-50">
         {transactions.map((tx) => (
@@ -71,12 +112,14 @@ export default function RecentActivity() {
         ))}
       </ul>
 
-      <div className="mt-3 pt-3 border-t border-slate-100 flex items-center justify-center gap-2">
-        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-        <p className="text-[0.7rem] text-slate-400 font-medium">
-          Dados importados automaticamente pelo Open Finance
-        </p>
-      </div>
+      {dados.estado === 'ok' && transactions.length > 0 && (
+        <div className="mt-3 pt-3 border-t border-slate-100 flex items-center justify-center gap-2">
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+          <p className="text-[0.7rem] text-slate-400 font-medium">
+            Dados importados automaticamente pelo Open Finance
+          </p>
+        </div>
+      )}
     </section>
   );
 }

@@ -1,0 +1,119 @@
+# evidência de execução — HT-006
+# Gerado por scripts/registrar-evidencia.sh. Não editar à mão.
+comando : scripts/harness.sh gates
+data    : 2026-09-07 12:17:20 -0300
+commit  : 64ca4eb (árvore suja)
+sistema : MINGW64_NT-10.0-26200
+espera  : SUCESSO
+---------------------------------------------------------------
+harness: executando gates na ordem — falha no primeiro erro
+harness: HARNESS_LINT -> pnpm run lint
+
+> conta-comigo@0.7.0 lint C:\Users\migue\Documents\mocitec\conta-comigo
+> pnpm --filter client-contacomigo lint && pnpm run lint:fronteiras
+
+
+> client-contacomigo@0.0.0 lint C:\Users\migue\Documents\mocitec\conta-comigo\frontend
+> eslint .
+
+
+> conta-comigo@0.7.0 lint:fronteiras C:\Users\migue\Documents\mocitec\conta-comigo
+> depcruise --config .dependency-cruiser.cjs backend frontend/src
+
+
+✔ no dependency violations found (66 modules, 102 dependencies cruised)
+
+harness: HARNESS_TEST -> pnpm run test
+
+> conta-comigo@0.7.0 test C:\Users\migue\Documents\mocitec\conta-comigo
+> pnpm run test:unitario && pnpm run test:funcional
+
+
+> conta-comigo@0.7.0 test:unitario C:\Users\migue\Documents\mocitec\conta-comigo
+> vitest run
+
+[33m(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - ESM syntax in a file loaded as CommonJS (vitest.config.ts:1:1). Use a `.mjs` extension or set `"type": "module"` in the closest package.json
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.[39m
+
+ RUN  v5.0.0 C:/Users/migue/Documents/mocitec/conta-comigo
+
+(node:2504) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+ Test Files  1 passed (1)
+      Tests  8 passed (8)
+   Start at  12:17:29
+   Duration  5.72s (import 99%)
+
+
+> conta-comigo@0.7.0 test:funcional C:\Users\migue\Documents\mocitec\conta-comigo
+> playwright test
+
+
+Running 2 tests using 2 workers
+
+  ✓  2 [chromium] › tests\funcional\fumaca.spec.ts:13:7 › fumaca — a web existente responde › a tela de login existe e tem formulario (1.5s)
+  ✓  1 [chromium] › tests\funcional\fumaca.spec.ts:7:7 › fumaca — a web existente responde › a landing abre com o titulo do produto (1.7s)
+
+  2 passed (3.8s)
+harness: HARNESS_COVERAGE -> pnpm run coverage
+
+> conta-comigo@0.7.0 coverage C:\Users\migue\Documents\mocitec\conta-comigo
+> vitest run --coverage
+
+[33m(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - ESM syntax in a file loaded as CommonJS (vitest.config.ts:1:1). Use a `.mjs` extension or set `"type": "module"` in the closest package.json
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.[39m
+
+ RUN  v5.0.0 C:/Users/migue/Documents/mocitec/conta-comigo
+      Coverage enabled with v8
+
+(node:6940) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+ Test Files  1 passed (1)
+      Tests  8 passed (8)
+   Start at  12:17:41
+   Duration  6.30s (import 99%, transform 1%)
+
+[34m % [39m[2mCoverage report from [22m[33mv8[39m
+----------|---------|----------|---------|---------|-------------------
+File      | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+----------|---------|----------|---------|---------|-------------------
+All files |       0 |        0 |       0 |       0 |                   
+----------|---------|----------|---------|---------|-------------------
+
+=============================== Coverage summary ===============================
+Statements   : Unknown% ( 0/0 )
+Branches     : Unknown% ( 0/0 )
+Functions    : Unknown% ( 0/0 )
+Lines        : Unknown% ( 0/0 )
+================================================================================
+harness: HARNESS_SECURITY -> pnpm run security
+
+> conta-comigo@0.7.0 security C:\Users\migue\Documents\mocitec\conta-comigo
+> node scripts/seguranca.mjs
+
+seguranca: varredura de segredo e de dependencia
+
+=== 1. Segredos (gitleaks)
+--- arvore de trabalho
+[90m3:17PM[0m [32mINF[0m [1mscanned ~77496431 bytes (77.50 MB) in 6.55s[0m
+[90m3:17PM[0m [32mINF[0m [1mno leaks found[0m
+--- historico de commits
+[90m3:18PM[0m [32mINF[0m [1m75 commits scanned.[0m
+[90m3:18PM[0m [32mINF[0m [1mscanned ~1053806 bytes (1.05 MB) in 4.33s[0m
+[90m3:18PM[0m [32mINF[0m [1mno leaks found[0m
+  [OK]    nenhum segredo detectado
+
+=== 2. Dependencias vulneraveis (osv-scanner)
+Scanned /repo/pnpm-lock.yaml file and found 334 packages
+No issues found
+  [OK]    nenhuma vulnerabilidade conhecida
+
+seguranca: aprovada
+harness: gates concluídos
+---------------------------------------------------------------
+EXIT_CODE=0
+SHA256=c391f3d4a55eeed91d00b0b59677cf53cd11db9314c70dea1ce386a4fd01bf34

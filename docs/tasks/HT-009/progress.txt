@@ -1,0 +1,16 @@
+# progress — HT-009
+# Diário append-only do ciclo Ralph. Uma linha por evento.
+# Formato: AAAA-MM-DD HH:MM | FASE | descrição objetiva | evidência
+# FASE: PERCEBER | ORIENTAR | DECIDIR | AGIR | REGISTRAR
+
+2026-09-07 12:30 | AGIR | testes de RN-003, caso de uso e HTTP sobre stubs — harness test-unitario exit 1 (VERMELHO ESPERADO) | docs/tasks/HT-009/evidencia/20260907-123016-test-unitario-vermelho.txt
+2026-09-07 12:33 | AGIR | import de @nestjs/common em domain/ real quebra o lint — harness lint exit 0 (VERDE INESPERADO) | docs/tasks/HT-009/evidencia/20260907-123328-lint-violacao-real.txt
+2026-09-07 12:33 | AGIR | decorator em domain/ real quebra o teste sem-decorator — harness test-unitario exit 1 (VERMELHO ESPERADO) | docs/tasks/HT-009/evidencia/20260907-123334-test-unitario-decorator-real.txt
+2026-09-07 12:33 | AGIR | lint verde com o contexto lancamentos real — harness lint exit 0 (VERDE) | docs/tasks/HT-009/evidencia/20260907-123341-lint-verde.txt
+2026-09-07 12:33 | AGIR | test-unitario verde com o contexto lancamentos real — harness test-unitario exit 0 (VERDE) | docs/tasks/HT-009/evidencia/20260907-123347-test-unitario-verde.txt
+2026-09-07 12:34 | AGIR | coverage verde com o contexto lancamentos real — harness coverage exit 0 (VERDE) | docs/tasks/HT-009/evidencia/20260907-123354-coverage-verde.txt
+2026-09-07 12:34 | AGIR | build verde com o contexto lancamentos real — harness build exit 0 (VERDE) | docs/tasks/HT-009/evidencia/20260907-123401-build-verde.txt
+2026-09-07 12:34 | REGISTRAR | gates de ponta a ponta com backend real — harness gates exit 0 (VERDE) | docs/tasks/HT-009/evidencia/20260907-123408-gates-verde.txt
+2026-09-07 12:35 | AGIR | import de @nestjs/common em domain/ real quebra o lint (apos corrigir o exclude) — harness lint exit 2 (VERMELHO ESPERADO) | docs/tasks/HT-009/evidencia/20260907-123540-lint-violacao-real-2.txt
+2026-09-07 12:36 | AGIR | lint verde apos corrigir o exclude de node_modules — harness lint exit 0 (VERDE) | docs/tasks/HT-009/evidencia/20260907-123623-lint-verde-2.txt
+2026-09-07 12:37 | REGISTRAR | gates de ponta a ponta com backend real e gate corrigido — harness gates exit 0 (VERDE) | docs/tasks/HT-009/evidencia/20260907-123629-gates-verde-2.txt

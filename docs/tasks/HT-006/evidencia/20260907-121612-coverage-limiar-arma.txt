@@ -1,0 +1,50 @@
+# evidência de execução — HT-006
+# Gerado por scripts/registrar-evidencia.sh. Não editar à mão.
+comando : scripts/harness.sh coverage
+data    : 2026-09-07 12:16:12 -0300
+commit  : 64ca4eb (árvore suja)
+sistema : MINGW64_NT-10.0-26200
+espera  : FALHA (vermelho obrigatório)
+---------------------------------------------------------------
+harness: HARNESS_COVERAGE -> pnpm run coverage
+
+> conta-comigo@0.7.0 coverage C:\Users\migue\Documents\mocitec\conta-comigo
+> vitest run --coverage
+
+[33m(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - ESM syntax in a file loaded as CommonJS (vitest.config.ts:1:1). Use a `.mjs` extension or set `"type": "module"` in the closest package.json
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.[39m
+
+ RUN  v5.0.0 C:/Users/migue/Documents/mocitec/conta-comigo
+      Coverage enabled with v8
+
+(node:324) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+ Test Files  1 passed (1)
+      Tests  8 passed (8)
+   Start at  12:16:13
+   Duration  5.41s (import 99%, transform 1%)
+
+[34m % [39m[2mCoverage report from [22m[33mv8[39m
+-------------------|---------|----------|---------|---------|-------------------
+File               | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+-------------------|---------|----------|---------|---------|-------------------
+All files          |       0 |        0 |       0 |       0 |                   
+ ...a-de-limiar.ts |       0 |        0 |       0 |       0 | 1                 
+-------------------|---------|----------|---------|---------|-------------------
+
+=============================== Coverage summary ===============================
+Statements   : 0% ( 0/1 )
+Branches     : 0% ( 0/2 )
+Functions    : 0% ( 0/1 )
+Lines        : 0% ( 0/1 )
+================================================================================
+ERROR: Coverage for lines (0%) does not meet global threshold (80%)
+ERROR: Coverage for functions (0%) does not meet global threshold (80%)
+ERROR: Coverage for statements (0%) does not meet global threshold (80%)
+ERROR: Coverage for branches (0%) does not meet global threshold (80%)
+ ELIFECYCLE  Command failed with exit code 1.
+---------------------------------------------------------------
+EXIT_CODE=1
+SHA256=9d765f4ab24d66986da3b80a34797f117a9f3ced72d7db3aa6fc638530032ea6

@@ -68,7 +68,18 @@ export function Toaster() {
   )
 }
 
-function cn(...inputs: any[]) {
-  return inputs.filter(Boolean).join(' ');
+type CnInput = string | number | null | boolean | undefined | CnInput[];
+
+function cn(...inputs: CnInput[]): string {
+  const flat: string[] = [];
+  const walk = (arr: CnInput[]) => {
+    for (const item of arr) {
+      if (!item) continue;
+      if (Array.isArray(item)) walk(item);
+      else flat.push(String(item));
+    }
+  };
+  walk(inputs);
+  return flat.join(' ');
 }
 

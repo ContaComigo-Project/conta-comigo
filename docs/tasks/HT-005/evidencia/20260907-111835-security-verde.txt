@@ -1,0 +1,34 @@
+# evidência de execução — HT-005
+# Gerado por scripts/registrar-evidencia.sh. Não editar à mão.
+comando : scripts/harness.sh security
+data    : 2026-09-07 11:18:35 -0300
+commit  : af73267 (árvore suja)
+sistema : MINGW64_NT-10.0-26200
+espera  : SUCESSO
+---------------------------------------------------------------
+harness: HARNESS_SECURITY -> pnpm run security
+
+> conta-comigo@0.7.0 security C:\Users\migue\Documents\mocitec\conta-comigo
+> node scripts/seguranca.mjs
+
+seguranca: varredura de segredo e de dependencia
+
+=== 1. Segredos (gitleaks)
+--- arvore de trabalho
+[90m2:18PM[0m [32mINF[0m [1mscanned ~76869084 bytes (76.87 MB) in 5.91s[0m
+[90m2:18PM[0m [32mINF[0m [1mno leaks found[0m
+--- historico de commits
+[90m2:18PM[0m [32mINF[0m [1m73 commits scanned.[0m
+[90m2:18PM[0m [32mINF[0m [1mscanned ~955060 bytes (955.06 KB) in 3.38s[0m
+[90m2:18PM[0m [32mINF[0m [1mno leaks found[0m
+  [OK]    nenhum segredo detectado
+
+=== 2. Dependencias vulneraveis (osv-scanner)
+Scanned /repo/pnpm-lock.yaml file and found 256 packages
+No issues found
+  [OK]    nenhuma vulnerabilidade conhecida
+
+seguranca: aprovada
+---------------------------------------------------------------
+EXIT_CODE=0
+SHA256=3f7cc94d5b231d937338796dffc3aacc0099c0437b01a4215bdbb6676b703d12

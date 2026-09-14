@@ -1,26 +1,28 @@
+import LandingChatMock from './LandingChatMock';
+
 const featuresList = [
   {
-    title: 'Metas Financeiras',
-    description: 'Defina e acompanhe suas metas de economia e investimento',
+    title: 'Visão Consolidada Multi-banco',
+    description: 'Saldo consolidado, gastos do mês e fatura do cartão em um único painel, com orçamento por categoria à vista.',
   },
   {
-    title: 'Simulador de Metas Realista',
-    description: 'A IA analisa sua renda consolidada de múltiplos bancos e calcula prazos e aportes reais para você alcançar seus objetivos sem passar sufoco.',
+    title: 'Simulador de Compra no Orçamento',
+    description: 'Informe o valor de um item planejado e veja o impacto real no semáforo do mês — sem incentivar crédito nem parcelamento.',
   },
   {
     title: 'Relatórios Detalhados',
-    description: 'Exporte relatórios em PDF e CSV para análise completa',
+    description: 'Exporte relatórios do orçamento e transações em PDF e CSV diretamente das telas de Despesas e Visão Geral.',
   },
   {
-    title: 'Mapa de Calor de Gastos',
-    description: 'Visualize os maiores gastos por categoria com gráficos de temperatura.',
+    title: 'Diagnóstico de IA em Linguagem Simples',
+    description: 'A IA educativa resume a saúde do seu orçamento em texto claro, com aviso de que não é aconselhamento financeiro.',
   },
 ];
 
 export default function Features() {
   return (
     <section id="funcionalidades" className="py-24 bg-[#f8f9fa]">
-      <div className="w-full max-w-[1200px] mx-auto px-4">
+      <div className="w-full max-w-300 mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
           <div>
             <h2 className="text-3xl font-bold mb-12 text-[#001b42]">
@@ -46,39 +48,9 @@ export default function Features() {
           </div>
 
           <div className="flex justify-center">
-            <div className="relative w-[16rem] h-128 bg-[#001b42] rounded-[2.5rem] p-3 shadow-xl">
-              <div className="w-full h-full bg-[#f8f9fa] rounded-4xl overflow-hidden relative flex flex-col p-4 pt-8">
-                {/* Header do Mockup */}
-                <div className="flex items-center gap-2 mb-6 pb-4 border-b border-gray-200">
-                  <div className="w-8 h-8 rounded-full bg-[#36b37e]/10 flex items-center justify-center text-[#36b37e]">
-                    <i className="fas fa-robot"></i>
-                  </div>
-                  <div>
-                    <div className="text-xs font-bold text-[#001b42]">Consultor IA</div>
-                    <div className="text-[10px] text-[#36b37e]">Online agora</div>
-                  </div>
-                </div>
-
-                {/* Área de Mensagens */}
-                <div className="flex flex-col gap-4">
-                  {/* Bolha Usuário */}
-                  <div className="self-end bg-[#36b37e]/10 text-[#001b42] text-xs p-3 rounded-2xl rounded-tr-sm max-w-[85%] shadow-sm">
-                    Consigo comprar um notebook de R$ 3.000 até dezembro?
-                  </div>
-
-                  {/* Bolha IA */}
-                  <div className="self-start bg-[#001b42] text-white text-xs p-3 rounded-2xl rounded-tl-sm max-w-[90%] shadow-sm leading-relaxed">
-                    Analisando suas contas via Open Finance: Se mantivermos seu padrão atual de economia de R$ 400/mês, você alcançará a meta em Novembro! Deseja ativar essa meta?
-                  </div>
-                </div>
-
-                {/* Input Fake */}
-                <div className="mt-auto pt-4">
-                  <div className="bg-white rounded-full p-2 px-4 flex justify-between items-center shadow-sm border border-gray-100">
-                    <span className="text-xs text-gray-400">Digite sua mensagem...</span>
-                    <i className="fas fa-paper-plane text-[#36b37e] text-sm"></i>
-                  </div>
-                </div>
+            <div className="relative w-76 h-144 bg-[#001b42] rounded-[2.75rem] p-3 shadow-2xl">
+              <div className="w-full h-full rounded-[2.25rem] overflow-hidden">
+                <LandingChatMock />
               </div>
             </div>
           </div>

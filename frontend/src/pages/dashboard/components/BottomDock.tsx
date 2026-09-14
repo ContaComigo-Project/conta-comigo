@@ -11,7 +11,7 @@ const DOCK_ITEMS = [
   {
     id: 'dock_expenses',
     label: 'Despesas',
-    path: '/dashboard/despesas',
+    path: '/dashboard/expenses',
     Icon: ShoppingBag,
   },
   {
@@ -57,7 +57,7 @@ export default function BottomDock() {
             </span>
             <span
               className={`text-[0.6rem] font-semibold transition-colors ${
-                isActive ? 'text-[#0a6d42]' : 'text-slate-400'
+                isActive ? 'text-cc-dark-green' : 'text-slate-400'
               }`}
             >
               {label}

@@ -1,0 +1,39 @@
+
+> @contacomigo/backend@0.9.0 start C:\Users\migue\Documents\mocitec\conta-comigo\backend
+> tsx src/main.ts
+
+[32m[Nest] 17808  - [39m08/09/2026, 21:58:37 [32m    LOG[39m [38;5;3m[NestFactory] [39m[32mStarting Nest application...[39m
+[32m[Nest] 17808  - [39m08/09/2026, 21:58:37 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAppModule dependencies initialized[39m[38;5;3m +11ms[39m
+[32m[Nest] 17808  - [39m08/09/2026, 21:58:37 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAggregationModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 17808  - [39m08/09/2026, 21:58:37 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mIntelligenceModule dependencies initialized[39m[38;5;3m +4ms[39m
+[32m[Nest] 17808  - [39m08/09/2026, 21:58:37 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mObservabilityModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 17808  - [39m08/09/2026, 21:58:37 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAccessModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 17808  - [39m08/09/2026, 21:58:37 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTransactionsModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 17808  - [39m08/09/2026, 21:58:37 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mConsentModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 17808  - [39m08/09/2026, 21:58:37 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mAccessController {/access}:[39m[38;5;3m +24ms[39m
+[32m[Nest] 17808  - [39m08/09/2026, 21:58:37 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/access/accounts, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 17808  - [39m08/09/2026, 21:58:37 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/access/sessions, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 17808  - [39m08/09/2026, 21:58:37 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/access/sessions/refresh, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 17808  - [39m08/09/2026, 21:58:37 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/access/sessions, DELETE} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 17808  - [39m08/09/2026, 21:58:37 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mProfileController {/access}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 17808  - [39m08/09/2026, 21:58:37 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/access/accounts/me, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 17808  - [39m08/09/2026, 21:58:37 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mTransactionsController {/transactions}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 17808  - [39m08/09/2026, 21:58:37 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/transactions/month-summary, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 17808  - [39m08/09/2026, 21:58:37 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/transactions, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 17808  - [39m08/09/2026, 21:58:37 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mDashboardController {/dashboard}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 17808  - [39m08/09/2026, 21:58:37 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/dashboard/summary, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 17808  - [39m08/09/2026, 21:58:37 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mConsentController {/consents}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 17808  - [39m08/09/2026, 21:58:37 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/consents, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 17808  - [39m08/09/2026, 21:58:37 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/consents, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 17808  - [39m08/09/2026, 21:58:37 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/consents/:id/sync, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 17808  - [39m08/09/2026, 21:58:37 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/consents/account, DELETE} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 17808  - [39m08/09/2026, 21:58:37 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/consents/:id, DELETE} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 17808  - [39m08/09/2026, 21:58:37 [32m    LOG[39m [38;5;3m[NestApplication] [39m[32mNest application successfully started[39m[38;5;3m +1ms[39m
+{"level":"info","message":"api ouvindo","requestId":"boot","timestamp":"2026-09-09T00:58:37.718Z","url":"http://localhost:3112","docs":"http://localhost:3112/api/docs"}
+{"level":"info","message":"requisicao concluida","requestId":"d50909c8-b9c3-45fc-90a4-b947bc27336a","timestamp":"2026-09-09T00:58:48.041Z","method":"POST","route":"/access/sessions","status":200,"durationMs":337}
+{"level":"info","message":"requisicao concluida","requestId":"b45699ca-2767-4360-9aab-b201785d7ef3","timestamp":"2026-09-09T00:58:48.131Z","method":"GET","route":"/transactions","status":200,"durationMs":31}
+Mercado Central  <-  PAG*MERCADO CENTRAL
+Transf Recebida  <-  TRANSF RECEBIDA
+Uber  <-  UBER *TRIP
+Netflix  <-  NETFLIX.COM
+Rendimento Poupanca  <-  RENDIMENTO POUPANCA

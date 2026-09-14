@@ -1,0 +1,38 @@
+{
+  "name": "conta-comigo",
+  "private": true,
+  "type": "module",
+  "version": "0.7.0",
+  "description": "ContaComigo — orquestracao do workspace. Nenhuma dependencia de produto vive aqui.",
+  "packageManager": "pnpm@10.32.1",
+  "engines": {
+    "node": ">=24.11.0 <25"
+  },
+  "scripts": {
+    "setup": "node scripts/setup-ambiente.mjs",
+    "down": "docker compose down -v",
+    "build": "pnpm --filter client-contacomigo build && pnpm --filter @contacomigo/backend typecheck",
+    "lint": "pnpm --filter client-contacomigo lint && pnpm run lint:boundaries",
+    "lint:boundaries": "depcruise --config .dependency-cruiser.cjs backend frontend/src",
+    "test:unit": "vitest run",
+    "test:functional": "playwright test",
+    "test": "pnpm run test:unit && pnpm run test:integration && pnpm run test:functional",
+    "coverage": "vitest run --coverage",
+    "security": "node scripts/seguranca.mjs",
+    "start": "pnpm --filter client-contacomigo dev",
+    "start:api": "pnpm --filter @contacomigo/backend dev",
+    "test:integration": "vitest run --config vitest.integration.config.ts"
+  },
+  "devDependencies": {
+    "@contacomigo/contract": "workspace:*",
+    "@nestjs/common": "12.0.1",
+    "@playwright/test": "1.63.0",
+    "@prisma/client": "7.10.0",
+    "@types/node": "^24.13.3",
+    "@vitest/coverage-v8": "5.0.0",
+    "dependency-cruiser": "18.2.0",
+    "reflect-metadata": "0.2.2",
+    "typescript": "6.0.3",
+    "vitest": "5.0.0"
+  }
+}

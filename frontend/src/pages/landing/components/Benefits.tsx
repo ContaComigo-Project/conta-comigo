@@ -2,7 +2,7 @@ const benefitsData = [
   {
     icon: 'fas fa-link',
     title: 'Integração Completa',
-    description: 'Conecte todas suas contas bancárias, cartões e investimentos em um só lugar através do Open Finance.',
+    description: 'Conecte suas contas bancárias e cartões em um só lugar através do Open Finance, sempre com o seu consentimento.',
   },
   {
     icon: 'fas fa-chart-pie',
@@ -10,9 +10,9 @@ const benefitsData = [
     description: 'Gráficos interativos e relatórios detalhados para entender seus hábitos financeiros.',
   },
   {
-    icon: 'fas fa-magic',
-    title: 'Limpador Semântico por IA',
-    description: 'Chega de nomes confusos na fatura. Nossa Inteligência Artificial decodifica códigos bancários complexos e categoriza suas despesas automaticamente de forma clara.',
+    icon: 'fas fa-traffic-light',
+    title: 'Orçamento com Semáforo Inteligente',
+    description: 'Defina limites por categoria e receba alertas visuais Verde / Amarelo / Vermelho em tempo real (70% / 90% do limite), com edição inline sem sair da tela. Histórico de meses anteriores incluso.',
   },
   {
     icon: 'fas fa-shield-alt',
@@ -27,14 +27,14 @@ const benefitsData = [
   {
     icon: 'fas fa-comments',
     title: 'Consultor Financeiro 24/7',
-    description: 'Converse direto com nosso Chatbot Educativo integrado. Tire dúvidas sobre investimentos, inflação ou valide se uma compra cabe no seu orçamento.',
+    description: 'Converse com o assistente educativo para entender seus números e conceitos de finanças — ele usa os seus dados e não recomenda produtos, crédito nem instituições.',
   },
 ];
 
 export default function Benefits() {
   return (
     <section id="beneficios" className="py-24 bg-white">
-      <div className="w-full max-w-[1200px] mx-auto px-4">
+      <div className="w-full max-w-300 mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-6 text-[#001b42]">
             Por que escolher o ContaComigo?

@@ -1,0 +1,27 @@
+# evidência de execução — HT-012
+# Gerado por scripts/registrar-evidencia.sh. Não editar à mão.
+comando : scripts/harness.sh lint
+data    : 2026-09-08 21:27:16 -0300
+commit  : a15d499 (árvore suja)
+sistema : MINGW64_NT-10.0-26200
+espera  : SUCESSO
+---------------------------------------------------------------
+harness: HARNESS_LINT -> pnpm run lint
+
+> conta-comigo@0.7.0 lint C:\Users\migue\Documents\mocitec\conta-comigo
+> pnpm --filter client-contacomigo lint && pnpm run lint:boundaries
+
+
+> client-contacomigo@0.0.0 lint C:\Users\migue\Documents\mocitec\conta-comigo\frontend
+> eslint .
+
+
+> conta-comigo@0.7.0 lint:boundaries C:\Users\migue\Documents\mocitec\conta-comigo
+> depcruise --config .dependency-cruiser.cjs backend frontend/src
+
+
+✔ no dependency violations found (220 modules, 620 dependencies cruised)
+
+---------------------------------------------------------------
+EXIT_CODE=0
+SHA256=62e4ea9ffe98542d3a4c79181051c2762b62f4720ba424ce3de0a8969a250e49

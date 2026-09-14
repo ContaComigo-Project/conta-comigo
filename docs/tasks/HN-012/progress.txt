@@ -1,0 +1,14 @@
+# progress — HN-012
+# Diário append-only do ciclo Ralph. Uma linha por evento.
+# Formato: AAAA-MM-DD HH:MM | FASE | descrição objetiva | evidência
+# FASE: PERCEBER | ORIENTAR | DECIDIR | AGIR | REGISTRAR
+
+2026-09-08 01:00 | PERCEBER | li RN-013/015/016, RF-006/025 e a pendência do prazo na SDD §7 | docs
+2026-09-08 01:02 | DECIDIR | prazo de exclusão definitiva após revogação = até 24h (decisão do time) | SDD §7 resolvida
+2026-09-08 01:05 | AGIR | grooming HN-012 (arquivo) + SDD atualizada + kanban Ready/Em execução + TASK/IMPLEMENTATION | docs
+2026-09-08 01:15 | AGIR | consent: deletionScheduledAt + revogarComAgendamento + purgeDue + deleteByHolder; migração consent_deletion_scheduled | prisma, domain
+2026-09-08 01:25 | AGIR | access/transactions: deleteById/deleteByHolder; DeleteAccount (consent) apaga conta+sessões+consents+transactions; endpoints DELETE /consents/:id e DELETE /consents/account | backend
+2026-09-08 01:35 | AGIR | rota estática 'account' precedia ':id' — bug corrigido (204 real) | curl
+2026-09-08 01:40 | AGIR | suíte 158+9+2 verdes; fronteiras verdes; build ok; auditoria 100% | pnpm
+2026-09-08 01:45 | AGIR | validação de ponta a ponta: revogar 204 (sai da lista), excluir conta 204, login pós-exclusão 401 | curl
+2026-09-08 01:47 | REGISTRAR | ENTREGA-HN-012 criada; kanban Em revisão | docs/entregas, KANBAN

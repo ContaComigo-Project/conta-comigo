@@ -1,0 +1,16 @@
+# progress — HT-011
+# Diário append-only do ciclo Ralph. Uma linha por evento.
+# Formato: AAAA-MM-DD HH:MM | FASE | descrição objetiva | evidência
+# FASE: PERCEBER | ORIENTAR | DECIDIR | AGIR | REGISTRAR
+
+2026-09-07 19:08 | PERCEBER | Ready tinha HT-011; porta AgregadorOpenFinance de ADR-001 ainda inexistente | KANBAN + ADR-001
+2026-09-07 19:08 | DECIDIR | resiliencia como decorador (nao dentro do adaptador Pluggy), para o falso tambem a ter e o teste dispensar rede | IMPLEMENTATION.md
+2026-09-07 19:08 | REGISTRAR | kanban HT-011 -> Em execucao; TASK e IMPLEMENTATION preenchidos antes de codigo | docs/tasks/HT-011/
+2026-09-07 19:12 | AGIR | politica de resiliencia sobre decorador que so delega — harness test-unitario exit 1 (VERMELHO ESPERADO) | docs/tasks/HT-011/evidencia/20260907-191118-test-unitario-vermelho.txt
+2026-09-07 19:15 | AGIR | politica de resiliencia implementada: timeout, retry so transitorio, espera crescente — harness test-unitario exit 0 (VERDE) | docs/tasks/HT-011/evidencia/20260907-191537-test-unitario-verde-resiliencia.txt
+2026-09-07 19:17 | AGIR | agregador falso deterministico sobre stub vazio — harness test-unitario exit 1 (VERMELHO ESPERADO) | docs/tasks/HT-011/evidencia/20260907-191744-test-unitario-vermelho-falso.txt
+2026-09-07 19:20 | AGIR | agregador falso deterministico e adaptador Pluggy com classificacao de erro — harness test-unitario exit 0 (VERDE) | docs/tasks/HT-011/evidencia/20260907-191958-test-unitario-verde-adaptadores.txt
+2026-09-07 19:23 | AGIR | cliente HTTP em domain/ real quebra o lint (RNF-020) — harness lint exit 2 (VERMELHO ESPERADO) | docs/tasks/HT-011/evidencia/20260907-192258-lint-http-no-dominio.txt
+2026-09-07 19:25 | REGISTRAR | gates de ponta a ponta com a porta de agregacao, politica de resiliencia e degradacao — harness gates exit 1 (VERMELHO) | docs/tasks/HT-011/evidencia/20260907-192349-gates-verde.txt
+2026-09-07 19:26 | AGIR | biblioteca externa em agregacao/domain/ quebra o lint (RNF-020) — harness lint exit 2 (VERMELHO ESPERADO) | docs/tasks/HT-011/evidencia/20260907-192643-lint-externo-no-dominio.txt
+2026-09-07 19:28 | REGISTRAR | gates de ponta a ponta apos remover o axios que a fixture trouxe — harness gates exit 0 (VERDE) | docs/tasks/HT-011/evidencia/20260907-192712-gates-verde-2.txt

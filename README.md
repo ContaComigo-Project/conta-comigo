@@ -1,114 +1,258 @@
-<h1 align="center"> Conta Comigo </h1>
+<h1 align="center">
+  <img
+    src="./frontend/public/assets/brand/logo-conta-comigo.png"
+    alt="ContaComigo"
+    width="320"
+  />
+</h1>
 
 <p align="center">
-<img src="http://img.shields.io/static/v1?label=STATUS&message=EM%20DESENVOLVIMENTO&color=GREEN&style=for-the-badge"/>
-<img src="https://img.shields.io/badge/.NET-512BD4?style=for-the-badge&logo=dotnet&logoColor=white"/>
-<img src="https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white"/>
-<img src="https://img.shields.io/badge/Docker-2CA5E0?style=for-the-badge&logo=docker&logoColor=white"/>
+  <strong>
+    Democratizando a gestão financeira pessoal através do Open Finance e da Inteligência Artificial.
+  </strong>
 </p>
 
+<p align="center">
+  <img src="https://img.shields.io/static/v1?label=STATUS&message=EM%20DESENVOLVIMENTO&color=GREEN&style=for-the-badge" alt="Status do projeto: EM DESENVOLVIMENTO"/>
+  <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript"/>
+  <img src="https://img.shields.io/badge/React_19-61DAFB?style=for-the-badge&logo=react&logoColor=black" alt="React 19"/>
+  <img src="https://img.shields.io/badge/Vite_5-646CFF?style=for-the-badge&logo=vite&logoColor=white" alt="Vite 5"/>
+  <img src="https://img.shields.io/badge/TailwindCSS_4-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white" alt="TailwindCSS 4"/>
+  <img src="https://img.shields.io/badge/NestJS-E0234E?style=for-the-badge&logo=nestjs&logoColor=white" alt="NestJS"/>
+  <img src="https://img.shields.io/badge/Docker-2CA5E0?style=for-the-badge&logo=docker&logoColor=white" alt="Docker"/>
+  <img src="https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white" alt="PostgreSQL"/>
+  <img src="https://img.shields.io/badge/Google_Gemini-8E75B2?style=for-the-badge&logo=googlegemini&logoColor=white" alt="Google Gemini"/>
+  <img src="https://img.shields.io/badge/Open_Finance_Brasil-004C97?style=for-the-badge&logo=banksalad&logoColor=white" alt="Open Finance Brasil"/>
+</p>
+
+<p align="center">
+  Projeto homologado e apresentado na
+  <strong> MOCITEC — Mostra de Ciências e Tecnologias do IFSul Campus Charqueadas</strong>.
+</p>
+
+---
+
 ## Descrição
-Descreva brevemente o objetivo do projeto, suas funcionalidades principais e qualquer outra informação relevante.
+
+O **ContaComigo** é uma Prova de Conceito (PoC) de aplicação web voltada à
+democratização da gestão financeira pessoal no Brasil. Integra dados bancários
+via **Open Finance (regulamentado pelo BACEN)** com **Inteligência Artificial
+generativa (Google Gemini)** para oferecer orçamento semáforo inteligente,
+diagnósticos e educação financeira — sem exercer aconselhamento regulamentado
+por CVM/Bacen.
+
+A aplicação foi submetida, homologada e apresentada na **MOCITEC (Mostra de
+Ciências e Tecnologias do IFSul Campus Charqueadas)**. Para o texto completo
+do resumo submetido à mostra, acesse:
+
+**[Resumo homologado (MOCITEC) — docs/RESUMO-MOCITEC.md](./docs/RESUMO-MOCITEC.md)**
+
+### Principais funcionalidades (PoC em andamento)
+
+- 🏦 **Consolidação Open Finance** — agregação de múltiplas instituições
+  bancárias em um único dashboard (Pluggy Sandbox)
+- 🚦 **Orçamento Semáforo Inteligente** — visualização Verde ≤70% / Amarelo
+  70–90% / Vermelho >90% com barras verticais animadas, limites editáveis
+  inline e sugestões de ajuste por IA
+- 📊 **Histórico de 6 meses** — análise de tendências, gasto médio, top 3
+  problemas recorrentes e mapa de status por categoria
+- 🤖 **Diagnóstico e Insights de IA (RAG)** — painel rotativo de
+  oportunidades, alertas e metas, com CTAs navegáveis para ações
+- 💬 **Chatbot Educativo** — consultor financeiro IA com banner permanente
+  de "não aconselhamento financeiro" + cards de status orçamentário e planos
+  de compra simulados
+- 📄 **Exportar Relatórios** — menu visual PDF / CSV por mês ou histórico
+  completo
+- 📱 **Interface 100% responsiva** — Bento Grid desktop + Bottom Dock +
+  Sidebar desktop, layout adaptado a celulares
+- 🔐 **Autenticação local** — Login / Cadastro com validação via Zod + React
+  Hook Form, proteção de rotas privadas
+
+---
 
 ## Tecnologias Utilizadas
 
-- `<tecnologia_1>`
-- `<tecnologia_2>`
-- `<tecnologia_3>`
+### Frontend (aplicação web, implementada)
 
-## Demonstração
+- **[React 19](https://react.dev/)** + **[TypeScript 6](https://www.typescriptlang.org/)**
+  — tipagem estrita e React Compiler
+- **[Vite 8](https://vitejs.dev/)** — build tool e servidor de desenvolvimento
+- **[TailwindCSS 4](https://tailwindcss.com/)** — @theme inline, tokens
+  customizados (cores, sizes, durations), sem `tailwind.config.js`
+- **[React Router 7](https://reactrouter.com/)** — nested routes, proteção de
+  rotas privadas, hash scrolling
+- **[Zod 4](https://zod.dev/)** + **[React Hook Form 7](https://react-hook-form.com/)**
+  — validação de formulários
+- **[Lucide React](https://lucide.dev/)** + **Font Awesome (ícones)**
+- **[@radix-ui/react-toast](https://www.radix-ui.com/)** + toaster custom
+- **[Tailwind Merge](https://www.npmjs.com/package/tailwind-merge)** +
+  **[class-variance-authority](https://cva.style/)** + **clsx**
+- **Lint:** [ESLint 9](https://eslint.org/) + `typescript-eslint` +
+  `react-hooks` + `react-refresh`
 
-Veja o <nome_do_projeto> em ação! Confira nossa demonstração completa das principais funcionalidades:
+### Backend (a ser implementado)
 
-<div align="center">
-  <img src="public/videos/demo.gif" alt="Demonstração do <nome_do_projeto>" width="800">
-</div>
+- **[NestJS](https://nestjs.com/)** — regras de negócio e API REST
+- **[Pluggy API (Sandbox)](https://pluggy.ai/)** — agregação de dados Open
+  Finance
+- **[Google Gemini API](https://ai.google.dev/)** + **[LangChain.js](https://js.langchain.com/)**
+  — motor de IA, orquestração de contexto e prompts
+- **[PostgreSQL](https://www.postgresql.org/)** — persistência
+- **[Docker](https://www.docker.com/)** + **docker-compose** — ambiente
+  reproduzível
 
-> **Quer ver mais detalhes?** [Clique aqui para visualizar em tamanho completo](public/videos/demo.gif)
-
-> **Nota**: A demonstração pode demorar alguns segundos para carregar devido ao tamanho do arquivo. Por favor, aguarde!
+---
 
 ## Como Executar o Projeto
 
+> Atualmente apenas a camada **frontend** está materializada no repositório
+> (mock puro, sem backend integrado). A arquitetura pretendida para o backend
+> está em [docs/backlog/EPICO-TECNICO.md](./docs/backlog/EPICO-TECNICO.md).
+
 ### Pré-requisitos
 
-- `<pré-requisito_1>`
-- `<pré-requisito_2>`
-- `<pré-requisito_3>`
+- **Node.js ≥ 22** (recomendado última versão LTS)
+- **pnpm ≥ 9** (`corepack enable` instala o gerenciador)
+- (Opcional, backend futuro) **Docker 27** + **docker compose v2**
+- (Opcional, backend futuro) **PostgreSQL 16**
 
-### Instalação
+### 1. Clone o repositório
 
-1. **Clone o repositório**
-   ```bash
-   $ git clone <url-do-repositorio>
-   $ cd <nome_do_projeto>
-   ```
+```bash
+git clone https://github.com/Raullize/conta-comigo.git
+cd conta-comigo
+```
 
-2. **Instale as dependências**
-   ```bash
-   $ npm install
-   ```
+### 2. Instale as dependências do frontend
 
-3. **Configure as variáveis de ambiente**
-   ```bash
-   $ cp .env.example .env
-   ```
-   Edite o arquivo `.env` com suas configurações.
+```bash
+cd frontend
+pnpm install
+```
 
-4. Entre outras configurações necessárias...
+### 3. Suba o ambiente de desenvolvimento (Vite)
+
+```bash
+pnpm dev
+```
+
+A aplicação ficará disponível em **http://localhost:5173** (porta padrão Vite).
+
+### 4. Valide código e faça o build de produção
+
+```bash
+# Lint (ESLint 9 + Tailwind suggestCanonicalClasses)
+pnpm lint
+
+# Type-check strict (tsc -b) + build Vite otimizado
+pnpm build
+
+# Preview do build de produção localmente
+pnpm preview
+```
+
+### 5. Backend — variáveis de ambiente
+
+O backend (NestJS) lê as variáveis de `backend/.env`. Copie o modelo
+`backend/.env.example` → `backend/.env` e preencha: `JWT_SECRET` (obrigatório),
+`ENCRYPTION_KEY`, `GEMINI_API_KEY` (IA educativa; sem ela o adaptador falso
+assume), e opcionais `PLUGGY_CLIENT_ID / PLUGGY_CLIENT_SECRET` e
+`AI_DAILY_LIMIT`. A credencial do Postgres local já vem no `docker-compose.yml`.
+
+---
 
 ## Documentação
-- [Documentação do Banco de Dados](./docs/README.md)
-- [Documentação da API](./docs/README.md)
-- [Documentação do Front-end](./docs/README.md)
+
+| Documento | Descrição |
+| :--- | :--- |
+| [Workflow Agêntico](./docs/WORKFLOW-AGENTICO.md) | Guia operacional: como puxar, executar, validar e fechar uma história |
+| [Kanban Oficial](./docs/backlog/KANBAN-OFICIAL.md) | Fonte única da próxima demanda |
+| [Resumo homologado MOCITEC](./docs/RESUMO-MOCITEC.md) | Texto completo submetido, aprovado e apresentado na Mostra |
+| [Especificação SDD-001](./docs/spec-driven-development/SDD-001-contacomigo-poc.md) | Problema, personas, escopo, fluxos e decisões em aberto |
+| [Requisitos](./docs/requisitos/) | Catálogos de RF, RN e RNF com identificador estável |
+| [Decisões de Arquitetura](./docs/adr/) | ADRs: o porquê de cada escolha estrutural |
+| [Épico de Negócio](./docs/backlog/EPICO-NEGOCIO.md) | Visão, personas, jornadas e regras de negócio |
+| [Épico Técnico](./docs/backlog/EPICO-TECNICO.md) | Arquitetura, segurança, testes, CI/CD e operação |
+| [Entregas](./docs/entregas/) | Registro cronológico de cada história concluída |
+
+---
 
 ## Contribuindo
 
-Se você deseja contribuir para este projeto, siga estas etapas:
+Este é um projeto acadêmico do IFSul Campus Charqueadas, submetido à
+MOCITEC. Contribuições são bem-vindas através do processo padrão de Pull
+Request:
 
-1. Bifurque este repositório.
-2. Crie um branch: `git checkout -b <nome_branch>`.
-3. Faça suas alterações e confirme-as: `git commit -m '<mensagem_commit>'`
-4. Envie para o branch original: `git push origin <nome_do_projeto> / <local>`
-5. Crie a solicitação de pull.
+1. **Fork** o repositório
+2. Crie uma branch feature:
 
-Como alternativa, consulte a documentação do GitHub em [como criar uma solicitação pull](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request).
+   ```bash
+   git checkout -b feature/minha-contribuicao
+   ```
 
-## Contribuidores
+3. Faça suas alterações com **commits semânticos** (Conventional Commits):
+   `feat(...)`, `fix(...)`, `refactor(...)`, `docs(...)`, `style(...)`
+4. Garanta `pnpm lint && pnpm build` exit 0 dentro de `frontend/`
+5. Envie a branch: `git push origin feature/minha-contribuicao`
+6. Abra um **Pull Request** contra a branch `develop` descrevendo a mudança
 
-Agradecemos às seguintes pessoas que contribuíram para este projeto:
+Referência GitHub:
+[como criar uma solicitação de pull](https://help.github.com/pt/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request).
+
+---
+
+## Equipe
+
+### Alunos Autores
 
 <table>
   <tr>
     <td align="center">
-      <a href="https://github.com/Raullize" title="Perfil no GitHub">
-        <img src="https://github.com/Raullize.png" width="100px;" alt="Foto do Raul Lize Teixeira no GitHub"/><br>
-        <sub>
-          <b>Raul Lize Teixeira</b>
-        </sub>
+      <a href="https://github.com/Raullize" title="Raul Lize Teixeira no GitHub">
+        <img src="https://github.com/Raullize.png" width="100px;" alt="Foto do Raul Lize Teixeira"/><br>
+        <sub><strong>Raul Lize Teixeira</strong></sub>
       </a>
+      <br><sub>Desenvolvedor Full Stack</sub>
     </td>
     <td align="center">
-      <a href="https://github.com/unclebob" title="Perfil no GitHub">
-        <img src="https://github.com/unclebob.png" width="100px;" alt="Foto do Robert C. Martin no GitHub"/><br>
-        <sub>
-          <b>Robert C. Martin</b>
-        </sub>
+      <a href="https://github.com/MiguelLewandowski" title="Miguel Lewandowski no GitHub">
+        <img src="https://github.com/MiguelLewandowski.png" width="100px;" alt="Foto do Miguel Leonardo Strapazon Lewandowski"/><br>
+        <sub><strong>Miguel L. S. Lewandowski</strong></sub>
       </a>
+      <br><sub>Desenvolvedor Full Stack</sub>
     </td>
     <td align="center">
-      <a href="https://github.com/torvalds" title="Perfil no GitHub">
-        <img src="https://github.com/torvalds.png" width="100px;" alt="Foto do Linus Torvalds no GitHub"/><br>
-        <sub>
-          <b>Linus Torvalds</b>
-        </sub>
+      <a href="https://github.com/CaputiDev" title="Thiago Caputi no GitHub">
+        <img src="https://github.com/CaputiDev.png" width="100px;" alt="Foto do Thiago Rodrigues Caputi"/><br>
+        <sub><strong>Thiago R. Caputi</strong></sub>
       </a>
+      <br><sub>Desenvolvedor Full Stack</sub>
     </td>
   </tr>
 </table>
 
+### Orientador
+
+<table>
+  <tr>
+    <td align="center">
+      <a href="https://github.com/EverttonFernandes" title="Prof. Everton Fernandes no GitHub">
+        <img src="https://github.com/EverttonFernandes.png" width="100px;" alt="Foto do Professor Everton Oliveira Fernandes"/><br>
+        <sub><strong>Prof. Me. Everton Oliveira Fernandes</strong></sub>
+      </a>
+      <br><sub>Orientação acadêmica · IFSul Campus Charqueadas</sub>
+    </td>
+  </tr>
+</table>
+
+---
+
 ## Licença
 
-Esse projeto está sob licença. Veja o arquivo [LICENÇA](LICENSE.md) para mais detalhes.
+Este repositório **não possui licença aberta**. É um trabalho acadêmico
+desenvolvido no IFSul Campus Charqueadas e apresentado na MOCITEC.
 
-> Você pode atualizar esse documento e implementar as mudanças conforme necessário. Seja adicionando, removendo ou atualizando as informações existentes.
+Sem licença declarada, valem os direitos autorais padrão: o código pode ser
+lido e avaliado, mas não há permissão de uso, cópia, modificação ou
+redistribuição. Para qualquer uso além da avaliação acadêmica, fale com os
+autores.

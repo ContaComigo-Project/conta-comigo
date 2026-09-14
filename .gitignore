@@ -1,0 +1,45 @@
+# Dependências
+node_modules/
+
+# Build
+dist/
+dist-ssr/
+build/
+.next/
+
+# Cliente Prisma gerado: `harness setup` o regenera (prisma generate)
+backend/src/**/persistence/gerado/
+
+# Testes e cobertura
+coverage/
+test-results/
+playwright-report/
+blob-report/
+.playwright/
+
+# Ambiente — segredo nunca é versionado.
+# Exceções versionadas de propósito: os arquivos de exemplo e o registro de
+# comandos do harness (scripts/harness.env), que não contém segredo.
+.env
+.env.*
+!.env.example
+!*.env.example
+
+# Logs e temporários
+*.log
+*.tmp
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editores e sistema operacional
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+Thumbs.db
+*.swp
+
+# NÃO ignorar: docs/tasks/*/evidencia/ é evidência de execução, versionada
+# de propósito para que o gate de QA possa conferi-la em diff.

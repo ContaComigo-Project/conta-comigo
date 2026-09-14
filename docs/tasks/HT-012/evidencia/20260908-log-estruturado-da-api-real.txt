@@ -1,0 +1,36 @@
+
+> @contacomigo/backend@0.9.0 start C:\Users\migue\Documents\mocitec\conta-comigo\backend
+> tsx src/main.ts
+
+[32m[Nest] 8664  - [39m08/09/2026, 21:18:35 [32m    LOG[39m [38;5;3m[NestFactory] [39m[32mStarting Nest application...[39m
+[32m[Nest] 8664  - [39m08/09/2026, 21:18:35 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAppModule dependencies initialized[39m[38;5;3m +11ms[39m
+[32m[Nest] 8664  - [39m08/09/2026, 21:18:35 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAggregationModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 8664  - [39m08/09/2026, 21:18:35 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mObservabilityModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 8664  - [39m08/09/2026, 21:18:35 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAccessModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 8664  - [39m08/09/2026, 21:18:35 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTransactionsModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 8664  - [39m08/09/2026, 21:18:35 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mConsentModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 8664  - [39m08/09/2026, 21:18:35 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mAccessController {/access}:[39m[38;5;3m +23ms[39m
+[32m[Nest] 8664  - [39m08/09/2026, 21:18:35 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/access/accounts, POST} route[39m[38;5;3m +2ms[39m
+[32m[Nest] 8664  - [39m08/09/2026, 21:18:35 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/access/sessions, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 8664  - [39m08/09/2026, 21:18:35 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/access/sessions/refresh, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 8664  - [39m08/09/2026, 21:18:35 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/access/sessions, DELETE} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 8664  - [39m08/09/2026, 21:18:35 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mProfileController {/access}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 8664  - [39m08/09/2026, 21:18:35 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/access/accounts/me, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 8664  - [39m08/09/2026, 21:18:35 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mTransactionsController {/transactions}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 8664  - [39m08/09/2026, 21:18:35 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/transactions/month-summary, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 8664  - [39m08/09/2026, 21:18:35 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/transactions, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 8664  - [39m08/09/2026, 21:18:35 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mDashboardController {/dashboard}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 8664  - [39m08/09/2026, 21:18:35 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/dashboard/summary, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 8664  - [39m08/09/2026, 21:18:35 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mConsentController {/consents}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 8664  - [39m08/09/2026, 21:18:35 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/consents, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 8664  - [39m08/09/2026, 21:18:35 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/consents, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 8664  - [39m08/09/2026, 21:18:35 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/consents/:id/sync, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 8664  - [39m08/09/2026, 21:18:35 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/consents/account, DELETE} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 8664  - [39m08/09/2026, 21:18:35 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/consents/:id, DELETE} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 8664  - [39m08/09/2026, 21:18:35 [32m    LOG[39m [38;5;3m[NestApplication] [39m[32mNest application successfully started[39m[38;5;3m +2ms[39m
+{"level":"info","message":"api ouvindo","requestId":"boot","timestamp":"2026-09-09T00:18:35.087Z","url":"http://localhost:3111","docs":"http://localhost:3111/api/docs"}
+{"level":"warn","message":"Unauthorized","requestId":"b01c1237-416f-47fd-9080-faa5e729db18","timestamp":"2026-09-09T00:18:42.981Z","operation":"GET /transactions","status":401,"method":"GET","route":"/transactions","kind":"UnauthorizedException"}
+{"level":"warn","message":"Unauthorized","requestId":"correlacao-manual","timestamp":"2026-09-09T00:18:43.024Z","operation":"GET /transactions/month-summary","status":401,"method":"GET","route":"/transactions/month-summary","kind":"UnauthorizedException"}
+{"level":"info","message":"requisicao concluida","requestId":"53fe96a2-cd72-43f8-908b-111fd85f0f71","timestamp":"2026-09-09T00:18:51.968Z","method":"POST","route":"/access/sessions","status":200,"durationMs":344}
+{"level":"info","message":"requisicao concluida","requestId":"d60c232b-cc32-4dd2-83c7-4ee13a62dac1","timestamp":"2026-09-09T00:18:59.677Z","method":"POST","route":"/access/sessions","status":200,"durationMs":108}
+{"level":"info","message":"requisicao concluida","requestId":"05c3a6d0-0ac2-467d-a80e-3b5cf8684b1a","timestamp":"2026-09-09T00:18:59.790Z","method":"GET","route":"/transactions","status":200,"durationMs":47}

@@ -1,0 +1,39 @@
+# evidência de execução — HT-008
+# Gerado por scripts/registrar-evidencia.sh. Não editar à mão.
+comando : scripts/harness.sh security
+data    : 2026-09-07 17:50:16 -0300
+commit  : 01725c6 (árvore suja)
+sistema : MINGW64_NT-10.0-26200
+espera  : FALHA (vermelho obrigatório)
+---------------------------------------------------------------
+harness: HARNESS_SECURITY -> pnpm run security
+
+> conta-comigo@0.7.0 security C:\Users\migue\Documents\mocitec\conta-comigo
+> node scripts/seguranca.mjs
+
+seguranca: varredura de segredo e de dependencia
+
+=== 1. Segredos (gitleaks)
+--- arvore de trabalho
+[90m8:50PM[0m [32mINF[0m [1mscanned ~77959991 bytes (77.96 MB) in 8.16s[0m
+[90m8:50PM[0m [33mWRN[0m [1mleaks found: 1[0m
+--- historico de commits
+[90m8:50PM[0m [32mINF[0m [1m82 commits scanned.[0m
+[90m8:50PM[0m [32mINF[0m [1mscanned ~1458240 bytes (1.46 MB) in 5.96s[0m
+[90m8:50PM[0m [32mINF[0m [1mno leaks found[0m
+--- pacote compilado da web (frontend/dist)
+[90m8:50PM[0m [32mINF[0m [1mscanned ~38409850 bytes (38.41 MB) in 6.58s[0m
+[90m8:50PM[0m [33mWRN[0m [1mleaks found: 1[0m
+  [FALHA] segredo na arvore de trabalho
+  [FALHA] segredo no pacote compilado da web
+
+=== 2. Dependencias vulneraveis (osv-scanner)
+Scanned /repo/pnpm-lock.yaml file and found 580 packages
+No issues found
+  [OK]    nenhuma vulnerabilidade conhecida
+
+seguranca: reprovada — 1 varredura(s) falharam
+ ELIFECYCLE  Command failed with exit code 1.
+---------------------------------------------------------------
+EXIT_CODE=1
+SHA256=6686c320baf42f9b0ec16c9cff1c8a9f99f0f6bfb8aa2eba8d31effd5e9f4c67

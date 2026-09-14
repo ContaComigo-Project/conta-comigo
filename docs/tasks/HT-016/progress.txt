@@ -1,0 +1,19 @@
+# progress — HT-016
+# Diário append-only do ciclo Ralph. Uma linha por evento.
+# Formato: AAAA-MM-DD HH:MM | FASE | descrição objetiva | evidência
+# FASE: PERCEBER | ORIENTAR | DECIDIR | AGIR | REGISTRAR
+
+2026-09-05 00:40 | PERCEBER | li KANBAN-OFICIAL.md, HT-016-inventario-frontend.md, catálogo de RN (RN-001, RN-024/025) e mapa tela->requisito | docs/backlog, docs/requisitos
+2026-09-05 00:41 | ORIENTAR | critérios de aceite de HT-016 comparados com o que o frontend realmente contém; decisão da história: preservar UI, reescrever lógica | -
+2026-09-05 00:42 | AGIR | inventário completo do frontend produzido por análise estática: 58 arquivos, 5.930 linhas, 38 componentes .tsx, 9 mocks, 25+ regras localizadas | agente explore
+2026-09-05 00:43 | DECIDIR | RN-024 e RN-025 descartadas como regra de domínio (limite/arredondamento são de exibição; RN-001 permanece como fonte única da faixa) | REGRAS-DE-NEGOCIO.md
+2026-09-05 00:44 | REGISTRAR | kanban move HT-016 para Em execução | docs/backlog/KANBAN-OFICIAL.md
+2026-09-05 00:45 | AGIR | escrita de docs/backlog/inventario-frontend.md iniciada | docs/backlog/inventario-frontend.md
+2026-09-05 00:50 | AGIR | inventario-frontend.md completo: 41 componentes, 9 mocks, regras R1-R24 com arquivo/linha | docs/backlog/inventario-frontend.md
+2026-09-05 00:51 | REGISTRAR | RN-024 e RN-025 marcadas como Descartada no catálogo com motivo; legenda atualizada | docs/requisitos/REGRAS-DE-NEGOCIO.md
+2026-09-05 00:52 | REGISTRAR | notas de escopo (rotas mortas, console.log, identidade real) adicionadas ao kanban | docs/backlog/KANBAN-OFICIAL.md
+2026-09-05 00:53 | REGISTRAR | ENTREGA-HT-016-inventario-frontend.md criado; gates de segurança/arquitetura/final aplicados | docs/entregas/
+2026-09-05 01:00 | AGIR | commit de fechamento 5ebeb8a criado; tag v0.6.0; verificar-fechamento verde | git
+2026-09-05 01:10 | PERCEBER | time corrige: /investimentos, /bancos, /configuracoes, /metas não são links mortos — são telas mantidas, em estudo para implementar/cortar | -
+2026-09-05 01:11 | DECIDIR | telas mantidas; em um primeiro momento o link leva a tela 'Em construção'; implementar/cortar fica com o product-manager | decisão do time
+2026-09-05 01:12 | REGISTRAR | inventario-frontend.md (§1.3, §1.6, §5), KANBAN-OFICIAL.md e ENTREGA-HT-016 corrigidos | docs/ |

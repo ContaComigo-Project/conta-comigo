@@ -11,7 +11,20 @@
   --color-cc-light-gray: #e8e8e8;
   --color-cc-cream: #f8e7c5;
   --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
-  
+
+  --size-14: 3.5rem;     /* 56px */
+  --size-27\.5: 6.875rem; /* 110px */
+  --size-55: 13.75rem;   /* 220px */
+  --size-76: 19rem;      /* 304px - mock phone landing width */
+  --size-105: 26.25rem;  /* 420px */
+  --size-144: 36rem;     /* 576px - mock phone landing height */
+  --size-160: 40rem;     /* 640px */
+  --size-300: 75rem;     /* 1200px - wrapper max width */
+  --spacing-55: 13.75rem;   /* 220px (md:ml-55) */
+
+  --duration-1000: 1000ms;
+  --duration-1200: 1200ms;
+
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);

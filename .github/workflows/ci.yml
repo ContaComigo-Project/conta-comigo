@@ -1,0 +1,54 @@
+name: CI
+
+# HT-007 — pipeline de CI com gates bloqueantes (RNF-021).
+# Roda os MESMOS comandos do harness local (RNF-007): qualquer step que falhar
+# bloqueia o merge. Nenhum `continue-on-error` aqui — aviso não é gate.
+on:
+  push:
+    branches: [develop, main]
+  pull_request:
+
+jobs:
+  gates:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      # Segredo de teste para a suíte; a API recusa operar com padrão (HN-001).
+      # ENCRYPTION_KEY NÃO é definida: o teste da cipher prova a recusa sem chave
+      # (determinístico no cipher.test.ts), e o seed (que a exige) não roda no CI.
+      JWT_SECRET: ci-secret-somente-para-teste
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.32.1
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: 'pnpm'
+
+      - name: Setup do harness (deps, navegadores, Postgres, migrações)
+        run: pnpm run setup
+
+      - name: Lint + fronteiras (ADR-001/ADR-002)
+        run: pnpm run lint
+
+      - name: Testes unitários
+        run: pnpm run test:unit
+
+      - name: Testes de integração (PostgreSQL real)
+        run: pnpm run test:integration
+
+      - name: Testes funcionais (Playwright)
+        run: pnpm run test:functional
+
+      - name: Segurança (segredos + dependências)
+        run: pnpm run security
+
+      - name: Cobertura rigorosa do domínio (100% linhas e funções)
+        run: pnpm run coverage
+
+      - name: Build (web + typecheck)
+        run: pnpm run build

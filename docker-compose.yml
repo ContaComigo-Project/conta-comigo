@@ -1,0 +1,33 @@
+name: conta-comigo
+
+# Ambiente de desenvolvimento local. Nao existe homologacao nem producao ate
+# HT-015 (ADR-005). A versao da imagem e fixada por tag exata: "o ambiente
+# precisa ser identico em qualquer maquina" (RNF-007).
+
+services:
+  postgres:
+    image: postgres:17.6-alpine
+    container_name: conta-comigo-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: contacomigo
+      # Credencial exclusivamente local, sem valor fora desta maquina.
+      # Versionada de proposito para que `harness setup` funcione em maquina
+      # limpa sem passo manual (RNF-007). Declarada na allowlist de
+      # .gitleaks.toml com justificativa. Nenhum ambiente real usa este valor.
+      POSTGRES_PASSWORD: contacomigo_dev_local
+      POSTGRES_DB: contacomigo
+    ports:
+      # 5433 no host evita colisao com um PostgreSQL ja instalado na maquina.
+      - "5433:5432"
+    volumes:
+      - contacomigo-pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U contacomigo -d contacomigo"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+      start_period: 5s
+
+volumes:
+  contacomigo-pgdata:

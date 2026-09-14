@@ -1,0 +1,19 @@
+# progress — HT-017
+# Diário append-only do ciclo Ralph. Uma linha por evento.
+# Formato: AAAA-MM-DD HH:MM | FASE | descrição objetiva | evidência
+# FASE: PERCEBER | ORIENTAR | DECIDIR | AGIR | REGISTRAR
+
+2026-09-07 14:49 | PERCEBER | Ready tinha HT-017; mocks inventariados em HT-016 sao a base do contrato | inventario-frontend.md §2
+2026-09-07 14:49 | DECIDIR | contrato em packages/contrato (zod), faixa no dominio, origem falsa na web; planos escritos antes do codigo | docs/tasks/HT-017/
+2026-09-07 14:53 | AGIR | esquemas do contrato sobre stubs permissivos — harness test-unitario exit 1 (VERMELHO ESPERADO) | docs/tasks/HT-017/evidencia/20260907-145311-test-unitario-vermelho-contrato.txt
+2026-09-07 14:55 | AGIR | esquemas reais do contrato (strict, enums, centavos, ISO) — harness test-unitario exit 0 (VERDE) | docs/tasks/HT-017/evidencia/20260907-145544-test-unitario-verde-contrato.txt
+2026-09-07 14:58 | AGIR | RN-001/RN-002 sobre stub que devolve sempre verde — harness test-unitario exit 1 (VERMELHO ESPERADO) | docs/tasks/HT-017/evidencia/20260907-145829-test-unitario-vermelho-rn001.txt
+2026-09-07 15:00 | AGIR | RN-001 implementada em inteiros; cobertura do dominio com orcamento — harness coverage exit 0 (VERDE) | docs/tasks/HT-017/evidencia/20260907-150023-coverage-verde-rn001.txt
+2026-09-07 15:03 | AGIR | equivalencia mock vs mapeadores(OrigemFalsa) sobre stubs vazios — harness test-unitario exit 1 (VERMELHO ESPERADO) | docs/tasks/HT-017/evidencia/20260907-150321-test-unitario-vermelho-equivalencia.txt
+2026-09-07 15:07 | AGIR | OrigemFalsa e mapeadores reais: mock equivale ao mapeado — harness test-unitario exit 0 (VERDE) | docs/tasks/HT-017/evidencia/20260907-150705-test-unitario-verde-equivalencia.txt
+2026-09-07 15:11 | AGIR | GET /lancamentos no contrato, sobre caso de uso e rota stub — harness test-unitario exit 1 (VERMELHO ESPERADO) | docs/tasks/HT-017/evidencia/20260907-151054-test-unitario-vermelho-http.txt
+2026-09-07 15:13 | AGIR | GET /lancamentos devolve Resultado<LancamentoDTO[]> real — harness test-unitario exit 0 (VERDE) | docs/tasks/HT-017/evidencia/20260907-151326-test-unitario-verde-http.txt
+2026-09-07 15:14 | AGIR | @contacomigo/contrato importado em domain/ quebra o lint — harness lint exit 0 (VERDE INESPERADO) | docs/tasks/HT-017/evidencia/20260907-151353-lint-contrato-no-dominio.txt
+2026-09-07 15:14 | REGISTRAR | gates de ponta a ponta com contrato, RN-001 e origem falsa — harness gates exit 0 (VERDE) | docs/tasks/HT-017/evidencia/20260907-151400-gates-verde.txt
+2026-09-07 15:16 | AGIR | import type do contrato em domain/ quebra o lint (apos corrigir as regras) — harness lint exit 2 (VERMELHO ESPERADO) | docs/tasks/HT-017/evidencia/20260907-151553-lint-contrato-no-dominio-2.txt
+2026-09-07 15:17 | REGISTRAR | gates finais: contrato, RN-001, origem falsa, endpoint e regras de fronteira corrigidas — harness gates exit 0 (VERDE) | docs/tasks/HT-017/evidencia/20260907-151620-gates-verde-2.txt

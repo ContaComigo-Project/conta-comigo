@@ -1,0 +1,51 @@
+# evidência de execução — HT-017
+# Gerado por scripts/registrar-evidencia.sh. Não editar à mão.
+comando : scripts/harness.sh test-unitario
+data    : 2026-09-07 15:10:54 -0300
+commit  : a419cf4 (árvore suja)
+sistema : MINGW64_NT-10.0-26200
+espera  : FALHA (vermelho obrigatório)
+---------------------------------------------------------------
+harness: HARNESS_TEST_UNIT -> pnpm run test:unitario
+
+> conta-comigo@0.7.0 test:unitario C:\Users\migue\Documents\mocitec\conta-comigo
+> vitest run
+
+
+ RUN  v5.0.0 C:/Users/migue/Documents/mocitec/conta-comigo
+
+ ❯ backend/src/lancamentos/infrastructure/http/lancamentos.controller.test.ts (2 tests | 1 failed) 280ms
+   ❯ GET /lancamentos/resumo-do-mes (2)
+     × GET /lancamentos responde no CONTRATO: Resultado<LancamentoDTO[]> valido pelo esquema (HT-017) 33ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  backend/src/lancamentos/infrastructure/http/lancamentos.controller.test.ts > GET /lancamentos/resumo-do-mes > GET /lancamentos responde no CONTRATO: Resultado<LancamentoDTO[]> valido pelo esquema (HT-017)
+AssertionError: expected [] to have a length of 2 but got +0
+
+- Expected
++ Received
+
+- 2
++ 0
+
+ ❯ backend/src/lancamentos/infrastructure/http/lancamentos.controller.test.ts:49:30
+     47|     expect(parse.success, JSON.stringify(parse.success ? null : parse.…
+     48|     if (!parse.success || parse.data.estado !== 'ok') throw new Error(…
+     49|     expect(parse.data.dados).toHaveLength(2);
+       |                              ^
+     50|     expect(parse.data.dados[0]).toEqual({
+     51|       id: '1',
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 9 passed (10)
+      Tests  1 failed | 60 passed (61)
+   Start at  15:10:55
+   Duration  6.15s (import 87%, transform 7%, tests 5%, worker 1%)
+
+ ELIFECYCLE  Command failed with exit code 1.
+---------------------------------------------------------------
+EXIT_CODE=1
+SHA256=028a226883069269dc8a32511b170fea18d6f125c2117b3e51476332a03ab482

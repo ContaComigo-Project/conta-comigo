@@ -1,0 +1,12 @@
+# progress — HN-010
+# Diário append-only do ciclo Ralph. Uma linha por evento.
+# Formato: AAAA-MM-DD HH:MM | FASE | descrição objetiva | evidência
+# FASE: PERCEBER | ORIENTAR | DECIDIR | AGIR | REGISTRAR
+
+2026-09-09 03:15 | PERCEBER | li RF-020/021, RN-017/018; porta pergunta-livre já existe (HT-013/014); widget mockado no frontend | docs, backend/intelligence
+2026-09-09 03:20 | ORIENTAR | escopo: caso de uso de chat que monta o gasto da pessoa, chama o AiAdvisor e entrega o aviso de não aconselhamento junto da resposta | -
+2026-09-09 03:25 | AGIR | grooming HN-010 + kanban Em execução + TASK/IMPLEMENTATION | docs
+2026-09-09 03:35 | AGIR | PerguntarNoChat (RF-020 dado da pessoa, RN-018 aviso, RN-021 degradação) + POST /intelligence/chat + DTO | backend/intelligence
+2026-09-09 03:45 | AGIR | IntelligenceModule importa TransactionsModule + AccessModule (bug de resolução do TokenIdentity corrigido) | module
+2026-09-09 03:50 | AGIR | suíte 308+22+3 verdes; build ok; auditoria 100%; chat validado na API (resposta + aviso) | pnpm, curl
+2026-09-09 03:55 | REGISTRAR | ENTREGA-HN-010 criada; kanban Em revisão | docs/entregas, KANBAN

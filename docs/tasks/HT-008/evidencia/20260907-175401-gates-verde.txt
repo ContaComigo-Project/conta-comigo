@@ -1,0 +1,124 @@
+# evidência de execução — HT-008
+# Gerado por scripts/registrar-evidencia.sh. Não editar à mão.
+comando : scripts/harness.sh gates
+data    : 2026-09-07 17:54:01 -0300
+commit  : 01725c6 (árvore suja)
+sistema : MINGW64_NT-10.0-26200
+espera  : SUCESSO
+---------------------------------------------------------------
+harness: executando gates na ordem — falha no primeiro erro
+harness: HARNESS_LINT -> pnpm run lint
+
+> conta-comigo@0.7.0 lint C:\Users\migue\Documents\mocitec\conta-comigo
+> pnpm --filter client-contacomigo lint && pnpm run lint:fronteiras
+
+
+> client-contacomigo@0.0.0 lint C:\Users\migue\Documents\mocitec\conta-comigo\frontend
+> eslint .
+
+
+> conta-comigo@0.7.0 lint:fronteiras C:\Users\migue\Documents\mocitec\conta-comigo
+> depcruise --config .dependency-cruiser.cjs backend frontend/src
+
+
+✔ no dependency violations found (124 modules, 249 dependencies cruised)
+
+harness: HARNESS_TEST -> pnpm run test
+
+> conta-comigo@0.7.0 test C:\Users\migue\Documents\mocitec\conta-comigo
+> pnpm run test:unitario && pnpm run test:integracao && pnpm run test:funcional
+
+
+> conta-comigo@0.7.0 test:unitario C:\Users\migue\Documents\mocitec\conta-comigo
+> vitest run
+
+
+ RUN  v5.0.0 C:/Users/migue/Documents/mocitec/conta-comigo
+
+
+ Test Files  13 passed (13)
+      Tests  80 passed (80)
+   Start at  17:54:45
+   Duration  8.25s (import 83%, transform 8%, tests 8%, worker 1%)
+
+
+> conta-comigo@0.7.0 test:integracao C:\Users\migue\Documents\mocitec\conta-comigo
+> vitest run --config vitest.integracao.config.ts
+
+
+ RUN  v5.0.0 C:/Users/migue/Documents/mocitec/conta-comigo
+
+
+ Test Files  1 passed (1)
+      Tests  4 passed (4)
+   Start at  17:54:54
+   Duration  753ms (tests 42%, import 35%, transform 22%, worker 1%)
+
+
+> conta-comigo@0.7.0 test:funcional C:\Users\migue\Documents\mocitec\conta-comigo
+> playwright test
+
+
+Running 2 tests using 2 workers
+
+  ✓  2 [chromium] › tests\funcional\fumaca.spec.ts:13:3 › fumaca — a web existente responde › a tela de login existe e tem formulario (3.7s)
+  ✓  1 [chromium] › tests\funcional\fumaca.spec.ts:7:3 › fumaca — a web existente responde › a landing abre com o titulo do produto (3.8s)
+
+  2 passed (7.7s)
+harness: HARNESS_COVERAGE -> pnpm run coverage
+
+> conta-comigo@0.7.0 coverage C:\Users\migue\Documents\mocitec\conta-comigo
+> vitest run --coverage
+
+
+ RUN  v5.0.0 C:/Users/migue/Documents/mocitec/conta-comigo
+      Coverage enabled with v8
+
+
+ Test Files  13 passed (13)
+      Tests  80 passed (80)
+   Start at  17:55:07
+   Duration  9.27s (import 77%, tests 10%, transform 10%, worker 4%)
+
+[34m % [39m[2mCoverage report from [22m[33mv8[39m
+-------------------|---------|----------|---------|---------|-------------------
+File               | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+-------------------|---------|----------|---------|---------|-------------------
+All files          |   95.23 |    91.66 |     100 |     100 |                   
+ ...s/domain/model |      75 |       50 |     100 |     100 |                   
+  titular.ts       |      75 |       50 |     100 |     100 | 6                 
+-------------------|---------|----------|---------|---------|-------------------
+
+=============================== Coverage summary ===============================
+Statements   : 95.23% ( 20/21 )
+Branches     : 91.66% ( 11/12 )
+Functions    : 100% ( 6/6 )
+Lines        : 100% ( 15/15 )
+================================================================================
+harness: HARNESS_SECURITY -> pnpm run security
+
+> conta-comigo@0.7.0 security C:\Users\migue\Documents\mocitec\conta-comigo
+> node scripts/seguranca.mjs
+
+seguranca: varredura de segredo e de dependencia
+
+=== 1. Segredos (gitleaks)
+--- arvore de trabalho
+[90m8:55PM[0m [32mINF[0m [1mscanned ~39571584 bytes (39.57 MB) in 7.54s[0m
+[90m8:55PM[0m [32mINF[0m [1mno leaks found[0m
+--- historico de commits
+[90m8:55PM[0m [32mINF[0m [1m82 commits scanned.[0m
+[90m8:55PM[0m [32mINF[0m [1mscanned ~1458240 bytes (1.46 MB) in 5.59s[0m
+[90m8:55PM[0m [32mINF[0m [1mno leaks found[0m
+  [OK]    nenhum segredo detectado
+
+=== 2. Dependencias vulneraveis (osv-scanner)
+Scanned /repo/pnpm-lock.yaml file and found 580 packages
+No issues found
+  [OK]    nenhuma vulnerabilidade conhecida
+
+seguranca: aprovada
+harness: gates concluídos
+---------------------------------------------------------------
+EXIT_CODE=0
+SHA256=725279348d63ee7a29bc28b43f50808be8d753058a8ef22b7bd03f689a4ee166

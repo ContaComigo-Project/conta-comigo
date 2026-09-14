@@ -1,0 +1,32 @@
+# evidência de execução — HT-010
+# Gerado por scripts/registrar-evidencia.sh. Não editar à mão.
+comando : scripts/harness.sh lint
+data    : 2026-09-07 14:28:56 -0300
+commit  : 110050e (árvore suja)
+sistema : MINGW64_NT-10.0-26200
+espera  : FALHA (vermelho obrigatório)
+---------------------------------------------------------------
+harness: HARNESS_LINT -> pnpm run lint
+
+> conta-comigo@0.7.0 lint C:\Users\migue\Documents\mocitec\conta-comigo
+> pnpm --filter client-contacomigo lint && pnpm run lint:fronteiras
+
+
+> client-contacomigo@0.0.0 lint C:\Users\migue\Documents\mocitec\conta-comigo\frontend
+> eslint .
+
+
+> conta-comigo@0.7.0 lint:fronteiras C:\Users\migue\Documents\mocitec\conta-comigo
+> depcruise --config .dependency-cruiser.cjs backend frontend/src
+
+
+  error prisma-so-em-persistence: backend/src/lancamentos/application/usa-prisma-proposital.ts → node_modules/.pnpm/@prisma+client@7.10.0_prism_ae9422e84cbebfdf861191d29bdda307/node_modules/@prisma/client/default.d.ts
+  error application-nao-conhece-infra: backend/src/lancamentos/application/usa-prisma-proposital.ts → node_modules/.pnpm/@prisma+client@7.10.0_prism_ae9422e84cbebfdf861191d29bdda307/node_modules/@prisma/client/default.d.ts
+
+x 2 dependency violations (2 errors, 0 warnings). 101 modules, 170 dependencies cruised.
+
+ ELIFECYCLE  Command failed with exit code 2.
+ ELIFECYCLE  Command failed with exit code 2.
+---------------------------------------------------------------
+EXIT_CODE=2
+SHA256=4e85b3aa4b3fb1294c9fcf2e03f685370890dd5e63d6568b8f894a1832311571

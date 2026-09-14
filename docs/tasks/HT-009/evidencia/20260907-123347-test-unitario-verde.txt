@@ -1,0 +1,30 @@
+# evidência de execução — HT-009
+# Gerado por scripts/registrar-evidencia.sh. Não editar à mão.
+comando : scripts/harness.sh test-unitario
+data    : 2026-09-07 12:33:47 -0300
+commit  : ff16a13 (árvore suja)
+sistema : MINGW64_NT-10.0-26200
+espera  : SUCESSO
+---------------------------------------------------------------
+harness: HARNESS_TEST_UNIT -> pnpm run test:unitario
+
+> conta-comigo@0.7.0 test:unitario C:\Users\migue\Documents\mocitec\conta-comigo
+> vitest run
+
+[33m(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - ESM syntax in a file loaded as CommonJS (vitest.config.ts:1:1). Use a `.mjs` extension or set `"type": "module"` in the closest package.json
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.[39m
+
+ RUN  v5.0.0 C:/Users/migue/Documents/mocitec/conta-comigo
+
+(node:9980) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+ Test Files  5 passed (5)
+      Tests  19 passed (19)
+   Start at  12:33:48
+   Duration  5.67s (import 90%, transform 5%, tests 4%, worker 1%)
+
+---------------------------------------------------------------
+EXIT_CODE=0
+SHA256=207b2d63f24c0cd200569ed33870f239d4ab8eb203835fc84413ca497c9aa9af

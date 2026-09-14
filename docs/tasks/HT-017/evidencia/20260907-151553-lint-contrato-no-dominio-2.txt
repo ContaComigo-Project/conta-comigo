@@ -1,0 +1,32 @@
+# evidência de execução — HT-017
+# Gerado por scripts/registrar-evidencia.sh. Não editar à mão.
+comando : scripts/harness.sh lint
+data    : 2026-09-07 15:15:53 -0300
+commit  : a419cf4 (árvore suja)
+sistema : MINGW64_NT-10.0-26200
+espera  : FALHA (vermelho obrigatório)
+---------------------------------------------------------------
+harness: HARNESS_LINT -> pnpm run lint
+
+> conta-comigo@0.7.0 lint C:\Users\migue\Documents\mocitec\conta-comigo
+> pnpm --filter client-contacomigo lint && pnpm run lint:fronteiras
+
+
+> client-contacomigo@0.0.0 lint C:\Users\migue\Documents\mocitec\conta-comigo\frontend
+> eslint .
+
+
+> conta-comigo@0.7.0 lint:fronteiras C:\Users\migue\Documents\mocitec\conta-comigo
+> depcruise --config .dependency-cruiser.cjs backend frontend/src
+
+
+  error dominio-so-importa-dominio: backend/src/lancamentos/domain/model/usa-contrato-proposital.ts → packages/contrato/src/index.ts
+  error dominio-nao-conhece-transporte: backend/src/lancamentos/domain/model/usa-contrato-proposital.ts → packages/contrato/src/index.ts
+
+x 2 dependency violations (2 errors, 0 warnings). 118 modules, 217 dependencies cruised.
+
+ ELIFECYCLE  Command failed with exit code 2.
+ ELIFECYCLE  Command failed with exit code 2.
+---------------------------------------------------------------
+EXIT_CODE=2
+SHA256=78309fb8f0751ff19d53d2747bb44cb63356aab4ffcc8883d35ac563464ed0fa

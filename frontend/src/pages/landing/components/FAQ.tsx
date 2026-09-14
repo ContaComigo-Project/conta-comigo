@@ -15,7 +15,7 @@ const faqsList = [
   },
   {
     question: 'O ContaComigo é gratuito?',
-    answer: 'Oferecemos um plano gratuito com funcionalidades básicas e planos premium com recursos avançados como relatórios detalhados, alertas personalizados e suporte prioritário.',
+    answer: 'Sim! No lançamento, o ContaComigo é 100% gratuito para todas as funcionalidades que você vê — Open Finance, diagnósticos de IA, orçamento por categoria, simulações de compra e exportação de relatórios. Não há planos pagos nem limites escondidos.',
   },
   {
     question: 'Como a Inteligência Artificial utiliza os meus dados?',
@@ -36,7 +36,7 @@ export default function FAQ() {
 
   return (
     <section id="faq" className="py-24 bg-[#f8f9fa]">
-      <div className="w-full max-w-[1200px] mx-auto px-4">
+      <div className="w-full max-w-300 mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-6 text-[#001b42]">Perguntas Frequentes</h2>
           <p className="text-lg text-gray-500 max-w-160 mx-auto">

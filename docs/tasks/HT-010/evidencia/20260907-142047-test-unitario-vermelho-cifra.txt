@@ -1,0 +1,111 @@
+# evidência de execução — HT-010
+# Gerado por scripts/registrar-evidencia.sh. Não editar à mão.
+comando : scripts/harness.sh test-unitario
+data    : 2026-09-07 14:20:47 -0300
+commit  : 110050e (árvore suja)
+sistema : MINGW64_NT-10.0-26200
+espera  : FALHA (vermelho obrigatório)
+---------------------------------------------------------------
+harness: HARNESS_TEST_UNIT -> pnpm run test:unitario
+
+> conta-comigo@0.7.0 test:unitario C:\Users\migue\Documents\mocitec\conta-comigo
+> vitest run
+
+
+ RUN  v5.0.0 C:/Users/migue/Documents/mocitec/conta-comigo
+
+ ❯ backend/src/lancamentos/infrastructure/persistence/cifra.test.ts (7 tests | 6 failed) 20ms
+   ❯ RNF-014 — cifra em repouso (AES-256-GCM) (7)
+     × o texto cifrado nao contem o texto claro 9ms
+     × cifrar o mesmo texto duas vezes produz saidas diferentes (IV aleatorio) 2ms
+     × decifrar com outra chave falha em vez de devolver lixo 3ms
+     × texto cifrado adulterado e rejeitado (autenticacao do GCM) 1ms
+     × sem ENCRYPTION_KEY recusa operar com erro nomeado — nunca grava texto claro 1ms
+     × chave com tamanho errado e rejeitada 1ms
+(node:19724) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 6 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  backend/src/lancamentos/infrastructure/persistence/cifra.test.ts > RNF-014 — cifra em repouso (AES-256-GCM) > o texto cifrado nao contem o texto claro
+AssertionError: expected 'token-do-agregador' not to contain 'token-do-agregador'
+ ❯ backend/src/lancamentos/infrastructure/persistence/cifra.test.ts:11:25
+      9|   it('o texto cifrado nao contem o texto claro', () => {
+     10|     const cifrado = cifrar('token-do-agregador', CHAVE_A);
+     11|     expect(cifrado).not.toContain('token-do-agregador');
+       |                         ^
+     12|     expect(cifrado).not.toBe('token-do-agregador');
+     13|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/6]⎯
+
+ FAIL  backend/src/lancamentos/infrastructure/persistence/cifra.test.ts > RNF-014 — cifra em repouso (AES-256-GCM) > cifrar o mesmo texto duas vezes produz saidas diferentes (IV aleatorio)
+AssertionError: expected 'mesmo texto' not to be 'mesmo texto' // Object.is equality
+ ❯ backend/src/lancamentos/infrastructure/persistence/cifra.test.ts:20:48
+     18|
+     19|   it('cifrar o mesmo texto duas vezes produz saidas diferentes (IV ale…
+     20|     expect(cifrar('mesmo texto', CHAVE_A)).not.toBe(cifrar('mesmo text…
+       |                                                ^
+     21|   });
+     22|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/6]⎯
+
+ FAIL  backend/src/lancamentos/infrastructure/persistence/cifra.test.ts > RNF-014 — cifra em repouso (AES-256-GCM) > decifrar com outra chave falha em vez de devolver lixo
+AssertionError: expected [Function] to throw an error
+ ❯ backend/src/lancamentos/infrastructure/persistence/cifra.test.ts:25:46
+     23|   it('decifrar com outra chave falha em vez de devolver lixo', () => {
+     24|     const cifrado = cifrar('token-do-agregador', CHAVE_A);
+     25|     expect(() => decifrar(cifrado, CHAVE_B)).toThrow();
+       |                                              ^
+     26|   });
+     27|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/6]⎯
+
+ FAIL  backend/src/lancamentos/infrastructure/persistence/cifra.test.ts > RNF-014 — cifra em repouso (AES-256-GCM) > texto cifrado adulterado e rejeitado (autenticacao do GCM)
+AssertionError: expected [Function] to throw an error
+ ❯ backend/src/lancamentos/infrastructure/persistence/cifra.test.ts:31:49
+     29|     const cifrado = cifrar('token-do-agregador', CHAVE_A);
+     30|     const adulterado = cifrado.slice(0, -2) + (cifrado.endsWith('AA') …
+     31|     expect(() => decifrar(adulterado, CHAVE_A)).toThrow();
+       |                                                 ^
+     32|   });
+     33|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/6]⎯
+
+ FAIL  backend/src/lancamentos/infrastructure/persistence/cifra.test.ts > RNF-014 — cifra em repouso (AES-256-GCM) > sem ENCRYPTION_KEY recusa operar com erro nomeado — nunca grava texto claro
+AssertionError: expected function to throw an error, but it didn't
+ ❯ backend/src/lancamentos/infrastructure/persistence/cifra.test.ts:35:55
+     33|
+     34|   it('sem ENCRYPTION_KEY recusa operar com erro nomeado — nunca grava …
+     35|     expect(() => cifrar('qualquer coisa', undefined)).toThrow(ChaveDeC…
+       |                                                       ^
+     36|     expect(() => decifrar('qualquer coisa', undefined)).toThrow(ChaveD…
+     37|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/6]⎯
+
+ FAIL  backend/src/lancamentos/infrastructure/persistence/cifra.test.ts > RNF-014 — cifra em repouso (AES-256-GCM) > chave com tamanho errado e rejeitada
+AssertionError: expected [Function] to throw an error
+ ❯ backend/src/lancamentos/infrastructure/persistence/cifra.test.ts:40:38
+     38|
+     39|   it('chave com tamanho errado e rejeitada', () => {
+     40|     expect(() => cifrar('x', 'abc')).toThrow();
+       |                                      ^
+     41|   });
+     42| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/6]⎯
+
+
+ Test Files  1 failed | 6 passed (7)
+      Tests  6 failed | 24 passed (30)
+   Start at  14:20:48
+   Duration  7.96s (import 87%, tests 6%, transform 6%, worker 1%)
+
+ ELIFECYCLE  Command failed with exit code 1.
+---------------------------------------------------------------
+EXIT_CODE=1
+SHA256=581fc9a7e988e0d104bd09997b8b88be811e2d69f4b379019ecb6fcdaae31f3c

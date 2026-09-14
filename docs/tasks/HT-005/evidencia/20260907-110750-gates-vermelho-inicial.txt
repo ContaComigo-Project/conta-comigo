@@ -1,0 +1,13 @@
+# evidência de execução — HT-005
+# Gerado por scripts/registrar-evidencia.sh. Não editar à mão.
+comando : scripts/harness.sh gates
+data    : 2026-09-07 11:07:50 -0300
+commit  : af73267 (árvore suja)
+sistema : MINGW64_NT-10.0-26200
+espera  : FALHA (vermelho obrigatório)
+---------------------------------------------------------------
+harness: scripts/harness.env não existe.
+harness: copie scripts/harness.env.example e preencha os comandos.
+---------------------------------------------------------------
+EXIT_CODE=2
+SHA256=6f5490137488cf87ba19189909f9573d05099550ba8206eac5439eda806bbac6

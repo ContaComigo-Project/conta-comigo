@@ -1,0 +1,263 @@
+# evidência de execução — HT-017
+# Gerado por scripts/registrar-evidencia.sh. Não editar à mão.
+comando : scripts/harness.sh test-unitario
+data    : 2026-09-07 15:03:21 -0300
+commit  : a419cf4 (árvore suja)
+sistema : MINGW64_NT-10.0-26200
+espera  : FALHA (vermelho obrigatório)
+---------------------------------------------------------------
+harness: HARNESS_TEST_UNIT -> pnpm run test:unitario
+
+> conta-comigo@0.7.0 test:unitario C:\Users\migue\Documents\mocitec\conta-comigo
+> vitest run
+
+
+ RUN  v5.0.0 C:/Users/migue/Documents/mocitec/conta-comigo
+
+ ❯ frontend/src/dados/equivalencia.test.ts (4 tests | 4 failed) 23ms
+   ❯ HT-017 — equivalencia mock ≡ mapeadores(OrigemFalsa) (4)
+     × a origem falsa entrega dados validos pelo contrato 7ms
+     × lancamentos: mesmo objeto de apresentacao que mockTransactions (exceto o instante `date`) 10ms
+     × bancos conectados: mesmo objeto que mockConnectedBanks 2ms
+     × categorias de gasto: mesmo objeto que mockSpendingCategories, com percentual derivado dos totais 2ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  frontend/src/dados/equivalencia.test.ts > HT-017 — equivalencia mock ≡ mapeadores(OrigemFalsa) > a origem falsa entrega dados validos pelo contrato
+AssertionError: expected 0 to be greater than 0
+ ❯ frontend/src/dados/equivalencia.test.ts:30:28
+     28|     expect(r.estado).toBe('ok');
+     29|     if (r.estado !== 'ok') return;
+     30|     expect(r.dados.length).toBeGreaterThan(0);
+       |                            ^
+     31|     for (const l of r.dados) expect(LancamentoDTO.safeParse(l).success…
+     32|     const b = await origem.listarBancosConectados();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯
+
+ FAIL  frontend/src/dados/equivalencia.test.ts > HT-017 — equivalencia mock ≡ mapeadores(OrigemFalsa) > lancamentos: mesmo objeto de apresentacao que mockTransactions (exceto o instante `date`)
+AssertionError: expected [] to deeply equal [ { id: 'txn_001', …(10) }, …(5) ]
+
+- Expected
++ Received
+
+- [
+-   {
+-     "amount": -34.9,
+-     "bank": "Nubank",
+-     "bankColor": "#8B5CF6",
+-     "category": "Transporte",
+-     "categoryIcon": "fa-car",
+-     "description": "Uber",
+-     "formattedAmount": "- R$ 34,90",
+-     "formattedDate": "Hoje, 10:02",
+-     "id": "txn_001",
+-     "merchant": "Uber Brasil",
+-     "type": "debit",
+-   },
+-   {
+-     "amount": -218.5,
+-     "bank": "Itaú",
+-     "bankColor": "#F97316",
+-     "category": "Alimentação",
+-     "categoryIcon": "fa-basket-shopping",
+-     "description": "Pão de Açúcar",
+-     "formattedAmount": "- R$ 218,50",
+-     "formattedDate": "Hoje, 05:30",
+-     "id": "txn_002",
+-     "merchant": "Grupo Pão de Açúcar",
+-     "type": "debit",
+-   },
+-   {
+-     "amount": 8500,
+-     "bank": "Nubank",
+-     "bankColor": "#8B5CF6",
+-     "category": "Receita",
+-     "categoryIcon": "fa-arrow-trend-up",
+-     "description": "Salário Junho",
+-     "formattedAmount": "+ R$ 8.500,00",
+-     "formattedDate": "Ontem, 08:00",
+-     "id": "txn_003",
+-     "merchant": "Empresa XYZ LTDA",
+-     "type": "credit",
+-   },
+-   {
+-     "amount": -55.9,
+-     "bank": "Bradesco",
+-     "bankColor": "#EF4444",
+-     "category": "Lazer",
+-     "categoryIcon": "fa-film",
+-     "description": "Netflix",
+-     "formattedAmount": "- R$ 55,90",
+-     "formattedDate": "Ontem, 00:01",
+-     "id": "txn_004",
+-     "merchant": "Netflix International",
+-     "type": "debit",
+-   },
+-   {
+-     "amount": -87.4,
+-     "bank": "Itaú",
+-     "bankColor": "#F97316",
+-     "category": "Saúde",
+-     "categoryIcon": "fa-pills",
+-     "description": "Farmácia São João",
+-     "formattedAmount": "- R$ 87,40",
+-     "formattedDate": "13 Jun, 18:45",
+-     "id": "txn_005",
+-     "merchant": "Farmácia São João",
+-     "type": "debit",
+-   },
+-   {
+-     "amount": 38.7,
+-     "bank": "Banco Inter",
+-     "bankColor": "#F97316",
+-     "category": "Investimentos",
+-     "categoryIcon": "fa-chart-line",
+-     "description": "Rendimento CDB",
+-     "formattedAmount": "+ R$ 38,70",
+-     "formattedDate": "12 Jun, 08:00",
+-     "id": "txn_006",
+-     "merchant": "Banco Inter",
+-     "type": "credit",
+-   },
+- ]
++ []
+
+ ❯ frontend/src/dados/equivalencia.test.ts:42:35
+     40|     if (r.estado !== 'ok') throw new Error('esperava ok');
+     41|     const mapeados = paraTransactions(r.dados, AGORA);
+     42|     expect(mapeados.map(semData)).toEqual(mockTransactions.map(semData…
+       |                                   ^
+     43|   });
+     44|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/4]⎯
+
+ FAIL  frontend/src/dados/equivalencia.test.ts > HT-017 — equivalencia mock ≡ mapeadores(OrigemFalsa) > bancos conectados: mesmo objeto que mockConnectedBanks
+AssertionError: expected [] to deeply equal [ { id: 'bank_nubank', …(7) }, …(2) ]
+
+- Expected
++ Received
+
+- [
+-   {
+-     "balance": 2418.32,
+-     "color": "#8B5CF6",
+-     "formattedBalance": "R$ 2.418,32",
+-     "id": "bank_nubank",
+-     "initials": "NU",
+-     "lastSync": "Agora mesmo",
+-     "name": "Nubank",
+-     "status": "active",
+-   },
+-   {
+-     "balance": 10842.13,
+-     "color": "#F97316",
+-     "formattedBalance": "R$ 10.842,13",
+-     "id": "bank_itau",
+-     "initials": "IT",
+-     "lastSync": "3 min atrás",
+-     "name": "Itaú",
+-     "status": "active",
+-   },
+-   {
+-     "balance": 5482.1,
+-     "color": "#EF4444",
+-     "formattedBalance": "R$ 5.482,10",
+-     "id": "bank_bradesco",
+-     "initials": "BB",
+-     "lastSync": "Sincronizando...",
+-     "name": "Bradesco",
+-     "status": "syncing",
+-   },
+- ]
++ []
+
+ ❯ frontend/src/dados/equivalencia.test.ts:48:48
+     46|     const r = await origem.listarBancosConectados();
+     47|     if (r.estado !== 'ok') throw new Error('esperava ok');
+     48|     expect(paraConnectedBanks(r.dados, AGORA)).toEqual(mockConnectedBa…
+       |                                                ^
+     49|   });
+     50|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/4]⎯
+
+ FAIL  frontend/src/dados/equivalencia.test.ts > HT-017 — equivalencia mock ≡ mapeadores(OrigemFalsa) > categorias de gasto: mesmo objeto que mockSpendingCategories, com percentual derivado dos totais
+AssertionError: expected [] to deeply equal [ { id: 'cat_food', …(5) }, …(5) ]
+
+- Expected
++ Received
+
+- [
+-   {
+-     "color": "#36b37e",
+-     "icon": "fa-utensils",
+-     "id": "cat_food",
+-     "name": "Alimentação",
+-     "percentage": 28.7,
+-     "value": 1240,
+-   },
+-   {
+-     "color": "#0a6d42",
+-     "icon": "fa-car",
+-     "id": "cat_trans",
+-     "name": "Transporte",
+-     "percentage": 19,
+-     "value": 820.5,
+-   },
+-   {
+-     "color": "#219b66",
+-     "icon": "fa-house",
+-     "id": "cat_house",
+-     "name": "Moradia",
+-     "percentage": 22,
+-     "value": 950,
+-   },
+-   {
+-     "color": "#001b42",
+-     "icon": "fa-heart-pulse",
+-     "id": "cat_health",
+-     "name": "Saúde",
+-     "percentage": 9.5,
+-     "value": 410,
+-   },
+-   {
+-     "color": "#4ade80",
+-     "icon": "fa-gamepad",
+-     "id": "cat_entert",
+-     "name": "Lazer",
+-     "percentage": 7.2,
+-     "value": 310.4,
+-   },
+-   {
+-     "color": "#cbd5e1",
+-     "icon": "fa-ellipsis",
+-     "id": "cat_other",
+-     "name": "Outros",
+-     "percentage": 13.6,
+-     "value": 588,
+-   },
+- ]
++ []
+
+ ❯ frontend/src/dados/equivalencia.test.ts:54:45
+     52|     const r = await origem.listarCategoriasDeGasto();
+     53|     if (r.estado !== 'ok') throw new Error('esperava ok');
+     54|     expect(paraSpendingCategories(r.dados)).toEqual(mockSpendingCatego…
+       |                                             ^
+     55|   });
+     56| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/4]⎯
+
+
+ Test Files  1 failed | 9 passed (10)
+      Tests  4 failed | 56 passed (60)
+   Start at  15:03:23
+   Duration  6.00s (import 86%, transform 8%, tests 5%, worker 1%)
+
+ ELIFECYCLE  Command failed with exit code 1.
+---------------------------------------------------------------
+EXIT_CODE=1
+SHA256=4fe1705f169fc5faa7b83c63d1d5a90e153a39bb0d7cc9feb95f87aaf011beca

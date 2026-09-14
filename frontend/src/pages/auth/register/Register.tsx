@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
+import { useForm, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { registerSchema, type RegisterFormData } from '../../../validations/auth.schema';
 import { calculatePasswordStrength } from '../../../utils/password';
 import { formatCPF } from '../../../utils/formatters';
 import { useToast } from '../../../hooks/use-toast';
+import { createAccount, AccessFailure } from '../../../data/access';
 
 export default function Register() {
   const [step, setStep] = useState(1);
@@ -19,7 +20,7 @@ export default function Register() {
     register,
     handleSubmit,
     trigger,
-    watch,
+    control,
     setValue,
     formState: { errors },
   } = useForm<RegisterFormData>({
@@ -27,8 +28,8 @@ export default function Register() {
     mode: 'onTouched',
   });
 
-  const password = watch('password', '');
-  const cpfValue = watch('cpf', '');
+  const password = useWatch({ control, name: 'password', defaultValue: '' });
+  const cpfValue = useWatch({ control, name: 'cpf', defaultValue: '' });
   const strength = calculatePasswordStrength(password);
 
   useEffect(() => {
@@ -48,20 +49,28 @@ export default function Register() {
     setStep(1);
   };
 
-  const onSubmit = (data: RegisterFormData) => {
+  // A credencial NUNCA e registrada em log — nem em desenvolvimento (RNF-015).
+  // Ate HN-001 esta funcao registrava o objeto do formulario no console.
+  const onSubmit = async (data: RegisterFormData) => {
     setIsLoading(true);
-    console.log('Register attempt:', data);
-
-    // Simulate API call
-    setTimeout(() => {
-      setIsLoading(false);
+    try {
+      await createAccount({ email: data.email, senha: data.password });
       toast({
         variant: "success",
         title: "Cadastro realizado!",
         description: "Sua conta foi criada. Redirecionando...",
       });
       navigate('/login');
-    }, 2000);
+    } catch (erro) {
+      // A recusa e uniforme: nao revela se o e-mail ja estava cadastrado (RF-001).
+      toast({
+        variant: "destructive",
+        title: "Não foi possível criar a conta",
+        description: erro instanceof AccessFailure ? erro.message : "Tente novamente.",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -77,7 +86,7 @@ export default function Register() {
         </p>
 
         {/* Progress Indicator */}
-        <div className="flex items-center justify-center gap-2 max-w-[300px] mx-auto">
+        <div className="flex items-center justify-center gap-2 max-w-75 mx-auto">
           <div className="flex flex-col items-center gap-2">
             <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm transition-colors ${step >= 1 ? 'bg-[#36b37e] text-white' : 'bg-gray-200 text-gray-500'}`}>
               {step > 1 ? <i className="fas fa-check"></i> : '1'}
@@ -85,7 +94,7 @@ export default function Register() {
             <span className={`text-[0.65rem] font-bold ${step >= 1 ? 'text-[#36b37e]' : 'text-gray-400'}`}>DADOS PESSOAIS</span>
           </div>
 
-          <div className={`flex-1 h-[2px] transition-colors ${step > 1 ? 'bg-[#36b37e]' : 'bg-gray-200'} -mt-4`}></div>
+          <div className={`flex-1 h-0.5 transition-colors ${step > 1 ? 'bg-[#36b37e]' : 'bg-gray-200'} -mt-4`}></div>
 
           <div className="flex flex-col items-center gap-2">
             <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm transition-colors ${step === 2 ? 'bg-[#36b37e] text-white' : 'bg-gray-200 text-gray-500'}`}>
@@ -184,7 +193,7 @@ export default function Register() {
             <button
               type="button"
               onClick={handleNextStep}
-              className="w-full py-[0.85rem] mt-2 bg-gradient-primary text-white rounded-lg font-bold text-[0.95rem] transition-all hover:opacity-90 hover:-translate-y-[2px] shadow-md flex items-center justify-center gap-2 uppercase tracking-wide"
+              className="w-full py-[0.85rem] mt-2 bg-gradient-primary text-white rounded-lg font-bold text-[0.95rem] transition-all hover:opacity-90 hover:-translate-y-0.5 shadow-md flex items-center justify-center gap-2 uppercase tracking-wide"
             >
               Continuar <i className="fas fa-arrow-right"></i>
             </button>
@@ -217,7 +226,7 @@ export default function Register() {
               {/* Password Strength Indicator */}
               {password && (
                 <div className="flex flex-col gap-1 mt-1">
-                  <div className="flex gap-1 h-[4px]">
+                  <div className="flex gap-1 h-1">
                     {[1, 2, 3, 4].map((i) => (
                       <div
                         key={i}
@@ -262,12 +271,12 @@ export default function Register() {
             </div>
 
             <label className="flex items-start gap-3 cursor-pointer group mt-2 text-[0.85rem]">
-              <div className="relative flex items-center justify-center mt-[3px]">
+              <div className="relative flex items-center justify-center mt-0.75">
                 <input
                   type="checkbox"
                   id="acceptTerms"
                   {...register('acceptTerms')}
-                  className="peer appearance-none w-[18px] h-[18px] border-2 border-gray-200 rounded cursor-pointer checked:bg-[#36b37e] checked:border-[#36b37e] transition-colors"
+                  className="peer appearance-none w-4.5 h-4.5 border-2 border-gray-200 rounded cursor-pointer checked:bg-[#36b37e] checked:border-[#36b37e] transition-colors"
                 />
                 <i className="fas fa-check absolute text-white text-[10px] opacity-0 peer-checked:opacity-100 pointer-events-none"></i>
               </div>
@@ -290,12 +299,12 @@ export default function Register() {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="flex-1 py-[0.85rem] bg-gradient-primary text-white rounded-lg font-bold text-[0.95rem] shadow-md transition-all hover:opacity-90 hover:-translate-y-[2px] flex items-center justify-center gap-2 disabled:opacity-70 disabled:hover:translate-y-0 disabled:cursor-not-allowed uppercase tracking-wide"
+                className="flex-1 py-[0.85rem] bg-gradient-primary text-white rounded-lg font-bold text-[0.95rem] shadow-md transition-all hover:opacity-90 hover:-translate-y-0.5 flex items-center justify-center gap-2 disabled:opacity-70 disabled:hover:translate-y-0 disabled:cursor-not-allowed uppercase tracking-wide"
               >
                 {isLoading ? (
                   <>Carregando&nbsp;&nbsp;<i className="fas fa-spinner fa-spin"></i></>
                 ) : (
-                  <>Criar Conta</>
+                  <>Criar Account</>
                 )}
               </button>
             </div>

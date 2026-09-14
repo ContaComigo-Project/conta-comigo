@@ -1,0 +1,10 @@
+# progress — [CHAVE]
+# Diário append-only do ciclo Ralph. Uma linha por evento.
+# Formato: AAAA-MM-DD HH:MM | FASE | descrição objetiva | evidência
+# FASE: PERCEBER | ORIENTAR | DECIDIR | AGIR | REGISTRAR
+
+AAAA-MM-DD HH:MM | PERCEBER | li KANBAN-OFICIAL.md, história e entregas relacionadas | -
+AAAA-MM-DD HH:MM | ORIENTAR | critérios de aceite x rules x riscos comparados | -
+AAAA-MM-DD HH:MM | DECIDIR | próxima ação escolhida: ... | -
+AAAA-MM-DD HH:MM | AGIR | ... | comando/saída
+AAAA-MM-DD HH:MM | REGISTRAR | ... | arquivo atualizado

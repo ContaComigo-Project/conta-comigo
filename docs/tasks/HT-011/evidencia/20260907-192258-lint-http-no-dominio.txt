@@ -1,0 +1,32 @@
+# evidência de execução — HT-011
+# Gerado por scripts/registrar-evidencia.sh. Não editar à mão.
+comando : scripts/harness.sh lint
+data    : 2026-09-07 19:22:58 -0300
+commit  : e294cb6 (árvore suja)
+sistema : MINGW64_NT-10.0-26200
+espera  : FALHA (vermelho obrigatório)
+---------------------------------------------------------------
+harness: HARNESS_LINT -> pnpm run lint
+
+> conta-comigo@0.7.0 lint C:\Users\migue\Documents\mocitec\conta-comigo
+> pnpm --filter client-contacomigo lint && pnpm run lint:fronteiras
+
+
+> client-contacomigo@0.0.0 lint C:\Users\migue\Documents\mocitec\conta-comigo\frontend
+> eslint .
+
+
+> conta-comigo@0.7.0 lint:fronteiras C:\Users\migue\Documents\mocitec\conta-comigo
+> depcruise --config .dependency-cruiser.cjs backend frontend/src
+
+
+  error dominio-so-importa-dominio: backend/src/agregacao/domain/model/usa-http-proposital.ts → node_modules/.pnpm/axios@1.13.2/node_modules/axios/index.d.cts
+  error dominio-sem-framework-nem-io: backend/src/agregacao/domain/model/usa-http-proposital.ts → node_modules/.pnpm/axios@1.13.2/node_modules/axios/index.d.cts
+
+x 2 dependency violations (2 errors, 0 warnings). 164 modules, 369 dependencies cruised.
+
+ ELIFECYCLE  Command failed with exit code 2.
+ ELIFECYCLE  Command failed with exit code 2.
+---------------------------------------------------------------
+EXIT_CODE=2
+SHA256=535c72b5a43f6b6aedcd429939475566777c34996499fca9c3b281e291d56187

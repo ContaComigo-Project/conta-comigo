@@ -1,0 +1,23 @@
+# evidência de execução — HT-006
+# Gerado por scripts/registrar-evidencia.sh. Não editar à mão.
+comando : scripts/harness.sh test-funcional
+data    : 2026-09-07 12:17:06 -0300
+commit  : 64ca4eb (árvore suja)
+sistema : MINGW64_NT-10.0-26200
+espera  : SUCESSO
+---------------------------------------------------------------
+harness: HARNESS_TEST_FUNCTIONAL -> pnpm run test:funcional
+
+> conta-comigo@0.7.0 test:funcional C:\Users\migue\Documents\mocitec\conta-comigo
+> playwright test
+
+
+Running 2 tests using 2 workers
+
+  ✓  2 [chromium] › tests\funcional\fumaca.spec.ts:13:7 › fumaca — a web existente responde › a tela de login existe e tem formulario (1.4s)
+  ✓  1 [chromium] › tests\funcional\fumaca.spec.ts:7:7 › fumaca — a web existente responde › a landing abre com o titulo do produto (1.7s)
+
+  2 passed (4.0s)
+---------------------------------------------------------------
+EXIT_CODE=0
+SHA256=9aab533f0050d05680ac327fdcae4bf66b373b0acf4df52e30a04a340d06c393

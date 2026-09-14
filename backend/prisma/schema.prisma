@@ -1,0 +1,144 @@
+// Persistence model (ADR-002, rule 1). NOT the domain entity: the repository in
+// infrastructure/persistence/ translates between the two. The generated client
+// lives inside persistence/ — the only place that knows it.
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/transactions/infrastructure/persistence/gerado"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Transaction {
+  id            String   @id
+  holderId      String   @map("holder_id")
+  description   String   @map("description")
+  // Versao legivel derivada (HN-004, RF-010). O original acima nunca e
+  // sobrescrito: RN-010 exige que ele permaneca consultavel.
+  readableDescription String? @map("readable_description")
+  // Categoria e quem a definiu (HN-005). `category_origin` = 'manual' bloqueia
+  // a sobrescrita por sincronizacao (RN-011).
+  category            String? @map("category")
+  categoryOrigin      String? @map("category_origin")
+  // Instituicao/banco de origem do lancamento (ex.: 'Banco Exemplo'). Ausente
+  // enquanto o agregador nao a preencher — o transporte nao inventa valor.
+  institutionId      String? @map("institution_id")
+  amountInCents Int      @map("amount_in_cents")
+  dueDate       DateTime @map("due_date") @db.Timestamptz(3)
+  externalId    String?  @map("external_id")
+
+  @@index([holderId])
+  @@index([holderId, externalId])
+  @@map("transactions")
+}
+
+// External account as persisted for the consolidated panel (HN-003). The type
+// separates active accounts (checking/savings) from credit cards: the card
+// enters the panel as a bill, never summed into the balance (RN-009).
+model ExternalAccount {
+  id               String @id
+  holderId         String @map("holder_id")
+  externalId       String @map("external_id")
+  institutionId    String @map("institution_id")
+  type             String @map("type")
+  balanceInCents   Int    @map("balance_in_cents")
+
+  @@index([holderId])
+  @@map("external_accounts")
+}
+
+// Access context (HN-001). The account IS the holder: there is no separate user
+// table. Stores the password hash, never the password.
+model Account {
+  id           String   @id
+  email        String   @unique
+  name         String   @default("")
+  passwordHash String   @map("password_hash")
+  createdAt    DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+
+  @@map("accounts")
+}
+
+// Refresh token: the database stores its HASH. If it leaks, the refreshes are
+// unusable (ADR-004, real revocation).
+model Session {
+  id               String    @id
+  holderId         String    @map("holder_id")
+  refreshTokenHash String    @unique @map("refresh_token_hash")
+  expiresAt        DateTime  @map("expires_at") @db.Timestamptz(3)
+  revokedAt        DateTime? @map("revoked_at") @db.Timestamptz(3)
+
+  @@index([holderId])
+  @@map("sessions")
+}
+
+// Consent as a first-class record (HN-002). The explicit decision of a person
+// to authorize an institution. The aggregator credential is stored CIPHERED
+// (RNF-014); the domain never sees the plain value.
+model Consent {
+  id                String    @id
+  holderId          String    @map("holder_id")
+  institutionId     String    @map("institution_id")
+  connectionId      String    @map("connection_id")
+  scope             String
+  credentialCipher  String    @map("credential_cipher")
+  createdAt         DateTime  @default(now()) @map("created_at") @db.Timestamptz(3)
+  expiresAt         DateTime  @map("expires_at") @db.Timestamptz(3)
+  revokedAt         DateTime? @map("revoked_at") @db.Timestamptz(3)
+  deletionScheduledAt DateTime? @map("deletion_scheduled_at") @db.Timestamptz(3)
+  lastSyncAt        DateTime? @map("last_sync_at") @db.Timestamptz(3)
+
+  @@index([holderId])
+  @@map("consents")
+}
+
+// Budget band-crossing alert (HN-007, RN-005): at most ONE per band, category
+// and month — persisted so a repeat is impossible, not just discouraged.
+model BudgetAlert {
+  id         String   @id
+  holderId   String   @map("holder_id")
+  categoryId String   @map("category_id")
+  month      String
+  band       String
+  createdAt  DateTime @map("created_at") @db.Timestamptz(3)
+
+  @@index([holderId, month])
+  @@map("budget_alerts")
+}
+// Uso diário de IA por titular (HT-013, RNF-009). O teto do free tier é por
+// pessoa e por dia; a linha existe para o par (titular, dia) e só cresce.
+model AiDailyUsage {
+  holderId String @map("holder_id")
+  day      String @map("day")
+  calls    Int    @default(0) @map("calls")
+
+  @@id([holderId, day])
+  @@map("ai_daily_usage")
+}
+
+// Cache de conselho (HT-013, RNF-010). A chave já embute titular, tipo,
+// pergunta e a impressão dos dados: dado novo produz chave nova, e a resposta
+// velha simplesmente deixa de ser encontrada.
+model AiAdviceCache {
+  key       String   @id @map("key")
+  text      String   @map("text")
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+
+  @@map("ai_advice_cache")
+}
+
+// Limite mensal por categoria (HN-006, RF-013). A chave e (titular, mes,
+// categoria): o mes faz parte dela para que um limite de dezembro nao passe a
+// valer para janeiro sozinho. Ausencia de linha significa "sem limite"
+// (RN-002) — diferente de limite zero.
+model MonthlyBudget {
+  holderId     String @map("holder_id")
+  month        String @map("month")
+  category     String @map("category")
+  limitInCents Int    @map("limit_in_cents")
+
+  @@id([holderId, month, category])
+  @@map("monthly_budgets")
+}

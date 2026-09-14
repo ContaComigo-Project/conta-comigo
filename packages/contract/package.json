@@ -1,0 +1,14 @@
+{
+  "name": "@contacomigo/contract",
+  "private": true,
+  "version": "0.11.0",
+  "type": "module",
+  "description": "Contrato de dados entre a web e a API (HT-017): tipos de transporte e esquemas zod. Importavel por infrastructure/ e pela web; nunca por domain/.",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "types": "./src/index.ts",
+  "dependencies": {
+    "zod": "4.3.6"
+  }
+}

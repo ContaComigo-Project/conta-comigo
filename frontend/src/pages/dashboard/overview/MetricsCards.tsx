@@ -1,16 +1,28 @@
+import { useEffect, useState } from 'react';
 import { Wallet, TrendingDown, BarChart3, TrendingUp, TrendingDown as TrendDown } from 'lucide-react';
-import { mockMetrics, type Metric } from '../../../data/dashboard.mock';
+import { ApiSource } from '../../../data/api-source';
 import { useCountUp } from '../../../hooks/use-count-up';
+import { formatBRL } from '../../../utils/formatters';
 
-const ICONS: Record<Metric['icon'], React.ReactNode> = {
+// Integração real (ApiSource): saldo total, gastos do mês e fatura do cartão
+// vêm de GET /dashboard/summary (HN-003, RN-009). Sem login, degrada em zero.
+const api = new ApiSource();
+
+type Metrica = {
+  id: string;
+  label: string;
+  value: number;
+  icon: 'wallet' | 'trending-down' | 'bar-chart';
+  highlight: boolean;
+  trend: number;
+  trendLabel: string;
+};
+
+const ICONS: Record<Metrica['icon'], React.ReactNode> = {
   wallet: <Wallet size={18} strokeWidth={1.7} />,
   'trending-down': <TrendingDown size={18} strokeWidth={1.7} />,
   'bar-chart': <BarChart3 size={18} strokeWidth={1.7} />,
 };
-
-function formatBRL(value: number): string {
-  return value.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-}
 
 function TrendBadge({ trend, label }: { trend: number; label: string }) {
   const isPositive = trend >= 0;
@@ -29,7 +41,7 @@ function TrendBadge({ trend, label }: { trend: number; label: string }) {
   );
 }
 
-function MetricCard({ metric }: { metric: Metric }) {
+function MetricCard({ metric }: { metric: Metrica }) {
   const animated = useCountUp(metric.value, 1400);
 
   return (
@@ -37,7 +49,7 @@ function MetricCard({ metric }: { metric: Metric }) {
       id={`metric-card-${metric.id}`}
       className={`relative overflow-hidden rounded-2xl p-5 ${
         metric.highlight
-          ? 'bg-gradient-to-br from-[#0a6d42] to-[#36b37e] text-white shadow-md shadow-[#36b37e]/20'
+          ? 'bg-linear-to-br from-cc-dark-green to-cc-green text-white shadow-md shadow-cc-green/20'
           : 'bg-white border border-slate-100 shadow-sm'
       }`}
     >
@@ -82,11 +94,29 @@ function MetricCard({ metric }: { metric: Metric }) {
   );
 }
 
+function metricasDoResumo(saldoCentavos: number, gastosCentavos: number, faturaCentavos: number): Metrica[] {
+  return [
+    { id: 'saldo', label: 'Saldo Total', value: saldoCentavos / 100, icon: 'wallet', highlight: true, trend: 0, trendLabel: 'contas ativas' },
+    { id: 'gastos', label: 'Gastos do Mês', value: gastosCentavos / 100, icon: 'trending-down', highlight: false, trend: 0, trendLabel: 'mês de referência' },
+    { id: 'fatura', label: 'Fatura do Cartão', value: faturaCentavos / 100, icon: 'bar-chart', highlight: false, trend: 0, trendLabel: 'separada do saldo' },
+  ];
+}
+
 export default function MetricsCards() {
+  const [metricas, setMetricas] = useState<Metrica[]>(metricasDoResumo(0, 0, 0));
+
+  useEffect(() => {
+    api.resumoConsolidado().then((r) => {
+      if (r.estado === 'ok') {
+        setMetricas(metricasDoResumo(r.dados.saldoTotalEmCentavos, r.dados.gastosDoMesEmCentavos, r.dados.faturaDoCartaoEmCentavos));
+      }
+    });
+  }, []);
+
   return (
     <section aria-label="Métricas principais">
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        {mockMetrics.map((metric) => (
+        {metricas.map((metric) => (
           <MetricCard key={metric.id} metric={metric} />
         ))}
       </div>

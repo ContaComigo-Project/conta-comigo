@@ -1,0 +1,166 @@
+# evidência de execução — HT-011
+# Gerado por scripts/registrar-evidencia.sh. Não editar à mão.
+comando : scripts/harness.sh gates
+data    : 2026-09-07 19:23:49 -0300
+commit  : e294cb6 (árvore suja)
+sistema : MINGW64_NT-10.0-26200
+espera  : SUCESSO
+---------------------------------------------------------------
+harness: executando gates na ordem — falha no primeiro erro
+harness: HARNESS_LINT -> pnpm run lint
+
+> conta-comigo@0.7.0 lint C:\Users\migue\Documents\mocitec\conta-comigo
+> pnpm --filter client-contacomigo lint && pnpm run lint:fronteiras
+
+
+> client-contacomigo@0.0.0 lint C:\Users\migue\Documents\mocitec\conta-comigo\frontend
+> eslint .
+
+
+> conta-comigo@0.7.0 lint:fronteiras C:\Users\migue\Documents\mocitec\conta-comigo
+> depcruise --config .dependency-cruiser.cjs backend frontend/src
+
+
+✔ no dependency violations found (163 modules, 381 dependencies cruised)
+
+harness: HARNESS_TEST -> pnpm run test
+
+> conta-comigo@0.7.0 test C:\Users\migue\Documents\mocitec\conta-comigo
+> pnpm run test:unitario && pnpm run test:integracao && pnpm run test:funcional
+
+
+> conta-comigo@0.7.0 test:unitario C:\Users\migue\Documents\mocitec\conta-comigo
+> vitest run
+
+
+ RUN  v5.0.0 C:/Users/migue/Documents/mocitec/conta-comigo
+
+
+ Test Files  20 passed (20)
+      Tests  129 passed (129)
+   Start at  19:24:01
+   Duration  12.90s (import 62%, tests 19%, transform 17%, setup 1%, worker 1%)
+
+    Isolate  20 workers spawned · ~484ms startup each (spawn + environment, per file)
+             at least ~899ms faster with isolate: false — reuses workers across files instead of one per file
+
+
+> conta-comigo@0.7.0 test:integracao C:\Users\migue\Documents\mocitec\conta-comigo
+> vitest run --config vitest.integracao.config.ts
+
+
+ RUN  v5.0.0 C:/Users/migue/Documents/mocitec/conta-comigo
+
+
+ Test Files  1 passed (1)
+      Tests  4 passed (4)
+   Start at  19:24:15
+   Duration  987ms (tests 54%, import 26%, transform 17%, setup 1%, worker 1%)
+
+
+> conta-comigo@0.7.0 test:funcional C:\Users\migue\Documents\mocitec\conta-comigo
+> playwright test
+
+
+Running 2 tests using 2 workers
+
+  ✓  2 [chromium] › tests\funcional\fumaca.spec.ts:13:3 › fumaca — a web existente responde › a tela de login existe e tem formulario (4.3s)
+  ✓  1 [chromium] › tests\funcional\fumaca.spec.ts:7:3 › fumaca — a web existente responde › a landing abre com o titulo do produto (5.2s)
+
+  2 passed (10.0s)
+harness: HARNESS_COVERAGE -> pnpm run coverage
+
+> conta-comigo@0.7.0 coverage C:\Users\migue\Documents\mocitec\conta-comigo
+> vitest run --coverage
+
+
+ RUN  v5.0.0 C:/Users/migue/Documents/mocitec/conta-comigo
+      Coverage enabled with v8
+
+
+ Test Files  20 passed (20)
+      Tests  129 passed (129)
+   Start at  19:24:30
+   Duration  15.21s (import 58%, tests 27%, transform 12%, worker 2%, setup 1%)
+
+    Isolate  20 workers spawned · ~576ms startup each (spawn + environment, per file)
+             at least ~1.07s faster with isolate: false — reuses workers across files instead of one per file
+
+[34m % [39m[2mCoverage report from [22m[33mv8[39m
+-------------------|---------|----------|---------|---------|-------------------
+File               | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+-------------------|---------|----------|---------|---------|-------------------
+All files          |   97.43 |    92.85 |     100 |     100 |                   
+ ...s/domain/model |      75 |       50 |     100 |     100 |                   
+  titular.ts       |      75 |       50 |     100 |     100 | 6                 
+-------------------|---------|----------|---------|---------|-------------------
+
+=============================== Coverage summary ===============================
+Statements   : 97.43% ( 38/39 )
+Branches     : 92.85% ( 13/14 )
+Functions    : 100% ( 13/13 )
+Lines        : 100% ( 29/29 )
+================================================================================
+harness: HARNESS_SECURITY -> pnpm run security
+
+> conta-comigo@0.7.0 security C:\Users\migue\Documents\mocitec\conta-comigo
+> node scripts/seguranca.mjs
+
+seguranca: varredura de segredo e de dependencia
+
+=== 1. Segredos (gitleaks)
+--- arvore de trabalho
+[90m10:24PM[0m [32mINF[0m [1mscanned ~78400542 bytes (78.40 MB) in 8.24s[0m
+[90m10:24PM[0m [32mINF[0m [1mno leaks found[0m
+--- historico de commits
+[90m10:25PM[0m [32mINF[0m [1m85 commits scanned.[0m
+[90m10:25PM[0m [32mINF[0m [1mscanned ~1628678 bytes (1.63 MB) in 7.97s[0m
+[90m10:25PM[0m [32mINF[0m [1mno leaks found[0m
+  [OK]    nenhum segredo detectado
+
+=== 2. Dependencias vulneraveis (osv-scanner)
+Scanned /repo/pnpm-lock.yaml file and found 604 packages
+Total 1 package affected by 29 known vulnerabilities (0 Critical, 12 High, 16 Medium, 1 Low, 0 Unknown) from 1 ecosystem.
+29 vulnerabilities can be fixed.
+
+
++-------------------------------------+------+-----------+---------+---------+---------------+---------------------+
+| OSV URL                             | CVSS | ECOSYSTEM | PACKAGE | VERSION | FIXED VERSION | SOURCE              |
++-------------------------------------+------+-----------+---------+---------+---------------+---------------------+
+| https://osv.dev/GHSA-35jp-ww65-95wh | 8.7  | npm       | axios   | 1.13.2  | 1.16.0        | repo/pnpm-lock.yaml |
+| https://osv.dev/GHSA-3g43-6gmg-66jw | 7.0  | npm       | axios   | 1.13.2  | 1.15.2        | repo/pnpm-lock.yaml |
+| https://osv.dev/GHSA-3p68-rc4w-qgx5 | 6.3  | npm       | axios   | 1.13.2  | 1.15.0        | repo/pnpm-lock.yaml |
+| https://osv.dev/GHSA-3w6x-2g7m-8v23 | 6.5  | npm       | axios   | 1.13.2  | 1.15.2        | repo/pnpm-lock.yaml |
+| https://osv.dev/GHSA-42h9-826w-cgv3 | 6.3  | npm       | axios   | 1.13.2  | 1.18.0        | repo/pnpm-lock.yaml |
+| https://osv.dev/GHSA-43fc-jf86-j433 | 7.5  | npm       | axios   | 1.13.2  | 1.13.5        | repo/pnpm-lock.yaml |
+| https://osv.dev/GHSA-445q-vr5w-6q77 | 5.3  | npm       | axios   | 1.13.2  | 1.15.1        | repo/pnpm-lock.yaml |
+| https://osv.dev/GHSA-5c9x-8gcm-mpgx | 5.3  | npm       | axios   | 1.13.2  | 1.15.1        | repo/pnpm-lock.yaml |
+| https://osv.dev/GHSA-62hf-57xw-28j9 | 7.5  | npm       | axios   | 1.13.2  | 1.15.1        | repo/pnpm-lock.yaml |
+| https://osv.dev/GHSA-6chq-wfr3-2hj9 | 7.4  | npm       | axios   | 1.13.2  | 1.15.1        | repo/pnpm-lock.yaml |
+| https://osv.dev/GHSA-777c-7fjr-54vf | 7.5  | npm       | axios   | 1.13.2  | 1.16.0        | repo/pnpm-lock.yaml |
+| https://osv.dev/GHSA-7q8q-rj6j-mhjq | 6.3  | npm       | axios   | 1.13.2  | 1.18.0        | repo/pnpm-lock.yaml |
+| https://osv.dev/GHSA-898c-q2cr-xwhg | 4.8  | npm       | axios   | 1.13.2  | 1.16.0        | repo/pnpm-lock.yaml |
+| https://osv.dev/GHSA-fvcv-3m26-pcqx | 4.8  | npm       | axios   | 1.13.2  | 1.15.0        | repo/pnpm-lock.yaml |
+| https://osv.dev/GHSA-hfxv-24rg-xrqf | 7.5  | npm       | axios   | 1.13.2  | 1.16.0        | repo/pnpm-lock.yaml |
+| https://osv.dev/GHSA-j5f8-grm9-p9fc | 7.5  | npm       | axios   | 1.13.2  | 1.16.0        | repo/pnpm-lock.yaml |
+| https://osv.dev/GHSA-jqh4-m9w3-8hp9 | 6.3  | npm       | axios   | 1.13.2  | 1.18.0        | repo/pnpm-lock.yaml |
+| https://osv.dev/GHSA-m7pr-hjqh-92cm | 6.8  | npm       | axios   | 1.13.2  | 1.15.1        | repo/pnpm-lock.yaml |
+| https://osv.dev/GHSA-mmx7-hfxf-jppx | 6.3  | npm       | axios   | 1.13.2  | 1.18.0        | repo/pnpm-lock.yaml |
+| https://osv.dev/GHSA-mwf2-3pr3-8698 | 6.3  | npm       | axios   | 1.13.2  | 1.18.0        | repo/pnpm-lock.yaml |
+| https://osv.dev/GHSA-p92q-9vqr-4j8v | 8.2  | npm       | axios   | 1.13.2  | 1.16.0        | repo/pnpm-lock.yaml |
+| https://osv.dev/GHSA-pf86-5x62-jrwf | 7.4  | npm       | axios   | 1.13.2  | 1.15.1        | repo/pnpm-lock.yaml |
+| https://osv.dev/GHSA-pmv8-rq9r-6j72 | 6.3  | npm       | axios   | 1.13.2  | 1.18.0        | repo/pnpm-lock.yaml |
+| https://osv.dev/GHSA-pmwg-cvhr-8vh7 | 7.2  | npm       | axios   | 1.13.2  | 1.15.1        | repo/pnpm-lock.yaml |
+| https://osv.dev/GHSA-q8qp-cvcw-x6jj | 7.4  | npm       | axios   | 1.13.2  | 1.15.2        | repo/pnpm-lock.yaml |
+| https://osv.dev/GHSA-vf2m-468p-8v99 | 5.3  | npm       | axios   | 1.13.2  | 1.15.1        | repo/pnpm-lock.yaml |
+| https://osv.dev/GHSA-w9j2-pvgh-6h63 | 4.8  | npm       | axios   | 1.13.2  | 1.15.1        | repo/pnpm-lock.yaml |
+| https://osv.dev/GHSA-xhjh-pmcv-23jw | 3.7  | npm       | axios   | 1.13.2  | 1.15.1        | repo/pnpm-lock.yaml |
+| https://osv.dev/GHSA-xx6v-rp6x-q39c | 5.4  | npm       | axios   | 1.13.2  | 1.15.1        | repo/pnpm-lock.yaml |
++-------------------------------------+------+-----------+---------+---------+---------------+---------------------+
+  [FALHA] osv-scanner encontrou vulnerabilidade
+
+seguranca: reprovada — 1 varredura(s) falharam
+ ELIFECYCLE  Command failed with exit code 1.
+---------------------------------------------------------------
+EXIT_CODE=1
+SHA256=78c846105da7d72f0329e92dcc883c65a136fc3af52d042d2324c4eecafad7fc

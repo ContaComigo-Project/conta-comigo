@@ -1,0 +1,75 @@
+# evidência de execução — HT-010
+# Gerado por scripts/registrar-evidencia.sh. Não editar à mão.
+comando : scripts/harness.sh test-integracao
+data    : 2026-09-07 14:21:12 -0300
+commit  : 110050e (árvore suja)
+sistema : MINGW64_NT-10.0-26200
+espera  : FALHA (vermelho obrigatório)
+---------------------------------------------------------------
+harness: HARNESS_TEST_INTEGRATION -> pnpm run test:integracao
+
+> conta-comigo@0.7.0 test:integracao C:\Users\migue\Documents\mocitec\conta-comigo
+> vitest run --config vitest.integracao.config.ts
+
+
+ RUN  v5.0.0 C:/Users/migue/Documents/mocitec/conta-comigo
+
+ ❯ backend/src/lancamentos/infrastructure/persistence/repositorio-prisma.integracao.test.ts (3 tests | 2 failed) 12ms
+   ❯ RepositorioDeLancamentosPrisma — ida e volta no PostgreSQL real (3)
+     × um lancamento salvo volta identico pela entidade de dominio 8ms
+     × varios lancamentos voltam todos, sem duplicar 1ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  backend/src/lancamentos/infrastructure/persistence/repositorio-prisma.integracao.test.ts > RepositorioDeLancamentosPrisma — ida e volta no PostgreSQL real > um lancamento salvo volta identico pela entidade de dominio
+AssertionError: expected [] to have a length of 1 but got +0
+
+- Expected
++ Received
+
+- 1
++ 0
+
+ ❯ backend/src/lancamentos/infrastructure/persistence/repositorio-prisma.integracao.test.ts:30:19
+     28|     const todos = await repositorio.listarTodos();
+     29|
+     30|     expect(todos).toHaveLength(1);
+       |                   ^
+     31|     expect(todos[0]).toEqual(original);
+     32|     // A data volta como Date com o MESMO instante — nao como string, …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  backend/src/lancamentos/infrastructure/persistence/repositorio-prisma.integracao.test.ts > RepositorioDeLancamentosPrisma — ida e volta no PostgreSQL real > varios lancamentos voltam todos, sem duplicar
+AssertionError: expected [] to deeply equal [ 'l-1', 'l-2', 'l-3' ]
+
+- Expected
++ Received
+
+- [
+-   "l-1",
+-   "l-2",
+-   "l-3",
+- ]
++ []
+
+ ❯ backend/src/lancamentos/infrastructure/persistence/repositorio-prisma.integracao.test.ts:45:17
+     43|     }
+     44|     const ids = (await repositorio.listarTodos()).map((l) => l.id).sor…
+     45|     expect(ids).toEqual(['l-1', 'l-2', 'l-3']);
+       |                 ^
+     46|   });
+     47| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 1 passed (3)
+   Start at  14:21:13
+   Duration  231ms (import 44%, transform 36%, tests 15%, worker 5%)
+
+ ELIFECYCLE  Command failed with exit code 1.
+---------------------------------------------------------------
+EXIT_CODE=1
+SHA256=13094ee5390182d1be21e05e82859616ff9b346845215c26fd7ceb2dc5b07710
