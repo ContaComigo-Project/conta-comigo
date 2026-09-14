@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { examinarSaida, valoresMonetariosDe, valoresPermitidos } from './output-guard';
+import { examinarSaida, sanitizarTexto, valoresInformadosPeloUsuario, valoresMonetariosDe, valoresPermitidos } from './output-guard';
 
 const dados = { totalEmCentavos: 128_432, categorias: { mercado: 40_000 } };
 
@@ -36,6 +36,28 @@ describe('valoresPermitidos', () => {
     expect(nums.has(10000)).toBe(true);
     expect(nums.has(51)).toBe(true);
     expect(nums.has(5050)).toBe(true);
+  });
+});
+
+describe('sanitizarTexto e valoresInformadosPeloUsuario — apresentação e RN-019', () => {
+  it('sanitizarTexto remove markdown, emojis e trunca no limite', () => {
+    const comMarkdown = sanitizarTexto('**Título**\n### seção\n- item\n`codigo`');
+    expect(comMarkdown).not.toContain('**');
+    expect(comMarkdown).not.toContain('###');
+    expect(comMarkdown).not.toContain('`');
+    const comEmoji = sanitizarTexto('Seus gastos 📊 aumentaram 🚀');
+    expect(comEmoji).not.toContain('📊');
+    expect(comEmoji).not.toContain('🚀');
+    const longo = sanitizarTexto('a'.repeat(1_200));
+    expect(longo.length).toBeLessThanOrEqual(1_001);
+    expect(longo.endsWith('…')).toBe(true);
+  });
+
+  it('valoresInformadosPeloUsuario entende "mil" e "milhões"', () => {
+    const mil = valoresInformadosPeloUsuario('quero comprar 350mil');
+    expect(mil).toContain(350_000_00); // centavos
+    const milhoes = valoresInformadosPeloUsuario('meta de 2 milhões');
+    expect(milhoes).toContain(2_000_000_00);
   });
 });
 

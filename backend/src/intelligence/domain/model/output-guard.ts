@@ -152,7 +152,7 @@ function contemVerboDeRecomendacao(textoNormalizado: string): boolean {
  */
 export function valoresInformadosPeloUsuario(contexto: string): number[] {
   const valores = valoresMonetariosDe(contexto);
-  for (const achado of contexto.matchAll(/(\d+(?:[.,]\d+)?)\s*(mil|milh(?:ao|ões|oes))/gi)) {
+  for (const achado of contexto.matchAll(/(\d+(?:[.,]\d+)?)\s*(milh(?:ao|ões|oes)|mil)/gi)) {
     const base = Number(achado[1].replace(/\./g, '').replace(',', '.'));
     if (!Number.isFinite(base)) continue;
     const reais = base * (/^mil$/i.test(achado[2]) ? 1_000 : 1_000_000);
