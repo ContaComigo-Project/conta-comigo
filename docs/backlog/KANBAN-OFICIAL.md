@@ -31,7 +31,7 @@ domínio, com teste antes.
 Consequência prática: a maioria das `HN` é **integração**, não construção. Cada
 uma tem a coluna "UI hoje" dizendo o que já está pronto na tela.
 
-## Notas do inventário (`HT-016`, `docs/inventario-frontend.md`)
+## Notas do inventário (`HT-016`, `docs/backlog/inventario-frontend.md`)
 
 - **Navegação do dashboard:** as telas `/dashboard/investimentos`, `/bancos` e
   `/configuracoes` **foram implementadas** (seções reais). A rota `/metas`

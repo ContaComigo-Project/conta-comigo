@@ -33,7 +33,7 @@ justificativa no catálogo. O resultado alimenta `HT-017` (contrato) e `HT-018`
 
 ## 3. Fronteiras e design
 
-- Módulos tocados: `docs/inventario-frontend.md`, `docs/requisitos/`, `docs/backlog/`, `docs/tasks/HT-016/`, `docs/entregas/`
+- Módulos tocados: `docs/backlog/inventario-frontend.md`, `docs/requisitos/`, `docs/backlog/`, `docs/tasks/HT-016/`, `docs/entregas/`
 - Contratos novos ou alterados: nenhum contrato de software
 - Dependências que entram: **nenhuma**
 
@@ -46,13 +46,13 @@ cada regra observada.
 
 | Passo | O quê | Estado esperado |
 | --- | --- | --- |
-| 1 | Conferir critérios de aceite contra `docs/inventario-frontend.md` | Todos marcados |
+| 1 | Conferir critérios de aceite contra `docs/backlog/inventario-frontend.md` | Todos marcados |
 | 2 | Conferir que `RN-024`/`RN-025` saíram de Rascunho | Catálogo atualizado |
 | 3 | Rodar `bash scripts/verificar-fechamento.sh` após commit+tag | Verde |
 
 | Cenário | Regra que prova | Arquivo de teste |
 | --- | --- | --- |
-| Nenhuma regra de negócio fica escondida no frontend | — (documental) | `docs/inventario-frontend.md` |
+| Nenhuma regra de negócio fica escondida no frontend | — (documental) | `docs/backlog/inventario-frontend.md` |
 
 ## 5. Gates
 
@@ -74,7 +74,7 @@ cada regra observada.
 
 ## 7. Plano de reversão
 
-Nenhum código é alterado. Reverter é apagar `docs/inventario-frontend.md` e
+Nenhum código é alterado. Reverter é apagar `docs/backlog/inventario-frontend.md` e
 reverter as linhas de `RN-024`/`RN-025` no catálogo.
 
 ## 8. Fechamento

@@ -49,7 +49,7 @@ Read these 4? You know 95 % of what it takes to work here without breaking anyth
 | Workspace test suites | [`tests/README.md`](tests/README.md) |
 | Boundary-checking tooling | [`tooling/README.md`](tooling/README.md) |
 | Frontend (React + Vite) | [`frontend/README.md`](frontend/README.md) |
-| Inventory and architecture of the existing frontend | [`docs/inventario-frontend.md`](docs/inventario-frontend.md) |
+| Inventory and architecture of the existing frontend | [`docs/backlog/inventario-frontend.md`](docs/backlog/inventario-frontend.md) |
 
 ---
 

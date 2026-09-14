@@ -17,7 +17,7 @@ max_lines: 300
 
 ## O que foi entregue
 
-- **`docs/inventario-frontend.md`** — inventário completo da camada web:
+- **`docs/backlog/inventario-frontend.md`** — inventário completo da camada web:
   58 arquivos, 5.930 linhas; **41 componentes** (38 `.tsx` + 3 hooks) com
   caminho, `RF` servido, classificação (mantém/adapta/descarta) e motivo;
   **9 mocks** com destino (contrato de dados, massa de teste, descarta);
@@ -36,8 +36,8 @@ Nenhum código do frontend foi alterado (fora de escopo declarado).
 
 | Requisito | Como foi atendido | Evidência |
 | --- | --- | --- |
-| `RNF-018` — toda RN com teste rastreável | Localiza cada regra hoje fora do domínio e aponta a história dona; impede regra não catalogada de escapar | `docs/inventario-frontend.md` §3 |
-| `RNF-020` — regras substituíveis | Classifica o destino de cada mock e regra; a fronteira de `HT-017`/`HT-018` se apoia nisso | `docs/inventario-frontend.md` §2 e §5 |
+| `RNF-018` — toda RN com teste rastreável | Localiza cada regra hoje fora do domínio e aponta a história dona; impede regra não catalogada de escapar | `docs/backlog/inventario-frontend.md` §3 |
+| `RNF-020` — regras substituíveis | Classifica o destino de cada mock e regra; a fronteira de `HT-017`/`HT-018` se apoia nisso | `docs/backlog/inventario-frontend.md` §2 e §5 |
 | `RN-001` — faixa de semáforo | Confirma 70/90 como única fonte; `RN-024`/`RN-025` descartadas evitam ambiguidade de fronteira | `REGRAS-DE-NEGOCIO.md` |
 
 ## Critérios de aceite
@@ -119,5 +119,5 @@ As telas `/dashboard/investimentos`, `/bancos`, `/configuracoes` e `/metas`
 foram reclassificadas de "links mortos" para **telas mantidas**: o link leva a
 uma tela com o estado **"Em construção"** em um primeiro momento, e a decisão
 de implementar ou cortar cada uma fica com o product-manager antes do fim da
-PoC. `docs/inventario-frontend.md` (§1.3, §1.6, §5), notas do kanban e este
+PoC. `docs/backlog/inventario-frontend.md` (§1.3, §1.6, §5), notas do kanban e este
 documento foram atualizados.

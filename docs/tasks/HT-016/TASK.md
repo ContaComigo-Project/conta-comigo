@@ -15,14 +15,14 @@ max_lines: 300
 
 ## Objetivo em uma frase
 
-Produzir `docs/inventario-frontend.md` que classifica os 41 componentes e os 9
+Produzir `docs/backlog/inventario-frontend.md` que classifica os 41 componentes e os 9
 mocks da camada web (mantém / adapta / descarta), mapeia cada um para o `RF` que
 serve, lista toda regra de negócio hoje fora do domínio com arquivo e linha, e
 resolve `RN-024` e `RN-025`.
 
 ## Critérios de aceite copiados da história
 
-- [ ] `docs/inventario-frontend.md` lista os componentes com: caminho, `RF`
+- [ ] `docs/backlog/inventario-frontend.md` lista os componentes com: caminho, `RF`
       servido, classificação (mantém / adapta / descarta) e motivo
 - [ ] Componente sem `RF` correspondente está marcado como "sem requisito" e
       vira decisão registrada
@@ -39,7 +39,7 @@ resolve `RN-024` e `RN-025`.
 **Dentro:**
 
 - Analisar `frontend/src` (58 arquivos .ts/.tsx, 5.930 linhas)
-- Escrever `docs/inventario-frontend.md`
+- Escrever `docs/backlog/inventario-frontend.md`
 - Resolver `RN-024` e `RN-025` no catálogo
 - Atualizar kanban e documento de entrega
 
@@ -54,7 +54,7 @@ resolve `RN-024` e `RN-025`.
 
 | Arquivo | Ação | Motivo |
 | --- | --- | --- |
-| `docs/inventario-frontend.md` | criar | Entregável central da história |
+| `docs/backlog/inventario-frontend.md` | criar | Entregável central da história |
 | `docs/requisitos/REGRAS-DE-NEGOCIO.md` | alterar | `RN-024`/`RN-025` saem de Rascunho |
 | `docs/backlog/KANBAN-OFICIAL.md` | alterar | Estado HT-016 → Em execução / Done; notas de escopo |
 | `docs/tasks/HT-016/TASK.md` | alterar | Este recorte |

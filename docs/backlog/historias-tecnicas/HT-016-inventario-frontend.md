@@ -59,7 +59,7 @@ de fonte de observação — não de especificação.
 
 ## Critérios de aceite
 
-- [x] Existe `docs/inventario-frontend.md` listando os 41 componentes com:
+- [x] Existe `docs/backlog/inventario-frontend.md` listando os 41 componentes com:
       caminho, `RF` servido, classificação (mantém / adapta / descarta) e motivo
 - [x] Todo componente sem `RF` correspondente está explicitamente marcado como
       "sem requisito" — e vira decisão: promover a `RF` ou descartar
@@ -120,7 +120,7 @@ Cenário: nenhuma regra de negócio fica escondida no frontend
 
 ## Definição de pronto
 
-- [x] `docs/inventario-frontend.md` criado e completo
+- [x] `docs/backlog/inventario-frontend.md` criado e completo
 - [x] `RN-024` e `RN-025` resolvidas no catálogo
 - [x] `docs/entregas/ENTREGA-HT-016-inventario-frontend.md` criado
 - [x] `KANBAN-OFICIAL.md` atualizado
